@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const cssnano = require('cssnano');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-/* const ExtractTextPlugin = require('extract-text-webpack-plugin');*/
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const project = require('./project.config');
 const debug = require('debug')('app:config:webpack');
 
@@ -29,7 +29,6 @@ webpackConfig.entry = {
     app: __DEV__
         ? [APP_ENTRY].concat(`webpack-hot-middleware/client?path=${project.compiler_public_path}__webpack_hmr`)
         : [APP_ENTRY],
-
     vendor: project.compiler_vendors
 };
 
@@ -37,7 +36,7 @@ webpackConfig.entry = {
 // Bundle Output
 // ------------------------------------
 webpackConfig.output = {
-    filename  : `[name].[${project.compiler_hash_type}].js`,
+    filename  : `[name].bundle.js`,
     path      : project.paths.dist(),
     publicPath: project.compiler_public_path
 };
@@ -45,16 +44,44 @@ webpackConfig.output = {
 // ------------------------------------
 // Externals
 // ------------------------------------
-webpackConfig.externals = {};
-webpackConfig.externals['react/lib/ExecutionEnvironment'] = true;
-webpackConfig.externals['react/lib/ReactContext'] = true;
-webpackConfig.externals['react/addons'] = true;
+webpackConfig.externals = [
+    'react/lib/ExecutionEnvironment',
+    'react/lib/ReactContext',
+    'react/addons'
+];
 
 // ------------------------------------
 // Plugins
 // ------------------------------------
 webpackConfig.plugins = [
     new webpack.DefinePlugin(project.globals),
+    new webpack.LoaderOptionsPlugin({
+        options: {
+            context: '/',
+            postcss: [
+                cssnano({
+                    autoprefixer: {
+                        add     : true,
+                        remove  : true,
+                        browsers: ['last 2 versions']
+                    },
+
+                    discardComments: {
+                        removeAll: true
+                    },
+
+                    discardUnused: false,
+                    mergeIdents  : false,
+                    reduceIdents : false,
+                    safe         : true,
+                    sourcemap    : true
+                })
+            ],
+            sassLoader: {
+                includePaths: project.paths.client('styles')
+            }
+        }
+    }),
     new HtmlWebpackPlugin({
         template: project.paths.client('index.html'),
         hash    : false,
@@ -67,6 +94,7 @@ webpackConfig.plugins = [
         }
     })
 ];
+
 
 // Ensure that the compiler exits on errors during testing so that
 // they do not get skipped and misreported.
@@ -93,10 +121,9 @@ if (__DEV__) {
         new webpack.NoErrorsPlugin()
     );
 } else if (__PROD__) {
-    debug('Enabling plugins for production (OccurenceOrder, Dedupe & UglifyJS).');
+    debug('Enable plugins for production (OccurenceOrder, UglifyJS).');
     webpackConfig.plugins.push(
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 unused   : true,
@@ -150,37 +177,6 @@ webpackConfig.module.rules.push({
     use : ['style-loader', BASE_CSS_LOADER, 'postcss-loader']
 });
 
-webpackConfig.plugins.push(
-    new webpack.LoaderOptionsPlugin({
-        options: {
-            sassLoader: {
-                includePaths: project.paths.client('styles')
-            },
-            postcss: [
-                cssnano({
-                    autoprefixer: {
-                        add     : true,
-                        remove  : true,
-                        browsers: ['last 2 versions']
-                    },
-
-                    discardComments: {
-                        removeAll: true
-                    },
-
-                    discardUnused: false,
-                    mergeIdents  : false,
-                    reduceIdents : false,
-                    safe         : true,
-                    sourcemap    : true
-                })
-            ],
-
-            context: '/'
-        }
-    })
-);
-
 // File loaders
 /* eslint-disable */
 webpackConfig.module.rules.push(
@@ -205,7 +201,10 @@ webpackConfig.module.rules.push(
         test  : /\.svg(\?.*)?$/,
         loader: 'url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml'
     },
-    { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
+    { test: /\.(png|jpg|gif)$/, loader: 'url-loader?limit=8192' }
+/*    { test: /\.gif$/, loader: "url-loader?limit=10000&mimetype=image/gif" },
+    { test: /\.jpg$/, loader: "url-loader?limit=10000&mimetype=image/jpg" }*/
+
 );
 /* eslint-enable */
 
@@ -215,23 +214,23 @@ webpackConfig.module.rules.push(
 // when we don't know the public path (we know it only when HMR is enabled [in development]) we
 // need to use the extractTextPlugin to fix this issue:
 // http://stackoverflow.com/questions/34133808/webpack-ots-parsing-error-loading-fonts/34133809#34133809
-/*
- if (!__DEV__) {
- debug('Applying ExtractTextPlugin to CSS loaders.');
- webpackConfig.module.rules.filter((loader) =>
- loader.loaders && loader.loaders.find((name) => /css/.test(name.split('?')[0]))
- ).forEach((loader) => {
- const first = loader.loaders[0];
- const rest = loader.loaders.slice(1);
- loader.loader = ExtractTextPlugin.extract(first, rest.join('!'));
- delete loader.loaders
- });
 
- webpackConfig.plugins.push(
- new ExtractTextPlugin('[name].[contenthash].css', {
- allChunks : true
- })
- )
- }
- */
+if (!__DEV__) {
+    debug('Applying ExtractTextPlugin to CSS loaders.');
+    webpackConfig.module.rules.filter((loader) =>
+        loader.loaders && loader.loaders.find((name) => /css/.test(name.split('?')[0]))
+    ).forEach((loader) => {
+        const first = loader.loaders[0];
+        const rest = loader.loaders.slice(1);
+        loader.loader = ExtractTextPlugin.extract(first, rest.join('!'));
+        delete loader.loaders
+    });
+
+    webpackConfig.plugins.push(
+        new ExtractTextPlugin('[name].bundle.css', {
+            allChunks: true
+        })
+    )
+}
+
 module.exports = webpackConfig;
