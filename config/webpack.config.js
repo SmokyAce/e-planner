@@ -18,7 +18,8 @@ const webpackConfig = {
         modules   : [project.paths.client(), 'node_modules'],
         extensions: ['.js', '.jsx', '.json']
     },
-    module: {}
+    module: {},
+    performance: { hints: false }
 };
 // ------------------------------------
 // Entry Points
@@ -94,7 +95,6 @@ webpackConfig.plugins = [
         }
     })
 ];
-
 
 // Ensure that the compiler exits on errors during testing so that
 // they do not get skipped and misreported.

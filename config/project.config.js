@@ -31,7 +31,12 @@ const config = {
     // ----------------------------------
     compiler_babel          : {
         cacheDirectory: true,
-        plugins       : ['transform-runtime'],
+        plugins       : ['transform-runtime',
+            [ 'react-intl', {
+                'messagesDir': './build/messages',
+                'enforceDescriptions': false
+            }
+        ]],
         presets       : [[ 'es2015', { modules: false } ], 'react', 'stage-0']
     },
     compiler_devtool        : 'source-map',

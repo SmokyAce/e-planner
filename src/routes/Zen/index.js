@@ -1,4 +1,4 @@
-import { injectReducer } from '../../reducers';
+import { injectReducer } from '../../store/reducers';
 
 export default (store) => ({
     path: 'zen',

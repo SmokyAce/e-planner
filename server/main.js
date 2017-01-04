@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const debug = require('debug')('app:server');
 const webpack = require('webpack');
@@ -7,10 +8,6 @@ const compress = require('compression');
 
 const app = express();
 
-// This rewrites all routes requests to the root /index.html file
-// (ignoring file requests). If you want to implement universal
-// rendering, you'll want to remove this middleware.
-app.use(require('connect-history-api-fallback')());
 
 // Apply gzip compression
 app.use(compress());
@@ -38,6 +35,21 @@ if (project.env === 'development') {
     // of development since this directory will be copied into ~/dist
     // when the application is compiled.
     app.use(express.static(project.paths.public()));
+
+    // This rewrites all routes requests to the root /index.html file
+    // (ignoring file requests). If you want to implement universal
+    // rendering, you'll want to remove this middleware.
+    app.use('*', function (req, res, next) {
+        const filename = path.join(compiler.outputPath, 'index.html');
+        compiler.outputFileSystem.readFile(filename, (err, result) => {
+            if (err) {
+                return next(err);
+            }
+            res.set('content-type', 'text/html');
+            res.send(result);
+            res.end();
+        })
+    })
 } else {
     debug(
         'Server is being run outside of live development mode, meaning it will ' +

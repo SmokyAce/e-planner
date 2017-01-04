@@ -1,13 +1,14 @@
 import React from 'react';
+import './Counter.scss';
 
 export const Counter = (props) => (
     <div style={{ margin: '0 auto' }}>
         <h2>Counter: { props.counter }</h2>
-        <button className='btn btn-default' onClick={props.increment}>
+        <button className='btn btn-default btn-counter' onClick={props.increment}>
             Increment
         </button>
         {' '}
-        <button className='btn btn-default' onClick={props.doubleAsync}>
+        <button className='btn btn-default btn-counter' onClick={props.doubleAsync}>
             Double (Async)
         </button>
     </div>
