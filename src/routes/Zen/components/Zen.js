@@ -17,7 +17,7 @@ export const Zen = (props: Props) => (
             <h2 className={classes.zenHeader}>
                 {props.zen ? props.zen.value : ''}
             </h2>
-            <button className='btn btn-default' onClick={props.fetchZen}>
+            <button className='btn btn-default' onClick={ () => { props.fetchZen(props.saved.length) } }>
                 Fetch a wisdom
             </button>
             {' '}
