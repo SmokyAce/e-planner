@@ -1,11 +1,13 @@
 import { applyMiddleware, compose, createStore } from 'redux';
+import { persistStore, autoRehydrate } from 'redux-persist';
 import thunk from 'redux-thunk';
+import createLogger from 'redux-logger';
 import { browserHistory } from 'react-router';
 import makeRootReducer from './reducers';
 import { updateLocation } from './reducers/location';
-import createLogger from 'redux-logger';
 
-export default (initialState = {}) => {
+
+export default () => {
     // ======================================================
     // Middleware Configuration
     // ======================================================
@@ -19,7 +21,7 @@ export default (initialState = {}) => {
     // ======================================================
     // Store Enhancers
     // ======================================================
-    const enhancers = [];
+    const enhancers = [autoRehydrate()];
 
     let composeEnhancers = compose;
 
@@ -36,7 +38,6 @@ export default (initialState = {}) => {
     // ======================================================
     const store = createStore(
         makeRootReducer(),
-        initialState,
         composeEnhancers(
             applyMiddleware(...middleware),
             ...enhancers
@@ -54,6 +55,8 @@ export default (initialState = {}) => {
             store.replaceReducer(reducers(store.asyncReducers));
         });
     }
+
+    persistStore(store);
 
     return store;
 };
