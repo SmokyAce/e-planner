@@ -6,8 +6,7 @@ import './Header.scss';
 
 class Header extends Component {
     render() {
-
-        const { messages, languages } = this.props.locale;
+        const { messages, languages, lang } = this.props.locale;
 
         return (
             <nav className='navbar navbar-default'>
@@ -28,8 +27,11 @@ class Header extends Component {
                     </ul>
                     <ul className='nav navbar-nav navbar-right'>
                         <NavDropdown title={ messages['app.lang'] } id='nav-dropdown' onSelect={this.props.selectedLocale}>
-                             <MenuItem eventKey={languages[0].lang}>{languages[0].fullName}</MenuItem>
-                            <MenuItem eventKey={languages[1].lang}>{languages[1].fullName}</MenuItem>
+                            { languages.map( item =>
+                                <MenuItem disabled={item.lang===lang} eventKey={item.lang} key={item.lang}>
+                                    {item.fullName}
+                                </MenuItem>
+                            )}
                         </NavDropdown>
                     </ul>
                 </div>
@@ -38,4 +40,4 @@ class Header extends Component {
     }
 }
 
-export default Header
+export default Header;
