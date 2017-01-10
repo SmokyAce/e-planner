@@ -1,6 +1,12 @@
-import { RUSSIAN_TRANSLATION } from '../i18n/messages/ru';
-import { ENGLISH_TRANSLATION } from '../i18n/messages/en';
-import { languages } from '../i18n/langs';
+import { RUSSIAN_TRANSLATION } from '../../i18n/messages/ru';
+import { ENGLISH_TRANSLATION } from '../../i18n/messages/en';
+import { languages } from '../../i18n/langs';
+
+// ------------------------------------
+// Constants
+// ------------------------------------
+export const LOCALE_SELECTED = 'LOCALE_SELECTED';
+
 
 const initialState = {
     lang: ENGLISH_TRANSLATION.lang,
@@ -8,9 +14,9 @@ const initialState = {
     languages: languages,
 };
 
-export const localeReducer = (state = initialState, action) => {
+export const locale = (state = initialState, action) => {
     switch (action.type) {
-        case 'LOCALE_SELECTED':
+        case LOCALE_SELECTED:
             switch (action.locale) {
                 case 'en':
                     return { ...initialState, lang: ENGLISH_TRANSLATION.lang, messages: ENGLISH_TRANSLATION.messages, languages: languages };

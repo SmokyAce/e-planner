@@ -2,13 +2,19 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { browserHistory } from 'react-router';
 import makeRootReducer from './reducers';
-import { updateLocation } from './location';
+import { updateLocation } from './reducers/location';
+import createLogger from 'redux-logger';
 
 export default (initialState = {}) => {
     // ======================================================
     // Middleware Configuration
     // ======================================================
     const middleware = [thunk];
+
+    // add logger for DEV mode
+    if (__DEV__) {
+        middleware.push(createLogger());
+    }
 
     // ======================================================
     // Store Enhancers

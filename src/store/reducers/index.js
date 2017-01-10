@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import locationReducer from './location';
-import { localeReducer } from './locales';
+import { location } from './location';
+import { locale } from './locales';
 
 export const makeRootReducer = (asyncReducers) => {
     return combineReducers({
-        location: locationReducer,
-        locale: localeReducer,
+        location,
+        locale,
         ...asyncReducers
     });
 };
