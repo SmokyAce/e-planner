@@ -18,7 +18,7 @@ const webpackConfig = {
         modules   : [project.paths.client(), 'node_modules'],
         extensions: ['.js', '.jsx', '.json']
     },
-    module: {},
+    module     : {},
     performance: { hints: false }
 };
 // ------------------------------------
@@ -37,7 +37,7 @@ webpackConfig.entry = {
 // Bundle Output
 // ------------------------------------
 webpackConfig.output = {
-    filename  : `[name].bundle.js`,
+    filename  : '[name].bundle.js',
     path      : project.paths.dist(),
     publicPath: project.compiler_public_path
 };
@@ -222,15 +222,16 @@ if (!__DEV__) {
     ).forEach((loader) => {
         const first = loader.loaders[0];
         const rest = loader.loaders.slice(1);
+
         loader.loader = ExtractTextPlugin.extract(first, rest.join('!'));
-        delete loader.loaders
+        delete loader.loaders;
     });
 
     webpackConfig.plugins.push(
         new ExtractTextPlugin('[name].bundle.css', {
             allChunks: true
         })
-    )
+    );
 }
 
 module.exports = webpackConfig;

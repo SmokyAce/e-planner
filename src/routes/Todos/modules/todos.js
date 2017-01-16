@@ -2,11 +2,12 @@
 // Actions
 // ------------------------------------
 
-//let nextTodoId = 0;
 export const addTodo = (text, count) => {
+    let newId = count;
+
     return {
         type: 'ADD_TODO',
-        id: count++,
+        id  : newId++,
         text
     };
 };
@@ -37,6 +38,8 @@ export const getVisibleTodos = (todos, filter, entries) => {
             return todos.filter(
                 t => !entries[t].completed
             );
+        default:
+            return todos;
     }
 };
 
@@ -55,8 +58,8 @@ const todo = (state, action) => {
     switch (action.type) {
         case 'ADD_TODO':
             return {
-                id: action.id,
-                text: action.text,
+                id       : action.id,
+                text     : action.text,
                 completed: false
             };
         case 'TOGGLE_TODO':
@@ -78,31 +81,33 @@ const TODOS_ACTION_HANDLERS = {
     [ADD_TODO]: (state, action) => {
         if (action.text === '') return state;
 
-        let { id } = action;
-        let entries = { ...state.entries, [id]: todo(undefined, action) };
-        let todoList = [ ...state.todoList, id ];
+        const { id } = action;
+        const entries = { ...state.entries, [id]: todo(undefined, action) };
+        const todoList = [...state.todoList, id];
+
         return {
             ...state,
             todoList,
             entries
-        }
+        };
     },
     [TOGGLE_TODO]: (state, action) => {
-        let entries = { ...state.entries, [action.id]: todo(state.entries[action.id], action) };
+        const entries = { ...state.entries, [action.id]: todo(state.entries[action.id], action) };
+
         return {
             ...state,
             entries
-        }
+        };
     },
-    [SET_VISIBILITY_FILTER]:  (state, action) => {
+    [SET_VISIBILITY_FILTER]: (state, action) => {
         return {
             ...state,
             filter: action.filter
-        }
+        };
     }
 };
 
-const initialState = { todoList: [], filter: 'SHOW_ALL', entries: {} } ;
+const initialState = { todoList: [], filter: 'SHOW_ALL', entries: {} };
 
 export default function todosReduceer(state = initialState, action) {
     const handler = TODOS_ACTION_HANDLERS[action.type];

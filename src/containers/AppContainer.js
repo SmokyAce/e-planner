@@ -36,7 +36,7 @@ class AppContainer extends Component {
                         </div>
                     </MuiThemeProvider>
                 </IntlContainer>
-             </Provider>
+            </Provider>
         );
     }
 }

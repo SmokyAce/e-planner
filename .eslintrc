@@ -197,7 +197,8 @@
         "react/jsx-max-props-per-line": [2, {"maximum": 3}],
         "react/jsx-no-bind": [2, {
             "ignoreRefs": true,
-            "allowBind": true
+            "allowBind": true,
+            "allowArrowFunctions": true
         }],
         "react/jsx-no-duplicate-props": 2,
         "react/jsx-no-undef": 2,
@@ -226,7 +227,7 @@
                 "render"
             ]
         }],
-        "react/wrap-multilines": 2,
+        "react/jsx-wrap-multilines": 2,
 
         // Legacy
         "max-depth": [0, 4],

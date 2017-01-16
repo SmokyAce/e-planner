@@ -39,6 +39,7 @@ export default () => {
             ...enhancers
         )
     );
+
     store.asyncReducers = {};
 
     // To unsubscribe, invoke `store.unsubscribeHistory()` anytime

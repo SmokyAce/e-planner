@@ -8,7 +8,6 @@ export default (store) => ({
             './containers/TodosContainer',
             './modules/todos'
         ], (require) => {
-
             const todos = require('./modules/todos').default;
 
             injectReducer(store, {

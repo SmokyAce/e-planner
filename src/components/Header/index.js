@@ -13,7 +13,7 @@ import Header from './Header';
  implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
-    selectedLocale: (locale) => selectedLocale(locale),
+    selectedLocale: (locale) => selectedLocale(locale)
 };
 
 const mapStateToProps = (state) => ({

@@ -1,11 +1,11 @@
 export const ENGLISH_TRANSLATION = {
     lang    : 'en',
     messages: {
-        'app.description': 'Wedding planner',
-        'app.route.home': 'Home',
+        'app.description'  : 'Wedding planner',
+        'app.route.home'   : 'Home',
         'app.route.counter': 'Counter',
-        'app.route.zen': 'Zen',
-        'app.route.todos': 'Todos',
-        'app.lang': 'Language',
+        'app.route.zen'    : 'Zen',
+        'app.route.todos'  : 'Todos',
+        'app.lang'         : 'Language'
     }
 };

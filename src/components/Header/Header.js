@@ -31,9 +31,11 @@ class Header extends Component {
                         </li>
                     </ul>
                     <ul className='nav navbar-nav navbar-right'>
-                        <NavDropdown title={ messages['app.lang'] } id='nav-dropdown' onSelect={this.props.selectedLocale}>
-                            { languages.map( item =>
-                                <MenuItem disabled={item.lang===lang} eventKey={item.lang} key={item.lang}>
+                        <NavDropdown title={messages['app.lang']} id='nav-dropdown'
+                            onSelect={this.props.selectedLocale}
+                        >
+                            { languages.map(item =>
+                                <MenuItem disabled={item.lang === lang} eventKey={item.lang} key={item.lang}>
                                     {item.fullName}
                                 </MenuItem>
                             )}
@@ -44,5 +46,10 @@ class Header extends Component {
         );
     }
 }
+
+Header.propTypes = {
+    locale        : React.PropTypes.object.isRequired,
+    selectedLocale: React.PropTypes.func.isRequired
+};
 
 export default Header;

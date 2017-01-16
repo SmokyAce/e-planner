@@ -11,7 +11,7 @@ export const Todos = () => {
             <AddTodo />
             <VisibleTodoList />
         </div>
-    )
+    );
 };
 
 export default Todos;

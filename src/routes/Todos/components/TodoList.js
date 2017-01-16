@@ -3,7 +3,7 @@ import Todo from './Todo';
 
 const TodoList = ({ todoList, onTodoClick, entries }) => {
     return (
-        <ul className="list-group text-left">
+        <ul className='list-group text-left'>
             { todoList.map(todo =>
                 <Todo
                     key={todo}
@@ -12,7 +12,13 @@ const TodoList = ({ todoList, onTodoClick, entries }) => {
                 />
             ) }
         </ul>
-    )
+    );
+};
+
+TodoList.propTypes = {
+    entries    : React.PropTypes.object.isRequired,
+    todoList   : React.PropTypes.array.isRequired,
+    onTodoClick: React.PropTypes.func.isRequired
 };
 
 export default TodoList;

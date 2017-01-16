@@ -9,9 +9,9 @@ export const LOCALE_SELECTED = 'LOCALE_SELECTED';
 
 
 const initialState = {
-    lang: ENGLISH_TRANSLATION.lang,
+    lang    : ENGLISH_TRANSLATION.lang,
     messages: ENGLISH_TRANSLATION.messages,
-    languages: languages,
+    languages
 };
 
 export const locale = (state = initialState, action) => {
@@ -19,11 +19,20 @@ export const locale = (state = initialState, action) => {
         case LOCALE_SELECTED:
             switch (action.locale) {
                 case 'en':
-                    return { ...initialState, lang: ENGLISH_TRANSLATION.lang, messages: ENGLISH_TRANSLATION.messages, languages: languages };
+                    return { ...initialState,
+                        lang    : ENGLISH_TRANSLATION.lang,
+                        messages: ENGLISH_TRANSLATION.messages,
+                        languages };
                 case 'ru':
-                    return { ...initialState, lang: RUSSIAN_TRANSLATION.lang, messages: RUSSIAN_TRANSLATION.messages, languages: languages };
+                    return { ...initialState,
+                        lang    : RUSSIAN_TRANSLATION.lang,
+                        messages: RUSSIAN_TRANSLATION.messages,
+                        languages };
                 default:
-                    return { ...initialState, lang: ENGLISH_TRANSLATION.lang, messages: ENGLISH_TRANSLATION.messages, languages: languages };
+                    return { ...initialState,
+                        lang    : ENGLISH_TRANSLATION.lang,
+                        messages: ENGLISH_TRANSLATION.messages,
+                        languages };
             }
         default:
             return state;

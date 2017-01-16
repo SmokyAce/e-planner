@@ -19,14 +19,14 @@ export function requestZen(): Action {
     };
 }
 
-let availableId = 0;
-
 export function recieveZen(value: string, current: number): Action {
+    let newId = current;
+
     return {
         type   : RECIEVE_ZEN,
         payload: {
             value,
-            id: current++
+            id: newId++
         }
     };
 }

@@ -1,10 +1,10 @@
 export const languages = [
     {
-        'lang': 'en',
+        'lang'    : 'en',
         'fullName': 'English'
     },
     {
-        'lang': 'ru',
+        'lang'    : 'ru',
         'fullName': 'Русский'
-    },
+    }
 ];

@@ -32,12 +32,12 @@ const config = {
     compiler_babel          : {
         cacheDirectory: true,
         plugins       : ['transform-runtime',
-            [ 'react-intl', {
+            ['react-intl', {
                 'messagesDir': './build/messages',
                 'enforceDescriptions': false
             }
-        ]],
-        presets       : [[ 'es2015', { modules: false } ], 'react', 'stage-0']
+            ]],
+        presets       : [['es2015', { modules: false }], 'react', 'stage-0']
     },
     compiler_devtool        : 'source-map',
     compiler_hash_type      : 'hash',
