@@ -53,7 +53,7 @@ export default () => {
     }
 
     persistStore(store, {
-        blacklist: 'todos'
+        blacklist: ''
     });
 
     return store;

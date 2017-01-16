@@ -2,11 +2,11 @@
 // Actions
 // ------------------------------------
 
-let nextTodoId = 0;
-export const addTodo = (text) => {
+//let nextTodoId = 0;
+export const addTodo = (text, count) => {
     return {
         type: 'ADD_TODO',
-        id: nextTodoId++,
+        id: count++,
         text
     };
 };
@@ -25,17 +25,17 @@ export const setVisibilityFilter = (filter) => {
     };
 };
 
-export const getVisibleTodos = (todos, filter) => {
+export const getVisibleTodos = (todos, filter, entries) => {
     switch (filter) {
         case 'SHOW_ALL':
             return todos;
         case 'SHOW_COMPLETED':
             return todos.filter(
-                t => t.completed
+                t => entries[t].completed
             );
         case 'SHOW_ACTIVE':
             return todos.filter(
-                t => !t.completed
+                t => !entries[t].completed
             );
     }
 };
@@ -77,17 +77,21 @@ const TODOS_ACTION_HANDLERS = {
 
     [ADD_TODO]: (state, action) => {
         if (action.text === '') return state;
-        let todoList = [ ...state.todoList, todo(undefined, action) ];
+
+        let { id } = action;
+        let entries = { ...state.entries, [id]: todo(undefined, action) };
+        let todoList = [ ...state.todoList, id ];
         return {
             ...state,
-            todoList
+            todoList,
+            entries
         }
     },
     [TOGGLE_TODO]: (state, action) => {
-        let todoList = state.todoList.map(t => todo(t, action));
+        let entries = { ...state.entries, [action.id]: todo(state.entries[action.id], action) };
         return {
             ...state,
-            todoList
+            entries
         }
     },
     [SET_VISIBILITY_FILTER]:  (state, action) => {
@@ -98,7 +102,7 @@ const TODOS_ACTION_HANDLERS = {
     }
 };
 
-const initialState = { todoList: [], filter: 'SHOW_ALL' } ;
+const initialState = { todoList: [], filter: 'SHOW_ALL', entries: {} } ;
 
 export default function todosReduceer(state = initialState, action) {
     const handler = TODOS_ACTION_HANDLERS[action.type];

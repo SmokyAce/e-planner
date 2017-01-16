@@ -1,14 +1,14 @@
 import React from 'react';
 import Todo from './Todo';
 
-const TodoList = ({ todoList, onTodoClick }) => {
+const TodoList = ({ todoList, onTodoClick, entries }) => {
     return (
         <ul className="list-group text-left">
             { todoList.map(todo =>
                 <Todo
-                    key={todo.id}
-                    {...todo}
-                    onClick={() => onTodoClick(todo.id)}
+                    key={todo}
+                    {...entries[todo]}
+                    onClick={() => onTodoClick(todo)}
                 />
             ) }
         </ul>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Filters from './FiltersContainer';
-import AddTodo from '../components/AddTodo';
+import AddTodo from './AddTodo';
 import VisibleTodoList from './VisibleTodoList';
 
 export const Todos = () => {
