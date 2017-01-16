@@ -154,7 +154,6 @@
                 "align": "colon"
             }
         }],
-        "linebreak-style": [2, "windows"],
         "max-len": [2, 120, 4, {
             "ignoreUrls": true,
             "ignoreComments": false
