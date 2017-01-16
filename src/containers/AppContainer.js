@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { browserHistory, Router } from 'react-router';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { addLocaleData } from 'react-intl';
 
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import IntlContainer from './IntlContainer';
 
@@ -28,9 +30,11 @@ class AppContainer extends Component {
         return (
             <Provider store={store}>
                 <IntlContainer>
-                    <div style={{ height: '100%' }}>
-                        <Router history={browserHistory} children={routes} />
-                    </div>
+                    <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+                        <div style={{ height: '100%' }}>
+                            <Router history={browserHistory} children={routes} />
+                        </div>
+                    </MuiThemeProvider>
                 </IntlContainer>
              </Provider>
         );

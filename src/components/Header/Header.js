@@ -24,6 +24,11 @@ class Header extends Component {
                         <li><Link to='/zen' activeClassName='route--active'>
                             { messages['app.route.zen'] }
                         </Link></li>
+                        <li>
+                            <Link to='/todos' activeClassName='route--active'>
+                                { messages['app.route.todos'] }
+                            </Link>
+                        </li>
                     </ul>
                     <ul className='nav navbar-nav navbar-right'>
                         <NavDropdown title={ messages['app.lang'] } id='nav-dropdown' onSelect={this.props.selectedLocale}>

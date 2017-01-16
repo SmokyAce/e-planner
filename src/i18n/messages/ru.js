@@ -5,6 +5,7 @@ export const RUSSIAN_TRANSLATION = {
         'app.route.home': 'Дом',
         'app.route.counter': 'Счетчик',
         'app.route.zen': 'Дзен',
+        'app.route.todos': 'Задачи',
         'app.lang': 'Язык',
     }
 };

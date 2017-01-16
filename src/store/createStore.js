@@ -6,17 +6,13 @@ import { browserHistory } from 'react-router';
 import makeRootReducer from './reducers';
 import { updateLocation } from './reducers/location';
 
-
 export default () => {
     // ======================================================
     // Middleware Configuration
     // ======================================================
-    const middleware = [thunk];
+    const logger = createLogger();
 
-    // add logger for DEV mode
-    if (__DEV__) {
-        middleware.push(createLogger());
-    }
+    const middleware = [thunk, logger];
 
     // ======================================================
     // Store Enhancers
@@ -56,7 +52,9 @@ export default () => {
         });
     }
 
-    persistStore(store);
+    persistStore(store, {
+        blacklist: 'todos'
+    });
 
     return store;
 };

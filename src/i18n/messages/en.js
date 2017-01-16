@@ -5,6 +5,7 @@ export const ENGLISH_TRANSLATION = {
         'app.route.home': 'Home',
         'app.route.counter': 'Counter',
         'app.route.zen': 'Zen',
+        'app.route.todos': 'Todos',
         'app.lang': 'Language',
     }
 };
