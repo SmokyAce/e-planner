@@ -92,7 +92,7 @@ const TODOS_ACTION_HANDLERS = {
         return state.setIn(['entries', action.id], todo(state.getIn(['entries', action.id]), action));
     },
     [SET_VISIBILITY_FILTER]: (state, action) => {
-        return state.set('filter', action.filter)
+        return state.set('filter', action.filter);
     }
 };
 

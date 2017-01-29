@@ -17,6 +17,10 @@ export const HomeView = ({ locale }) => {
     );
 };
 
+HomeView.propTypes = {
+    locale: React.PropTypes.object.isRequired
+};
+
 const mapStateToProps = (state) => {
     return {
         locale: state.locale
