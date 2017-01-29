@@ -5,7 +5,7 @@ import { setVisibilityFilter } from '../modules/todos';
 
 const mapStateToProps = (state) => {
     return {
-        filter: state.todos.filter
+        filter: state.todos.get('filter')
     };
 };
 const mapDispatchToProps = (dispatch) => {

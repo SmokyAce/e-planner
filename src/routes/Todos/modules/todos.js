@@ -1,3 +1,5 @@
+import Immutable from 'immutable';
+
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -32,11 +34,11 @@ export const getVisibleTodos = (todos, filter, entries) => {
             return todos;
         case 'SHOW_COMPLETED':
             return todos.filter(
-                t => entries[t].completed
+                t => entries.get(t).completed
             );
         case 'SHOW_ACTIVE':
             return todos.filter(
-                t => !entries[t].completed
+                t => !entries.get(t).completed
             );
         default:
             return todos;
@@ -82,32 +84,19 @@ const TODOS_ACTION_HANDLERS = {
         if (action.text === '') return state;
 
         const { id } = action;
-        const entries = { ...state.entries, [id]: todo(undefined, action) };
-        const todoList = [...state.todoList, id];
+        const newState = state.setIn(['entries', id], todo(undefined, action));
 
-        return {
-            ...state,
-            todoList,
-            entries
-        };
+        return newState.updateIn(['todoList'], list => list.push(id));
     },
     [TOGGLE_TODO]: (state, action) => {
-        const entries = { ...state.entries, [action.id]: todo(state.entries[action.id], action) };
-
-        return {
-            ...state,
-            entries
-        };
+        return state.setIn(['entries', action.id], todo(state.getIn(['entries', action.id]), action));
     },
     [SET_VISIBILITY_FILTER]: (state, action) => {
-        return {
-            ...state,
-            filter: action.filter
-        };
+        return state.set('filter', action.filter)
     }
 };
 
-const initialState = { todoList: [], filter: 'SHOW_ALL', entries: {} };
+const initialState = Immutable.fromJS({ todoList: [], filter: 'SHOW_ALL', entries: {} });
 
 export default function todosReduceer(state = initialState, action) {
     const handler = TODOS_ACTION_HANDLERS[action.type];

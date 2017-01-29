@@ -1,4 +1,5 @@
 import React from 'react';
+import Immutable from 'immutable';
 import Todo from './Todo';
 
 const TodoList = ({ todoList, onTodoClick, entries }) => {
@@ -7,7 +8,7 @@ const TodoList = ({ todoList, onTodoClick, entries }) => {
             { todoList.map(todo =>
                 <Todo
                     key={todo}
-                    {...entries[todo]}
+                    {...entries.get(todo)}
                     onClick={() => onTodoClick(todo)}
                 />
             ) }
@@ -16,8 +17,8 @@ const TodoList = ({ todoList, onTodoClick, entries }) => {
 };
 
 TodoList.propTypes = {
-    entries    : React.PropTypes.object.isRequired,
-    todoList   : React.PropTypes.array.isRequired,
+    entries    : React.PropTypes.instanceOf(Immutable.Map).isRequired,
+    todoList   : React.PropTypes.instanceOf(Immutable.List).isRequired,
     onTodoClick: React.PropTypes.func.isRequired
 };
 

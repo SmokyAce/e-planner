@@ -4,9 +4,9 @@ import { toggleTodo, getVisibleTodos } from '../modules/todos';
 
 const mapStateToProps = (state) => {
     return {
-        todoList: getVisibleTodos(state.todos.todoList, state.todos.filter, state.todos.entries),
-        filter  : state.todos.filter,
-        entries : state.todos.entries
+        todoList: getVisibleTodos(state.todos.get('todoList'), state.todos.get('filter'), state.todos.get('entries')),
+        filter  : state.todos.get('filter'),
+        entries : state.todos.get('entries')
     };
 };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import Immutable from 'immutable';
 import { addTodo } from '../modules/todos';
 
 export const AddTodo = ({ dispatch, todoList }) => {
@@ -12,7 +13,7 @@ export const AddTodo = ({ dispatch, todoList }) => {
             />
             <span className='input-group-btn'>
                 <button className='btn btn-default' onClick={() => {
-                    dispatch(addTodo(input.value, todoList.length)); input.value = '';
+                    dispatch(addTodo(input.value, todoList.size)); input.value = '';
                 }}
                 >
                     Add todo
@@ -23,7 +24,7 @@ export const AddTodo = ({ dispatch, todoList }) => {
 };
 
 AddTodo.propTypes = {
-    todoList: React.PropTypes.array.isRequired,
+    todoList: React.PropTypes.instanceOf(Immutable.List).isRequired,
     dispatch: React.PropTypes.func.isRequired
 };
 
