@@ -21,6 +21,13 @@ export const toggleTodo = (id) => {
     };
 };
 
+export const deleteTodo = (id) => {
+    return {
+        type: 'DELETE_TODO',
+        id
+    };
+};
+
 export const setVisibilityFilter = (filter) => {
     return {
         type: 'SET_VISIBILITY_FILTER',
@@ -51,6 +58,7 @@ export const getVisibleTodos = (todos, filter, entries) => {
 // ------------------------------------
 const ADD_TODO = 'ADD_TODO';
 const TOGGLE_TODO = 'TOGGLE_TODO';
+const DELETE_TODO = 'DELETE_TODO';
 const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
 // ------------------------------------
 // Reducers
@@ -90,6 +98,11 @@ const TODOS_ACTION_HANDLERS = {
     },
     [TOGGLE_TODO]: (state, action) => {
         return state.setIn(['entries', action.id], todo(state.getIn(['entries', action.id]), action));
+    },
+    [DELETE_TODO]: (state, action) => {
+        const newState = state.set('todoList', state.get('todoList').filter(id => id !== action.id));
+
+        return newState.deleteIn(['entries', action.id]);
     },
     [SET_VISIBILITY_FILTER]: (state, action) => {
         return state.set('filter', action.filter);

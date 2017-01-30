@@ -7,7 +7,7 @@ export const AddTodo = ({ dispatch, todoList }) => {
 
     const handleKeyPress = (target) => {
         if (target.charCode === 13) {
-            dispatch(addTodo(input.value, todoList.size));
+            dispatch(addTodo(input.value, todoList.size === 0 ? 0 : todoList.get(todoList.size - 1) + 1));
             input.value = '';
         }
     };
@@ -23,7 +23,8 @@ export const AddTodo = ({ dispatch, todoList }) => {
             <span className='input-group-btn'>
                 <button className='btn btn-default'
                     onClick={() => {
-                        dispatch(addTodo(input.value, todoList.size)); input.value = '';
+                        dispatch(addTodo(input.value, todoList.size === 0 ? 0 : todoList.get(todoList.size - 1) + 1));
+                        input.value = '';
                     }}
                 >
                     Add todo

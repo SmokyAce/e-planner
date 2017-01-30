@@ -9,6 +9,7 @@ export const Todos = () => {
         <div>
             <Filters />
             <AddTodo />
+            <p />
             <VisibleTodoList />
         </div>
     );
