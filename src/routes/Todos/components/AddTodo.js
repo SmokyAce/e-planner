@@ -5,16 +5,26 @@ import { addTodo } from '../modules/todos';
 export const AddTodo = ({ dispatch, todoList }) => {
     let input;
 
+    const handleKeyPress = (target) => {
+        if (target.charCode === 13) {
+            dispatch(addTodo(input.value, todoList.size));
+            input.value = '';
+        }
+    };
+
     return (
         <div className='input-group'>
-            <input className='form-control' placeholder='example: buy a suit' ref={node => {
-                input = node;
-            }}
+            <input className='form-control' placeholder='example: buy a suit'
+                onKeyPress={handleKeyPress}
+                ref={node => {
+                    input = node;
+                }}
             />
             <span className='input-group-btn'>
-                <button className='btn btn-default' onClick={() => {
-                    dispatch(addTodo(input.value, todoList.size)); input.value = '';
-                }}
+                <button className='btn btn-default'
+                    onClick={() => {
+                        dispatch(addTodo(input.value, todoList.size)); input.value = '';
+                    }}
                 >
                     Add todo
                 </button>
