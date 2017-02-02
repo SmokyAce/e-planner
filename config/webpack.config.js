@@ -37,7 +37,7 @@ webpackConfig.entry = {
 // Bundle Output
 // ------------------------------------
 webpackConfig.output = {
-    filename  : '[name].bundle.js',
+    filename  : `[name].[${project.compiler_hash_type}].js`,
     path      : project.paths.dist(),
     publicPath: project.compiler_public_path
 };
@@ -228,9 +228,7 @@ if (!__DEV__) {
     });
 
     webpackConfig.plugins.push(
-        new ExtractTextPlugin('[name].bundle.css', {
-            allChunks: true
-        })
+        new ExtractTextPlugin({ filename: '[name].bundle.css', disable: false, allChunks: true })
     );
 }
 
