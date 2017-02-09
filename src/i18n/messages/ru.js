@@ -27,7 +27,7 @@ export const RUSSIAN_TRANSLATION = {
         'app.change-pwd.repeat-pwd' : 'Повторить пароль:',
         'app.change-pwd.btn'        : 'Изменить пароль',
 
-        'app.logout.description': 'Вы вышшли из приложения!',
+        'app.logout.description': 'Вы вышли из приложения!',
         'app.logout.btn'        : 'Выход',
 
         'app.register.description': 'Регистрация',

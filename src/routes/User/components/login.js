@@ -108,7 +108,6 @@ class UserLogin extends Component {
 }
 
 UserLogin.propTypes = {
-    currentUser      : React.PropTypes.object.isRequired,
     locale           : React.PropTypes.object.isRequired,
     loginUser        : React.PropTypes.func.isRequired,
     fetchUser        : React.PropTypes.func.isRequired,
@@ -125,8 +124,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        currentUser: state.currentUser,
-        locale     : state.locale
+        locale: state.locale
     };
 }
 

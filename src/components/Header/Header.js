@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { IndexLink, Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 // styles
-import { NavDropdown, MenuItem } from 'react-bootstrap';
+import { Navbar, NavDropdown, MenuItem } from 'react-bootstrap';
 import './Header.scss';
 
 class Header extends Component {
@@ -26,14 +26,14 @@ class Header extends Component {
         if (currentUser && currentUser.uid) {
             return (
                 <NavDropdown title={currentUser.displayName === '' ? currentUser.email : currentUser.displayName}
-                    id='user-dropdown'
+                    id='user-dropdown' eventKey='2'
                 >
                     <LinkContainer to='/user/profile'>
-                        <MenuItem eventKey='1'>{ messages['app.profile.btn'] }</MenuItem>
+                        <MenuItem eventKey='2.1'>{ messages['app.profile.btn'] }</MenuItem>
                     </LinkContainer>
                     <MenuItem divider />
                     <LinkContainer to='/user/logout' onClick={this.logOut}>
-                        <MenuItem eventKey='2'>{messages['app.logout.btn']}</MenuItem>
+                        <MenuItem eventKey='2.2'>{messages['app.logout.btn']}</MenuItem>
                     </LinkContainer>
                 </NavDropdown>
             );
@@ -49,11 +49,14 @@ class Header extends Component {
         const { messages, languages, lang } = this.props.locale;
 
         return (
-            <nav className='navbar navbar-default'>
-                <div className='container-fluid'>
-                    <div className='navbar-header'>
-                        <a className='navbar-brand' href='/'>{ messages['app.description'] }</a>
-                    </div>
+            <Navbar collapseOnSelect>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <a href='/'>{ messages['app.description'] }</a>
+                    </Navbar.Brand>
+                    <Navbar.Toggle />
+                </Navbar.Header>
+                <Navbar.Collapse>
                     <ul className='nav navbar-nav'>
                         <li>
                             <IndexLink to='/' activeClassName='route--active'>
@@ -78,10 +81,7 @@ class Header extends Component {
                         </li>
                     </ul>
                     <ul className='nav navbar-nav navbar-right'>
-                        { this.renderUserMenu(this.props.currentUser, messages) }
-                    </ul>
-                    <ul className='nav navbar-nav navbar-right'>
-                        <NavDropdown title={lang} id='lang-dropdown'
+                        <NavDropdown eventKey='1' title={lang} id='lang-dropdown'
                             onSelect={this.props.selectedLocale}
                         >
                             { languages.map(item =>
@@ -90,15 +90,16 @@ class Header extends Component {
                                 </MenuItem>
                             )}
                         </NavDropdown>
+                        { this.renderUserMenu(this.props.currentUser, messages) }
                     </ul>
-                </div>
-            </nav>
+                </Navbar.Collapse>
+            </Navbar>
         );
     }
 }
 
 Header.propTypes = {
-    currentUser   : React.PropTypes.object.isRequired,
+    currentUser   : React.PropTypes.object,
     fetchUser     : React.PropTypes.func.isRequired,
     logoutUser    : React.PropTypes.func.isRequired,
     locale        : React.PropTypes.object.isRequired,

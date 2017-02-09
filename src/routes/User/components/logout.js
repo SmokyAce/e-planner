@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-export const UserLogout = () => {
-    const { messages } = this.props;
-
+export const UserLogout = ({ locale }) => {
     return (
         <form id='frmLogout' role='form'>
-            <h2>{ messages['app.logout.description'] }</h2>
+            <h2>{ locale.messages['app.logout.description'] }</h2>
         </form>
     );
 };

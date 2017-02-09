@@ -20,7 +20,9 @@ export default () => {
     // ======================================================
     // Store Enhancers
     // ======================================================
-    const enhancers = [autoRehydrate()];
+    const enhancers = [
+        autoRehydrate()
+    ];
 
     let composeEnhancers = compose;
 
@@ -57,7 +59,7 @@ export default () => {
     }
 
     persistStore(store, {
-        blacklist: 'todos, locale, currentUser'
+        blacklist: 'todos, locale, currentUser, location'
     });
 
     return store;
