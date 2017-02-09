@@ -7,6 +7,9 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
+import 'bootstrap-social';
+
+// i18n
 import IntlContainer from './IntlContainer';
 
 import en from 'react-intl/locale-data/en';

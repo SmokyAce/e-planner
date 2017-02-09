@@ -1,5 +1,6 @@
 import Todos from './containers/TodosContainer';
 import { injectReducer } from '../../store/reducers';
+import requireAuth from '../../utils/authenticated';
 
 export default (store) => ({
     path: 'todos',
@@ -17,5 +18,6 @@ export default (store) => ({
 
             next(null, Todos);
         });
-    }
+    },
+    onEnter: requireAuth
 });

@@ -1,8 +1,11 @@
 import { applyMiddleware, compose, createStore } from 'redux';
+import { browserHistory } from 'react-router';
+
 import { persistStore, autoRehydrate } from 'redux-persist';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import { browserHistory } from 'react-router';
+import promise from 'redux-promise';
+
 import makeRootReducer from './reducers';
 import { updateLocation } from './reducers/location';
 
@@ -12,7 +15,7 @@ export default () => {
     // ======================================================
     const logger = createLogger();
 
-    const middleware = [thunk, logger];
+    const middleware = [thunk, logger, promise];
 
     // ======================================================
     // Store Enhancers
@@ -54,7 +57,7 @@ export default () => {
     }
 
     persistStore(store, {
-        blacklist: 'todos, locale'
+        blacklist: 'todos, locale, currentUser'
     });
 
     return store;

@@ -16,7 +16,8 @@ export const createRoutes = (store) => ({
                 // Provide store for async reducers and middleware
                 require('./Counter').default(store),
                 require('./Zen').default(store),
-                require('./Todos').default(store)
+                require('./Todos').default(store),
+                require('./User').default(store)
             ]);
         });
     } });

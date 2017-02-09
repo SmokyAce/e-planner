@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { selectedLocale } from '../../actions/header';
+import { fetchUser, logoutUser } from '../../store/reducers/user';
 
 /*  This is a container component. Notice it does not contain any JSX,
  nor does it import React. This component is **only** responsible for
@@ -12,12 +14,18 @@ import Header from './Header';
  Keys will be passed as props to presentational components. Here we are
  implementing our wrapper around increment; the component doesn't care   */
 
-const mapDispatchToProps = {
-    selectedLocale: (locale) => selectedLocale(locale)
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        selectedLocale: (locale) => selectedLocale(locale),
+        fetchUser,
+        logoutUser
+    }, dispatch);
 };
 
 const mapStateToProps = (state) => ({
-    locale: state.locale
+    locale     : state.locale,
+    location   : state.location,
+    currentUser: state.currentUser
 });
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
