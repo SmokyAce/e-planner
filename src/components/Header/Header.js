@@ -80,7 +80,7 @@ class Header extends Component {
                             </Link>
                         </li>
                     </ul>
-                    <ul className='nav navbar-nav navbar-right' style={{marginRight: '0px'}}>
+                    <ul className='nav navbar-nav navbar-right' style={{ marginRight: '0px' }}>
                         <NavDropdown eventKey='1' title={lang} id='lang-dropdown'
                             onSelect={this.props.selectedLocale}
                         >
