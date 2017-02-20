@@ -42,26 +42,30 @@ class UserProfile extends Component {
         const { messages } = this.props.locale;
 
         return (
-            <div className='col-md-6'>
-                <form id='frmProfile' role='form' onSubmit={this.onFormSubmit}>
-                    <h2>{messages['app.profile.description']}</h2>
-                    <p>{this.state.message}</p>
-                    <br />
-                    <div className='form-group'>
-                        <label htmlFor='email'>{messages['app.email']}</label>
-                        <input type='text' defaultValue={this.props.currentUser.email} className='form-control'
-                            id='email' ref='email' placeholder='Email' name='email'
-                        />
-                    </div>
-                    <div className='form-group'>
-                        <label htmlFor='displayName'>{messages['app.profile.display-name']}</label>
-                        <input type='text' defaultValue={this.props.currentUser.displayName} className='form-control'
-                            ref='displayName' id='displayName' placeholder='Display name' name='displayName'
-                        />
-                    </div>
-                    <button type='submit' className='btn btn-primary'>{messages['app.profile.update-btn']}</button>
-                </form>
-                <ChangePassword />
+            <div>
+                <div className='col-md-4' />
+                <div className='col-md-4'>
+                    <form id='frmProfile' role='form' onSubmit={this.onFormSubmit}>
+                        <h2>{messages['app.profile.description']}</h2>
+                        <p>{this.state.message}</p>
+                        <br />
+                        <div className='form-group'>
+                            <label htmlFor='email'>{messages['app.email']}</label>
+                            <input type='text' defaultValue={this.props.currentUser.email} className='form-control'
+                                id='email' ref='email' placeholder='Email' name='email'
+                            />
+                        </div>
+                        <div className='form-group'>
+                            <label htmlFor='displayName'>{messages['app.profile.display-name']}</label>
+                            <input type='text' defaultValue={this.props.currentUser.displayName}
+                                className='form-control'
+                                ref='displayName' id='displayName' placeholder='Display name' name='displayName'
+                            />
+                        </div>
+                        <button type='submit' className='btn btn-primary'>{messages['app.profile.update-btn']}</button>
+                    </form>
+                    <ChangePassword />
+                </div>
             </div>
         );
     }

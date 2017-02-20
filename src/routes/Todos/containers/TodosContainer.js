@@ -6,7 +6,7 @@ import VisibleTodoList from './VisibleTodoList';
 
 export const Todos = () => {
     return (
-        <div className='container'>
+        <div>
             <Filters />
             <AddTodo />
             <p />

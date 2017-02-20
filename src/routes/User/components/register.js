@@ -34,50 +34,53 @@ class UserRegister extends Component {
         const { messages } = this.props.locale;
 
         return (
-            <div className='col-md-4'>
-                <form id='frmRegister' role='form' onSubmit={this.onFormSubmit}>
-                    <p>{this.state.message}</p>
-                    <h2>{ messages['app.register.description'] }</h2>
-                    <div className='form-group'>
-                        <label htmlFor='txtRegEmail'>{ messages['app.email'] }</label>
-                        <input type='email' className='form-control' ref='email' id='txtEmail'
-                            placeholder='Enter email' name='email'
-                        />
-                    </div>
-                    <div className='form-group'>
-                        <label htmlFor='txtRegPass'>{ messages['app.pwd'] }</label>
-                        <input type='password' className='form-control' ref='password' id='txtPass'
-                            placeholder='Password' name='password'
-                        />
-                    </div>
-                    <button type='submit' className='btn btn-default'>{ messages['app.register.btn'] }</button>
-                    <br /> <br />
+            <div>
+                <div className='col-md-4' />
+                <div className='col-md-4'>
+                    <form id='frmRegister' role='form' onSubmit={this.onFormSubmit}>
+                        <p>{this.state.message}</p>
+                        <h2>{ messages['app.register.description'] }</h2>
+                        <div className='form-group'>
+                            <label htmlFor='txtRegEmail'>{ messages['app.email'] }</label>
+                            <input type='email' className='form-control' ref='email' id='txtEmail'
+                                placeholder='Enter email' name='email'
+                            />
+                        </div>
+                        <div className='form-group'>
+                            <label htmlFor='txtRegPass'>{ messages['app.pwd'] }</label>
+                            <input type='password' className='form-control' ref='password' id='txtPass'
+                                placeholder='Password' name='password'
+                            />
+                        </div>
+                        <button type='submit' className='btn btn-default'>{ messages['app.register.btn'] }</button>
+                        <br /> <br />
 
-                    <a ref='#' className='btn btn-block btn-social btn-facebook' data-provider='facebook'
-                        onClick={() => {
-                            this.props.loginWithProvider('facebook');
-                        }}
-                    >
-                        <span className='fa fa-facebook' />
-                        Facebook
-                    </a>
-                    <a href='#' className='btn btn-block btn-social btn-twitter' data-provider='twitter'
-                        onClick={() => {
-                            this.props.loginWithProvider('twitter');
-                        }}
-                    >
-                        <span className='fa fa-twitter' />
-                        Twitter
-                    </a>
-                    <a href='#' className='btn btn-block btn-social btn-google' data-provider='google'
-                        onClick={() => {
-                            this.props.loginWithProvider('google');
-                        }}
-                    >
-                        <span className='fa fa-google' />
-                        Google
-                    </a>
-                </form>
+                        <a ref='#' className='btn btn-block btn-social btn-facebook' data-provider='facebook'
+                            onClick={() => {
+                                this.props.loginWithProvider('facebook');
+                            }}
+                        >
+                            <span className='fa fa-facebook' />
+                            Facebook
+                        </a>
+                        <a href='#' className='btn btn-block btn-social btn-twitter' data-provider='twitter'
+                            onClick={() => {
+                                this.props.loginWithProvider('twitter');
+                            }}
+                        >
+                            <span className='fa fa-twitter' />
+                            Twitter
+                        </a>
+                        <a href='#' className='btn btn-block btn-social btn-google' data-provider='google'
+                            onClick={() => {
+                                this.props.loginWithProvider('google');
+                            }}
+                        >
+                            <span className='fa fa-google' />
+                            Google
+                        </a>
+                    </form>
+                </div>
             </div>
         );
     }
