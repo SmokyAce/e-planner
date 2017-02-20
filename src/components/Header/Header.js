@@ -31,7 +31,7 @@ class Header extends Component {
                     <LinkContainer to='/user/profile'>
                         <MenuItem eventKey='2.1'>{ messages['app.profile.btn'] }</MenuItem>
                     </LinkContainer>
-                    <MenuItem divider />
+                    <MenuItem divider bsStyle={{ margin: 0 }}/>
                     <LinkContainer to='/user/logout' onClick={this.logOut}>
                         <MenuItem eventKey='2.2'>{messages['app.logout.btn']}</MenuItem>
                     </LinkContainer>
@@ -49,7 +49,7 @@ class Header extends Component {
         const { messages, languages, lang } = this.props.locale;
 
         return (
-            <Navbar collapseOnSelect>
+            <Navbar collapseOnSelect className='navbar-inverse'>
                 <Navbar.Header>
                     <Navbar.Brand>
                         <a href='/'>{ messages['app.description'] }</a>
@@ -80,15 +80,15 @@ class Header extends Component {
                             </Link>
                         </li>
                     </ul>
-                    <ul className='nav navbar-nav navbar-right' style={{ marginRight: '0px' }}>
-                        <NavDropdown eventKey='1' title={lang} id='lang-dropdown'
+                    <ul className='nav navbar-nav nav-pills navbar-right' style={{ marginRight: '0px' }}>
+                        <NavDropdown eventKey='1' title={messages['app.language']} id='lang-dropdown'
                             onSelect={this.props.selectedLocale}
                         >
                             { languages.map(item =>
                                 <MenuItem disabled={item.lang === lang} eventKey={item.lang} key={item.lang}>
                                     {item.fullName}
                                 </MenuItem>
-                            )}
+                             )}
                         </NavDropdown>
                         { this.renderUserMenu(this.props.currentUser, messages) }
                     </ul>

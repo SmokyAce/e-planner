@@ -1,6 +1,7 @@
 export const ENGLISH_TRANSLATION = {
     lang    : 'en',
     messages: {
+        'app.language'     : 'English',
         'app.description'  : 'Event Planner',
         'app.greeting'     : 'Welcome!',
         'app.route.home'   : 'Home',
