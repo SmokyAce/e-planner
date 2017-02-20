@@ -1,7 +1,7 @@
 {
-  "name": "wedding-planner",
+  "name": "E-Planner",
   "version": "0.0.1",
-  "description": "This is best wedding planner in the world :)",
+  "description": "Event Planner - this is best planner for events in the world :)",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
