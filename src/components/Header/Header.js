@@ -80,6 +80,11 @@ class Header extends Component {
                                     { messages['app.route.todos'] }
                                 </Link>
                             </li>
+                            <li>
+                                <Link to='/planner' activeClassName='route--active'>
+                                    Planner
+                                </Link>
+                            </li>
                         </ul>
                         <ul className='nav navbar-nav navbar-right' style={{ marginRight: '0px' }}>
                             <NavDropdown eventKey='1' title={messages['app.language']} id='lang-dropdown'
