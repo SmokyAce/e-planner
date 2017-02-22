@@ -29,13 +29,13 @@ const SidebarContent = () => {
 
     for (let ind = 0; ind < 5; ind++) {
         links.push(
-            <a key={ind} href='#' style={styles.sidebarLink}>Mock menu item {ind}</a>);
+            <a key={ind} href='#' style={styles.sidebarLink}>Event item {ind}</a>);
     }
 
     return (
         <TitlePanel title='Menu'>
-            <div style={styles.content}>
-                <a href='/' style={styles.sidebarLink}>Home</a>
+            <div style={styles.content} className="text-left">
+                <h4>Events</h4>
                 <div style={styles.divider} />
                 {links}
             </div>

@@ -6,7 +6,7 @@ const TitlePanel = (props) => {
         <div>
             <Navbar inverse>
                 <Navbar.Header>
-                    <Navbar.Brand>Menu</Navbar.Brand>
+                    <Navbar.Brand>{ props.title }</Navbar.Brand>
                 </Navbar.Header>
             </Navbar>
             {props.children}

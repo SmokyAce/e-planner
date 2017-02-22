@@ -2,7 +2,7 @@ export const RUSSIAN_TRANSLATION = {
     lang    : 'ru',
     messages: {
         'app.language'     : 'Русский',
-        'app.description'  : 'Event planner',
+        'app.description'  : 'Event Planner',
         'app.greeting'     : 'Добро пожаловать!',
         'app.route.home'   : 'Дом',
         'app.route.counter': 'Счетчик',

@@ -1,21 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Planner extends Component {
+export const Planner = ({ docked, onSetDocked, onSetOpen }) => {
 
-    render = () => {
-        return (
-            <div>
-                <button className='btn' onClick={this.props.onSetOpen}>
-                    Open
-                </button>
-                Welcome to Event Planner!
-            </div>
-        );
-    }
-}
+    const onDockedClick = () => {
+        onSetDocked(docked);
+    };
+
+    return (
+        <div>
+            <h2> Welcome to Event Planner application! </h2>
+            <button className='btn btn-primary' onClick={onSetOpen}>
+                Open
+            </button>
+            <button className='btn btn-primary' onClick={onDockedClick}>
+                Docked
+            </button>
+        </div>
+    );
+};
 
 Planner.propTypes = {
-    onSetOpen: React.PropTypes.func
+    onSetOpen  : React.PropTypes.func,
+    docked     : React.PropTypes.bool,
+    onSetDocked: React.PropTypes.func
 };
 
 export default Planner;

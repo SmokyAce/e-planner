@@ -1,10 +1,10 @@
 import Planner from '../components/Planner';
 import { connect } from 'react-redux';
-import { onSetOpen } from '../../../layouts/PlannerCoreLayout/modules/sidebar';
+import { onSetOpen, onSetDocked } from '../../../layouts/PlannerCoreLayout/modules/sidebar';
 
 const mapStateToProps = (state) => {
     return {
-        // sidebar: state.sidebar
+        docked: state.sidebar.get('sidebarDocked')
     };
 };
 
@@ -12,6 +12,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onSetOpen: (open) => {
             dispatch(onSetOpen(open));
+        },
+        onSetDocked: (docked) => {
+            dispatch(onSetDocked(docked));
         }
     };
 };

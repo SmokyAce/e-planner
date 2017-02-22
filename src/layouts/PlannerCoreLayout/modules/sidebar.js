@@ -5,15 +5,23 @@ import Immutable from 'immutable';
 // ------------------------------------
 export const onSetOpen = (open) => {
     return {
-        type   : 'SIDEBAR_SET',
+        type   : 'SIDEBAR_OPEN_SET',
         payload: open
+    };
+};
+
+export const onSetDocked = (docked) => {
+    return {
+        type   : 'SIDEBAR_DOCKED_SET',
+        payload: !docked
     };
 };
 
 // ------------------------------------
 // Constants
 // ------------------------------------
-const SIDEBAR_SET = 'SIDEBAR_SET';
+const SIDEBAR_OPEN_SET = 'SIDEBAR_OPEN_SET';
+const SIDEBAR_DOCKED_SET = 'SIDEBAR_DOCKED_SET';
 
 
 // ------------------------------------
@@ -22,8 +30,11 @@ const SIDEBAR_SET = 'SIDEBAR_SET';
 
 const PLANNER_ACTION_HANDLERS = {
 
-    [SIDEBAR_SET]: (state, action) => {
+    [SIDEBAR_OPEN_SET]: (state, action) => {
         return state.setIn(['sidebarOpen'], action.payload);
+    },
+    [SIDEBAR_DOCKED_SET]: (state, action) => {
+        return state.setIn(['sidebarDocked'], action.payload);
     }
 
 };
