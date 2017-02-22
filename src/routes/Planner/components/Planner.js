@@ -1,7 +1,6 @@
 import React from 'react';
 
 export const Planner = ({ docked, onSetDocked, onSetOpen }) => {
-
     const onDockedClick = () => {
         onSetDocked(docked);
     };

@@ -34,7 +34,7 @@ const SidebarContent = () => {
 
     return (
         <TitlePanel title='Menu'>
-            <div style={styles.content} className="text-left">
+            <div style={styles.content} className='text-left'>
                 <h4>Events</h4>
                 <div style={styles.divider} />
                 {links}
