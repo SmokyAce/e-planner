@@ -7,13 +7,13 @@ export default (store) => ({
     getComponent(nextState, next) {
         require.ensure([
             './containers/PlannerContainer'
-            // './modules/todos'
+            // './modules/planner'
         ], (require) => {
-            // const todos = require('./modules/todos').default;
+            // const planner = require('./modules/planner').default;
             //
             // injectReducer(store, {
-            //     key    : 'todos',
-            //     reducer: todos
+            //     key    : 'planner',
+            //     reducer: planner
             // });
 
             next(null, Planner);

@@ -59,7 +59,7 @@ export default () => {
     }
 
     persistStore(store, {
-        blacklist: 'todos, locale, currentUser, location'
+        blacklist: 'todos, locale, currentUser, location, sidebar'
     });
 
     return store;

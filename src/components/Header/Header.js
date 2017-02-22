@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { IndexLink, Link } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
-// styles
 import { Navbar, NavDropdown, MenuItem } from 'react-bootstrap';
+// styles
 import './Header.scss';
 
 class Header extends Component {
@@ -50,7 +50,7 @@ class Header extends Component {
 
         return (
             <div id='header'>
-                <Navbar collapseOnSelect className='navbar-inverse'>
+                <Navbar collapseOnSelect inverse fluid>
                     <Navbar.Header>
                         <Navbar.Brand>
                             <a href='/'>{ messages['app.description'] }</a>

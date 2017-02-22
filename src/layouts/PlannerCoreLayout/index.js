@@ -1,10 +1,10 @@
-import Planner from '../components/Planner';
+import PlannerCoreLayout from './PlannerCoreLayout';
 import { connect } from 'react-redux';
-import { onSetOpen } from '../../../layouts/PlannerCoreLayout/modules/sidebar';
+import { onSetOpen } from './modules/sidebar';
 
 const mapStateToProps = (state) => {
     return {
-        // sidebar: state.sidebar
+        sidebar: state.sidebar
     };
 };
 
@@ -16,5 +16,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Planner);
-
+export default connect(mapStateToProps, mapDispatchToProps)(PlannerCoreLayout);

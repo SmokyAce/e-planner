@@ -1,4 +1,3 @@
-
 .root {
     position: absolute;
     top: 100px;
@@ -7,6 +6,11 @@
     bottom: 0;
     overflow: hidden;
   };
+
+.custom-sidebar-class {
+  background-color: #FFF;
+  width: 256px;
+}
 
 .sidebar {
   z-index: 2;
