@@ -15,14 +15,15 @@ addLocaleData(ruLocaleData);
 
 export const appLocales = [
     'en',
-    'de'
+    'ru'
 ];
 
 import enTranslationMessages from './translations/en.json';
 import ruTranslationMessages from './translations/ru.json';
 
 export const formatTranslationMessages = (locale, messages) => {
-    const defaultFormattedMessages = locale !== DEFAULT_LOCALE ? formatTranslationMessages(DEFAULT_LOCALE, enTranslationMessages) : {};
+    const defaultFormattedMessages = locale !==
+    DEFAULT_LOCALE ? formatTranslationMessages(DEFAULT_LOCALE, enTranslationMessages) : {};
     const formattedMessages = {};
     const messageKeys = Object.keys(messages);
 

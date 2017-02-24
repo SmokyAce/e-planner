@@ -15,15 +15,16 @@ import { appLocales } from '../../i18n';
 import { changeLocale } from '../LanguageProvider/module';
 import { selectLocale } from '../LanguageProvider/selectors';
 
-export class LocaleToggle extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+
+export class LocaleToggle extends React.Component { // eslint-disable-line react/prefer-stateless-function
     render() {
         return (
-            <NavDropdown eventKey='1' title={messages.language} id='lang-dropdown'
+            <NavDropdown eventKey='1' title={messages[this.props.locale].defaultMessage} id='lang-dropdown'
                 onSelect={this.props.onLocaleToggle}
             >
-                { appLocales.map(item =>
-                    <MenuItem disabled={item.lang === this.props.language} eventKey={item.lang} key={item.lang}>
-                        {item.fullName}
+                { appLocales.map(lang =>
+                    <MenuItem disabled={lang === this.props.locale} eventKey={lang} key={lang}>
+                        {messages[lang].defaultMessage}
                     </MenuItem>
                 )}
             </NavDropdown>
@@ -33,7 +34,7 @@ export class LocaleToggle extends React.PureComponent { // eslint-disable-line r
 
 LocaleToggle.propTypes = {
     onLocaleToggle: React.PropTypes.func,
-    language      : React.PropTypes.string
+    locale        : React.PropTypes.string
 };
 
 const mapStateToProps = createSelector(
@@ -43,7 +44,7 @@ const mapStateToProps = createSelector(
 
 export function mapDispatchToProps(dispatch) {
     return {
-        onLocaleToggle: (evt) => dispatch(changeLocale(evt.target.value)),
+        onLocaleToggle: (locale) => dispatch(changeLocale(locale)),
         dispatch
     };
 }

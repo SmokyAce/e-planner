@@ -1,7 +1,6 @@
 import React from 'react';
 import { IndexLink, Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
-import Immutable from 'immutable';
 
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, NavDropdown, MenuItem } from 'react-bootstrap';

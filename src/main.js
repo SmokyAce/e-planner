@@ -39,7 +39,7 @@ if (__DEV__) {
         // Wrap render in try/catch
         render = () => {
             try {
-                renderApp();
+                renderApp(translationMessages);
             } catch (error) {
                 renderError(error);
             }
@@ -49,7 +49,7 @@ if (__DEV__) {
         module.hot.accept('./routes/index', () =>
             setImmediate(() => {
                 ReactDOM.unmountComponentAtNode(MOUNT_NODE);
-                render();
+                render(translationMessages);
             })
         );
 

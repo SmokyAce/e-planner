@@ -13,5 +13,17 @@ export default defineMessages({
     logoutBtn: {
         id            : 'app.logout.btn',
         defaultMessage: 'Logout'
+    },
+    language: {
+        id            : 'app.language',
+        defaultMessage: 'English'
+    },
+    en: {
+        id            : 'app.language.en',
+        defaultMessage: 'English'
+    },
+    ru: {
+        id            : 'app.language.ru',
+        defaultMessage: 'Русский'
     }
 });

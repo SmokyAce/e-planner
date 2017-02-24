@@ -1,12 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { FormattedDate } from 'react-intl';
+import { FormattedDate, FormattedMessage } from 'react-intl';
+import messages from './messages';
 import './HomeView.scss';
 
-export const HomeView = ({ messages }) => {
+export const HomeView = () => {
     return (
         <div>
-            <h4>{messages['app.greeting']}</h4>
+            <h4>
+                <FormattedMessage {...messages.greeting} />
+            </h4>
             <FormattedDate value={Date.now()} />
             <img
                 alt='This is a duck, because Redux!'
@@ -17,14 +19,4 @@ export const HomeView = ({ messages }) => {
     );
 };
 
-HomeView.propTypes = {
-    messages: React.PropTypes.object.isRequired
-};
-
-const mapStateToProps = (state) => {
-    return {
-        messages: state.getIn(['locale', 'messages']).toJS()
-    };
-};
-
-export default connect(mapStateToProps)(HomeView);
+export default HomeView;
