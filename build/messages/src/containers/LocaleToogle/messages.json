@@ -1,0 +1,10 @@
+[
+  {
+    "id": "app.profile.btn",
+    "defaultMessage": "Profile"
+  },
+  {
+    "id": "app.logout.btn",
+    "defaultMessage": "Logout"
+  }
+]

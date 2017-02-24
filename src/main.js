@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import createStore from './store/createStore';
-import AppContainer from './containers/AppContainer';
+import App from './containers/App/index';
+
+// Import translations messages
+import { translationMessages } from './i18n';
 
 // ========================================================
 // Store Instantiation
@@ -13,11 +16,11 @@ const store = createStore();
 // ========================================================
 const MOUNT_NODE = document.getElementById('root');
 
-let render = () => {
+let render = (messages) => {
     const routes = require('./routes/index').default(store);
 
     ReactDOM.render(
-        <AppContainer store={store} routes={routes} />,
+        <App store={store} routes={routes} messages={messages} />,
         MOUNT_NODE
     );
 };
@@ -49,8 +52,15 @@ if (__DEV__) {
                 render();
             })
         );
+
+        // modules.hot.accept does not accept dynamic dependencies,
+        // have to be constants at compile-time
+        module.hot.accept('./i18n', () => {
+            render(translationMessages);
+        });
     }
 }
+
 
 // ========================================================
 // Go!

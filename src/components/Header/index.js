@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { selectedLocale } from '../../actions/header';
 import { fetchUser, logoutUser } from '../../store/reducers/user';
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -16,14 +15,12 @@ import Header from './Header';
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        selectedLocale: (locale) => selectedLocale(locale),
         fetchUser,
         logoutUser
     }, dispatch);
 };
 
 const mapStateToProps = (state) => ({
-    locale     : state.locale,
     location   : state.location,
     currentUser: state.currentUser
 });
