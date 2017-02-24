@@ -4,7 +4,7 @@ import { onSetOpen, onSetDocked } from '../../../layouts/PlannerCoreLayout/modul
 
 const mapStateToProps = (state) => {
     return {
-        docked: state.sidebar.get('sidebarDocked')
+        docked: state.getIn(['sidebar', 'sidebarDocked'])
     };
 };
 

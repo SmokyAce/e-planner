@@ -4,11 +4,14 @@ export const Planner = ({ docked, onSetDocked, onSetOpen }) => {
     const onDockedClick = () => {
         onSetDocked(docked);
     };
+    const onOpenClick = () => {
+        onSetOpen(true);
+    };
 
     return (
         <div>
             <h2> Welcome to Event Planner application! </h2>
-            <button className='btn btn-primary' onClick={onSetOpen}>
+            <button className='btn btn-primary' onClick={onOpenClick}>
                 Open
             </button>
             <button className='btn btn-primary' onClick={onDockedClick}>

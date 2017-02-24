@@ -4,7 +4,7 @@ import { onSetOpen } from './modules/sidebar';
 
 const mapStateToProps = (state) => {
     return {
-        sidebar: state.sidebar
+        sidebar: state.get('sidebar')
     };
 };
 

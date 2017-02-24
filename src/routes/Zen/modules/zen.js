@@ -1,7 +1,6 @@
 /* @flow */
-
-import type { ZenObject, ZenStateObject } from '../interfaces/zen.js';
-
+// import type {  ZenStateObject } from '../interfaces/zen.js';
+import { fromJS } from 'immutable';
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -19,7 +18,7 @@ export function requestZen(): Action {
     };
 }
 
-export function recieveZen(value: string, current: number): Action {
+export function recieveZen(value, current): Action {
     let newId = current;
 
     return {
@@ -37,8 +36,8 @@ export function saveCurrentZen(): Action {
     };
 }
 
-export const fetchZen = (current = 0): Function => {
-    return (dispatch: Function): Promise => {
+export const fetchZen = (current = 0) => {
+    return (dispatch) => {
         dispatch(requestZen());
 
         return fetch('https://api.github.com/zen')
@@ -56,14 +55,18 @@ export const actions = {
 
 const ZEN_ACTION_HANDLERS = {
 
-    [REQUEST_ZEN]: (state: ZenStateObject): ZenStateObject => {
-        return ({ ...state, fetching: true });
+    [REQUEST_ZEN]: (state) => {
+        return state.set('fetching', true);
     },
-    [RECIEVE_ZEN]: (state: ZenStateObject, action: { payload: ZenObject }): ZenStateObject => {
-        return ({ ...state, zens: state.zens.concat(action.payload), current: action.payload.id, fetching: false });
+    [RECIEVE_ZEN]: (state, action) => {
+        return state.set('zens', state.get('zens').concat(action.payload))
+                    .set('current', action.payload.id)
+                    .set('fetching', false);
     },
-    [SAVE_CURRENT_ZEN]: (state: ZenStateObject): ZenStateObject => {
-        return state.current !== null ? ({ ...state, saved: state.saved.concat(state.current) }) : state;
+    [SAVE_CURRENT_ZEN]: (state) => {
+        const current = state.get('current');
+
+        return current !== null ? state.set('saved', state.get('saved').concat(current)) : state;
     }
 };
 
@@ -71,9 +74,9 @@ const ZEN_ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 
-const initialState: ZenStateObject = { fetching: false, current: null, zens: [], saved: [] };
+const initialState = fromJS({ fetching: false, current: null, zens: [], saved: [] });
 
-export default function zenReducer(state: ZenStateObject = initialState, action: Action): ZenStateObject {
+export default function zenReducer(state = initialState, action) {
     const handler = ZEN_ACTION_HANDLERS[action.type];
 
     return handler ? handler(state, action) : state;
