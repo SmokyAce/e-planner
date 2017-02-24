@@ -1,4 +1,4 @@
-import Immutable from 'immutable';
+import { fromJS } from 'immutable';
 
 // ------------------------------------
 // Actions
@@ -13,7 +13,7 @@ export const onSetOpen = (open) => {
 export const onSetDocked = (docked) => {
     return {
         type   : 'SIDEBAR_DOCKED_SET',
-        payload: !docked
+        payload: docked
     };
 };
 
@@ -31,15 +31,15 @@ const SIDEBAR_DOCKED_SET = 'SIDEBAR_DOCKED_SET';
 const PLANNER_ACTION_HANDLERS = {
 
     [SIDEBAR_OPEN_SET]: (state, action) => {
-        return state.setIn(['sidebarOpen'], action.payload);
+        return state.set('sidebarOpen', action.payload);
     },
     [SIDEBAR_DOCKED_SET]: (state, action) => {
-        return state.setIn(['sidebarDocked'], action.payload);
+        return state.set('sidebarDocked', !action.payload);
     }
 
 };
 
-const initialState = Immutable.fromJS({ sidebarOpen: false, sidebarDocked: false });
+const initialState = fromJS({ sidebarOpen: false, sidebarDocked: false });
 
 export default function plannerReducer(state = initialState, action) {
     const handler = PLANNER_ACTION_HANDLERS[action.type];

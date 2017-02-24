@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { IndexLink, Link } from 'react-router';
+import Immutable from 'immutable';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, NavDropdown, MenuItem } from 'react-bootstrap';
 // styles
@@ -46,7 +47,8 @@ class Header extends Component {
     }
 
     render() {
-        const { messages, languages, lang } = this.props.locale;
+        const messages = this.props.messages.toJS();
+        const languages = this.props.languages.toJS();
 
         return (
             <div id='header'>
@@ -91,7 +93,9 @@ class Header extends Component {
                                 onSelect={this.props.selectedLocale}
                             >
                                 { languages.map(item =>
-                                    <MenuItem disabled={item.lang === lang} eventKey={item.lang} key={item.lang}>
+                                    <MenuItem disabled={item.lang === this.props.lang} eventKey={item.lang}
+                                        key={item.lang}
+                                    >
                                         {item.fullName}
                                     </MenuItem>
                                 )}
@@ -110,7 +114,9 @@ Header.propTypes = {
     currentUser   : React.PropTypes.object,
     fetchUser     : React.PropTypes.func.isRequired,
     logoutUser    : React.PropTypes.func.isRequired,
-    locale        : React.PropTypes.object.isRequired,
+    languages     : React.PropTypes.instanceOf(Immutable.List).isRequired,
+    messages      : React.PropTypes.instanceOf(Immutable.Map).isRequired,
+    lang          : React.PropTypes.string.isRequired,
     selectedLocale: React.PropTypes.func.isRequired
 };
 

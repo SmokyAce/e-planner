@@ -22,11 +22,14 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch);
 };
 
-const mapStateToProps = (state) => ({
-    locale     : state.locale,
-    location   : state.location,
-    currentUser: state.currentUser
-});
+const mapStateToProps = (state) => {
+    return {
+        messages   : state.getIn(['locale', 'messages']),
+        languages  : state.getIn(['locale', 'languages']),
+        lang       : state.getIn(['locale', 'lang']),
+        currentUser: state.get('currentUser')
+    };
+};
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
 

@@ -1,14 +1,12 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux-immutable';
 import { location } from './location';
 import { locale } from './locales';
-import { status } from './status';
 import { firebaseUser } from './user';
 
 export const makeRootReducer = (asyncReducers) => {
     return combineReducers({
         location,
         locale,
-        status,
         currentUser: firebaseUser,
         ...asyncReducers
     });

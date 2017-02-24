@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Immutable from 'immutable';
 import Sidebar from 'react-sidebar';
 import SidebarContent from '../../components/SidebarContent';
 
@@ -50,7 +51,7 @@ class CoreLayout extends Component {
 
 CoreLayout.propTypes = {
     children : React.PropTypes.element.isRequired,
-    sidebar  : React.PropTypes.object.isRequired,
+    sidebar  : React.PropTypes.instanceOf(Immutable.Map).isRequired,
     onSetOpen: React.PropTypes.func.isRequired
 };
 
