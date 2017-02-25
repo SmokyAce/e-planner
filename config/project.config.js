@@ -33,7 +33,7 @@ const config = {
         cacheDirectory: true,
         plugins       : ['transform-runtime',
             ['react-intl', {
-                'messagesDir': './build/messages',
+                'messagesDir': './dist/messages',
                 'enforceDescriptions': false
             }
             ]],
