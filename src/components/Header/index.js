@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { selectedLocale } from '../../actions/header';
 import { fetchUser, logoutUser } from '../../store/reducers/user';
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -16,20 +15,15 @@ import Header from './Header';
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        selectedLocale: (locale) => selectedLocale(locale),
         fetchUser,
         logoutUser
     }, dispatch);
 };
 
-const mapStateToProps = (state) => {
-    return {
-        messages   : state.getIn(['locale', 'messages']),
-        languages  : state.getIn(['locale', 'languages']),
-        lang       : state.getIn(['locale', 'lang']),
-        currentUser: state.get('currentUser')
-    };
-};
+const mapStateToProps = (state) => ({
+    location   : state.get('location'),
+    currentUser: state.get('currentUser')
+});
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
 

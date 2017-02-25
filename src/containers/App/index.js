@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import { browserHistory, Router } from 'react-router';
 import { Provider } from 'react-redux';
-import { addLocaleData } from 'react-intl';
+// translations
+import LanguageProvider from '../LanguageProvider';
 
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -9,18 +10,12 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import 'bootstrap-social';
 
-// i18n
-import IntlContainer from './IntlContainer';
 
-import en from 'react-intl/locale-data/en';
-import ru from 'react-intl/locale-data/ru';
-
-addLocaleData([...ru, ...en]);
-
-class AppContainer extends Component {
+class AppContainer extends React.Component {
     static propTypes = {
-        routes: PropTypes.object.isRequired,
-        store : PropTypes.object.isRequired
+        routes  : React.PropTypes.object.isRequired,
+        store   : React.PropTypes.object.isRequired,
+        messages: React.PropTypes.object
     };
 
     shouldComponentUpdate() {
@@ -28,17 +23,17 @@ class AppContainer extends Component {
     }
 
     render() {
-        const { routes, store } = this.props;
+        const { routes, store, messages } = this.props;
 
         return (
             <Provider store={store}>
-                <IntlContainer>
+                <LanguageProvider messages={messages}>
                     <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
                         <div style={{ height: '100%' }}>
                             <Router history={browserHistory} children={routes} />
                         </div>
                     </MuiThemeProvider>
-                </IntlContainer>
+                </LanguageProvider>
             </Provider>
         );
     }

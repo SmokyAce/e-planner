@@ -1,12 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { IndexLink, Link } from 'react-router';
-import Immutable from 'immutable';
+import { FormattedMessage } from 'react-intl';
+
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, NavDropdown, MenuItem } from 'react-bootstrap';
+
+import LocaleToggle from '../../containers/LocaleToogle';
+
 // styles
 import './Header.scss';
+import messages from './messages';
 
-class Header extends Component {
+class Header extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,7 +27,7 @@ class Header extends Component {
         });
     }
 
-    renderUserMenu(currentUser, messages) {
+    renderUserMenu(currentUser) {
         // if current user exists and user id exists than make user navigation
         if (currentUser && currentUser.uid) {
             return (
@@ -30,32 +35,43 @@ class Header extends Component {
                     id='user-dropdown' eventKey='2'
                 >
                     <LinkContainer to='/user/profile'>
-                        <MenuItem eventKey='2.1'>{ messages['app.profile.btn'] }</MenuItem>
+                        <MenuItem eventKey='2.1'>
+                            <FormattedMessage {...messages.profileBtn} />
+                        </MenuItem>
                     </LinkContainer>
                     <MenuItem divider />
                     <LinkContainer to='/user/logout' onClick={this.logOut}>
-                        <MenuItem eventKey='2.2'>{messages['app.logout.btn']}</MenuItem>
+                        <MenuItem eventKey='2.2'>
+                            <FormattedMessage {...messages.logoutBtn} />
+                        </MenuItem>
                     </LinkContainer>
                 </NavDropdown>
             );
         }
 
         return [
-            <li key={1}><Link to='/user/login'>{ messages['app.login.btn'] }</Link></li>,
-            <li key={2}><Link to='/user/register'>{ messages['app.register.btn'] }</Link></li>
+            <li key={1}>
+                <Link to='/user/login'>
+                    <FormattedMessage {...messages.loginBtn} />
+                </Link>
+            </li>,
+            <li key={2}>
+                <Link to='/user/register'>
+                    <FormattedMessage {...messages.registerBtn} />
+                </Link>
+            </li>
         ];
     }
 
     render() {
-        const messages = this.props.messages.toJS();
-        const languages = this.props.languages.toJS();
-
         return (
             <div id='header'>
                 <Navbar collapseOnSelect inverse fluid>
                     <Navbar.Header>
                         <Navbar.Brand>
-                            <a href='/'>{ messages['app.description'] }</a>
+                            <a href='/'>
+                                <FormattedMessage{...messages.description} />
+                            </a>
                         </Navbar.Brand>
                         <Navbar.Toggle />
                     </Navbar.Header>
@@ -64,22 +80,22 @@ class Header extends Component {
                             <li>
                                 <IndexLink to='/' activeClassName='route--active'>
                                     <i className='fa fa-home fa-fw' aria-hidden='true' />
-                                    { messages['app.route.home'] }
+                                    <FormattedMessage {...messages.home} />
                                 </IndexLink>
                             </li>
                             <li>
                                 <Link to='/counter' activeClassName='route--active'>
-                                    { messages['app.route.counter'] }
+                                    <FormattedMessage {...messages.counter} />
                                 </Link>
                             </li>
                             <li>
                                 <Link to='/zen' activeClassName='route--active'>
-                                    { messages['app.route.zen'] }
+                                    <FormattedMessage {...messages.zen} />
                                 </Link>
                             </li>
                             <li>
                                 <Link to='/todos' activeClassName='route--active'>
-                                    { messages['app.route.todos'] }
+                                    <FormattedMessage {...messages.todos} />
                                 </Link>
                             </li>
                             <li>
@@ -89,18 +105,8 @@ class Header extends Component {
                             </li>
                         </ul>
                         <ul className='nav navbar-nav navbar-right' style={{ marginRight: '0px' }}>
-                            <NavDropdown eventKey='1' title={messages['app.language']} id='lang-dropdown'
-                                onSelect={this.props.selectedLocale}
-                            >
-                                { languages.map(item =>
-                                    <MenuItem disabled={item.lang === this.props.lang} eventKey={item.lang}
-                                        key={item.lang}
-                                    >
-                                        {item.fullName}
-                                    </MenuItem>
-                                )}
-                            </NavDropdown>
-                            { this.renderUserMenu(this.props.currentUser, messages) }
+                            <LocaleToggle />
+                            { this.renderUserMenu(this.props.currentUser) }
                         </ul>
                     </Navbar.Collapse>
                 </Navbar>
@@ -111,13 +117,9 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-    currentUser   : React.PropTypes.object,
-    fetchUser     : React.PropTypes.func.isRequired,
-    logoutUser    : React.PropTypes.func.isRequired,
-    languages     : React.PropTypes.instanceOf(Immutable.List).isRequired,
-    messages      : React.PropTypes.instanceOf(Immutable.Map).isRequired,
-    lang          : React.PropTypes.string.isRequired,
-    selectedLocale: React.PropTypes.func.isRequired
+    currentUser: React.PropTypes.object,
+    fetchUser  : React.PropTypes.func.isRequired,
+    logoutUser : React.PropTypes.func.isRequired
 };
 
 export default Header;
