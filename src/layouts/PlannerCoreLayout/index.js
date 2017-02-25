@@ -1,4 +1,4 @@
-import PlannerCoreLayout from './PlannerCoreLayout';
+import PlannerCoreLayout from './CoreLayout';
 import { connect } from 'react-redux';
 import { onSetOpen } from './modules/sidebar';
 
