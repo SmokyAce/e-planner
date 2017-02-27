@@ -40,20 +40,22 @@ class UserRegister extends Component {
                 <div className='col-md-4'>
                     <form id='frmRegister' role='form' onSubmit={this.onFormSubmit}>
                         <p>{this.state.message}</p>
-                        <h2><FormattedMessage {...messages.register_description}/></h2>
+                        <h2><FormattedMessage {...messages.register_description} /></h2>
                         <div className='form-group'>
-                            <label htmlFor='txtRegEmail'><FormattedMessage {...messages.email}/></label>
+                            <label htmlFor='txtRegEmail'><FormattedMessage {...messages.email} /></label>
                             <input type='email' className='form-control' ref='email' id='txtEmail'
                                 placeholder='Enter email' name='email'
                             />
                         </div>
                         <div className='form-group'>
-                            <label htmlFor='txtRegPass'><FormattedMessage {...messages.pwd}/></label>
+                            <label htmlFor='txtRegPass'><FormattedMessage {...messages.pwd} /></label>
                             <input type='password' className='form-control' ref='password' id='txtPass'
                                 placeholder='Password' name='password'
                             />
                         </div>
-                        <button type='submit' className='btn btn-default'><FormattedMessage {...messages.register_btn}/></button>
+                        <button type='submit' className='btn btn-default'>
+                            <FormattedMessage {...messages.register_btn} />
+                        </button>
                         <br /> <br />
 
                         <a ref='#' className='btn btn-block btn-social btn-facebook' data-provider='facebook'

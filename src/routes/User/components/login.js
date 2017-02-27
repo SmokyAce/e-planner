@@ -8,7 +8,6 @@ import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 
-
 class UserLogin extends Component {
 
     constructor(props) {
@@ -56,11 +55,11 @@ class UserLogin extends Component {
                             {this.state.message}
                         </p>
                         <h2>
-                            <FormattedMessage {...messages.login_description}/>
+                            <FormattedMessage {...messages.login_description} />
                         </h2>
                         <div className='form-group'>
                             <label htmlFor='txtEmail'>
-                                <FormattedMessage {...messages.email}/>
+                                <FormattedMessage {...messages.email} />
                             </label>
                             <input
                                 type='email' className='form-control' id='txtEmail' ref='email'
@@ -70,7 +69,7 @@ class UserLogin extends Component {
                         </div>
                         <div className='form-group'>
                             <label htmlFor='txtPass'>
-                                <FormattedMessage {...messages.pwd}/>
+                                <FormattedMessage {...messages.pwd} />
                             </label>
                             <input
                                 type='password' className='form-control' id='txtPass' ref='password'
@@ -81,12 +80,12 @@ class UserLogin extends Component {
                         <button type='submit'
                             className='btn btn-default btn-block'
                         >
-                            <FormattedMessage {...messages.login_btn}/>
+                            <FormattedMessage {...messages.login_btn} />
                         </button>
                         <br />
                         <h5>
                             <Link to='/user/reset'>
-                                <FormattedMessage {...messages.forgot_pwd}/>
+                                <FormattedMessage {...messages.forgot_pwd} />
                             </Link>
                         </h5>
                         <a href='#' className='btn btn-block btn-social btn-facebook'
@@ -95,8 +94,8 @@ class UserLogin extends Component {
                             }}
                             data-provider='facebook'
                         >
-                            <span className='fa fa-facebook'/>
-                                <FormattedMessage {...messages.login_with}/>&nbsp;Facebook
+                            <span className='fa fa-facebook' />
+                            <FormattedMessage {...messages.login_with} />&nbsp;Facebook
                         </a>
 
                         <a href='#' className='btn btn-block btn-social btn-twitter'
@@ -105,8 +104,8 @@ class UserLogin extends Component {
                             }}
                             data-provider='twitter'
                         >
-                            <span className='fa fa-twitter'/>
-                                <FormattedMessage {...messages.login_with}/>&nbsp;Twitter
+                            <span className='fa fa-twitter' />
+                            <FormattedMessage {...messages.login_with} />&nbsp;Twitter
                         </a>
 
                         <a href='#' className='btn btn-block btn-social btn-google'
@@ -115,8 +114,8 @@ class UserLogin extends Component {
                             }}
                             data-provider='google'
                         >
-                            <span className='fa fa-google'/>
-                                <FormattedMessage {...messages.login_with}/>&nbsp;Google
+                            <span className='fa fa-google' />
+                            <FormattedMessage {...messages.login_with} />&nbsp;Google
 
                         </a>
                     </form>

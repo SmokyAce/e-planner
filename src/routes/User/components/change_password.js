@@ -40,7 +40,7 @@ class ChangePassword extends Component {
         return (
             <form id='ChangePassword' role='form' onSubmit={this.onFormSubmit}>
                 <br />
-                <h4> <FormattedMessage {...messages.change_description}/></h4>
+                <h4> <FormattedMessage {...messages.change_description} /></h4>
                 <h5> {this.state.message} </h5>
                 <div className='form-group'>
                     <label htmlFor='password'><FormattedMessage {...messages.new_pwd} /></label>
@@ -53,7 +53,9 @@ class ChangePassword extends Component {
                     />
 
                 </div>
-                <button type='submit' className='btn btn-primary'><FormattedMessage {...messages.change_pwd_btn}/></button>
+                <button type='submit' className='btn btn-primary'>
+                    <FormattedMessage {...messages.change_pwd_btn} />
+                </button>
             </form>
         );
     }
@@ -62,7 +64,8 @@ class ChangePassword extends Component {
 
 ChangePassword.propTypes = {
     currentUser   : React.PropTypes.object.isRequired,
-    changePassword: React.PropTypes.func.isRequired
+    changePassword: React.PropTypes.func.isRequired,
+    messages      : React.PropTypes.object.isRequired
 };
 
 function mapDispatchToProps(dispatch) {
@@ -71,7 +74,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        currentUser: state.currentUser,
+        currentUser: state.currentUser
     };
 }
 

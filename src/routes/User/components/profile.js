@@ -48,25 +48,27 @@ class UserProfile extends Component {
                 <div className='col-md-4' />
                 <div className='col-md-4'>
                     <form id='frmProfile' role='form' onSubmit={this.onFormSubmit}>
-                        <h2><FormattedMessage {...messages.profile_description}/></h2>
+                        <h2><FormattedMessage {...messages.profile_description} /></h2>
                         <p>{this.state.message}</p>
                         <br />
                         <div className='form-group'>
-                            <label htmlFor='email'><FormattedMessage {...messages.email}/></label>
+                            <label htmlFor='email'><FormattedMessage {...messages.email} /></label>
                             <input type='text' defaultValue={this.props.currentUser.email} className='form-control'
                                 id='email' ref='email' placeholder='Email' name='email'
                             />
                         </div>
                         <div className='form-group'>
-                            <label htmlFor='displayName'><FormattedMessage {...messages.display_name}/></label>
+                            <label htmlFor='displayName'><FormattedMessage {...messages.display_name} /></label>
                             <input type='text' defaultValue={this.props.currentUser.displayName}
                                 className='form-control'
                                 ref='displayName' id='displayName' placeholder='Display name' name='displayName'
                             />
                         </div>
-                        <button type='submit' className='btn btn-primary'><FormattedMessage {...messages.update_btn}/></button>
+                        <button type='submit' className='btn btn-primary'>
+                            <FormattedMessage {...messages.update_btn} />
+                        </button>
                     </form>
-                    <ChangePassword {...{'messages': messages}}/>
+                    <ChangePassword {...{ messages }} />
                 </div>
             </div>
         );
@@ -87,7 +89,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        currentUser: state.get('currentUser'),
+        currentUser: state.get('currentUser')
     };
 }
 

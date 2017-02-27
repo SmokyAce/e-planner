@@ -18,6 +18,7 @@ export default (initialState = {}) => {
     // Middleware Configuration
     // ======================================================
     const middleware = [thunk, promise, sagaMiddleware];
+
     if (__DEV__) {
         middleware.push(logger);
     }
