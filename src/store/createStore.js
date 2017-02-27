@@ -5,18 +5,22 @@ import { Map } from 'immutable';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import promise from 'redux-promise';
+import createSagaMiddleware from 'redux-saga';
 
 import makeRootReducer from './reducers';
 import { updateLocation } from './reducers/location';
+
+const logger = createLogger();
+const sagaMiddleware = createSagaMiddleware();
 
 export default (initialState = {}) => {
     // ======================================================
     // Middleware Configuration
     // ======================================================
-    const logger = createLogger();
-
-    const middleware = [thunk, logger, promise];
-
+    const middleware = [thunk, promise, sagaMiddleware];
+    if (__DEV__) {
+        middleware.push(logger);
+    }
     // ======================================================
     // Store Enhancers
     // ======================================================
@@ -45,6 +49,8 @@ export default (initialState = {}) => {
         )
     );
 
+    // Extensions
+    store.runSaga = sagaMiddleware.run;
     store.asyncReducers = {};
 
     // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
