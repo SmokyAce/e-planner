@@ -1,24 +1,28 @@
-import { injectReducer } from '../../store/reducers';
+import { getAsyncInjectors } from '../../utils/asyncInjectors';
 
-export default (store) => ({
-    path: 'counter',
-    /*  Async getComponent is only invoked when route matches   */
-    getComponent(nextState, cb) {
-        /*  Webpack - use 'require.ensure' to create a split point
-         and embed an async module loader (jsonp) when bundling   */
-        require.ensure([], (require) => {
-            /*  Webpack - use require callback to define
-             dependencies for bundling   */
-            const Counter = require('./containers/CounterContainer').default;
-            const reducer = require('./modules/counter').default;
+export default (store) => {
+    const { injectReducer } = getAsyncInjectors(store);
 
-            /*  Add the reducer to the store on key 'counter'  */
-            injectReducer(store, { key: 'counter', reducer });
+    return ({
+        path: 'counter',
+        /*  Async getComponent is only invoked when route matches   */
+        getComponent(nextState, cb) {
+            /*  Webpack - use 'require.ensure' to create a split point
+             and embed an async module loader (jsonp) when bundling   */
+            require.ensure([], (require) => {
+                /*  Webpack - use require callback to define
+                 dependencies for bundling   */
+                const Counter = require('./containers/CounterContainer').default;
+                const reducer = require('./modules/counter').default;
 
-            /*  Return getComponent   */
-            cb(null, Counter);
+                /*  Add the reducer to the store on key 'counter'  */
+                injectReducer('counter', reducer);
 
-            /* Webpack named bundle   */
-        }, 'counter');
-    }
-});
+                /*  Return getComponent   */
+                cb(null, Counter);
+
+                /* Webpack named bundle   */
+            }, 'counter');
+        }
+    });
+};

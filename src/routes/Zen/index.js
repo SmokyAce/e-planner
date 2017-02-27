@@ -1,21 +1,22 @@
-import { injectReducer } from '../../store/reducers';
+import { getAsyncInjectors } from '../../utils/asyncInjectors';
 
-export default (store) => ({
-    path: 'zen',
-    getComponent(nextState, next) {
-        require.ensure([
-            './containers/ZenContainer',
-            './modules/zen'
-        ], (require) => {
-            const Zen = require('./containers/ZenContainer').default;
-            const zenReducer = require('./modules/zen').default;
+export default (store) => {
+    const { injectReducer } = getAsyncInjectors(store);
 
-            injectReducer(store, {
-                key    : 'zen',
-                reducer: zenReducer
+    return ({
+        path: 'zen',
+        getComponent(nextState, next) {
+            require.ensure([
+                './containers/ZenContainer',
+                './modules/zen'
+            ], (require) => {
+                const Zen = require('./containers/ZenContainer').default;
+                const zenReducer = require('./modules/zen').default;
+
+                injectReducer('zen', zenReducer);
+
+                next(null, Zen);
             });
-
-            next(null, Zen);
-        });
-    }
-});
+        }
+    });
+};

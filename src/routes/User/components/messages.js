@@ -15,8 +15,8 @@ export default defineMessages({
         defaultMessage: 'Register'
     },
     profile_description: {
-        id            : 'app.register.description',
-        defaultMessage: 'Register'
+        id            : 'app.profile.description',
+        defaultMessage: 'User Profile Page'
     },
     change_description: {
         id            : 'app.change-pwd.description',
