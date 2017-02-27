@@ -6,6 +6,10 @@ import { fetchUser, updateUser } from '../../../store/reducers/user';
 import Loading from './loading';
 import ChangePassword from './change_password';
 
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
+
+
 class UserProfile extends Component {
 
     constructor(props) {
@@ -39,32 +43,30 @@ class UserProfile extends Component {
             return <Loading />;
         }
 
-        const { messages } = this.props.locale;
-
         return (
             <div>
                 <div className='col-md-4' />
                 <div className='col-md-4'>
                     <form id='frmProfile' role='form' onSubmit={this.onFormSubmit}>
-                        <h2>{messages['app.profile.description']}</h2>
+                        <h2><FormattedMessage {...messages.profile_description}/></h2>
                         <p>{this.state.message}</p>
                         <br />
                         <div className='form-group'>
-                            <label htmlFor='email'>{messages['app.email']}</label>
+                            <label htmlFor='email'><FormattedMessage {...messages.email}/></label>
                             <input type='text' defaultValue={this.props.currentUser.email} className='form-control'
                                 id='email' ref='email' placeholder='Email' name='email'
                             />
                         </div>
                         <div className='form-group'>
-                            <label htmlFor='displayName'>{messages['app.profile.display-name']}</label>
+                            <label htmlFor='displayName'><FormattedMessage {...messages.display_name}/></label>
                             <input type='text' defaultValue={this.props.currentUser.displayName}
                                 className='form-control'
                                 ref='displayName' id='displayName' placeholder='Display name' name='displayName'
                             />
                         </div>
-                        <button type='submit' className='btn btn-primary'>{messages['app.profile.update-btn']}</button>
+                        <button type='submit' className='btn btn-primary'><FormattedMessage {...messages.update_btn}/></button>
                     </form>
-                    <ChangePassword />
+                    <ChangePassword {...{'messages': messages}}/>
                 </div>
             </div>
         );
@@ -73,7 +75,6 @@ class UserProfile extends Component {
 }
 
 UserProfile.propTypes = {
-    locale     : React.PropTypes.object.isRequired,
     currentUser: React.PropTypes.object.isRequired,
     fetchUser  : React.PropTypes.func.isRequired,
     updateUser : React.PropTypes.func.isRequired
@@ -86,8 +87,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
     return {
-        currentUser: state.currentUser,
-        locale     : state.locale
+        currentUser: state.get('currentUser'),
     };
 }
 

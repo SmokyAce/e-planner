@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { registerUser, loginWithProvider } from '../../../store/reducers/user';
 
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
+
 class UserRegister extends Component {
     constructor(props) {
         super(props);
@@ -31,28 +34,26 @@ class UserRegister extends Component {
     }
 
     render() {
-        const { messages } = this.props.locale;
-
         return (
             <div>
                 <div className='col-md-4' />
                 <div className='col-md-4'>
                     <form id='frmRegister' role='form' onSubmit={this.onFormSubmit}>
                         <p>{this.state.message}</p>
-                        <h2>{ messages['app.register.description'] }</h2>
+                        <h2><FormattedMessage {...messages.register_description}/></h2>
                         <div className='form-group'>
-                            <label htmlFor='txtRegEmail'>{ messages['app.email'] }</label>
+                            <label htmlFor='txtRegEmail'><FormattedMessage {...messages.email}/></label>
                             <input type='email' className='form-control' ref='email' id='txtEmail'
                                 placeholder='Enter email' name='email'
                             />
                         </div>
                         <div className='form-group'>
-                            <label htmlFor='txtRegPass'>{ messages['app.pwd'] }</label>
+                            <label htmlFor='txtRegPass'><FormattedMessage {...messages.pwd}/></label>
                             <input type='password' className='form-control' ref='password' id='txtPass'
                                 placeholder='Password' name='password'
                             />
                         </div>
-                        <button type='submit' className='btn btn-default'>{ messages['app.register.btn'] }</button>
+                        <button type='submit' className='btn btn-default'><FormattedMessage {...messages.register_btn}/></button>
                         <br /> <br />
 
                         <a ref='#' className='btn btn-block btn-social btn-facebook' data-provider='facebook'
@@ -88,8 +89,6 @@ class UserRegister extends Component {
 }
 
 UserRegister.propTypes = {
-    locale           : React.PropTypes.object.isRequired,
-    currentUser      : React.PropTypes.object.isRequired,
     registerUser     : React.PropTypes.func.isRequired,
     loginWithProvider: React.PropTypes.func.isRequired
 };
@@ -101,11 +100,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-function mapStateToProps(state) {
-    return {
-        currentUser: state.currentUser,
-        locale     : state.locale
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserRegister);
+export default connect(null, mapDispatchToProps)(UserRegister);

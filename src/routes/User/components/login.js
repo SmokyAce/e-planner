@@ -4,6 +4,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { loginUser, fetchUser, loginWithProvider } from '../../../store/reducers/user';
 
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
+
+
 
 class UserLogin extends Component {
 
@@ -43,8 +47,6 @@ class UserLogin extends Component {
     }
 
     render() {
-        const { messages } = this.props.locale;
-
         return (
             <div>
                 <div className='col-md-4' />
@@ -53,9 +55,13 @@ class UserLogin extends Component {
                         <p>
                             {this.state.message}
                         </p>
-                        <h2>{ messages['app.login.description'] }</h2>
+                        <h2>
+                            <FormattedMessage {...messages.login_description}/>
+                        </h2>
                         <div className='form-group'>
-                            <label htmlFor='txtEmail'>{ messages['app.email'] }</label>
+                            <label htmlFor='txtEmail'>
+                                <FormattedMessage {...messages.email}/>
+                            </label>
                             <input
                                 type='email' className='form-control' id='txtEmail' ref='email'
                                 placeholder='Enter email'
@@ -63,7 +69,9 @@ class UserLogin extends Component {
                             />
                         </div>
                         <div className='form-group'>
-                            <label htmlFor='txtPass'>{ messages['app.pwd'] }</label>
+                            <label htmlFor='txtPass'>
+                                <FormattedMessage {...messages.pwd}/>
+                            </label>
                             <input
                                 type='password' className='form-control' id='txtPass' ref='password'
                                 placeholder='Password'
@@ -72,18 +80,23 @@ class UserLogin extends Component {
                         </div>
                         <button type='submit'
                             className='btn btn-default btn-block'
-                        >{ messages['app.login.btn'] }</button>
+                        >
+                            <FormattedMessage {...messages.login_btn}/>
+                        </button>
                         <br />
-                        <h5><Link to='/user/reset'>{ messages['app.login.forgot-pwd'] }</Link></h5>
-
+                        <h5>
+                            <Link to='/user/reset'>
+                                <FormattedMessage {...messages.forgot_pwd}/>
+                            </Link>
+                        </h5>
                         <a href='#' className='btn btn-block btn-social btn-facebook'
                             onClick={() => {
                                 this.loginWithProvider('facebook');
                             }}
                             data-provider='facebook'
                         >
-                            <span className='fa fa-facebook' />
-                            { `${messages['app.login.with']} Facebook` }
+                            <span className='fa fa-facebook'/>
+                                <FormattedMessage {...messages.login_with}/>&nbsp;Facebook
                         </a>
 
                         <a href='#' className='btn btn-block btn-social btn-twitter'
@@ -92,8 +105,8 @@ class UserLogin extends Component {
                             }}
                             data-provider='twitter'
                         >
-                            <span className='fa fa-twitter' />
-                            { `${messages['app.login.with']} Twitter` }
+                            <span className='fa fa-twitter'/>
+                                <FormattedMessage {...messages.login_with}/>&nbsp;Twitter
                         </a>
 
                         <a href='#' className='btn btn-block btn-social btn-google'
@@ -102,8 +115,9 @@ class UserLogin extends Component {
                             }}
                             data-provider='google'
                         >
-                            <span className='fa fa-google' />
-                            { `${messages['app.login.with']} Google` }
+                            <span className='fa fa-google'/>
+                                <FormattedMessage {...messages.login_with}/>&nbsp;Google
+
                         </a>
                     </form>
                 </div>
@@ -114,7 +128,6 @@ class UserLogin extends Component {
 }
 
 UserLogin.propTypes = {
-    locale           : React.PropTypes.object.isRequired,
     loginUser        : React.PropTypes.func.isRequired,
     fetchUser        : React.PropTypes.func.isRequired,
     loginWithProvider: React.PropTypes.func.isRequired
@@ -128,10 +141,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-function mapStateToProps(state) {
-    return {
-        locale: state.locale
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserLogin);
+export default connect(null, mapDispatchToProps)(UserLogin);

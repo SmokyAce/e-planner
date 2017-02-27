@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { changePassword } from '../../../store/reducers/user';
+import { FormattedMessage } from 'react-intl';
 
 class ChangePassword extends Component {
 
@@ -34,25 +35,25 @@ class ChangePassword extends Component {
     }
 
     render() {
-        const { messages } = this.props.locale;
+        const { messages } = this.props;
 
         return (
             <form id='ChangePassword' role='form' onSubmit={this.onFormSubmit}>
                 <br />
-                <h4> { messages['app.change-pwd.description'] } </h4>
+                <h4> <FormattedMessage {...messages.change_description}/></h4>
                 <h5> {this.state.message} </h5>
                 <div className='form-group'>
-                    <label htmlFor='password'> { messages['app.change-pwd.new-pwd'] } </label>
+                    <label htmlFor='password'><FormattedMessage {...messages.new_pwd} /></label>
                     <input type='password' className='form-control' name='password' ref='password' id='password' />
                 </div>
                 <div className='form-group'>
-                    <label htmlFor='repeatPassword'> { messages['app.change-pwd.repeat-pwd'] } </label>
+                    <label htmlFor='repeatPassword'><FormattedMessage {...messages.repeat_pwd} /></label>
                     <input type='password' className='form-control' name='repeatPassword'
                         ref='repeatPassword' id='repeatPassword'
                     />
 
                 </div>
-                <button type='submit' className='btn btn-primary'>{ messages['app.change-pwd.btn'] }</button>
+                <button type='submit' className='btn btn-primary'><FormattedMessage {...messages.change_pwd_btn}/></button>
             </form>
         );
     }
@@ -61,7 +62,6 @@ class ChangePassword extends Component {
 
 ChangePassword.propTypes = {
     currentUser   : React.PropTypes.object.isRequired,
-    locale        : React.PropTypes.object.isRequired,
     changePassword: React.PropTypes.func.isRequired
 };
 
@@ -72,7 +72,6 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
     return {
         currentUser: state.currentUser,
-        locale     : state.locale
     };
 }
 
