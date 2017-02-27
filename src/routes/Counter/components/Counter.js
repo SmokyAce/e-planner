@@ -1,5 +1,5 @@
 import React from 'react';
-import './Counter.scss';
+
 
 export const Counter = (props) => (
     <div style={{ margin: '0 auto' }}>
