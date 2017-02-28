@@ -50,7 +50,7 @@ class CoreLayout extends Component {
 }
 
 CoreLayout.propTypes = {
-    children : React.PropTypes.element.isRequired,
+    children : React.PropTypes.element,
     sidebar  : React.PropTypes.instanceOf(Immutable.Map).isRequired,
     onSetOpen: React.PropTypes.func.isRequired
 };

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { changePassword } from '../../../store/reducers/user';
+import { changePassword } from '../modules/user';
 import { FormattedMessage } from 'react-intl';
 
 class ChangePassword extends Component {

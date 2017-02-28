@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { fetchUser, updateUser } from '../../../store/reducers/user';
+import { fetchUser, updateUser } from '../modules/user';
 import Loading from './loading';
 import ChangePassword from './change_password';
 
@@ -77,7 +77,7 @@ class UserProfile extends Component {
 }
 
 UserProfile.propTypes = {
-    currentUser: React.PropTypes.object.isRequired,
+    currentUser: React.PropTypes.object,
     fetchUser  : React.PropTypes.func.isRequired,
     updateUser : React.PropTypes.func.isRequired
 };

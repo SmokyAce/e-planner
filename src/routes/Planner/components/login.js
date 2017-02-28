@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loginUser, fetchUser, loginWithProvider } from '../../../store/reducers/user';
+import { loginUser, fetchUser, loginWithProvider } from '../modules/user';
 
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
@@ -29,7 +29,7 @@ class UserLogin extends Component {
             if (data.payload.errorCode) {
                 this.setState({ message: data.payload.errorMessage });
             } else {
-                browserHistory.push('/user/profile');
+                browserHistory.push('/planner/profile');
             }
         }
         );
@@ -40,7 +40,7 @@ class UserLogin extends Component {
             if (data.payload.errorCode) {
                 this.setState({ message: data.payload.errorMessage });
             } else {
-                browserHistory.push('/user/profile');
+                browserHistory.push('/planner/profile');
             }
         });
     }
@@ -84,7 +84,7 @@ class UserLogin extends Component {
                         </button>
                         <br />
                         <h5>
-                            <Link to='/user/reset'>
+                            <Link to='/planner/reset'>
                                 <FormattedMessage {...messages.forgot_pwd} />
                             </Link>
                         </h5>

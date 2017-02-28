@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchUser, logoutUser } from '../../store/reducers/user';
+import { fetchUser, logoutUser } from '../../routes/Planner/modules/user';
 
 /*  This is a container component. Notice it does not contain any JSX,
  nor does it import React. This component is **only** responsible for

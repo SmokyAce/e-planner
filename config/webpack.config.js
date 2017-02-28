@@ -118,7 +118,7 @@ if (__DEV__) {
     debug('Enabling plugins for live development (HMR, NoErrors).');
     webpackConfig.plugins.push(
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin()
     );
 } else if (__PROD__) {
     debug('Enable plugins for production (OccurenceOrder, UglifyJS).');

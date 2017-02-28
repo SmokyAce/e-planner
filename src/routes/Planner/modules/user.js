@@ -1,4 +1,4 @@
-import FireBaseTools from '../../utils/firebase';
+import FireBaseTools from '../../../utils/firebase';
 
 // ------------------------------------
 // Constants
@@ -112,3 +112,5 @@ export const firebaseUser = (state = null, action) => {
             return state;
     }
 };
+
+export default firebaseUser;

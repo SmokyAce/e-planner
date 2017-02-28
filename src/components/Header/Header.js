@@ -34,13 +34,13 @@ class Header extends React.Component {
                 <NavDropdown title={currentUser.displayName === '' ? currentUser.email : currentUser.displayName}
                     id='user-dropdown' eventKey='2'
                 >
-                    <LinkContainer to='/user/profile'>
+                    <LinkContainer to='/planner/profile'>
                         <MenuItem eventKey='2.1'>
                             <FormattedMessage {...messages.profileBtn} />
                         </MenuItem>
                     </LinkContainer>
                     <MenuItem divider />
-                    <LinkContainer to='/user/logout' onClick={this.logOut}>
+                    <LinkContainer to='/planner/logout' onClick={this.logOut}>
                         <MenuItem eventKey='2.2'>
                             <FormattedMessage {...messages.logoutBtn} />
                         </MenuItem>
@@ -51,12 +51,12 @@ class Header extends React.Component {
 
         return [
             <li key={1}>
-                <Link to='/user/login'>
+                <Link to='/planner/login'>
                     <FormattedMessage {...messages.loginBtn} />
                 </Link>
             </li>,
             <li key={2}>
-                <Link to='/user/register'>
+                <Link to='/planner/register'>
                     <FormattedMessage {...messages.registerBtn} />
                 </Link>
             </li>
