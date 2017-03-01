@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { resetPasswordEmail } from '../modules/user';
+import { resetPasswordEmail } from '../../Planner/modules/user';
 
 class ResetPassword extends Component {
     constructor(props) {

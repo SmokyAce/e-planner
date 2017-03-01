@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { fetchUser, updateUser } from '../modules/user';
+import { fetchUser, updateUser } from '../../Planner/modules/user';
 import Loading from './loading';
 import ChangePassword from './change_password';
 

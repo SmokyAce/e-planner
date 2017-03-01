@@ -22,6 +22,10 @@ export default defineMessages({
         id            : 'app.change-pwd.description',
         defaultMessage: 'Register'
     },
+    logout_description: {
+        id            : 'app.logout.description',
+        defaultMessage: 'You are logged out!'
+    },
     email: {
         id            : 'app.email',
         defaultMessage: 'Email'

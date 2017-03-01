@@ -1,12 +1,6 @@
 import Planner from './containers/PlannerContainer';
 import { getAsyncInjectors } from '../../utils/asyncInjectors';
-
-import UserLogin from './components/login';
-import UserProfile from './components/profile';
-import UserLogout from './components/logout';
-import UserRegister from './components/register';
-import ResetPassword from './components/reset_password';
-import requireAuth from '../../utils/authenticated';
+import PlannerHome from '../PlannerHome';
 
 export default (store) => {
 
@@ -26,13 +20,15 @@ export default (store) => {
                 next(null, Planner);
             });
         },
-        childRoutes: [
-            { path: 'login', component: UserLogin},
-            { path: 'logout', component: UserLogout },
-            { path: 'register', component: UserRegister},
-            { path: 'reset', component: ResetPassword },
-            { path: 'profile', component: UserProfile }
-        ],
-        onEnter: requireAuth
+        indexRoute: PlannerHome,
+        getChildRoutes(location, next) {
+            require.ensure([], (require) => {
+                next(null, [
+                    // Provide store for async reducers and middleware
+                    require('../Users').default(store),
+
+                ]);
+            });
+        },
     });
 }

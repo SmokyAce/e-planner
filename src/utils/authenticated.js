@@ -5,7 +5,7 @@ const requireAuth = (nextState, replace) => {
 
     if (data === null) {
         replace({
-            pathname: '/planner/login',
+            pathname: '/planner/users/login',
             state   : {
                 nextPathname: nextState.location.pathname
             }

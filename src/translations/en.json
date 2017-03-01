@@ -24,5 +24,6 @@
   "app.logout.description": "You are logged out!",
   "app.logout.btn": "Logout",
   "app.register.description": "Register",
-  "app.register.btn": "Register"
+  "app.register.btn": "Register",
+  "app.planner.home.greeting": "Welcome to the Event Planner application"
 }
