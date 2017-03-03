@@ -4,7 +4,7 @@ import PlannerHome from '../PlannerHome';
 
 export default (store) => {
 
-    const { injectReducer } = getAsyncInjectors(store);
+    const { injectReducer, injectSagas } = getAsyncInjectors(store);
 
     return ({
         path: 'planner',
@@ -16,6 +16,7 @@ export default (store) => {
 
                 // user reducers
                 injectReducer('currentUser', require('./modules/user').default);
+                injectSagas(require('./modules/sagas').default);
 
                 next(null, Planner);
             });
