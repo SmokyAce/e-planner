@@ -18,7 +18,7 @@ export const LOGOUT_FIREBASE_USER = 'LOGOUT_FIREBASE_USER';
 // ------------------------------------
 export const requestToFetchUser = () => {
     return {
-        type   : REQUEST_FIREBASE_USER
+        type: REQUEST_FIREBASE_USER
     };
 };
 

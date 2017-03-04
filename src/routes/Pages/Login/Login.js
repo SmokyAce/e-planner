@@ -29,7 +29,7 @@ class UserLogin extends Component {
             if (data.payload.errorCode) {
                 this.setState({ message: data.payload.errorMessage });
             } else {
-                browserHistory.push('/planner/users/profile');
+                browserHistory.push('/app/profile');
             }
         }
         );
@@ -40,7 +40,7 @@ class UserLogin extends Component {
             if (data.payload.errorCode) {
                 this.setState({ message: data.payload.errorMessage });
             } else {
-                browserHistory.push('/planner/users/profile');
+                browserHistory.push('/app/profile');
             }
         });
     }

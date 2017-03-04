@@ -22,6 +22,7 @@ export const Planner = ({ docked, onSetDocked, onSetOpen, children }) => {
 };
 
 Planner.propTypes = {
+    children   : React.PropTypes.element,
     onSetOpen  : React.PropTypes.func,
     docked     : React.PropTypes.bool,
     onSetDocked: React.PropTypes.func

@@ -26,11 +26,12 @@ export const createRoutes = (store) => {
         getChildRoutes(location, next) {
             require.ensure([], (require) => {
                 next(null, [
-                        // Provide store for async reducers and middleware
+
+                    // Provide store for async reducers and middleware
                     require('./Counter').default(store),
                     require('./Zen').default(store),
                     require('./Todos').default(store),
-                    require('./App').default(store),
+                    require('./App').default(store)
                 ]);
             });
         }

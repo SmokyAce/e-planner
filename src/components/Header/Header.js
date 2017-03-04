@@ -117,9 +117,9 @@ class Header extends React.Component {
 }
 
 Header.propTypes = {
-    currentUser: React.PropTypes.object,
-    fetchUser  : React.PropTypes.func.isRequired,
-    logoutUser : React.PropTypes.func.isRequired
+    currentUser       : React.PropTypes.object,
+    requestToFetchUser: React.PropTypes.func.isRequired,
+    logoutUser        : React.PropTypes.func.isRequired
 };
 
 export default Header;

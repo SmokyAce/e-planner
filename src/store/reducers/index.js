@@ -6,8 +6,8 @@ import languageProviderReducer from '../../containers/LanguageProvider/module';
 export const makeRootReducer = (asyncReducers) => {
     return combineReducers({
         location,
-        language   : languageProviderReducer,
-        //currentUser: firebaseUser,
+        language: languageProviderReducer,
+        // currentUser: firebaseUser,
         ...asyncReducers
     });
 };
