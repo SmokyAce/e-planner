@@ -1,19 +1,19 @@
 import Planner from './containers/PlannerContainer';
 import { getAsyncInjectors } from '../../utils/asyncInjectors';
-import PlannerHome from '../PlannerHome';
+import AppHome from '../AppHome';
 
 export default (store) => {
 
     const { injectReducer, injectSagas } = getAsyncInjectors(store);
 
     return ({
-        path: 'planner',
+        path: 'app',
         getComponent(nextState, next) {
             require.ensure([
                 './containers/PlannerContainer',
-                './modules/user'
+                './modules/user',
+                './modules/sagas'
             ], (require) => {
-
                 // user reducers
                 injectReducer('currentUser', require('./modules/user').default);
                 injectSagas(require('./modules/sagas').default);
@@ -21,13 +21,18 @@ export default (store) => {
                 next(null, Planner);
             });
         },
-        indexRoute: PlannerHome,
+        indexRoute: AppHome,
         getChildRoutes(location, next) {
             require.ensure([], (require) => {
                 next(null, [
                     // Provide store for async reducers and middleware
-                    require('../Users').default(store),
-
+                    //require('../Users').default(store),
+                    // Pages
+                    require('../Pages/Register').default(store),
+                    require('../Pages/Login').default(store),
+                    require('../Pages/ResetPwd').default(store),
+                    require('../Pages/Profile').default(store),
+                    require('../Pages/Logout').default(store),
                 ]);
             });
         },

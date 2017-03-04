@@ -16,14 +16,14 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
 
-        this.props.fetchUser();
+        this.props.requestToFetchUser();
         this.logOut = this.logOut.bind(this);
     }
 
     logOut() {
         this.props.logoutUser().then((data) => {
             // reload props from reducer
-            this.props.fetchUser();
+            this.props.requestToFetchUser();
         });
     }
 
@@ -34,13 +34,13 @@ class Header extends React.Component {
                 <NavDropdown title={currentUser.displayName === '' ? currentUser.email : currentUser.displayName}
                     id='user-dropdown' eventKey='2'
                 >
-                    <LinkContainer to='/planner/users/profile'>
+                    <LinkContainer to='/app/profile'>
                         <MenuItem eventKey='2.1'>
                             <FormattedMessage {...messages.profileBtn} />
                         </MenuItem>
                     </LinkContainer>
                     <MenuItem divider />
-                    <LinkContainer to='/planner/users/logout' onClick={this.logOut}>
+                    <LinkContainer to='/app/logout' onClick={this.logOut}>
                         <MenuItem eventKey='2.2'>
                             <FormattedMessage {...messages.logoutBtn} />
                         </MenuItem>
@@ -51,12 +51,12 @@ class Header extends React.Component {
 
         return [
             <li key={1}>
-                <Link to='/planner/users/login'>
+                <Link to='/app/login'>
                     <FormattedMessage {...messages.loginBtn} />
                 </Link>
             </li>,
             <li key={2}>
-                <Link to='/planner/users/register'>
+                <Link to='/app/register'>
                     <FormattedMessage {...messages.registerBtn} />
                 </Link>
             </li>
@@ -99,8 +99,8 @@ class Header extends React.Component {
                                 </Link>
                             </li>
                             <li>
-                                <Link to='/planner' activeClassName='route--active'>
-                                    Planner
+                                <Link to='/app' activeClassName='route--active'>
+                                    App
                                 </Link>
                             </li>
                         </ul>

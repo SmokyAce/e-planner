@@ -49,7 +49,7 @@ export function injectAsyncReducer(store, isValid) {
 export function injectAsyncSagas(store, isValid) {
     return function injectSagas(sagas) {
         if (!isValid) checkStore(store);
-debugger;
+
         invariant(
             Array.isArray(sagas),
             '(app/utils...) injectAsyncSagas: Expected `sagas` to be an array of generator functions'

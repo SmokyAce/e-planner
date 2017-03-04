@@ -30,7 +30,7 @@ export const createRoutes = (store) => {
                     require('./Counter').default(store),
                     require('./Zen').default(store),
                     require('./Todos').default(store),
-                    require('./Planner').default(store)
+                    require('./App').default(store),
                 ]);
             });
         }

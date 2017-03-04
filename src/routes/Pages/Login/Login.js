@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loginUser, fetchUser, loginWithProvider } from '../../Planner/modules/user';
+import { loginUser, fetchUser, loginWithProvider } from '../../App/modules/user';
 
 import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import messages from '../messages';
 
 
 class UserLogin extends Component {
@@ -84,7 +84,7 @@ class UserLogin extends Component {
                         </button>
                         <br />
                         <h5>
-                            <Link to='/planner/users/reset'>
+                            <Link to='/app/reset'>
                                 <FormattedMessage {...messages.forgot_pwd} />
                             </Link>
                         </h5>

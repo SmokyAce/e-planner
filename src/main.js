@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import createStore from './store/createStore';
-import App from './containers/App';
+import Main from './containers/Main';
 
 // Import translations messages
 import { translationMessages } from './i18n';
@@ -20,7 +20,7 @@ let render = (messages) => {
     const routes = require('./routes').default(store);
 
     ReactDOM.render(
-        <App store={store} routes={routes} messages={messages} />,
+        <Main store={store} routes={routes} messages={messages} />,
         MOUNT_NODE
     );
 };

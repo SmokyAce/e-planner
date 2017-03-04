@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { fetchUser, updateUser } from '../../Planner/modules/user';
-import Loading from './loading';
-import ChangePassword from './change_password';
+import { fetchUser, updateUser } from '../../App/modules/user';
+import Loading from '../Loading';
+import ChangePassword from './ChangePassword';
 
 import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import messages from '../messages';
 
 
 class UserProfile extends Component {

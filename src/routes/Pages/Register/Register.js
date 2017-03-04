@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { registerUser, loginWithProvider } from '../../Planner/modules/user';
+import { registerUser, loginWithProvider } from '../../App/modules/user';
 
 import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import messages from '../messages';
 
 class UserRegister extends Component {
     constructor(props) {

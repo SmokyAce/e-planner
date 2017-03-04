@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchUser, logoutUser } from '../../routes/Planner/modules/user';
+import { fetchUser, logoutUser, requestToFetchUser } from '../../routes/App/modules/user';
 
 /*  This is a container component. Notice it does not contain any JSX,
  nor does it import React. This component is **only** responsible for
@@ -16,6 +16,7 @@ import Header from './Header';
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         fetchUser,
+        requestToFetchUser,
         logoutUser
     }, dispatch);
 };
