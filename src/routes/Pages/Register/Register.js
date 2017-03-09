@@ -1,105 +1,128 @@
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { registerUser, loginWithProvider } from '../../App/modules/user';
+import Immutable from 'immutable';
+
+import { registerRequest, loginWithProviderRequest, changeForm } from '../../App/modules/app';
+import { createStructuredSelector } from 'reselect';
+import { makeSelectFormState, makeSelectMessage } from '../../App/modules/selectors';
 
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
 
 class UserRegister extends Component {
+
     constructor(props) {
         super(props);
+
         this.onFormSubmit = this.onFormSubmit.bind(this);
-        this.state = {
-            message: ''
-        };
+        this.loginWithProvider = this.loginWithProvider.bind(this);
+        this._changeEmail = this._changeEmail.bind(this);
+        this._changePassword = this._changePassword.bind(this);
     }
 
     onFormSubmit(event) {
         event.preventDefault();
-
-        const email = this.refs.email.value;
-        const password = this.refs.password.value;
-
-        this.props.registerUser({ email, password }).then((data) => {
-            if (data.payload.errorCode) {
-                this.setState({ message: data.payload.errorMessage })
-                    ;
-            } else {
-                browserHistory.push('/planner/users/profile');
-            }
-        }
+        this.props.dispatch(
+            registerRequest({
+                email   : this.props.formState.get('email'),
+                password: this.props.formState.get('password')
+            })
         );
     }
 
+    loginWithProvider(provider) {
+        this.props.dispatch(loginWithProviderRequest(provider));
+    }
+
+    _changeEmail(event) {
+        this._emitChange(this.props.formState.set('email', event.target.value));
+    }
+
+    _changePassword(event) {
+        this._emitChange(this.props.formState.set('password', event.target.value));
+    }
+
+    _emitChange(newFormState) {
+        this.props.dispatch(changeForm(newFormState));
+    }
+
     render() {
+        const { formState, message } = this.props;
+
         return (
             <div>
                 <div className='col-md-4' />
                 <div className='col-md-4'>
                     <form id='frmRegister' role='form' onSubmit={this.onFormSubmit}>
-                        <p>{this.state.message}</p>
+                        <p>{message}</p>
                         <h2><FormattedMessage {...messages.register_description} /></h2>
                         <div className='form-group'>
-                            <label htmlFor='txtRegEmail'><FormattedMessage {...messages.email} /></label>
-                            <input type='email' className='form-control' ref='email' id='txtEmail'
-                                placeholder='Enter email' name='email'
+                            <label htmlFor='txtEmail'>
+                                <FormattedMessage {...messages.email} />
+                            </label>
+                            <input type='email' className='form-control' id='txtEmail' placeholder='Enter email'
+                                name='email' value={formState.get('email')} onChange={this._changeEmail}
                             />
+
                         </div>
                         <div className='form-group'>
-                            <label htmlFor='txtRegPass'><FormattedMessage {...messages.pwd} /></label>
-                            <input type='password' className='form-control' ref='password' id='txtPass'
-                                placeholder='Password' name='password'
+                            <label htmlFor='txtPass'>
+                                <FormattedMessage {...messages.pwd} />
+                            </label>
+                            <input type='password' className='form-control' id='txtPass' placeholder='password'
+                                name='password' value={formState.get('password')} onChange={this._changePassword}
                             />
                         </div>
-                        <button type='submit' className='btn btn-default'>
+                        <button type='submit' className='btn btn-primary btn-block'>
                             <FormattedMessage {...messages.register_btn} />
                         </button>
-                        <br /> <br />
+                        <br /><br />
 
-                        <a ref='#' className='btn btn-block btn-social btn-facebook' data-provider='facebook'
+                        <a href='#' className='btn btn-block btn-social btn-facebook'
                             onClick={() => {
-                                this.props.loginWithProvider('facebook');
+                                this.loginWithProvider('facebook');
                             }}
+                            data-provider='facebook'
                         >
                             <span className='fa fa-facebook' />
-                            Facebook
+                            <FormattedMessage {...messages.login_with} />&nbsp;Facebook
                         </a>
-                        <a href='#' className='btn btn-block btn-social btn-twitter' data-provider='twitter'
+                        <a href='#' className='btn btn-block btn-social btn-twitter'
                             onClick={() => {
-                                this.props.loginWithProvider('twitter');
+                                this.loginWithProvider('twitter');
                             }}
+                            data-provider='twitter'
                         >
                             <span className='fa fa-twitter' />
-                            Twitter
+                            <FormattedMessage {...messages.login_with} />&nbsp;Twitter
                         </a>
-                        <a href='#' className='btn btn-block btn-social btn-google' data-provider='google'
+                        <a href='#' className='btn btn-block btn-social btn-google'
                             onClick={() => {
-                                this.props.loginWithProvider('google');
+                                this.loginWithProvider('google');
                             }}
+                            data-provider='google'
                         >
                             <span className='fa fa-google' />
-                            Google
+                            <FormattedMessage {...messages.login_with} />&nbsp;Google
+
                         </a>
                     </form>
                 </div>
             </div>
         );
     }
-
 }
+
 
 UserRegister.propTypes = {
-    registerUser     : React.PropTypes.func.isRequired,
-    loginWithProvider: React.PropTypes.func.isRequired
+    formState: React.PropTypes.instanceOf(Immutable.Map),
+    message  : React.PropTypes.string,
+    dispatch : React.PropTypes.func.isRequired
 };
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-        registerUser,
-        loginWithProvider
-    }, dispatch);
-}
+const mapStateToProps = state => createStructuredSelector({
+    formState: makeSelectFormState(),
+    message  : makeSelectMessage()
+});
 
-export default connect(null, mapDispatchToProps)(UserRegister);
+export default connect(mapStateToProps, null)(UserRegister);

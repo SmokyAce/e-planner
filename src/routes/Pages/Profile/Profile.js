@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { createStructuredSelector } from 'reselect';
 
-import { fetchUser, updateUser } from '../../App/modules/user';
+import { makeSelectCurrentUser, makeSelectMessage, makeSelectFormState } from '../../App/modules/selectors';
+
+import { updateUserInfoRequest, changeForm } from '../../App/modules/app';
 import Loading from '../Loading';
 import ChangePassword from './ChangePassword';
 
@@ -14,32 +16,38 @@ class UserProfile extends Component {
 
     constructor(props) {
         super(props);
-        this.props.fetchUser();
-        this.state = {
-            message: ''
-        };
         this.onFormSubmit = this.onFormSubmit.bind(this);
+        this._changeEmail = this._changeEmail.bind(this);
+        this._changeDisplayName = this._changeDisplayName.bind(this);
     }
 
     onFormSubmit(event) {
         event.preventDefault();
-        const email = this.refs.email.value;
-        const displayName = this.refs.displayName.value;
-
-        this.props.updateUser({ email, displayName }).then((data) => {
-            if (data.payload.errorCode) {
-                this.setState({ message: data.payload.errorMessage });
-            } else {
-                this.setState({
-                    message: 'Updated successfuly!'
-                });
-            }
-        }
+        this.props.dispatch(
+            updateUserInfoRequest({
+                email      : this.props.formState.get('email'),
+                displayName: this.props.formState.get('displayName')
+            })
         );
     }
 
+    _changeEmail(event) {
+        this._emitChange(this.props.formState.set('email', event.target.value));
+    }
+
+    _changeDisplayName(event) {
+        this._emitChange(this.props.formState.set('displayName', event.target.value));
+    }
+
+    _emitChange(newFormState) {
+        this.props.dispatch(changeForm(newFormState));
+    }
+
+
     render() {
-        if (!this.props.currentUser) {
+        const { currentUser, message } = this.props;
+
+        if (!currentUser) {
             return <Loading />;
         }
 
@@ -49,19 +57,19 @@ class UserProfile extends Component {
                 <div className='col-md-4'>
                     <form id='frmProfile' role='form' onSubmit={this.onFormSubmit}>
                         <h2><FormattedMessage {...messages.profile_description} /></h2>
-                        <p>{this.state.message}</p>
+                        <p>{message}</p>
                         <br />
                         <div className='form-group'>
                             <label htmlFor='email'><FormattedMessage {...messages.email} /></label>
-                            <input type='text' defaultValue={this.props.currentUser.email} className='form-control'
-                                id='email' ref='email' placeholder='Email' name='email'
+                            <input type='email' className='form-control' id='txtEmail' placeholder='Email'
+                                name='email' defaultValue={currentUser.email} onChange={this._changeEmail}
                             />
                         </div>
                         <div className='form-group'>
                             <label htmlFor='displayName'><FormattedMessage {...messages.display_name} /></label>
-                            <input type='text' defaultValue={this.props.currentUser.displayName}
-                                className='form-control'
-                                ref='displayName' id='displayName' placeholder='Display name' name='displayName'
+                            <input type='text' className='form-control' id='displayName' placeholder='Display name'
+                                name='displayName' defaultValue={currentUser.displayName}
+                                onChange={this._changeDisplayName}
                             />
                         </div>
                         <button type='submit' className='btn btn-primary'>
@@ -78,20 +86,16 @@ class UserProfile extends Component {
 
 UserProfile.propTypes = {
     currentUser: React.PropTypes.object,
-    fetchUser  : React.PropTypes.func.isRequired,
-    updateUser : React.PropTypes.func.isRequired
+    formState  : React.PropTypes.object,
+    message    : React.PropTypes.string,
+    dispatch   : React.PropTypes.func.isRequired
 };
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ fetchUser, updateUser }, dispatch);
-}
+const mapStateToProps = state => createStructuredSelector({
+    currentUser: makeSelectCurrentUser(),
+    formState  : makeSelectFormState(),
+    message    : makeSelectMessage()
+});
 
+export default connect(mapStateToProps, null)(UserProfile);
 
-function mapStateToProps(state) {
-    return {
-        currentUser: state.get('currentUser')
-    };
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

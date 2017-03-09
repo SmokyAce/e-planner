@@ -1,4 +1,4 @@
-import FireBaseTools from '../../../utils/firebase';
+import FireBaseTools from '../../../utils/firebaseTools';
 
 // ------------------------------------
 // Constants

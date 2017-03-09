@@ -1,23 +1,5 @@
-import Planner from '../components/App';
+import App from '../components/App';
 import { connect } from 'react-redux';
-import { onSetOpen, onSetDocked } from '../../../layouts/PlannerCoreLayout/modules/sidebar';
 
-const mapStateToProps = (state) => {
-    return {
-        docked: state.getIn(['sidebar', 'sidebarDocked'])
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onSetOpen: (open) => {
-            dispatch(onSetOpen(open));
-        },
-        onSetDocked: (docked) => {
-            dispatch(onSetDocked(docked));
-        }
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Planner);
+export default connect()(App);
 

@@ -8,16 +8,19 @@ import Home from './Home';
  PlainRoute objects to build route definitions.   */
 export const createRoutes = (store) => {
     // create reusable async injectors using getAsyncInjectors factory
-    const { injectReducer } = getAsyncInjectors(store);
+    const { injectReducer, injectSagas } = getAsyncInjectors(store);
 
     return (
     {
         path: '/',
         getComponent(nextState, cb) {
-            require.ensure(['../layouts/PlannerCoreLayout/modules/sidebar'], (require) => {
-                const sidebar = require('../layouts/PlannerCoreLayout/modules/sidebar').default;
+            require.ensure(['../layouts/PlannerCoreLayout/modules/core'], (require) => {
+                const core = require('../layouts/PlannerCoreLayout/modules/core').default;
 
-                injectReducer('sidebar', sidebar);
+                injectReducer('global', core);
+
+                injectReducer('app', require('./App/modules/app').default);
+                injectSagas(require('./App/modules/sagas').default);
 
                 cb(null, PlannerCoreLayout);
             });

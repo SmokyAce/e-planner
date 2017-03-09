@@ -1,4 +1,4 @@
-import requireAuth from '../../../utils/authenticated';
+import auth from '../../../utils/auth';
 
 // Sync route definition
 export default (store) => {
@@ -11,6 +11,6 @@ export default (store) => {
                 next(null, require('./Profile').default);
             });
         },
-        onEnter: requireAuth
+        onEnter: auth.requireAuth
     });
 };

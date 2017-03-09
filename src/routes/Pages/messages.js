@@ -69,5 +69,9 @@ export default defineMessages({
     change_pwd_btn: {
         id            : 'app.change-pwd.btn',
         defaultMessage: 'Change password'
+    },
+    reset_pwd_btn: {
+        id            : 'app.change-pwd.btn',
+        defaultMessage: 'Change password'
     }
 });

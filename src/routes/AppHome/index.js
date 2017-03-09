@@ -1,8 +1,8 @@
-import HomeView from './components/HomeView';
-import requireAuth from '../../utils/authenticated';
+import AppContainer from './containers/AppHomeContainer';
+import auth from '../../utils/auth';
 
 // Sync route definition
 export default {
-    component: HomeView,
-    onEnter  : requireAuth
+    component: AppContainer,
+    onEnter  : auth.requireAuth
 };

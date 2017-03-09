@@ -4,7 +4,6 @@ import { Map } from 'immutable';
 
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import promise from 'redux-promise';
 import createSagaMiddleware from 'redux-saga';
 
 import makeRootReducer from './reducers';
@@ -17,7 +16,7 @@ export default (initialState = {}) => {
     // ======================================================
     // Middleware Configuration
     // ======================================================
-    const middleware = [thunk, promise, sagaMiddleware];
+    const middleware = [thunk, sagaMiddleware];
 
     if (__DEV__) {
         middleware.push(logger);

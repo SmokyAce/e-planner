@@ -3,8 +3,10 @@ import Immutable from 'immutable';
 import Sidebar from 'react-sidebar';
 import SidebarContent from '../../components/SidebarContent';
 
+
 import '../../styles/core.scss';
 import './PlannerCoreLayout.scss';
+
 
 import Header from '../../components/Header';
 

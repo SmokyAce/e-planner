@@ -4,3 +4,16 @@
   padding-top: 4rem;
 }
 
+/* just for loaders.css demo */
+.loader-demo .panel-body {
+  height: 150px;
+  padding-top: 50px;
+  text-align: center;
+  > div {
+    display: inline-block;
+  }
+}
+.loader-demo-sk .panel-body {
+  padding-top: 0 !important;
+}
+

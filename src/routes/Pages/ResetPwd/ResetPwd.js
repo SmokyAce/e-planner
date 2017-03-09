@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { FormattedMessage } from 'react-intl';
+
 import { resetPasswordEmail } from '../../App/modules/user';
+import messages from '../messages';
 
 class ResetPassword extends Component {
     constructor(props) {
@@ -20,36 +23,37 @@ class ResetPassword extends Component {
             if (data.payload.errorCode) {
                 this.setState({ message: data.payload.errorMessage });
             } else {
-                this.setState({ message: 'Please see your email!' });
+                this.setState({ message: 'Please check your email!' });
             }
         });
     }
 
     render() {
-        const { messages } = this.props.locale;
-
         return (
-            <div className='col-md-4'>
-                <form role='form' onSubmit={this.onFormSubmit}>
-                    <h4>{this.state.message}</h4>
-                    <div className='form-group'>
-                        <label htmlFor='txtEmail'>{ messages['app.email'] }</label>
-                        <input type='email' className='form-control' id='txtEmail' ref='email'
-                            placeholder='Enter email' name='email'
-                        />
-                    </div>
-                    <button type='submit' className='btn btn-default btn-block'>
-                        { messages['app.reset-pwd.btn'] }
-                    </button>
-                </form>
+            <div>
+                <div className='col-md-4' />
+                <div className='col-md-4'>
+                    <form role='form' onSubmit={this.onFormSubmit}>
+                        <h4>{this.state.message}</h4>
+                        <div className='form-group'>
+                            <label htmlFor='txtEmail'>
+                                <FormattedMessage {...messages.email} />
+                            </label>
+                            <input type='email' className='form-control' id='txtEmail' ref='email'
+                                placeholder='Enter email' name='email'
+                            />
+                        </div>
+                        <button type='submit' className='btn btn-primary btn-block'>
+                            <FormattedMessage {...messages.reset_pwd_btn} />
+                        </button>
+                    </form>
+                </div>
             </div>
-
         );
     }
 }
 
 ResetPassword.propTypes = {
-    locale            : React.PropTypes.object.isRequired,
     resetPasswordEmail: React.PropTypes.func.isRequired
 };
 
@@ -59,10 +63,4 @@ function mapDispatchToProps(dispatch) {
     }, dispatch);
 }
 
-function mapStateToProps(state) {
-    return {
-        locale: state.locale
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);
+export default connect(null, mapDispatchToProps)(ResetPassword);

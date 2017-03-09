@@ -1,42 +1,64 @@
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { logoutUser, requestToFetchUser } from '../../routes/App/modules/user';
+import React from 'react';
+import { IndexLink, Link } from 'react-router';
+import { FormattedMessage } from 'react-intl';
+import { Navbar } from 'react-bootstrap';
 
-/*  This is a container component. Notice it does not contain any JSX,
- nor does it import React. This component is **only** responsible for
- wiring in the actions and state necessary to render a presentational
- component - in this case, the counter:   */
+import UserMenu from '../../containers/UserMenu';
+import LocaleToggle from '../../containers/LocaleToogle';
 
-import Header from './Header';
+// styles
+import './Header.scss';
+import messages from './messages';
 
-/*  Object of action creators (can also be function that returns object).
- Keys will be passed as props to presentational components. Here we are
- implementing our wrapper around increment; the component doesn't care   */
-
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({
-        requestToFetchUser,
-        logoutUser
-    }, dispatch);
+const Header = () => {
+    return (
+        <div id='header'>
+            <Navbar collapseOnSelect inverse fluid>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <a href='/'>
+                            <FormattedMessage{...messages.description} />
+                        </a>
+                    </Navbar.Brand>
+                    <Navbar.Toggle />
+                </Navbar.Header>
+                <Navbar.Collapse>
+                    <ul className='nav navbar-nav'>
+                        <li>
+                            <IndexLink to='/' activeClassName='route--active'>
+                                <i className='fa fa-home fa-fw' aria-hidden='true' />
+                                <FormattedMessage {...messages.home} />
+                            </IndexLink>
+                        </li>
+                        <li>
+                            <Link to='/counter' activeClassName='route--active'>
+                                <FormattedMessage {...messages.counter} />
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to='/zen' activeClassName='route--active'>
+                                <FormattedMessage {...messages.zen} />
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to='/todos' activeClassName='route--active'>
+                                <FormattedMessage {...messages.todos} />
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to='/app' activeClassName='route--active'>
+                                App
+                            </Link>
+                        </li>
+                    </ul>
+                    <ul className='nav navbar-nav navbar-right' style={{ marginRight: '0px' }}>
+                        <LocaleToggle />
+                        <UserMenu />
+                    </ul>
+                </Navbar.Collapse>
+            </Navbar>
+        </div>
+    );
 };
 
-const mapStateToProps = (state) => ({
-    location   : state.get('location'),
-    currentUser: state.get('currentUser')
-});
-
-/*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
-
- import { createSelector } from 'reselect'
- const counter = (state) => state.counter
- const tripleCount = createSelector(counter, (count) => count * 3)
- const mapStateToProps = (state) => ({
- counter: tripleCount(state)
- })
-
- Selectors can compute derived data, allowing Redux to store the minimal possible state.
- Selectors are efficient. A selector is not recomputed unless one of its arguments change.
- Selectors are composable. They can be used as input to other selectors.
- https://github.com/reactjs/reselect    */
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;

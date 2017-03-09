@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { changePassword } from '../../App/modules/user';
+import { createStructuredSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
+
+import { makeSelectCurrentUser } from '../../App/modules/selectors';
+import { changePassword } from '../../App/modules/user';
 
 class ChangePassword extends Component {
 
@@ -72,10 +75,10 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ changePassword }, dispatch);
 }
 
-function mapStateToProps(state) {
-    return {
-        currentUser: state.currentUser
-    };
-}
+const mapStateToProps = state => createStructuredSelector({
+    currentUser: makeSelectCurrentUser()
+    // formState  : makeSelectFormState(),
+    // message    : makeSelectMessage()
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);
