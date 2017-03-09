@@ -66,7 +66,7 @@ class ChangePassword extends Component {
 }
 
 ChangePassword.propTypes = {
-    currentUser   : React.PropTypes.object.isRequired,
+    //currentUser   : React.PropTypes.object.isRequired,
     changePassword: React.PropTypes.func.isRequired,
     messages      : React.PropTypes.object.isRequired
 };
@@ -76,7 +76,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 const mapStateToProps = state => createStructuredSelector({
-    currentUser: makeSelectCurrentUser()
+    //currentUser: makeSelectCurrentUser()
     // formState  : makeSelectFormState(),
     // message    : makeSelectMessage()
 });
