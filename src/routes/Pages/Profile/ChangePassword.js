@@ -1,60 +1,60 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { createStructuredSelector } from 'reselect';
+import React from 'react';
+import Immutable from 'immutable';
 import { FormattedMessage } from 'react-intl';
+import { changeUserPwdRequest, setMesssage, changeForm } from '../../App/modules/app';
 
-import { makeSelectCurrentUser } from '../../App/modules/selectors';
-import { changePassword } from '../../App/modules/user';
 
-class ChangePassword extends Component {
+class ChangePassword extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.onFormSubmit = this.onFormSubmit.bind(this);
-        this.state = {
-            message: ''
-        };
+        this._changePassword = this._changePassword.bind(this);
     }
 
     onFormSubmit(event) {
         event.preventDefault();
-        const password = this.refs.password.value;
-        const repeatPassword = this.refs.repeatPassword.value;
+        const password       = this.props.formState.get('password'),
+              repeatPassword = this.props.formState.get('repeatPassword');
 
         if (password !== repeatPassword) {
-            this.setState({
-                message: 'Please password must match!'
-            });
-        } else {
-            this.props.changePassword(password).then((data) => {
-                if (data.payload.errorCode) {
-                    this.setState({ message: data.payload.errorMessage });
-                } else {
-                    this.setState({ message: 'Password was changed!' });
-                }
-            });
+            this.props.dispatch(
+                setMesssage('Please password must match!')
+            );
+            return;
         }
+        // dispatch the change user action request
+        this.props.dispatch(changeUserPwdRequest(password));
+    }
+
+    _changePassword(event) {
+        this._emitChange(this.props.formState.set(event.target.name, event.target.value));
+    }
+
+    _emitChange(newFormState) {
+        this.props.dispatch(changeForm(newFormState));
     }
 
     render() {
-        const { messages } = this.props;
+        const { messages, formState, message } = this.props;
 
         return (
             <form id='ChangePassword' role='form' onSubmit={this.onFormSubmit}>
                 <br />
                 <h4> <FormattedMessage {...messages.change_description} /></h4>
-                <h5> {this.state.message} </h5>
+                <h5> {message} </h5>
                 <div className='form-group'>
                     <label htmlFor='password'><FormattedMessage {...messages.new_pwd} /></label>
-                    <input type='password' className='form-control' name='password' ref='password' id='password' />
+                    <input type='password' className='form-control' name='password' id='password'
+                        value={formState.get('password')} onChange={this._changePassword}
+                    />
                 </div>
                 <div className='form-group'>
                     <label htmlFor='repeatPassword'><FormattedMessage {...messages.repeat_pwd} /></label>
-                    <input type='password' className='form-control' name='repeatPassword'
-                        ref='repeatPassword' id='repeatPassword'
+                    <input type='password' className='form-control' name='repeatPassword' id='repeatPassword'
+                        value={formState.get('repeatPassword')} onChange={this._changePassword}
                     />
-
                 </div>
                 <button type='submit' className='btn btn-primary'>
                     <FormattedMessage {...messages.change_pwd_btn} />
@@ -62,23 +62,13 @@ class ChangePassword extends Component {
             </form>
         );
     }
-
 }
 
 ChangePassword.propTypes = {
-    //currentUser   : React.PropTypes.object.isRequired,
-    changePassword: React.PropTypes.func.isRequired,
-    messages      : React.PropTypes.object.isRequired
+    messages : React.PropTypes.object,
+    formState: React.PropTypes.instanceOf(Immutable.Map),
+    message  : React.PropTypes.string,
+    dispatch : React.PropTypes.func
 };
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ changePassword }, dispatch);
-}
-
-const mapStateToProps = state => createStructuredSelector({
-    //currentUser: makeSelectCurrentUser()
-    // formState  : makeSelectFormState(),
-    // message    : makeSelectMessage()
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);
+export default ChangePassword;

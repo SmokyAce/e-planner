@@ -26,7 +26,10 @@ class UserMenu extends React.Component {
 
         if (currentUser && currentUser.uid) {
             return (
-                <NavDropdown title={currentUser.displayName === '' ? currentUser.email : currentUser.displayName}
+                <NavDropdown title={
+                    (currentUser.displayName === '' || currentUser.displayName === null)
+                    ? currentUser.email : currentUser.displayName
+                }
                     id='user-dropdown' eventKey='2'
                 >
                     <LinkContainer to='/app/profile'>

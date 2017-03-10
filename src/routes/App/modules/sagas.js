@@ -19,7 +19,10 @@ import {
     LOGOUT,
     CHANGE_FORM,
     FETCH_USER_INFO_REQUEST,
-    SET_USER_INFO
+    SET_USER_INFO,
+    SET_MESSAGE,
+    UPDATE_USER_INFO_REQUEST,
+    CHANGE_USER_PASSWORD_REQUEST
 } from './app';
 import { LOCATION_CHANGE } from '../../../store/reducers/location';
 
@@ -41,7 +44,7 @@ export function* authorize(authType, isRegistring = false) {
         } else if (authType.loginWithProvider) {
             userInfo = yield firebaseTools.loginWithProvider(authType.loginWithProvider.provider);
         } else if (authType.registration) {
-            userInfo = yield firebaseTools.registerUser(authType.loginWithProvider.data);
+            userInfo = yield firebaseTools.registerUser(authType.registration.data);
         }
 
         if (userInfo.errorMessage) {
@@ -60,6 +63,7 @@ export function* authorize(authType, isRegistring = false) {
     } finally {
         // When done, we tell Redux we're not in the middle of a request any more
         yield put({ type: SENDING_REQUEST, sending: false });
+        forwardTo('/app');
     }
 }
 
@@ -101,14 +105,6 @@ export function* loginFlow() {
     }
 }
 
-export function* watchLoginFlow() {
-    // Fork watcher so we can continue execution
-    const watcher = yield fork(loginFlow);
-
-    // Suspend execution until location changes
-    yield take(LOCATION_CHANGE);
-    yield cancel(watcher);
-}
 
 export function* logout() {
     try {
@@ -140,15 +136,6 @@ export function* logoutFlow() {
     }
 }
 
-function* watchLogoutFlow() {
-    // Fork watcher so we can continue execution
-    const watcher = yield fork(logoutFlow);
-
-    // Suspend execution until location changes
-    yield take(LOCATION_CHANGE);
-    yield cancel(watcher);
-}
-
 /**
  * fetch user info out saga
  * This is basically the same as the `if (winner.fetch)` of above, just written
@@ -177,6 +164,45 @@ export function* fetchInfoFlow() {
     }
 }
 
+/**
+ * fetch user info out saga
+ * This is basically the same as the `if (winner.fetch)` of above, just written
+ * as a saga that is always listening to `fetch` actions
+ */
+export function* updateUserInfoFlow() {
+    while (true) {
+        yield take(FETCH_USER_INFO_REQUEST);
+
+        // And we're listening for `LOGIN_REQUEST` actions and destructuring its payload
+        const updateType = yield race({
+            updateUserProfile: take(UPDATE_USER_INFO_REQUEST),
+            changePassword   : take(CHANGE_USER_PASSWORD_REQUEST)
+        });
+
+        let userInfo;
+
+        try {
+            if(updateType.updateUserProfile) {
+                userInfo = yield call(firebaseTools.updateUserProfile, updateType.updateUserProfile.data);
+            } else if (updateType.changePassword){
+                userInfo = yield call(firebaseTools.changePassword, updateType.changePassword.newPassword);
+            }
+
+        } catch (error) {
+            // If we get an error we send Redux the appropiate action and return
+            yield put({ type: REQUEST_ERROR, error: error.message });
+            return false;
+        }
+
+        if (!userInfo.error) {
+            yield put({ type: SET_USER_INFO, userInfo });
+        } else {
+            yield put({ type: REQUEST_ERROR, error: userInfo.errorMessage });
+            return false;
+        }
+    }
+}
+
 
 /**
  * Register saga
@@ -186,7 +212,6 @@ export function* registerFlow() {
     while (true) {
         // We always listen to `REGISTER_REQUEST` actions
         const request = yield take(REGISTER_REQUEST);
-
         // We call the `authorize` task with the data, telling it that we are registering a user
         // This returns `true` if the registering was successful, `false` if not
         const wasSuccessful = yield call(authorize, { registration: { data: request.data } });
@@ -199,12 +224,45 @@ export function* registerFlow() {
     }
 }
 
+/**
+ * Watchers
+ */
+export function* watchLoginFlow() {
+    // Fork watcher so we can continue execution
+    const watcher = yield fork(loginFlow);
+
+    // Suspend execution until location changes
+    yield take(LOCATION_CHANGE);
+    yield put({ type: SET_MESSAGE, message: '' });
+    yield cancel(watcher);
+}
+
 function* watchRegisterFlow() {
     // Fork watcher so we can continue execution
     const watcher = yield fork(registerFlow);
 
     // Suspend execution until location changes
     yield take(LOCATION_CHANGE);
+    //yield put({ type: SET_MESSAGE, message: '' });
+    yield cancel(watcher);
+}
+
+function* watchLogoutFlow() {
+    // Fork watcher so we can continue execution
+    const watcher = yield fork(logoutFlow);
+
+    // Suspend execution until location changes
+    //yield take(LOCATION_CHANGE);
+    yield cancel(watcher);
+}
+
+function* watchUpdateUserInfoFlow() {
+    // Fork watcher so we can continue execution
+    const watcher = yield fork(updateUserInfoFlow);
+
+    // Suspend execution until location changes
+    yield take(LOCATION_CHANGE);
+    //yield put({ type: SET_MESSAGE, message: '' });
     yield cancel(watcher);
 }
 
@@ -216,7 +274,8 @@ export default [
     fetchInfoFlow,
     watchLoginFlow,
     watchLogoutFlow,
-    watchRegisterFlow
+    watchRegisterFlow,
+    watchUpdateUserInfoFlow
 ];
 
 // Little helper function to abstract going to different pages

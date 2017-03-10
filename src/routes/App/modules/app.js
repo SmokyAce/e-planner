@@ -4,18 +4,20 @@ import auth from '../../../utils/auth';
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const APP_LOADING = 'APP_LOADING';
-export const SENDING_REQUEST = 'SENDING_REQUEST';
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_WITH_PROVIDER_REQUEST = 'LOGIN_WITH_PROVIDER_REQUEST';
-export const REGISTER_REQUEST = 'REGISTER_REQUEST';
-export const FETCH_USER_INFO_REQUEST = 'FETCH_USER_INFO_REQUEST';
-export const UPDATE_USER_INFO_REQUEST = 'UPDATE_USER_INFO_REQUEST';
-export const REQUEST_ERROR = 'REQUEST_ERROR';
-export const LOGOUT = 'LOGOUT';
-export const SET_USER_INFO = 'SET_USER_INFO';
-export const SET_AUTH = 'SET_AUTH';
-export const CHANGE_FORM = 'CHANGE_FORM';
+export const APP_LOADING                  = 'APP_LOADING';
+export const SENDING_REQUEST              = 'SENDING_REQUEST';
+export const LOGIN_REQUEST                = 'LOGIN_REQUEST';
+export const LOGIN_WITH_PROVIDER_REQUEST  = 'LOGIN_WITH_PROVIDER_REQUEST';
+export const REGISTER_REQUEST             = 'REGISTER_REQUEST';
+export const FETCH_USER_INFO_REQUEST      = 'FETCH_USER_INFO_REQUEST';
+export const UPDATE_USER_INFO_REQUEST     = 'UPDATE_USER_INFO_REQUEST';
+export const REQUEST_ERROR                = 'REQUEST_ERROR';
+export const LOGOUT                       = 'LOGOUT';
+export const SET_USER_INFO                = 'SET_USER_INFO';
+export const SET_AUTH                     = 'SET_AUTH';
+export const CHANGE_FORM                  = 'CHANGE_FORM';
+export const SET_MESSAGE                  = 'SET_MESSAGE';
+export const CHANGE_USER_PASSWORD_REQUEST = 'CHANGE_USER_PASSWORD_REQUEST';
 
 // ------------------------------------
 // Actions
@@ -31,6 +33,14 @@ export function changeForm(newFormState) {
 }
 
 /**
+ * Sets the message state
+ * @param  {string} message The new text of the error message on the form
+ */
+export function setMesssage(message) {
+    return { type: SET_MESSAGE, message };
+}
+
+/**
  * Tells the app we want to fetch a user info
  */
 export function fetchUserInfoRequest() {
@@ -40,8 +50,15 @@ export function fetchUserInfoRequest() {
 /**
  * Tells the app we want to update a user info
  */
-export function updateUserInfoRequest() {
-    return { type: UPDATE_USER_INFO_REQUEST };
+export function updateUserInfoRequest(data) {
+    return { type: UPDATE_USER_INFO_REQUEST, data};
+}
+
+/**
+ * Tells the app we want to change a user password
+ */
+export function changeUserPwdRequest(newPassword) {
+    return { type: CHANGE_USER_PASSWORD_REQUEST, newPassword };
 }
 
 /**
@@ -83,10 +100,11 @@ export function registerRequest(data) {
 // The initial state of the App
 const initialState = Immutable.fromJS({
     formState: {
-        email      : '',
-        password   : '',
-        rememberMe : false,
-        displayName: ''
+        email         : '',
+        password      : '',
+        repeatPassword: '',
+        rememberMe    : false,
+        displayName   : ''
     },
     loading         : false,
     currentlySending: false,
@@ -120,6 +138,10 @@ const APP_ACTION_HANDLERS = {
     [REQUEST_ERROR]: (state, action) => {
         return state
             .set('message', action.error);
+    },
+    [SET_MESSAGE]: (state, action) => {
+        return state
+            .set('message', action.message);
     }
 };
 

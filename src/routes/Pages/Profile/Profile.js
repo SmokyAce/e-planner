@@ -45,7 +45,7 @@ class UserProfile extends Component {
 
 
     render() {
-        const { currentUser, message } = this.props;
+        const { currentUser, message, dispatch, formState } = this.props;
 
         if (!currentUser) {
             return <Loading />;
@@ -76,7 +76,7 @@ class UserProfile extends Component {
                             <FormattedMessage {...messages.update_btn} />
                         </button>
                     </form>
-                    <ChangePassword {...{ messages }} />
+                    <ChangePassword {...{ messages, dispatch, formState, message }} />
                 </div>
             </div>
         );
