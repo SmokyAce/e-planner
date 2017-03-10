@@ -15,7 +15,6 @@ export const createRoutes = (store) => {
         path: '/',
         getComponent(nextState, cb) {
             require.ensure([], (require) => {
-
                 injectReducer('app', require('./App/modules/app').default);
                 injectSagas(require('./App/modules/sagas').default);
 

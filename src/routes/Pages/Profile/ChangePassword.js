@@ -15,8 +15,8 @@ class ChangePassword extends React.Component {
 
     onFormSubmit(event) {
         event.preventDefault();
-        const password       = this.props.formState.get('password'),
-              repeatPassword = this.props.formState.get('repeatPassword');
+        const password       = this.props.formState.get('password');
+        const repeatPassword = this.props.formState.get('repeatPassword');
 
         if (password !== repeatPassword) {
             this.props.dispatch(

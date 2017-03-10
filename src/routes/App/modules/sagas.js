@@ -182,12 +182,11 @@ export function* updateUserInfoFlow() {
         let userInfo;
 
         try {
-            if(updateType.updateUserProfile) {
+            if (updateType.updateUserProfile) {
                 userInfo = yield call(firebaseTools.updateUserProfile, updateType.updateUserProfile.data);
-            } else if (updateType.changePassword){
+            } else if (updateType.changePassword) {
                 userInfo = yield call(firebaseTools.changePassword, updateType.changePassword.newPassword);
             }
-
         } catch (error) {
             // If we get an error we send Redux the appropiate action and return
             yield put({ type: REQUEST_ERROR, error: error.message });
@@ -243,7 +242,7 @@ function* watchRegisterFlow() {
 
     // Suspend execution until location changes
     yield take(LOCATION_CHANGE);
-    //yield put({ type: SET_MESSAGE, message: '' });
+    // yield put({ type: SET_MESSAGE, message: '' });
     yield cancel(watcher);
 }
 
@@ -262,7 +261,7 @@ function* watchUpdateUserInfoFlow() {
 
     // Suspend execution until location changes
     yield take(LOCATION_CHANGE);
-    //yield put({ type: SET_MESSAGE, message: '' });
+    // yield put({ type: SET_MESSAGE, message: '' });
     yield cancel(watcher);
 }
 

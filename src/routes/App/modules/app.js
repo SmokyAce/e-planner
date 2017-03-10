@@ -54,7 +54,7 @@ export function fetchUserInfoRequest() {
  * Tells the app we want to update a user info
  */
 export function updateUserInfoRequest(data) {
-    return { type: UPDATE_USER_INFO_REQUEST, data};
+    return { type: UPDATE_USER_INFO_REQUEST, data };
 }
 
 /**
@@ -117,7 +117,7 @@ export const onSetDocked = (docked) => {
 // The initial state of the App
 const initialState = Immutable.fromJS({
     sidebar: {
-        sidebarOpen: false,
+        sidebarOpen  : false,
         sidebarDocked: false
     },
     formState: {

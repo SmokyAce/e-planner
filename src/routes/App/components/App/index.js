@@ -32,12 +32,12 @@ class App extends React.Component {
         return (
             <div className='text-center'>
                 <Sidebar sidebar={content}
-                         open={sidebar.get('sidebarOpen')}
-                         docked={sidebar.get('sidebarDocked')}
-                         onSetOpen={onSetOpen}
-                         sidebarClassName='custom-sidebar-class'
+                    open={sidebar.get('sidebarOpen')}
+                    docked={sidebar.get('sidebarDocked')}
+                    onSetOpen={onSetOpen}
+                    sidebarClassName='custom-sidebar-class'
                 >
-                    <div className="app-container">
+                    <div className='app-container'>
                         <Header>{ children }</Header>
                         { children }
                     </div>
@@ -55,5 +55,4 @@ App.propTypes = {
 };
 
 export default App;
-
 
