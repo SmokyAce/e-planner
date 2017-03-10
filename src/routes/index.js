@@ -1,7 +1,7 @@
 // We only need to import the modules necessary for initial render
 import { getAsyncInjectors } from '../utils/asyncInjectors';
 
-import PlannerCoreLayout from '../layouts/PlannerCoreLayout';
+import CoreLayout from '../layouts/CoreLayout';
 import Home from './Home';
 
 /*  Note: Instead of using JSX, we recommend using react-router
@@ -14,15 +14,12 @@ export const createRoutes = (store) => {
     {
         path: '/',
         getComponent(nextState, cb) {
-            require.ensure(['../layouts/PlannerCoreLayout/modules/core'], (require) => {
-                const core = require('../layouts/PlannerCoreLayout/modules/core').default;
-
-                injectReducer('global', core);
+            require.ensure([], (require) => {
 
                 injectReducer('app', require('./App/modules/app').default);
                 injectSagas(require('./App/modules/sagas').default);
 
-                cb(null, PlannerCoreLayout);
+                cb(null, CoreLayout);
             });
         },
         indexRoute: Home,

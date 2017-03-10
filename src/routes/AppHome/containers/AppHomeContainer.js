@@ -1,10 +1,10 @@
 import AppHome from '../components/HomeView';
 import { connect } from 'react-redux';
-import { onSetOpen, onSetDocked } from '../../../layouts/PlannerCoreLayout/modules/sidebar';
+import { onSetOpen, onSetDocked } from '../../App/modules/app';
 
 const mapStateToProps = (state) => {
     return {
-        docked: state.getIn(['global', 'sidebar', 'sidebarDocked'])
+        docked: state.getIn(['app', 'sidebar', 'sidebarDocked'])
     };
 };
 

@@ -252,7 +252,7 @@ function* watchLogoutFlow() {
     const watcher = yield fork(logoutFlow);
 
     // Suspend execution until location changes
-    //yield take(LOCATION_CHANGE);
+    yield take(LOCATION_CHANGE);
     yield cancel(watcher);
 }
 

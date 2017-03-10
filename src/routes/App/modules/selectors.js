@@ -6,6 +6,11 @@ import { createSelector } from 'reselect';
 
 const selectApp = (state) => state.get('app');
 
+const makeSelectSidebar = () => createSelector(
+    selectApp,
+    (globalState) => globalState.get('sidebar')
+);
+
 const makeSelectCurrentUser = () => createSelector(
     selectApp,
     (globalState) => globalState.get('currentUser')
@@ -28,6 +33,7 @@ const makeSelectFormState = () => createSelector(
 
 export {
     selectApp,
+    makeSelectSidebar,
     makeSelectFormState,
     makeSelectCurrentUser,
     makeSelectLoading,

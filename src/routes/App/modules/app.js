@@ -4,20 +4,23 @@ import auth from '../../../utils/auth';
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const APP_LOADING                  = 'APP_LOADING';
+export const APP_LOADING = 'APP_LOADING';
+
 export const SENDING_REQUEST              = 'SENDING_REQUEST';
 export const LOGIN_REQUEST                = 'LOGIN_REQUEST';
 export const LOGIN_WITH_PROVIDER_REQUEST  = 'LOGIN_WITH_PROVIDER_REQUEST';
 export const REGISTER_REQUEST             = 'REGISTER_REQUEST';
 export const FETCH_USER_INFO_REQUEST      = 'FETCH_USER_INFO_REQUEST';
 export const UPDATE_USER_INFO_REQUEST     = 'UPDATE_USER_INFO_REQUEST';
+export const CHANGE_USER_PASSWORD_REQUEST = 'CHANGE_USER_PASSWORD_REQUEST';
 export const REQUEST_ERROR                = 'REQUEST_ERROR';
 export const LOGOUT                       = 'LOGOUT';
 export const SET_USER_INFO                = 'SET_USER_INFO';
 export const SET_AUTH                     = 'SET_AUTH';
 export const CHANGE_FORM                  = 'CHANGE_FORM';
 export const SET_MESSAGE                  = 'SET_MESSAGE';
-export const CHANGE_USER_PASSWORD_REQUEST = 'CHANGE_USER_PASSWORD_REQUEST';
+export const SIDEBAR_OPEN_SET             = 'SIDEBAR_OPEN_SET';
+export const SIDEBAR_DOCKED_SET           = 'SIDEBAR_DOCKED_SET';
 
 // ------------------------------------
 // Actions
@@ -96,9 +99,27 @@ export function registerRequest(data) {
     return { type: REGISTER_REQUEST, data };
 }
 
+export const onSetOpen = (open) => {
+    return {
+        type   : 'SIDEBAR_OPEN_SET',
+        payload: open
+    };
+};
+
+export const onSetDocked = (docked) => {
+    return {
+        type   : 'SIDEBAR_DOCKED_SET',
+        payload: docked
+    };
+};
+
 
 // The initial state of the App
 const initialState = Immutable.fromJS({
+    sidebar: {
+        sidebarOpen: false,
+        sidebarDocked: false
+    },
     formState: {
         email         : '',
         password      : '',
@@ -142,6 +163,12 @@ const APP_ACTION_HANDLERS = {
     [SET_MESSAGE]: (state, action) => {
         return state
             .set('message', action.message);
+    },
+    [SIDEBAR_OPEN_SET]: (state, action) => {
+        return state.setIn(['sidebar', 'sidebarOpen'], action.payload);
+    },
+    [SIDEBAR_DOCKED_SET]: (state, action) => {
+        return state.setIn(['sidebar', 'sidebarDocked'], !action.payload);
     }
 };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import TitlePanel from './TitlePanel';
 
 // styles
@@ -41,9 +42,6 @@ const SidebarContent = () => {
             </div>
         </TitlePanel>
     );
-};
-
-SidebarContent.propTypes = {
 };
 
 export default SidebarContent;
