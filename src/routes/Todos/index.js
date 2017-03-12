@@ -1,21 +1,22 @@
 import Todos from './containers/TodosContainer';
-import { injectReducer } from '../../store/reducers';
+import { getAsyncInjectors } from '../../utils/asyncInjectors';
 
-export default (store) => ({
-    path: 'todos',
-    getComponent(nextState, next) {
-        require.ensure([
-            './containers/TodosContainer',
-            './modules/todos'
-        ], (require) => {
-            const todos = require('./modules/todos').default;
+export default (store) => {
+    const { injectReducer } = getAsyncInjectors(store);
 
-            injectReducer(store, {
-                key    : 'todos',
-                reducer: todos
+    return ({
+        path: 'todos',
+        getComponent(nextState, next) {
+            require.ensure([
+                './containers/TodosContainer',
+                './modules/todos'
+            ], (require) => {
+                const todos = require('./modules/todos').default;
+
+                injectReducer('todos', todos);
+
+                next(null, Todos);
             });
-
-            next(null, Todos);
-        });
-    }
-});
+        }
+    });
+};

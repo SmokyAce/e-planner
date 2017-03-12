@@ -1,55 +1,45 @@
 // We only need to import the modules necessary for initial render
-import { injectReducer } from '../store/reducers';
+import { getAsyncInjectors } from '../utils/asyncInjectors';
 
-import PlannerCoreLayout from '../layouts/PlannerCoreLayout';
+import CoreLayout from '../layouts/CoreLayout';
 import Home from './Home';
 
 /*  Note: Instead of using JSX, we recommend using react-router
  PlainRoute objects to build route definitions.   */
-export const createRoutes = (store) => ({
-    path: '/',
-    getComponent(nextState, cb) {
-        require.ensure(['../layouts/PlannerCoreLayout/modules/sidebar'], (require) => {
-            const sidebar = require('../layouts/PlannerCoreLayout/modules/sidebar').default;
+export const createRoutes = (store) => {
+    // create reusable async injectors using getAsyncInjectors factory
+    const { injectReducer } = getAsyncInjectors(store);
 
-            injectReducer(store, {
-                key    : 'sidebar',
-                reducer: sidebar
+    return (
+    {
+        path: '/',
+        getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+                injectReducer('app', require('./App/modules/app').default);
+
+                cb(null, CoreLayout);
             });
+        },
+        indexRoute: Home,
+        getChildRoutes(location, next) {
+            require.ensure([], (require) => {
+                next(null, [
+                    require('./App').default(store),
 
-            cb(null, PlannerCoreLayout);
-        });
-    },
-    indexRoute: Home,
-    getChildRoutes(location, next) {
-        require.ensure([], (require) => {
-            next(null, [
-                // Provide store for async reducers and middleware
-                require('./Counter').default(store),
-                require('./Zen').default(store),
-                require('./Todos').default(store),
-                require('./User').default(store),
-                require('./Planner').default(store)
-            ]);
-        });
-    } });
+                    require('./Pages/Register').default(store),
+                    require('./Pages/Login').default(store),
+                    require('./Pages/ResetPwd').default(store),
+                    require('./Pages/Profile').default(store),
 
-/*  Note: childRoutes can be chunked or otherwise loaded programmatically
- using getChildRoutes with the following signature:
-
- getChildRoutes (location, cb) {
- require.ensure([], (require) => {
- cb(null, [
- // Remove imports!
- require('./Counter').default(store)
- ])
- })
- }
-
- However, this is not necessary for code-splitting! It simply provides
- an API for async route definitions. Your code splitting should occur
- inside the route `getComponent` function, since it is only invoked
- when the route exists and matches.
- */
+                    // Provide store for async reducers and middleware
+                    require('./Counter').default(store),
+                    require('./Zen').default(store),
+                    require('./Todos').default(store)
+                ]);
+            });
+        }
+    }
+    );
+};
 
 export default createRoutes;
