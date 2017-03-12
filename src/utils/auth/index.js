@@ -12,7 +12,7 @@ const auth = {
 
         if (data === null) {
             replace({
-                pathname: '/app/login',
+                pathname: '/login',
                 state   : {
                     nextPathname: nextState.location.pathname
                 }

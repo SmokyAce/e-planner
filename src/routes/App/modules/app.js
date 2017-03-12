@@ -113,7 +113,6 @@ export const onSetDocked = (docked) => {
     };
 };
 
-
 // The initial state of the App
 const initialState = Immutable.fromJS({
     sidebar: {

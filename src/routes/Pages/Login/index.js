@@ -1,9 +1,16 @@
 import Login from './Login';
+import { getAsyncInjectors } from '../../../utils/asyncInjectors';
 
-// Sync route definition
 export default (store) => {
+    const { injectSagas } = getAsyncInjectors(store);
+
     return ({
         path     : 'login',
-        component: Login
+        getComponent(nextState, next) {
+            require.ensure([], (require) => {
+                injectSagas(require('./sagas').default);
+                next(null, Login);
+            });
+        },
     });
 };

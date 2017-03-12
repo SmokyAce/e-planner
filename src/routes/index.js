@@ -8,7 +8,7 @@ import Home from './Home';
  PlainRoute objects to build route definitions.   */
 export const createRoutes = (store) => {
     // create reusable async injectors using getAsyncInjectors factory
-    const { injectReducer, injectSagas } = getAsyncInjectors(store);
+    const { injectReducer } = getAsyncInjectors(store);
 
     return (
     {
@@ -16,7 +16,6 @@ export const createRoutes = (store) => {
         getComponent(nextState, cb) {
             require.ensure([], (require) => {
                 injectReducer('app', require('./App/modules/app').default);
-                injectSagas(require('./App/modules/sagas').default);
 
                 cb(null, CoreLayout);
             });
@@ -25,12 +24,17 @@ export const createRoutes = (store) => {
         getChildRoutes(location, next) {
             require.ensure([], (require) => {
                 next(null, [
+                    require('./App').default(store),
+
+                    require('./Pages/Register').default(store),
+                    require('./Pages/Login').default(store),
+                    require('./Pages/ResetPwd').default(store),
+                    require('./Pages/Profile').default(store),
 
                     // Provide store for async reducers and middleware
                     require('./Counter').default(store),
                     require('./Zen').default(store),
-                    require('./Todos').default(store),
-                    require('./App').default(store)
+                    require('./Todos').default(store)
                 ]);
             });
         }

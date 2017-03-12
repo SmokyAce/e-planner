@@ -1,9 +1,9 @@
 import AppContainer from './containers/AppContainer';
-// import { getAsyncInjectors } from '../../utils/asyncInjectors';
+import { getAsyncInjectors } from '../../utils/asyncInjectors';
 import AppHome from '../AppHome';
 
 export default (store) => {
-    // const { injectReducer, injectSagas } = getAsyncInjectors(store);
+    const { injectSagas } = getAsyncInjectors(store);
 
     return ({
         path: 'app',
@@ -12,10 +12,7 @@ export default (store) => {
                 './containers/AppContainer',
                 './modules/sagas'
             ], (require) => {
-                // user reducers
-                // injectReducer('global', require('./modules/app').default);
-                // injectSagas(require('./modules/sagas').default);
-
+                injectSagas(require('./modules/sagas').default);
                 next(null, AppContainer);
             });
         },
@@ -25,11 +22,11 @@ export default (store) => {
                 next(null, [
 
                     // Pages
-                    require('../Pages/Register').default(store),
-                    require('../Pages/Login').default(store),
-                    require('../Pages/ResetPwd').default(store),
-                    require('../Pages/Profile').default(store),
-                    require('../Pages/Logout').default(store)
+                    //require('../Pages/Register').default(store),
+                    //require('../Pages/Login').default(store),
+                    //require('../Pages/ResetPwd').default(store),
+                    //require('../Pages/Profile').default(store),
+                    //require('../Pages/Logout').default(store)
                 ]);
             });
         }

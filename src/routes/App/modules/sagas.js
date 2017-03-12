@@ -20,7 +20,6 @@ import {
     CHANGE_FORM,
     FETCH_USER_INFO_REQUEST,
     SET_USER_INFO,
-    SET_MESSAGE,
     UPDATE_USER_INFO_REQUEST,
     CHANGE_USER_PASSWORD_REQUEST
 } from './app';
@@ -63,7 +62,6 @@ export function* authorize(authType, isRegistring = false) {
     } finally {
         // When done, we tell Redux we're not in the middle of a request any more
         yield put({ type: SENDING_REQUEST, sending: false });
-        forwardTo('/app');
     }
 }
 
@@ -100,7 +98,7 @@ export function* loginFlow() {
             // ...we send Redux appropiate action
             yield put({ type: SET_AUTH, newAuthState: false }); // User is not logged in (not authorized)
             yield call(logout); // Call `logout` effect
-            forwardTo('/app/logout'); // Go to root page
+            forwardTo('/');
         }
     }
 }
@@ -131,7 +129,7 @@ export function* logoutFlow() {
 
         if (result.success) {
             yield put({ type: SET_USER_INFO, userInfo: null });
-            forwardTo('/app/logout');
+            forwardTo('/');
         }
     }
 }
@@ -171,9 +169,6 @@ export function* fetchInfoFlow() {
  */
 export function* updateUserInfoFlow() {
     while (true) {
-        yield take(FETCH_USER_INFO_REQUEST);
-
-        // And we're listening for `LOGIN_REQUEST` actions and destructuring its payload
         const updateType = yield race({
             updateUserProfile: take(UPDATE_USER_INFO_REQUEST),
             changePassword   : take(CHANGE_USER_PASSWORD_REQUEST)
@@ -219,50 +214,9 @@ export function* registerFlow() {
         if (wasSuccessful) {
             yield put({ type: SET_AUTH, newAuthState: true }); // User is logged in (authorized) after being registered
             yield put({ type: CHANGE_FORM, newFormState: Map({ email: '', password: '', rememberMe: false }) });
+            forwardTo('/app'); // Go to home app page
         }
     }
-}
-
-/**
- * Watchers
- */
-export function* watchLoginFlow() {
-    // Fork watcher so we can continue execution
-    const watcher = yield fork(loginFlow);
-
-    // Suspend execution until location changes
-    yield take(LOCATION_CHANGE);
-    yield put({ type: SET_MESSAGE, message: '' });
-    yield cancel(watcher);
-}
-
-function* watchRegisterFlow() {
-    // Fork watcher so we can continue execution
-    const watcher = yield fork(registerFlow);
-
-    // Suspend execution until location changes
-    yield take(LOCATION_CHANGE);
-    // yield put({ type: SET_MESSAGE, message: '' });
-    yield cancel(watcher);
-}
-
-function* watchLogoutFlow() {
-    // Fork watcher so we can continue execution
-    const watcher = yield fork(logoutFlow);
-
-    // Suspend execution until location changes
-    yield take(LOCATION_CHANGE);
-    yield cancel(watcher);
-}
-
-function* watchUpdateUserInfoFlow() {
-    // Fork watcher so we can continue execution
-    const watcher = yield fork(updateUserInfoFlow);
-
-    // Suspend execution until location changes
-    yield take(LOCATION_CHANGE);
-    // yield put({ type: SET_MESSAGE, message: '' });
-    yield cancel(watcher);
 }
 
 // The root saga is what we actually send to Redux's middleware. In here we fork
@@ -271,10 +225,7 @@ function* watchUpdateUserInfoFlow() {
 // in the background, watching actions dispatched to the store.
 export default [
     fetchInfoFlow,
-    watchLoginFlow,
-    watchLogoutFlow,
-    watchRegisterFlow,
-    watchUpdateUserInfoFlow
+    logoutFlow
 ];
 
 // Little helper function to abstract going to different pages

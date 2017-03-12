@@ -15,7 +15,7 @@ class UserMenu extends React.Component {
 
     constructor(props) {
         super(props);
-        if (this.props.loggedIn && !this.props.currentlySending) {
+        if (this.props.loggedIn && !this.props.currentlySending && this.props.currentUser === null) {
             this.props.fetchUserInfoRequest();
         }
     }
@@ -32,7 +32,7 @@ class UserMenu extends React.Component {
                 }
                     id='user-dropdown' eventKey='2'
                 >
-                    <LinkContainer to='/app/profile'>
+                    <LinkContainer to='/profile'>
                         <MenuItem eventKey='2.1'>
                             <FormattedMessage {...messages.profileBtn} />
                         </MenuItem>
@@ -54,13 +54,13 @@ class UserMenu extends React.Component {
         return (
             <ul className='nav navbar-nav navbar-right'>
                 <li key={1}>
-                    <Link to='/app/login'>
+                    <Link to='/login'>
                         <FormattedMessage {...messages.loginBtn} />
                     </Link>
                 </li>
                 ,
                 <li key={2}>
-                    <Link to='/app/register'>
+                    <Link to='/register'>
                         <FormattedMessage {...messages.registerBtn} />
                     </Link>
                 </li>

@@ -13,6 +13,7 @@ const logger = createLogger();
 const sagaMiddleware = createSagaMiddleware();
 
 export default (initialState = {}) => {
+
     // ======================================================
     // Middleware Configuration
     // ======================================================
