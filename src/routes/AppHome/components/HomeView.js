@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 export const HomeView = ({ docked, onSetDocked, onSetOpen }) => {
     const onDockedClick = () => {
         onSetDocked(docked);

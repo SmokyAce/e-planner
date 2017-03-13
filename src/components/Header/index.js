@@ -13,7 +13,7 @@ import messages from './messages';
 const Header = () => {
     return (
         <div id='header'>
-            <Navbar collapseOnSelect inverse fluid>
+            <Navbar inverse fluid collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
                         <a href='/'>
@@ -29,21 +29,6 @@ const Header = () => {
                                 <i className='fa fa-home fa-fw' aria-hidden='true' />
                                 <FormattedMessage {...messages.home} />
                             </IndexLink>
-                        </li>
-                        <li>
-                            <Link to='/counter' activeClassName='route--active'>
-                                <FormattedMessage {...messages.counter} />
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to='/zen' activeClassName='route--active'>
-                                <FormattedMessage {...messages.zen} />
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to='/todos' activeClassName='route--active'>
-                                <FormattedMessage {...messages.todos} />
-                            </Link>
                         </li>
                         <li>
                             <Link to='/app' activeClassName='route--active'>

@@ -29,12 +29,7 @@ export const createRoutes = (store) => {
                     require('./Pages/Register').default(store),
                     require('./Pages/Login').default(store),
                     require('./Pages/ResetPwd').default(store),
-                    require('./Pages/Profile').default(store),
-
-                    // Provide store for async reducers and middleware
-                    require('./Counter').default(store),
-                    require('./Zen').default(store),
-                    require('./Todos').default(store)
+                    require('./Pages/Profile').default(store)
                 ]);
             });
         }

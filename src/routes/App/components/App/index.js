@@ -2,8 +2,9 @@ import React from 'react';
 import Immutable from 'immutable';
 import Sidebar from 'react-sidebar';
 
-import Header from '../../../../components/Header';
 import SidebarContent from '../SidebarContent';
+import Header from '../../../../components/Header';
+import AppNavPanel from '../AppNavPanel';
 
 import './App.scss';
 
@@ -39,7 +40,11 @@ class App extends React.Component {
                 >
                     <div className='app-container'>
                         <Header>{ children }</Header>
-                        { children }
+                        <div className='container'>
+                            <AppNavPanel />
+                            <br />
+                            { children }
+                        </div>
                     </div>
                 </Sidebar>
             </div>

@@ -18,18 +18,6 @@ export default defineMessages({
         id            : 'app.route.home',
         defaultMessage: 'Home'
     },
-    counter: {
-        id            : 'app.route.counter',
-        defaultMessage: 'Counter'
-    },
-    zen: {
-        id            : 'app.route.zen',
-        defaultMessage: 'Zen'
-    },
-    todos: {
-        id            : 'app.route.todos',
-        defaultMessage: 'Todos'
-    },
     planner: {
         id            : 'app.route.planner',
         defaultMessage: 'Planner'
