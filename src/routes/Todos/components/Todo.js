@@ -1,4 +1,5 @@
 import React from 'react';
+import './Todo.scss';
 
 const Todo = ({ onClick, onDelTodoClick, completed, text }) => {
     return (
