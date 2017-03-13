@@ -4,8 +4,7 @@
 
 // Sagas help us gather all our side effects (network requests in this case) in one place
 import { browserHistory } from 'react-router';
-import { take, call, put, fork, race, cancel } from 'redux-saga/effects';
-// import { delay } from 'redux-saga';
+import { take, call, put, race } from 'redux-saga/effects';
 import firebaseTools from '../../../utils/firebaseTools';
 import { Map } from 'immutable';
 
@@ -23,7 +22,6 @@ import {
     UPDATE_USER_INFO_REQUEST,
     CHANGE_USER_PASSWORD_REQUEST
 } from './app';
-import { LOCATION_CHANGE } from '../../../store/reducers/location';
 
 /**
  * Effect to handle authorization

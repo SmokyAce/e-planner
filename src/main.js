@@ -20,7 +20,7 @@ let render = (messages) => {
     const routes = require('./routes').default(store);
 
     ReactDOM.render(
-        <Main store={store} routes={routes} messages={messages}/>,
+        <Main store={store} routes={routes} messages={messages} />,
         MOUNT_NODE
     );
 };
@@ -33,7 +33,7 @@ if (__DEV__) {
         const renderError = (error) => {
             const RedBox = require('redbox-react').default;
 
-            ReactDOM.render(<RedBox error={error}/>, MOUNT_NODE);
+            ReactDOM.render(<RedBox error={error} />, MOUNT_NODE);
         };
 
         // Wrap render in try/catch

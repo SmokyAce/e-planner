@@ -5,12 +5,12 @@ export default (store) => {
     const { injectSagas } = getAsyncInjectors(store);
 
     return ({
-        path     : 'login',
+        path: 'login',
         getComponent(nextState, next) {
             require.ensure([], (require) => {
                 injectSagas(require('./sagas').default);
                 next(null, Login);
             });
-        },
+        }
     });
 };

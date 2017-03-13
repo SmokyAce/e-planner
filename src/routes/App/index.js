@@ -22,11 +22,11 @@ export default (store) => {
                 next(null, [
 
                     // Pages
-                    //require('../Pages/Register').default(store),
-                    //require('../Pages/Login').default(store),
-                    //require('../Pages/ResetPwd').default(store),
-                    //require('../Pages/Profile').default(store),
-                    //require('../Pages/Logout').default(store)
+                    // require('../Pages/Register').default(store),
+                    // require('../Pages/Login').default(store),
+                    // require('../Pages/ResetPwd').default(store),
+                    // require('../Pages/Profile').default(store),
+                    // require('../Pages/Logout').default(store)
                 ]);
             });
         }
