@@ -6,6 +6,7 @@
   "app.route.counter": "Counter",
   "app.route.zen": "Zen",
   "app.route.todos": "Todos",
+  "app.route.planner": "App",
   "app.lang": "Language",
   "app.profile.btn": "Profile",
   "app.email": "E-mail adress",

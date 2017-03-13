@@ -20,7 +20,7 @@ export default defineMessages({
     },
     planner: {
         id            : 'app.route.planner',
-        defaultMessage: 'Planner'
+        defaultMessage: 'App'
     },
     loginBtn: {
         id            : 'app.login.btn',

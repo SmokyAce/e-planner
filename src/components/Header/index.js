@@ -32,7 +32,7 @@ const Header = () => {
                         </li>
                         <li>
                             <Link to='/app' activeClassName='route--active'>
-                                App
+                                <FormattedMessage {...messages.planner} />
                             </Link>
                         </li>
                     </ul>

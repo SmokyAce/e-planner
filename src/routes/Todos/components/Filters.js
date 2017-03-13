@@ -1,29 +1,21 @@
 import React from 'react';
 
-import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
-import ActionFavorite from 'material-ui/svg-icons/action/favorite';
-import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import RadioButton from './RadioButton';
 import './Filters.scss';
+
 
 const Filters = ({ filter, onClick }) => {
     return (
         <form>
-            <RadioButtonGroup className='text-left radio-button-group'
-                name='Filters'
-                defaultSelected={filter}
-                onChange={(e, value) => {
-                    onClick(value);
-                }}
-            >
-                <RadioButton
-                    value='SHOW_ALL'
-                    label='All'
-                    checkedIcon={<ActionFavorite />}
-                    uncheckedIcon={<ActionFavoriteBorder />}
-                />
-                <RadioButton value='SHOW_ACTIVE' label='Active' />
-                <RadioButton value='SHOW_COMPLETED' label='Complete' />
-            </RadioButtonGroup>
+            <RadioButton isChecked={filter === 'SHOW_ALL'} value='SHOW_ALL' name='filters' filterName='All'
+                onChange={onClick}
+            />
+            <RadioButton isChecked={filter === 'SHOW_ACTIVE'} value='SHOW_ACTIVE' name='filters' filterName='Active'
+                onChange={onClick}
+            />
+            <RadioButton isChecked={filter === 'SHOW_COMPLETED'} value='SHOW_COMPLETED' name='filters'
+                filterName='Complete' onChange={onClick}
+            />
         </form>
     );
 };

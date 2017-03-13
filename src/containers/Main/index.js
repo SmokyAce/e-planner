@@ -4,10 +4,6 @@ import { Provider } from 'react-redux';
 // translations
 import LanguageProvider from '../LanguageProvider';
 
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
 import 'bootstrap-social';
 
 
@@ -28,11 +24,9 @@ class AppContainer extends React.Component {
         return (
             <Provider store={store}>
                 <LanguageProvider messages={messages}>
-                    <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-                        <div style={{ height: '100%' }}>
-                            <Router history={browserHistory} children={routes} />
-                        </div>
-                    </MuiThemeProvider>
+                    <div style={{ height: '100%' }}>
+                        <Router history={browserHistory} children={routes} />
+                    </div>
                 </LanguageProvider>
             </Provider>
         );
