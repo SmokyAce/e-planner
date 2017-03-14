@@ -38,13 +38,11 @@ class App extends React.Component {
                     onSetOpen={onSetOpen}
                     sidebarClassName='custom-sidebar-class'
                 >
-                    <div className='app-container'>
-                        <Header>{ children }</Header>
-                        <div className='container'>
-                            <AppNavPanel />
-                            <br />
-                            { children }
-                        </div>
+                    <Header>{ children }</Header>
+                    <div className='app-container container-fluide'>
+                        <AppNavPanel />
+                        <br />
+                        { children }
                     </div>
                 </Sidebar>
             </div>
