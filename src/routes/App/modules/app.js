@@ -119,49 +119,51 @@ const initialState = Immutable.fromJS({
         sidebarOpen  : false,
         sidebarDocked: true
     },
-    formState: {
-        email         : '',
-        password      : '',
-        repeatPassword: '',
-        rememberMe    : false,
-        displayName   : ''
-    },
-    loading         : false,
-    currentlySending: false,
-    message         : '',
-    currentUser     : null,
-    loggedIn        : auth.loggedIn()
+    auth: {
+        formState: {
+            email         : '',
+            password      : '',
+            repeatPassword: '',
+            rememberMe    : false,
+            displayName   : ''
+        },
+        loading         : false,
+        currentlySending: false,
+        message         : '',
+        currentUser     : null,
+        loggedIn        : auth.loggedIn()
+    }
 });
 
 const APP_ACTION_HANDLERS = {
     [APP_LOADING]: (state) => {
         return state
-            .set('loading', true)
-            .set('message', '');
+            .setIn(['auth', 'loading'], true)
+            .setIn(['auth', 'message'], '');
     },
     [CHANGE_FORM]: (state, action) => {
         return state
-            .set('formState', action.newFormState);
+            .setIn(['auth', 'formState'], action.newFormState);
     },
     [SET_AUTH]: (state, action) => {
         return state
-            .set('loggedIn', action.newAuthState);
+            .setIn(['auth', 'loggedIn'], action.newAuthState);
     },
     [SENDING_REQUEST]: (state, action) => {
         return state
-            .set('currentlySending', action.sending);
+            .setIn(['auth', 'currentlySending'], action.sending);
     },
     [SET_USER_INFO]: (state, action) => {
         return state
-            .set('currentUser', action.userInfo);
+            .setIn(['auth', 'currentUser'], action.userInfo);
     },
     [REQUEST_ERROR]: (state, action) => {
         return state
-            .set('message', action.error);
+            .setIn(['auth', 'message'], action.error);
     },
     [SET_MESSAGE]: (state, action) => {
         return state
-            .set('message', action.message);
+            .setIn(['auth', 'message'], action.message);
     },
     [SIDEBAR_OPEN_SET]: (state, action) => {
         return state.setIn(['sidebar', 'sidebarOpen'], action.payload);

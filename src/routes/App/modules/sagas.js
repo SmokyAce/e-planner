@@ -39,7 +39,9 @@ export function* authorize(authType, isRegistring = false) {
         if (authType.loginWithEmail) {
             userInfo = yield call(firebaseTools.loginUser, authType.loginWithEmail.data);
         } else if (authType.loginWithProvider) {
-            userInfo = yield firebaseTools.loginWithProvider(authType.loginWithProvider.provider);
+            const result = yield firebaseTools.loginWithProvider(authType.loginWithProvider.provider);
+
+            userInfo = (result.user) ? result.user : result;
         } else if (authType.registration) {
             userInfo = yield firebaseTools.registerUser(authType.registration.data);
         }

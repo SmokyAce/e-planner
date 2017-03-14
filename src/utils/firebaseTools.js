@@ -39,10 +39,12 @@ const FireBaseTools = {
     loginWithProvider: (p) => {
         const provider = FireBaseTools.getProvider(p);
 
-        return firebaseAuth.signInWithPopup(provider).then(firebaseAuth.currentUser).catch(error => ({
-            errorCode   : error.code,
-            errorMessage: error.message
-        }));
+        return firebaseAuth.signInWithPopup(provider)
+            .then(firebaseAuth.currentUser)
+            .catch(error => ({
+                errorCode   : error.code,
+                errorMessage: error.message
+            }));
     },
 
     /**

@@ -6,29 +6,41 @@ import { createSelector } from 'reselect';
 
 const selectApp = (state) => state.get('app');
 
+const selectAuth = (state) => state.getIn(['app', 'auth']);
+
 const makeSelectSidebar = () => createSelector(
     selectApp,
     (globalState) => globalState.get('sidebar')
 );
 
 const makeSelectCurrentUser = () => createSelector(
-    selectApp,
+    selectAuth,
     (globalState) => globalState.get('currentUser')
 );
 
 const makeSelectLoading = () => createSelector(
-    selectApp,
+    selectAuth,
     (globalState) => globalState.get('loading')
 );
 
 const makeSelectMessage = () => createSelector(
-    selectApp,
+    selectAuth,
     (globalState) => globalState.get('message')
 );
 
 const makeSelectFormState = () => createSelector(
-    selectApp,
+    selectAuth,
     (globalState) => globalState.get('formState')
+);
+
+const makeSelectLoggedIn = () => createSelector(
+    selectAuth,
+    (globalState) => globalState.get('loggedIn')
+);
+
+const makeSelectCurrentlySending = () => createSelector(
+    selectAuth,
+    (globalState) => globalState.get('currentlySending')
 );
 
 export {
@@ -37,5 +49,7 @@ export {
     makeSelectFormState,
     makeSelectCurrentUser,
     makeSelectLoading,
-    makeSelectMessage
+    makeSelectMessage,
+    makeSelectLoggedIn,
+    makeSelectCurrentlySending
 };

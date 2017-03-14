@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { createStructuredSelector } from 'reselect';
 
 import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router';
@@ -9,7 +10,14 @@ import { NavDropdown, MenuItem } from 'react-bootstrap';
 
 import Spinner from '../../components/Spinner';
 import { fetchUserInfoRequest, logoutRequest } from '../../routes/App/modules/app';
+import {
+    makeSelectCurrentUser,
+    makeSelectCurrentlySending,
+    makeSelectLoggedIn
+} from '../../routes/App/modules/selectors';
+
 import messages from './messages';
+
 
 class UserMenu extends React.Component {
 
@@ -85,12 +93,10 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch);
 };
 
-const mapStateToProps = (state) => {
-    return {
-        currentUser     : state.getIn(['app', 'currentUser']),
-        currentlySending: state.getIn(['app', 'currentlySending']),
-        loggedIn        : state.getIn(['app', 'loggedIn'])
-    };
-};
+const mapStateToProps = state => createStructuredSelector({
+    currentUser     : makeSelectCurrentUser(),
+    currentlySending: makeSelectCurrentlySending(),
+    loggedIn        : makeSelectLoggedIn()
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);
