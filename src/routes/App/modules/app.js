@@ -117,7 +117,7 @@ export const onSetDocked = (docked) => {
 const initialState = Immutable.fromJS({
     sidebar: {
         sidebarOpen  : false,
-        sidebarDocked: false
+        sidebarDocked: true
     },
     formState: {
         email         : '',

@@ -12,9 +12,12 @@ export function* watchLoginFlow() {
     const watcher = yield fork(loginFlow);
 
     // Suspend execution until location changes
-    yield take(LOCATION_CHANGE);
-    yield put({ type: SET_MESSAGE, message: '' });
-    yield cancel(watcher);
+    const data = yield take(LOCATION_CHANGE);
+
+    if (data.payload.action !== 'POP') {
+        yield put({ type: SET_MESSAGE, message: '' });
+        yield cancel(watcher);
+    }
 }
 
 // The root saga is what we actually send to Redux's middleware. In here we fork

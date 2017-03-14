@@ -74,8 +74,8 @@ const FireBaseTools = {
      * @returns {Promise}
      */
     fetchUser: () => new Promise((resolve, reject) => {
-        const unsub = firebaseAuth.onAuthStateChanged((user) => {
-            unsub();
+        const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
+            unsubscribe();
             resolve(user);
         }, (error) => {
             reject(error);
