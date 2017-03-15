@@ -13,7 +13,7 @@ import AddEvent from './AddEvent';
 
 // styles
 const styles = {
-    sidebar    : {
+    sidebar: {
         width: 300
     },
     sidebarLink: {
@@ -22,12 +22,12 @@ const styles = {
         color         : '#757575',
         textDecoration: 'none'
     },
-    divider    : {
+    divider: {
         margin         : '8px 0',
         height         : 1,
         backgroundColor: '#008cba'
     },
-    content    : {
+    content: {
         padding        : '5px',
         height         : '100%',
         backgroundColor: 'white'
@@ -40,7 +40,7 @@ const SidebarContent = ({ listOfEventsId, events, dispatch }) => {
     listOfEventsId.forEach((item) => {
         eventsList.push(
             <a key={item} style={styles.sidebarLink}>
-                <Link to={'/app/event/'+item} activeClassName='route--active'>
+                <Link to={`/app/event/${item}`} activeClassName='route--active'>
                     {events.getIn([item, 'name'])}
                 </Link>
             </a>);
@@ -50,8 +50,8 @@ const SidebarContent = ({ listOfEventsId, events, dispatch }) => {
     return (
         <TitlePanel>
             <div style={styles.content} className='text-left'>
-                <AddEvent dispatch={dispatch}/>
-                <div style={styles.divider}/>
+                <AddEvent dispatch={dispatch} />
+                <div style={styles.divider} />
                 {eventsList}
             </div>
         </TitlePanel>
@@ -61,7 +61,7 @@ const SidebarContent = ({ listOfEventsId, events, dispatch }) => {
 SidebarContent.propTypes = {
     dispatch      : React.PropTypes.func.isRequired,
     listOfEventsId: React.PropTypes.instanceOf(Immutable.List),
-    events        : React.PropTypes.instanceOf(Immutable.Map),
+    events        : React.PropTypes.instanceOf(Immutable.Map)
 };
 
 const mapStateToProps = state => createStructuredSelector({

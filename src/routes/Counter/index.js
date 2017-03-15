@@ -1,10 +1,10 @@
 import { getAsyncInjectors } from '../../utils/asyncInjectors';
 
 export default (store) => {
-    const { injectReducer } = getAsyncInjectors(store);
+    const { injectSagas } = getAsyncInjectors(store);
 
     return ({
-        path: 'event/:id/counter',
+        path: 'counter',
         /*  Async getComponent is only invoked when route matches   */
         getComponent(nextState, cb) {
             /*  Webpack - use 'require.ensure' to create a split point
@@ -13,10 +13,8 @@ export default (store) => {
                 /*  Webpack - use require callback to define
                  dependencies for bundling   */
                 const Counter = require('./containers/CounterContainer').default;
-                const reducer = require('./modules/counter').default;
 
-                /*  Add the reducer to the store on key 'counter'  */
-                injectReducer('counter', reducer);
+                injectSagas(require('./modules/sagas').default);
 
                 /*  Return getComponent   */
                 cb(null, Counter);

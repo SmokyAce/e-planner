@@ -1,13 +1,13 @@
-//import { getAsyncInjectors } from '../../utils/asyncInjectors';
+// import { getAsyncInjectors } from '../../utils/asyncInjectors';
 import AppEvent from './components/Event';
 
 export default (store) => {
-    //const { injectSagas } = getAsyncInjectors(store);
+    // const { injectSagas } = getAsyncInjectors(store);
     return ({
         path: 'event/:id',
         getComponent(nextState, next) {
             require.ensure([
-                './components/Event',
+                './components/Event'
             ], (require) => {
                 next(null, AppEvent);
             });

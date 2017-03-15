@@ -1,5 +1,5 @@
 import React from 'react';
-//import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Navbar } from 'react-bootstrap';
 import messages from './messages';
 
@@ -9,9 +9,9 @@ const TitlePanel = (props) => {
         <div>
             <Navbar inverse>
                 <Navbar.Header>
-                    <Navbar.Brand>
-                        {messages.titlePanel.defaultMessage}
-                    </Navbar.Brand>
+                    <div className='navbar-brand'>
+                        <FormattedMessage {...messages.titlePanel} />
+                    </div>
                 </Navbar.Header>
             </Navbar>
             {props.children}
@@ -20,10 +20,6 @@ const TitlePanel = (props) => {
 };
 
 TitlePanel.propTypes = {
-    title: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.object
-    ]),
     children: React.PropTypes.object
 };
 

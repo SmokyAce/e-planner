@@ -2,6 +2,10 @@ import Immutable, { fromJS } from 'immutable';
 import _ from 'lodash';
 import auth from '../../../utils/auth';
 
+import {
+    COUNTER_INCREMENT, COUNTER_DOUBLE_ASYNC
+} from '../../Counter/modules/counter';
+
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -23,6 +27,7 @@ export const SET_MESSAGE                  = 'SET_MESSAGE';
 export const SIDEBAR_OPEN_SET             = 'SIDEBAR_OPEN_SET';
 export const SIDEBAR_DOCKED_SET           = 'SIDEBAR_DOCKED_SET';
 export const ADD_EVENT                    = 'ADD_EVENT';
+
 
 // ------------------------------------
 // Actions
@@ -118,6 +123,8 @@ export const onSetDocked = (docked) => {
 export const addEvent = (options) => {
     const id = _.uniqueId();
 
+    options.counter = 0;
+
     return {
         type   : 'ADD_EVENT',
         payload: { id, options }
@@ -150,7 +157,8 @@ const initialState = Immutable.fromJS({
     listOfEventsId: [initialEventId],
     events        : {
         [initialEventId]: {
-            name: 'My first event'
+            name   : 'My first event',
+            counter: 1
         }
     }
 });
@@ -195,6 +203,14 @@ const APP_ACTION_HANDLERS = {
         return state
             .updateIn(['listOfEventsId'], list => list.push(action.payload.id))
             .setIn(['events', action.payload.id], fromJS(action.payload.options));
+    },
+    [COUNTER_INCREMENT]: (state, action) => {
+        return state
+            .setIn(['events', action.payload.eventId, 'counter'], (action.payload.value + 1));
+    },
+    [COUNTER_DOUBLE_ASYNC]: (state, action) => {
+        return state
+            .setIn(['events', action.payload.eventId, 'counter'], (action.payload.value * 2));
     }
 };
 

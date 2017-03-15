@@ -20,12 +20,12 @@ export default (store) => {
         getChildRoutes(location, next) {
             require.ensure([], (require) => {
                 next(null, [
-                    require('../AppEvent').default(store),
+                    require('../AppEvent').default(store)
 
                     // Provide store for async reducers and middleware
-                    //require('../Counter').default(store),
-                    //require('../Zen').default(store),
-                    //require('../Todos').default(store)
+                    // require('../Counter').default(store),
+                    // require('../Zen').default(store),
+                    // require('../Todos').default(store)
                 ]);
             });
         }

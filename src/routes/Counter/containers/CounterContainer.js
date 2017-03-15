@@ -1,5 +1,9 @@
 import { connect } from 'react-redux';
-import { increment, doubleAsync } from '../modules/counter';
+import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router';
+
+import { makeSelectEventCounter } from '../modules/selectors';
+
 
 /*  This is a container component. Notice it does not contain any JSX,
  nor does it import React. This component is **only** responsible for
@@ -12,13 +16,8 @@ import Counter from '../components/Counter';
  Keys will be passed as props to presentational components. Here we are
  implementing our wrapper around increment; the component doesn't care   */
 
-const mapDispatchToProps = {
-    increment: () => increment(1),
-    doubleAsync
-};
-
-const mapStateToProps = (state) => ({
-    counter: state.get('counter')
+const mapStateToProps = (state, { params }) => createStructuredSelector({
+    counter: makeSelectEventCounter(params.id)
 });
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
@@ -35,4 +34,4 @@ const mapStateToProps = (state) => ({
  Selectors are composable. They can be used as input to other selectors.
  https://github.com/reactjs/reselect    */
 
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+export default withRouter(connect(mapStateToProps, null)(Counter));

@@ -4,7 +4,7 @@ export default (store) => {
     const { injectReducer } = getAsyncInjectors(store);
 
     return ({
-        path: 'event/:id/zen',
+        path: 'zen',
         getComponent(nextState, next) {
             require.ensure([
                 './containers/ZenContainer',

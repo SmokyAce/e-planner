@@ -28,7 +28,7 @@ export const AddEvent = ({ dispatch }) => {
                         }
                     }}
                 >
-                    <strong>+</strong>
+                    <i className='fa fa-plus-circle fa-fw' aria-hidden='true' />
                 </button>
             </span>
         </div>
