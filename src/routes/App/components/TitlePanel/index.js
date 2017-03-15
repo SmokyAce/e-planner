@@ -1,12 +1,17 @@
 import React from 'react';
+//import { FormattedMessage } from 'react-intl';
 import { Navbar } from 'react-bootstrap';
+import messages from './messages';
+
 
 const TitlePanel = (props) => {
     return (
         <div>
             <Navbar inverse>
                 <Navbar.Header>
-                    <Navbar.Brand>{ props.title }</Navbar.Brand>
+                    <Navbar.Brand>
+                        {messages.titlePanel.defaultMessage}
+                    </Navbar.Brand>
                 </Navbar.Header>
             </Navbar>
             {props.children}

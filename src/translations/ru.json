@@ -26,5 +26,6 @@
   "app.logout.btn": "Выход",
   "app.register.description": "Регистрация",
   "app.register.btn": "Регистрация",
-  "app.planner.home.greeting": "Добро пожаловать в приложение - Event Planner"
+  "app.planner.home.greeting": "Добро пожаловать в приложение - Event Planner",
+  "app.title-panel.description": "Мои мероприятия"
 }

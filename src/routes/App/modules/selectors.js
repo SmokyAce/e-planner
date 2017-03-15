@@ -43,13 +43,27 @@ const makeSelectCurrentlySending = () => createSelector(
     (globalState) => globalState.get('currentlySending')
 );
 
+const makeSelectEvents = () => createSelector(
+    selectApp,
+    (globalState) => globalState.get('events')
+);
+
+const makeSelectListOfEventsId = () => createSelector(
+    selectApp,
+    (globalState) => globalState.get('listOfEventsId')
+);
+
 export {
     selectApp,
     makeSelectSidebar,
+    // auth
     makeSelectFormState,
     makeSelectCurrentUser,
     makeSelectLoading,
     makeSelectMessage,
     makeSelectLoggedIn,
-    makeSelectCurrentlySending
+    makeSelectCurrentlySending,
+    // events
+    makeSelectEvents,
+    makeSelectListOfEventsId
 };

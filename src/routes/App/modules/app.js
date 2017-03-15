@@ -1,4 +1,5 @@
-import Immutable from 'immutable';
+import Immutable, { fromJS } from 'immutable';
+import _ from 'lodash';
 import auth from '../../../utils/auth';
 
 // ------------------------------------
@@ -21,6 +22,7 @@ export const CHANGE_FORM                  = 'CHANGE_FORM';
 export const SET_MESSAGE                  = 'SET_MESSAGE';
 export const SIDEBAR_OPEN_SET             = 'SIDEBAR_OPEN_SET';
 export const SIDEBAR_DOCKED_SET           = 'SIDEBAR_DOCKED_SET';
+export const ADD_EVENT                    = 'ADD_EVENT';
 
 // ------------------------------------
 // Actions
@@ -113,6 +115,18 @@ export const onSetDocked = (docked) => {
     };
 };
 
+export const addEvent = (options) => {
+    const id = _.uniqueId();
+
+    return {
+        type   : 'ADD_EVENT',
+        payload: { id, options }
+    };
+};
+
+
+const initialEventId = _.uniqueId();
+
 // The initial state of the App
 const initialState = Immutable.fromJS({
     sidebar: {
@@ -132,6 +146,12 @@ const initialState = Immutable.fromJS({
         message         : '',
         currentUser     : null,
         loggedIn        : auth.loggedIn()
+    },
+    listOfEventsId: [initialEventId],
+    events        : {
+        [initialEventId]: {
+            name: 'My first event'
+        }
     }
 });
 
@@ -170,6 +190,11 @@ const APP_ACTION_HANDLERS = {
     },
     [SIDEBAR_DOCKED_SET]: (state, action) => {
         return state.setIn(['sidebar', 'sidebarDocked'], !action.payload);
+    },
+    [ADD_EVENT]: (state, action) => {
+        return state
+            .updateIn(['listOfEventsId'], list => list.push(action.payload.id))
+            .setIn(['events', action.payload.id], fromJS(action.payload.options));
     }
 };
 
