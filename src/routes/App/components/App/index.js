@@ -4,9 +4,8 @@ import Sidebar from 'react-sidebar';
 
 import SidebarContent from '../SidebarContent';
 import Header from '../../../../components/Header';
-// import AppNavPanel from '../AppNavPanel';
-
 import './App.scss';
+
 
 class App extends React.Component {
 
