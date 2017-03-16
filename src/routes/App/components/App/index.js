@@ -22,7 +22,7 @@ class App extends React.Component {
     };
 
     mediaQueryChanged = () => {
-        this.setState({ sidebarDocked: this.state.mql.matches });
+        this.props.onSetDocked(!this.state.mql.matches);
     };
 
     render = () => {
@@ -50,9 +50,10 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-    children : React.PropTypes.element,
-    sidebar  : React.PropTypes.instanceOf(Immutable.Map).isRequired,
-    onSetOpen: React.PropTypes.func.isRequired
+    children   : React.PropTypes.element,
+    sidebar    : React.PropTypes.instanceOf(Immutable.Map).isRequired,
+    onSetOpen  : React.PropTypes.func.isRequired,
+    onSetDocked: React.PropTypes.func.isRequired
 };
 
 export default App;
