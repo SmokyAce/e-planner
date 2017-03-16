@@ -1,31 +1,17 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 
-export const HomeView = ({ docked, onSetDocked, onSetOpen }) => {
-    const onDockedClick = () => {
-        onSetDocked(docked);
-    };
-    const onOpenClick = () => {
-        onSetOpen(true);
-    };
-
+export const HomeView = () => {
     return (
         <div>
-            <button className='btn btn-primary' onClick={onOpenClick}>
-                Open
-            </button>
-            <button className='btn btn-primary' onClick={onDockedClick}>
-                Docked
-            </button>
+            <h2><FormattedMessage {...messages.greeting} /></h2>
         </div>
     );
 };
 
-HomeView.propTypes = {
-    onSetOpen  : React.PropTypes.func,
-    docked     : React.PropTypes.bool,
-    onSetDocked: React.PropTypes.func
-};
+HomeView.propTypes = {};
 
 export default HomeView;
 

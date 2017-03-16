@@ -1,5 +1,6 @@
 // import { getAsyncInjectors } from '../../utils/asyncInjectors';
 import AppEvent from './components/Event';
+import EventHome from '../EventHome';
 
 export default (store) => {
     // const { injectSagas } = getAsyncInjectors(store);
@@ -12,6 +13,7 @@ export default (store) => {
                 next(null, AppEvent);
             });
         },
+        indexRoute: EventHome,
         getChildRoutes(location, next) {
             require.ensure([], (require) => {
                 next(null, [

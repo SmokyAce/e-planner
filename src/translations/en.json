@@ -2,6 +2,8 @@
   "app.language": "English",
   "app.description": "Event Planner",
   "app.greeting": "Welcome!",
+  "app.home.greeting": "Welcome to the Application Home Page",
+  "app.event.home.greeting": "Welcome to the Event Home Page",
   "app.route.home": "Home",
   "app.route.counter": "Counter",
   "app.route.zen": "Zen",
@@ -26,6 +28,5 @@
   "app.logout.btn": "Logout",
   "app.register.description": "Register",
   "app.register.btn": "Register",
-  "app.planner.home.greeting": "Welcome to the Event Planner application",
   "app.title-panel.description": "My events"
 }

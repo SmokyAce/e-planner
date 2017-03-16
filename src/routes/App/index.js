@@ -1,6 +1,7 @@
 import AppContainer from './containers/AppContainer';
 import { getAsyncInjectors } from '../../utils/asyncInjectors';
 import AppHome from '../AppHome';
+import auth from '../../utils/auth';
 
 export default (store) => {
     const { injectSagas } = getAsyncInjectors(store);
@@ -28,6 +29,7 @@ export default (store) => {
                     // require('../Todos').default(store)
                 ]);
             });
-        }
+        },
+        onEnter: auth.requireAuth
     });
 };
