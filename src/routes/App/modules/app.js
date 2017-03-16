@@ -138,7 +138,7 @@ const initialEventId = _.uniqueId();
 const initialState = Immutable.fromJS({
     sidebar: {
         sidebarOpen  : false,
-        sidebarDocked: true
+        sidebarDocked: (window.InnerWidth > 800)
     },
     auth: {
         formState: {
