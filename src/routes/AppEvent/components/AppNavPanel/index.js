@@ -6,7 +6,9 @@ import messages from './messages';
 
 
 const AppNavPanel = ({ params }) => {
-    const services = ['Home', 'Counter', 'Zen', 'Todos'];
+    const services = [
+        'Home', 'Counter', 'Todos', 'Guests', 'Budjet', 'Timing', 'Contractors', 'Blog', 'Quiz', 'Notebook'
+    ];
 
     return (
         <div className='app-nav-panel'>

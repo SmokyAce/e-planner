@@ -17,11 +17,16 @@ export default (store) => {
         getChildRoutes(location, next) {
             require.ensure([], (require) => {
                 next(null, [
-
-                    // Provide store for async reducers and middleware
+                    // require('../Zen').default(store),
                     require('../Counter').default(store),
-                    require('../Zen').default(store),
-                    require('../Todos').default(store)
+                    require('../Todos').default(store),
+                    require('../EventBlog').default(store),
+                    require('../EventBudget').default(store),
+                    require('../EventContractors').default(store),
+                    require('../EventGuests').default(store),
+                    require('../EventNotebook').default(store),
+                    require('../EventQuiz').default(store),
+                    require('../EventTiming').default(store)
                 ]);
             });
         }
