@@ -26,6 +26,7 @@ export const CHANGE_FORM                  = 'CHANGE_FORM';
 export const SET_MESSAGE                  = 'SET_MESSAGE';
 export const SIDEBAR_OPEN_SET             = 'SIDEBAR_OPEN_SET';
 export const SIDEBAR_DOCKED_SET           = 'SIDEBAR_DOCKED_SET';
+export const SIDEBAR_PULL_RIGHT_SET       = 'SIDEBAR_PULL_RIGHT_SET';
 export const ADD_EVENT                    = 'ADD_EVENT';
 
 
@@ -120,6 +121,13 @@ export const onSetDocked = (docked) => {
     };
 };
 
+export const onChangeSide = (pullRight) => {
+    return {
+        type   : 'SIDEBAR_PULL_RIGHT_SET',
+        payload: pullRight
+    };
+};
+
 export const addEvent = (options) => {
     const id = _.uniqueId();
 
@@ -138,7 +146,8 @@ const initialEventId = _.uniqueId();
 const initialState = Immutable.fromJS({
     sidebar: {
         sidebarOpen  : false,
-        sidebarDocked: (window.InnerWidth > 800)
+        sidebarDocked: (window.InnerWidth > 800),
+        pullRight    : true
     },
     auth: {
         formState: {
@@ -198,6 +207,9 @@ const APP_ACTION_HANDLERS = {
     },
     [SIDEBAR_DOCKED_SET]: (state, action) => {
         return state.setIn(['sidebar', 'sidebarDocked'], !action.payload);
+    },
+    [SIDEBAR_PULL_RIGHT_SET]: (state, action) => {
+        return state.setIn(['sidebar', 'pullRight'], action.payload);
     },
     [ADD_EVENT]: (state, action) => {
         return state

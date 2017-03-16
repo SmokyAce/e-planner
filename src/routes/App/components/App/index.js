@@ -37,6 +37,7 @@ class App extends React.Component {
                     docked={sidebar.get('sidebarDocked')}
                     onSetOpen={onSetOpen}
                     sidebarClassName='custom-sidebar-class'
+                    pullRight={sidebar.get('pullRight')}
                 >
                     <Header>{ children }</Header>
                     <div className='app-container container-fluide'>
