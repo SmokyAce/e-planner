@@ -124,27 +124,27 @@ const initialState = fromJS({
 const AUTH_ACTION_HANDLERS = {
     [CHANGE_FORM]: (state, action) => {
         return state
-            .setIn(['auth', 'formState'], action.newFormState);
+            .set('formState', action.newFormState);
     },
     [SET_AUTH]: (state, action) => {
         return state
-            .setIn(['auth', 'loggedIn'], action.newAuthState);
+            .set('loggedIn', action.newAuthState);
     },
     [SENDING_REQUEST]: (state, action) => {
         return state
-            .setIn(['auth', 'currentlySending'], action.sending);
+            .set('currentlySending', action.sending);
     },
     [SET_USER_INFO]: (state, action) => {
         return state
-            .setIn(['auth', 'currentUser'], action.userInfo);
+            .set('currentUser', action.userInfo);
     },
     [REQUEST_ERROR]: (state, action) => {
         return state
-            .setIn(['auth', 'message'], action.error);
+            .set('message', action.error);
     },
     [SET_MESSAGE]: (state, action) => {
         return state
-            .setIn(['auth', 'message'], action.message);
+            .set('message', action.message);
     }
 };
 
