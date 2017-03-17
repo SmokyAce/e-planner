@@ -4,7 +4,7 @@ import AppHome from '../AppHome';
 import auth from '../../utils/auth';
 
 export default (store) => {
-    const { injectSagas } = getAsyncInjectors(store);
+    const { injectSagas, injectReducer } = getAsyncInjectors(store);
 
     return ({
         path: 'app',
@@ -14,6 +14,10 @@ export default (store) => {
                 './modules/sagas'
             ], (require) => {
                 injectSagas(require('./modules/sagas').default);
+
+                injectReducer('app.sidebar', require('./modules/sidebar').default);
+                injectReducer('app.events', require('./modules/events').default);
+
                 next(null, AppContainer);
             });
         },

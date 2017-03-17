@@ -15,7 +15,7 @@ export const createRoutes = (store) => {
         path: '/',
         getComponent(nextState, cb) {
             require.ensure([], (require) => {
-                injectReducer('app', require('./App/modules/app').default);
+                injectReducer('app.auth', require('./App/modules/auth').default);
 
                 cb(null, CoreLayout);
             });

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { makeSelectSidebar } from '../modules/selectors';
-import { onSetOpen, onSetDocked } from '../modules/app';
+import { onSetOpen, onSetDocked } from '../modules/sidebar';
 
 const mapStateToProps = (state) => createStructuredSelector({
     sidebar: makeSelectSidebar()

@@ -1,10 +1,6 @@
-import Immutable, { fromJS } from 'immutable';
-import _ from 'lodash';
+import { fromJS } from 'immutable';
 import auth from '../../../utils/auth';
 
-import {
-    COUNTER_INCREMENT, COUNTER_DOUBLE_ASYNC
-} from '../../Counter/modules/counter';
 
 // ------------------------------------
 // Constants
@@ -107,77 +103,25 @@ export function registerRequest(data) {
     return { type: REGISTER_REQUEST, data };
 }
 
-export const onSetOpen = (open) => {
-    return {
-        type   : 'SIDEBAR_OPEN_SET',
-        payload: open
-    };
-};
-
-export const onSetDocked = (docked) => {
-    return {
-        type   : 'SIDEBAR_DOCKED_SET',
-        payload: docked
-    };
-};
-
-export const onChangeSide = (pullRight) => {
-    return {
-        type   : 'SIDEBAR_PULL_RIGHT_SET',
-        payload: pullRight
-    };
-};
-
-export const addEvent = (options) => {
-    const id = _.uniqueId();
-
-    options.counter = 0;
-
-    return {
-        type   : 'ADD_EVENT',
-        payload: { id, options }
-    };
-};
-
-
-const initialEventId = _.uniqueId();
 
 // The initial state of the App
-const initialState = Immutable.fromJS({
-    sidebar: {
-        sidebarOpen  : false,
-        sidebarDocked: (window.innerWidth > 800),
-        pullRight    : true
+const initialState = fromJS({
+    formState: {
+        email         : '',
+        password      : '',
+        repeatPassword: '',
+        rememberMe    : false,
+        displayName   : ''
     },
-    auth: {
-        formState: {
-            email         : '',
-            password      : '',
-            repeatPassword: '',
-            rememberMe    : false,
-            displayName   : ''
-        },
-        loading         : false,
-        currentlySending: false,
-        message         : '',
-        currentUser     : null,
-        loggedIn        : auth.loggedIn()
-    },
-    listOfEventsId: [initialEventId],
-    events        : {
-        [initialEventId]: {
-            name   : 'My first event',
-            counter: 1
-        }
-    }
+    loading         : false,
+    currentlySending: false,
+    message         : '',
+    currentUser     : null,
+    loggedIn        : auth.loggedIn()
+
 });
 
-const APP_ACTION_HANDLERS = {
-    [APP_LOADING]: (state) => {
-        return state
-            .setIn(['auth', 'loading'], true)
-            .setIn(['auth', 'message'], '');
-    },
+const AUTH_ACTION_HANDLERS = {
     [CHANGE_FORM]: (state, action) => {
         return state
             .setIn(['auth', 'formState'], action.newFormState);
@@ -201,33 +145,11 @@ const APP_ACTION_HANDLERS = {
     [SET_MESSAGE]: (state, action) => {
         return state
             .setIn(['auth', 'message'], action.message);
-    },
-    [SIDEBAR_OPEN_SET]: (state, action) => {
-        return state.setIn(['sidebar', 'sidebarOpen'], action.payload);
-    },
-    [SIDEBAR_DOCKED_SET]: (state, action) => {
-        return state.setIn(['sidebar', 'sidebarDocked'], !action.payload);
-    },
-    [SIDEBAR_PULL_RIGHT_SET]: (state, action) => {
-        return state.setIn(['sidebar', 'pullRight'], action.payload);
-    },
-    [ADD_EVENT]: (state, action) => {
-        return state
-            .updateIn(['listOfEventsId'], list => list.push(action.payload.id))
-            .setIn(['events', action.payload.id], fromJS(action.payload.options));
-    },
-    [COUNTER_INCREMENT]: (state, action) => {
-        return state
-            .setIn(['events', action.payload.eventId, 'counter'], (action.payload.value + 1));
-    },
-    [COUNTER_DOUBLE_ASYNC]: (state, action) => {
-        return state
-            .setIn(['events', action.payload.eventId, 'counter'], (action.payload.value * 2));
     }
 };
 
-export default function appReducer(state = initialState, action) {
-    const handler = APP_ACTION_HANDLERS[action.type];
+export default function authReducer(state = initialState, action) {
+    const handler = AUTH_ACTION_HANDLERS[action.type];
 
     return handler ? handler(state, action) : state;
 }

@@ -24,6 +24,21 @@ export function checkStore(store) {
     );
 }
 
+
+const replaceAsyncReducers = (rootReducers, keys, reducer) => {
+    const key = keys.shift();
+
+    if (keys.length === 0) {
+        rootReducers[key] = reducer;
+        return;
+    }
+    if (rootReducers[key] === undefined) rootReducers[key] = {};
+    const nextRootReducers = rootReducers[key];
+
+    return replaceAsyncReducers(nextRootReducers, keys, reducer);
+};
+
+
 /**
  * Inject an asynchronously loaded reducer
  */
@@ -38,8 +53,13 @@ export function injectAsyncReducer(store, isValid) {
 
         if (Reflect.has(store.asyncReducers, key)) return;
 
-        store.asyncReducers[key] = asyncReducer; // eslint-disable-line no-param-reassign
+        const keys = key.split('.');
+
+        replaceAsyncReducers(store.asyncReducers, keys, asyncReducer);
+        //  store.asyncReducers[key] = reducer
         store.replaceReducer(createReducer(store.asyncReducers));
+        // store.asyncReducers[key] = asyncReducer; // eslint-disable-line no-param-reassign
+        // store.replaceReducer(createReducer(store.asyncReducers));
     };
 }
 
@@ -63,6 +83,7 @@ export function injectAsyncSagas(store, isValid) {
         sagas.map(store.runSaga);
     };
 }
+
 
 /**
  * Helper for creating injectors

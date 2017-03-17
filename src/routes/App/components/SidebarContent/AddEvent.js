@@ -1,5 +1,5 @@
 import React from 'react';
-import { addEvent } from '../../modules/app';
+import { addEvent } from '../../modules/events';
 
 export const AddEvent = ({ dispatch }) => {
     let input;

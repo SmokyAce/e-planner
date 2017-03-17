@@ -43,14 +43,14 @@ const makeSelectCurrentlySending = () => createSelector(
     (globalState) => globalState.get('currentlySending')
 );
 
-const makeSelectEvents = () => createSelector(
+const makeSelectEventsByIds = () => createSelector(
     selectApp,
-    (globalState) => globalState.get('events')
+    (globalState) => globalState.getIn(['events', 'byIds'])
 );
 
-const makeSelectListOfEventsId = () => createSelector(
+const makeSelectEventsListOfIds = () => createSelector(
     selectApp,
-    (globalState) => globalState.get('listOfEventsId')
+    (globalState) => globalState.getIn(['events', 'listOfIds'])
 );
 
 export {
@@ -64,6 +64,6 @@ export {
     makeSelectLoggedIn,
     makeSelectCurrentlySending,
     // events
-    makeSelectEvents,
-    makeSelectListOfEventsId
+    makeSelectEventsByIds,
+    makeSelectEventsListOfIds
 };

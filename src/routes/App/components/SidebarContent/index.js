@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Immutable from 'immutable';
 import { createStructuredSelector } from 'reselect';
 // import { FormattedMessage } from 'react-intl';
 
-import { makeSelectEvents, makeSelectListOfEventsId } from '../../modules/selectors';
+import { makeSelectEventsByIds, makeSelectEventsListOfIds } from '../../modules/selectors';
 
 import TitlePanel from '../TitlePanel';
 import AddEvent from './AddEvent';
@@ -34,14 +34,14 @@ const styles = {
     }
 };
 
-const SidebarContent = ({ listOfEventsId, events, dispatch }) => {
+const SidebarContent = ({ listOfEventsId, eventsByIds, dispatch }) => {
     const eventsList = [];
 
     listOfEventsId.forEach((item) => {
         eventsList.push(
             <a key={item} style={styles.sidebarLink}>
                 <Link to={`/app/event/${item}`} activeClassName='route--active'>
-                    {events.getIn([item, 'name'])}
+                    {eventsByIds.getIn([item, 'name'])}
                 </Link>
             </a>);
     });
@@ -59,14 +59,14 @@ const SidebarContent = ({ listOfEventsId, events, dispatch }) => {
 };
 
 SidebarContent.propTypes = {
-    dispatch      : React.PropTypes.func.isRequired,
-    listOfEventsId: React.PropTypes.instanceOf(Immutable.List),
-    events        : React.PropTypes.instanceOf(Immutable.Map)
+    dispatch      : PropTypes.func.isRequired,
+    listOfEventsId: PropTypes.instanceOf(Immutable.List),
+    eventsByIds   : PropTypes.instanceOf(Immutable.Map)
 };
 
 const mapStateToProps = state => createStructuredSelector({
-    events        : makeSelectEvents(),
-    listOfEventsId: makeSelectListOfEventsId()
+    eventsByIds   : makeSelectEventsByIds(),
+    listOfEventsId: makeSelectEventsListOfIds()
 });
 
 export default connect(mapStateToProps, null)(SidebarContent);

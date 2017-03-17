@@ -21,7 +21,7 @@ import {
     SET_USER_INFO,
     UPDATE_USER_INFO_REQUEST,
     CHANGE_USER_PASSWORD_REQUEST
-} from './app';
+} from './auth';
 
 /**
  * Effect to handle authorization

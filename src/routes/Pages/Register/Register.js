@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
 
-import { registerRequest, loginWithProviderRequest, changeForm } from '../../App/modules/app';
+import { registerRequest, loginWithProviderRequest, changeForm } from '../../App/modules/auth';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectFormState, makeSelectMessage } from '../../App/modules/selectors';
 

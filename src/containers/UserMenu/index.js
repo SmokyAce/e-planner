@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import { NavDropdown, MenuItem } from 'react-bootstrap';
 
 import Spinner from '../../components/Spinner';
-import { fetchUserInfoRequest, logoutRequest } from '../../routes/App/modules/app';
+import { fetchUserInfoRequest, logoutRequest } from '../../routes/App/modules/auth';
 import {
     makeSelectCurrentUser,
     makeSelectCurrentlySending,

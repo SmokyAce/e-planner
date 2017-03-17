@@ -1,19 +1,19 @@
 import { createSelector } from 'reselect';
 
-const selectEvents = (state) => state.getIn(['app', 'events']);
+const selectEventsByIds = (state) => state.getIn(['app', 'events', 'byIds']);
 
 const makeSelectEvent = (eventId) => createSelector(
-    selectEvents,
+    selectEventsByIds,
     (globalState) => globalState.get(eventId)
 );
 
 const makeSelectEventCounter = (eventId) => createSelector(
-    selectEvents,
+    selectEventsByIds,
     (globalState) => globalState.getIn([eventId, 'counter'])
 );
 
 export {
-    selectEvents,
+    selectEventsByIds,
     makeSelectEvent,
     makeSelectEventCounter
 };

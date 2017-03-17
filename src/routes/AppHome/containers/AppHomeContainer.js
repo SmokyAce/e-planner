@@ -1,6 +1,6 @@
 import AppHome from '../components/HomeView';
 import { connect } from 'react-redux';
-import { onSetOpen, onSetDocked, onChangeSide } from '../../App/modules/app';
+import { onSetOpen, onSetDocked, onChangeSide } from '../../App/modules/sidebar';
 
 const mapStateToProps = (state) => {
     return {
