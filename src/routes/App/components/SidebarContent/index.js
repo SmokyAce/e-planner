@@ -13,9 +13,6 @@ import AddEvent from './AddEvent';
 
 // styles
 const styles = {
-    sidebar: {
-        width: 300
-    },
     sidebarLink: {
         display       : 'block',
         padding       : '7px 0px',

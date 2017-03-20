@@ -95,31 +95,9 @@ webpackConfig.plugins = [
         minify: {
             collapseWhitespace: false
         }
-    }),
+    })
     // Put it in the end to capture all the HtmlWebpackPlugin's
     // assets manipulations and do leak its manipulations to HtmlWebpackPlugin
-    new OfflinePlugin({
-        relativePaths: false,
-        publicPath   : '/',
-
-        // No need to cache .htaccess. See http://mxs.is/googmp,
-        // this is applied before any match in `caches` section
-        excludes: ['.htaccess'],
-
-        caches: {
-            main: [':rest:'],
-
-            // All chunks marked as `additional`, loaded after main section
-            // and do not prevent SW to install. Change to `optional` if
-            // do not want them to be preloaded at all (cached only when first loaded)
-            additional: ['*.chunk.js']
-        },
-
-        // Removes warning for about `additional` section usage
-        safeToUseOptionalCaches: true,
-
-        AppCache: false
-    })
 ];
 
 // Ensure that the compiler exits on errors during testing so that
@@ -149,6 +127,23 @@ if (__DEV__) {
 } else if (__PROD__) {
     debug('Enable plugins for production (OccurenceOrder, UglifyJS).');
     webpackConfig.plugins.push(
+        new OfflinePlugin({
+            relativePaths: false,
+            publicPath   : '/',
+            // No need to cache .htaccess. See http://mxs.is/googmp,
+            // this is applied before any match in `caches` section
+            excludes     : ['.htaccess'],
+            caches       : {
+                main      : [':rest:'],
+                // All chunks marked as `additional`, loaded after main section
+                // and do not prevent SW to install. Change to `optional` if
+                // do not want them to be preloaded at all (cached only when first loaded)
+                additional: ['*.chunk.js']
+            },
+            // Removes warning for about `additional` section usage
+            safeToUseOptionalCaches: true,
+            AppCache               : false
+        }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
@@ -164,7 +159,10 @@ if (__DEV__) {
 if (!__TEST__) {
     webpackConfig.plugins.push(
         new webpack.optimize.CommonsChunkPlugin({
-            names: ['vendor']
+            names    : ['vendor'],
+            children : true,
+            minChunks: 2,
+            async    : true
         })
     );
 }
@@ -219,18 +217,17 @@ webpackConfig.module.rules.push(
         test  : /\.ttf(\?.*)?$/,
         loader: 'url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream'
     }, {
-        test: /\.eot(\?.*)?$/,
+        test  : /\.eot(\?.*)?$/,
         loader: 'file-loader?prefix=fonts/&name=[path][name].[ext]'
     }, {
         test  : /\.svg(\?.*)?$/,
         loader: 'url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml'
     }, {
-        test: /\.(png|jpg|gif)$/,
+        test  : /\.(png|jpg|gif)$/,
         loader: 'url-loader?limit=8192'
     }
-/*    { test: /\.gif$/, loader: "url-loader?limit=10000&mimetype=image/gif" },
-    { test: /\.jpg$/, loader: "url-loader?limit=10000&mimetype=image/jpg" }*/
-
+    /*    { test: /\.gif$/, loader: "url-loader?limit=10000&mimetype=image/gif" },
+     { test: /\.jpg$/, loader: "url-loader?limit=10000&mimetype=image/jpg" }*/
 );
 /* eslint-enable */
 
