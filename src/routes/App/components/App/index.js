@@ -1,7 +1,7 @@
 import React from 'react';
 import Immutable from 'immutable';
-import Sidebar from 'react-sidebar';
 
+import Sidebar from '../Sidebar/Sidebar';
 import SidebarContent from '../SidebarContent';
 import Header from '../../../../components/Header';
 import './App.scss';
@@ -9,41 +9,28 @@ import './App.scss';
 
 class App extends React.Component {
 
-    componentWillMount = () => {
-        const mql = window.matchMedia('(min-width: 800px)');
-
-        mql.addListener(this.mediaQueryChanged);
-        this.setState({ mql, sidebarDocked: mql.matches });
-    };
-
-    componentWillUnmount = () => {
-        this.state.mql.removeListener(this.mediaQueryChanged);
-    };
-
-    mediaQueryChanged = () => {
-        this.props.onSetDocked(!this.state.mql.matches);
-    };
-
     render = () => {
-        const content = <SidebarContent />;
+        const { sidebar, onSetOpen, onSetDocked, children } = this.props;
 
-        const { sidebar, onSetOpen, children } = this.props;
+        const content = <SidebarContent style={{ width: sidebar.get('sidebarWidth') }} />;
+
+        const sidebarProps = {
+            sidebar         : content,
+            sidebarClassName: 'custom-sidebar-class',
+            docked          : sidebar.get('sidebarDocked'),
+            open            : sidebar.get('sidebarOpen'),
+            pullRight       : sidebar.get('pullRight'),
+            onSetOpen,
+            onSetDocked
+        };
 
         return (
-            <div className='text-center'>
-                <Sidebar sidebar={content}
-                    open={sidebar.get('sidebarOpen')}
-                    docked={sidebar.get('sidebarDocked')}
-                    onSetOpen={onSetOpen}
-                    sidebarClassName='custom-sidebar-class'
-                    pullRight={sidebar.get('pullRight')}
-                >
-                    <Header>{ children }</Header>
-                    <div className='app-container container-fluide'>
-                        { children }
-                    </div>
-                </Sidebar>
-            </div>
+            <Sidebar {...sidebarProps}>
+                <Header>{ children }</Header>
+                <div className='app-container container-fluide'>
+                    { children }
+                </div>
+            </Sidebar>
         );
     }
 

@@ -13,6 +13,10 @@ import AddEvent from './AddEvent';
 
 // styles
 const styles = {
+    sidebar: {
+        width : 256,
+        height: '100%'
+    },
     sidebarLink: {
         display       : 'block',
         padding       : '7px 0px',
@@ -26,12 +30,13 @@ const styles = {
     },
     content: {
         padding        : '5px',
-        height         : '100%',
         backgroundColor: 'white'
     }
 };
 
-const SidebarContent = ({ listOfEventsId, eventsByIds, dispatch }) => {
+const SidebarContent = ({ listOfEventsId, eventsByIds, dispatch, style }) => {
+    const sidebarStyle = style ? { ...styles.sidebar, ...style } : styles.sidebar;
+
     const eventsList = [];
 
     listOfEventsId.forEach((item) => {
@@ -45,7 +50,7 @@ const SidebarContent = ({ listOfEventsId, eventsByIds, dispatch }) => {
     // <a key={item} href='#' style={styles.sidebarLink}>{events.getIn([item, 'name'])}</a>);
 
     return (
-        <TitlePanel>
+        <TitlePanel style={sidebarStyle}>
             <div style={styles.content} className='text-left'>
                 <AddEvent dispatch={dispatch} />
                 <div style={styles.divider} />
@@ -58,7 +63,8 @@ const SidebarContent = ({ listOfEventsId, eventsByIds, dispatch }) => {
 SidebarContent.propTypes = {
     dispatch      : PropTypes.func.isRequired,
     listOfEventsId: PropTypes.instanceOf(Immutable.List),
-    eventsByIds   : PropTypes.instanceOf(Immutable.Map)
+    eventsByIds   : PropTypes.instanceOf(Immutable.Map),
+    style         : PropTypes.object
 };
 
 const mapStateToProps = state => createStructuredSelector({

@@ -7,6 +7,7 @@ import { fromJS } from 'immutable';
 export const SIDEBAR_OPEN_SET             = 'SIDEBAR_OPEN_SET';
 export const SIDEBAR_DOCKED_SET           = 'SIDEBAR_DOCKED_SET';
 export const SIDEBAR_PULL_RIGHT_SET       = 'SIDEBAR_PULL_RIGHT_SET';
+export const SIDEBAR_WIDTH_SET            = 'SIDEBAR_WIDTH_SET';
 
 
 // ------------------------------------
@@ -33,12 +34,20 @@ export const onChangeSide = (pullRight) => {
     };
 };
 
+export const onSetWidth = (width) => {
+    return {
+        type   : 'SIDEBAR_WIDTH_SET',
+        payload: width
+    };
+};
+
 
 // The initial state of the App
 const initialState = fromJS({
     sidebarOpen  : false,
     sidebarDocked: (window.innerWidth > 800),
-    pullRight    : true
+    pullRight    : true,
+    sidebarWidth : 256
 });
 
 const APP_ACTION_HANDLERS = {
@@ -50,6 +59,9 @@ const APP_ACTION_HANDLERS = {
     },
     [SIDEBAR_PULL_RIGHT_SET]: (state, action) => {
         return state.set('pullRight', action.payload);
+    },
+    [SIDEBAR_WIDTH_SET]: (state, action) => {
+        return state.set('sidebarWidth', action.payload);
     }
 };
 

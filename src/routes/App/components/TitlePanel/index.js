@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Navbar } from 'react-bootstrap';
 import messages from './messages';
@@ -6,7 +6,7 @@ import messages from './messages';
 
 const TitlePanel = (props) => {
     return (
-        <div>
+        <div style={props.style}>
             <Navbar inverse>
                 <Navbar.Header>
                     <div className='navbar-brand'>
@@ -20,7 +20,8 @@ const TitlePanel = (props) => {
 };
 
 TitlePanel.propTypes = {
-    children: React.PropTypes.object
+    children: PropTypes.object.isRequired,
+    style   : PropTypes.object
 };
 
 export default TitlePanel;
