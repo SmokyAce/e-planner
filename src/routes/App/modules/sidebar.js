@@ -13,33 +13,25 @@ export const SIDEBAR_WIDTH_SET            = 'SIDEBAR_WIDTH_SET';
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const onSetOpen = (open) => {
-    return {
-        type   : 'SIDEBAR_OPEN_SET',
-        payload: open
-    };
-};
+export const onSetOpen = (open) => ({
+    type   : 'SIDEBAR_OPEN_SET',
+    payload: open
+});
 
-export const onSetDocked = (docked) => {
-    return {
-        type   : 'SIDEBAR_DOCKED_SET',
-        payload: docked
-    };
-};
+export const onSetDocked = (docked) => ({
+    type   : 'SIDEBAR_DOCKED_SET',
+    payload: docked
+});
 
-export const onChangeSide = (pullRight) => {
-    return {
-        type   : 'SIDEBAR_PULL_RIGHT_SET',
-        payload: pullRight
-    };
-};
+export const onChangeSide = (pullRight) => ({
+    type   : 'SIDEBAR_PULL_RIGHT_SET',
+    payload: pullRight
+});
 
-export const onSetWidth = (width) => {
-    return {
-        type   : 'SIDEBAR_WIDTH_SET',
-        payload: width
-    };
-};
+export const onSetWidth = (width) => ({
+    type   : 'SIDEBAR_WIDTH_SET',
+    payload: width
+});
 
 
 // The initial state of the App

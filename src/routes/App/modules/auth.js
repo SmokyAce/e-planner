@@ -35,38 +35,41 @@ export const ADD_EVENT                    = 'ADD_EVENT';
  * @param  {string} newFormState.username The new text of the username input field of the form
  * @param  {string} newFormState.password The new text of the password input field of the form
  */
-export function changeForm(newFormState) {
-    return { type: CHANGE_FORM, newFormState };
-}
+export const changeForm = (newFormState) => ({
+    type: CHANGE_FORM,
+    newFormState
+});
 
 /**
  * Sets the message state
  * @param  {string} message The new text of the error message on the form
  */
-export function setMesssage(message) {
-    return { type: SET_MESSAGE, message };
-}
+export const setMesssage = (message) => ({
+    type: SET_MESSAGE,
+    message
+});
 
 /**
  * Tells the app we want to fetch a user info
  */
-export function fetchUserInfoRequest() {
-    return { type: FETCH_USER_INFO_REQUEST };
-}
+export const fetchUserInfoRequest = () => ({
+    type: FETCH_USER_INFO_REQUEST
+});
 
 /**
  * Tells the app we want to update a user info
  */
-export function updateUserInfoRequest(data) {
-    return { type: UPDATE_USER_INFO_REQUEST, data };
-}
+export const updateUserInfoRequest = (data) => ({
+    type: UPDATE_USER_INFO_REQUEST,
+    data
+});
 
 /**
  * Tells the app we want to change a user password
  */
-export function changeUserPwdRequest(newPassword) {
-    return { type: CHANGE_USER_PASSWORD_REQUEST, newPassword };
-}
+export const changeUserPwdRequest = (newPassword) => ({
+    type: CHANGE_USER_PASSWORD_REQUEST, newPassword
+});
 
 /**
  * Tells the app we want to log in a user
@@ -74,24 +77,26 @@ export function changeUserPwdRequest(newPassword) {
  * @param  {string} data.username The username of the user to log in
  * @param  {string} data.password The password of the user to log in
  */
-export function loginRequest(data) {
-    return { type: LOGIN_REQUEST, data };
-}
+export const loginRequest = (data) => ({
+    type: LOGIN_REQUEST,
+    data
+});
 
 /**
  * Tells the app we want to log in a user
  * @param  {string} provider          The provider which selected user
  */
-export function loginWithProviderRequest(provider) {
-    return { type: LOGIN_WITH_PROVIDER_REQUEST, provider };
-}
+export const loginWithProviderRequest = (provider) => ({
+    type: LOGIN_WITH_PROVIDER_REQUEST,
+    provider
+});
 
 /**
  * Tells the app we want to logout
  */
-export function logoutRequest() {
-    return { type: LOGOUT };
-}
+export const logoutRequest = () => ({
+    type: LOGOUT
+});
 
 /**
  * Tells the app we want to register a user
@@ -99,9 +104,10 @@ export function logoutRequest() {
  * @param  {string} data.email    The email of the user to register
  * @param  {string} data.password The password of the user to register
  */
-export function registerRequest(data) {
-    return { type: REGISTER_REQUEST, data };
-}
+export const registerRequest = (data) => ({
+    type: REGISTER_REQUEST,
+    data
+});
 
 
 // The initial state of the App
