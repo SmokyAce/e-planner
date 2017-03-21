@@ -5,6 +5,7 @@
   "app.home.greeting": "Добро пожаловать на главную страницу приложения!",
   "app.event.home.greeting": "Добро пожаловать на Домашнюю страницу!",
 
+  "app.title-panel.description": "Мои события",
   "app.event.guests.description": "Сервис: Список гостей!",
   "app.event.budjet.description": "Сервис: Бюджет!",
   "app.event.timing.description": "Сервис: Тайминг!",
@@ -14,6 +15,7 @@
   "app.event.notebook.description": "Сервис: Блокнот!",
 
   "app.route.home": "Домой",
+  "app.route.planner": "Планировщик",
   "app.route.counter": "Счетчик",
   "app.route.zen": "Дзен",
   "app.route.todos": "Список дел",
@@ -44,6 +46,5 @@
   "app.logout.btn": "Выход",
   "app.register.description": "Регистрация",
   "app.register.btn": "Регистрация",
-  "app.planner.home.greeting": "Добро пожаловать в приложение - Event Planner",
-  "app.title-panel.description": "Мои мероприятия"
+  "app.planner.home.greeting": "Добро пожаловать в приложение - Event Planner"
 }

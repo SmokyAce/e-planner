@@ -7,7 +7,7 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
     titlePanel: {
-        id            : 'app.title-penel.description',
+        id            : 'app.title-panel.description',
         defaultMessage: 'My events'
     }
 });

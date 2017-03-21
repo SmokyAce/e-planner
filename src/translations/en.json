@@ -5,6 +5,7 @@
   "app.home.greeting": "Welcome to the Application Home Page",
   "app.event.home.greeting": "Welcome to the Event Home Page",
 
+  "app.title-panel.description": "My Events",
   "app.event.guests.description": "Service: Guests",
   "app.event.budjet.description": "Service: Budjet",
   "app.event.timing.description": "Service: Timing",
@@ -43,6 +44,5 @@
   "app.logout.description": "You are logged out!",
   "app.logout.btn": "Logout",
   "app.register.description": "Register",
-  "app.register.btn": "Register",
-  "app.title-panel.description": "My events"
+  "app.register.btn": "Register"
 }

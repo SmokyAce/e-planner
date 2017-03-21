@@ -53,6 +53,11 @@ const makeSelectEventsListOfIds = () => createSelector(
     (globalState) => globalState.getIn(['events', 'listOfIds'])
 );
 
+const makeSelectEventsFormState = () => createSelector(
+    selectApp,
+    (globalState) => globalState.getIn(['events', 'formState'])
+);
+
 export {
     selectApp,
     makeSelectSidebar,
@@ -65,5 +70,6 @@ export {
     makeSelectCurrentlySending,
     // events
     makeSelectEventsByIds,
-    makeSelectEventsListOfIds
+    makeSelectEventsListOfIds,
+    makeSelectEventsFormState
 };

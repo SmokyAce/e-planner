@@ -1,32 +1,40 @@
 import React from 'react';
-import { addEvent } from '../../modules/events';
+import { Map } from 'immutable';
+import { addEvent, onEventNameChange } from '../../modules/events';
 
-export const AddEvent = ({ dispatch }) => {
+export const AddEvent = ({ dispatch, formState }) => {
     let input;
 
     const handleKeyPress = (target) => {
-        if (target.charCode === 13 && input.value !== '') {
-            dispatch(addEvent({ name: input.value }));
-            input.value = '';
+        const eventName = formState.get('eventName');
+
+        if (target.charCode === 13 && eventName !== '') {
+            dispatch(addEvent({ name: eventName, services: formState.get('services') }));
+        }
+    };
+
+    const onChange = (e) => {
+        dispatch(onEventNameChange(e.target.value));
+    };
+
+    const onAddEventButtonClick = () => {
+        const eventName = formState.get('eventName');
+
+        if (eventName !== '') {
+            dispatch(addEvent({ name: eventName, services: formState.get('services') }));
         }
     };
 
     return (
         <div className='input-group'>
             <input className='form-control' placeholder='enter new event'
+                value={formState.get('eventName')}
+                onChange={onChange}
                 onKeyPress={handleKeyPress}
-                ref={node => {
-                    input = node;
-                }}
             />
             <span className='input-group-btn'>
                 <button className='btn btn-primary'
-                    onClick={() => {
-                        if (input.value !== '') {
-                            dispatch(addEvent({ name: input.value }));
-                            input.value = '';
-                        }
-                    }}
+                    onClick={onAddEventButtonClick}
                 >
                     <i className='fa fa-plus-circle fa-fw' aria-hidden='true' />
                 </button>
@@ -36,7 +44,8 @@ export const AddEvent = ({ dispatch }) => {
 };
 
 AddEvent.propTypes = {
-    dispatch: React.PropTypes.func.isRequired
+    dispatch : React.PropTypes.func.isRequired,
+    formState: React.PropTypes.instanceOf(Map).isRequired
 };
 
 export default AddEvent;

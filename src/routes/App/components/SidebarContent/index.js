@@ -1,15 +1,18 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import Immutable from 'immutable';
+import { List, Map } from 'immutable';
 import { createStructuredSelector } from 'reselect';
 // import { FormattedMessage } from 'react-intl';
 
-import { makeSelectEventsByIds, makeSelectEventsListOfIds } from '../../modules/selectors';
+import { makeSelectEventsByIds, makeSelectEventsListOfIds, makeSelectEventsFormState } from '../../modules/selectors';
 
 import TitlePanel from '../TitlePanel';
 import AddEvent from './AddEvent';
+import Services from './Services';
 // import messages from 'messages';
+import './SidebarContent.scss';
+
 
 // styles
 const styles = {
@@ -34,25 +37,35 @@ const styles = {
     }
 };
 
-const SidebarContent = ({ listOfEventsId, eventsByIds, dispatch, style }) => {
+const SidebarContent = ({ listOfEventsId, eventsByIds, dispatch, style, formState }) => {
     const sidebarStyle = style ? { ...styles.sidebar, ...style } : styles.sidebar;
-
     const eventsList = [];
 
     listOfEventsId.forEach((item) => {
         eventsList.push(
-            <a key={item} style={styles.sidebarLink}>
-                <Link to={`/app/event/${item}`} activeClassName='route--active'>
-                    {eventsByIds.getIn([item, 'name'])}
-                </Link>
-            </a>);
+            <div className='input-group'>
+                <li key={item} style={styles.sidebarLink}>
+                    <Link to={`/app/event/${item}`} activeClassName='route--active'>
+                        {eventsByIds.getIn([item, 'name'])}
+                    </Link>
+                </li>
+                <span className='input-group-btn'>
+                    <button className='btn btn-link event-btns'>
+                        <i className='fa fa-edit fa-fw' />
+                    </button>
+                    <button className='btn btn-link event-btns'>
+                        <i className='fa fa-trash-o fa-lg' />
+                    </button>
+                </span>
+            </div>
+        );
     });
-    // <a key={item} href='#' style={styles.sidebarLink}>{events.getIn([item, 'name'])}</a>);
 
     return (
         <TitlePanel style={sidebarStyle}>
             <div style={styles.content} className='text-left'>
-                <AddEvent dispatch={dispatch} />
+                <AddEvent dispatch={dispatch} formState={formState} />
+                <Services dispatch={dispatch} formState={formState} />
                 <div style={styles.divider} />
                 {eventsList}
             </div>
@@ -62,14 +75,16 @@ const SidebarContent = ({ listOfEventsId, eventsByIds, dispatch, style }) => {
 
 SidebarContent.propTypes = {
     dispatch      : PropTypes.func.isRequired,
-    listOfEventsId: PropTypes.instanceOf(Immutable.List),
-    eventsByIds   : PropTypes.instanceOf(Immutable.Map),
+    listOfEventsId: PropTypes.instanceOf(List),
+    eventsByIds   : PropTypes.instanceOf(Map),
+    formState     : PropTypes.instanceOf(Map),
     style         : PropTypes.object
 };
 
 const mapStateToProps = state => createStructuredSelector({
     eventsByIds   : makeSelectEventsByIds(),
-    listOfEventsId: makeSelectEventsListOfIds()
+    listOfEventsId: makeSelectEventsListOfIds(),
+    formState     : makeSelectEventsFormState()
 });
 
 export default connect(mapStateToProps, null)(SidebarContent);
