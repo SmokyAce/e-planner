@@ -1,7 +1,7 @@
 import React from 'react';
 import Immutable from 'immutable';
 
-import Sidebar from '../Sidebar/Sidebar';
+import Sidebar from '../Sidebar';
 import SidebarContent from '../SidebarContent';
 import Header from '../../../../components/Header';
 import './App.scss';
