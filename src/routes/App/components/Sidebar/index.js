@@ -8,8 +8,6 @@ const HOC = (Component) => {
     class SidebarHOC extends React.Component {
 
         componentWillMount = () => {
-            console.log('will mount');
-
             const mql = window.matchMedia('(min-width: 800px)');
 
             mql.addListener(this.mediaQueryChanged);

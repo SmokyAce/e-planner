@@ -20,10 +20,6 @@ export const SET_USER_INFO                = 'SET_USER_INFO';
 export const SET_AUTH                     = 'SET_AUTH';
 export const CHANGE_FORM                  = 'CHANGE_FORM';
 export const SET_MESSAGE                  = 'SET_MESSAGE';
-export const SIDEBAR_OPEN_SET             = 'SIDEBAR_OPEN_SET';
-export const SIDEBAR_DOCKED_SET           = 'SIDEBAR_DOCKED_SET';
-export const SIDEBAR_PULL_RIGHT_SET       = 'SIDEBAR_PULL_RIGHT_SET';
-export const ADD_EVENT                    = 'ADD_EVENT';
 
 
 // ------------------------------------
