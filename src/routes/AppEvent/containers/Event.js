@@ -4,11 +4,11 @@ import { createStructuredSelector } from 'reselect';
 import { Map } from 'immutable';
 
 import { makeSelectEventsByIds } from '../../App/modules/selectors';
-import AppNavPanel from './AppNavPanel';
+import AppNavPanel from '../components/AppNavPanel';
 
 
 const AppEvent = ({ children, params, eventsByIds }) => {
-    const services = eventsByIds.getIn([params.id, 'services']);
+    const services = eventsByIds.getIn([params.id, 'services']).filter(isChecked => isChecked);
 
     return (
         <div>

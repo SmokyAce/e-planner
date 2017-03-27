@@ -1,7 +1,8 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 
-const Checkbox = ({ isChecked, value, onChange, key }) => {
+const Checkbox = ({ isChecked, value, onChange, messages }) => {
     const onCheckboxSelect = (event) => {
         onChange(event.target.value);
     };
@@ -9,10 +10,10 @@ const Checkbox = ({ isChecked, value, onChange, key }) => {
     return (
         <div className='checkbox-inline'>
             <label>
-                <input type='checkbox' value={value} checked={isChecked} key={key}
+                <input type='checkbox' value={value} checked={isChecked}
                     onChange={onCheckboxSelect}
                 />
-                {value}
+                <FormattedMessage {...messages[value]} />
             </label>
         </div>
     );
@@ -21,7 +22,7 @@ const Checkbox = ({ isChecked, value, onChange, key }) => {
 Checkbox.propTypes = {
     isChecked: React.PropTypes.bool.isRequired,
     value    : React.PropTypes.string.isRequired,
-    key      : React.PropTypes.string.isRequired,
+    messages : React.PropTypes.object.isRequired,
     onChange : React.PropTypes.func.isRequired
 };
 

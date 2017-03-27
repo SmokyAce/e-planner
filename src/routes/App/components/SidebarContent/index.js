@@ -9,8 +9,6 @@ import { makeSelectEventsByIds, makeSelectEventsListOfIds, makeSelectEventsFormS
 
 import TitlePanel from '../TitlePanel';
 import AddEvent from './AddEvent';
-import Services from './Services';
-// import messages from 'messages';
 import './SidebarContent.scss';
 
 
@@ -43,19 +41,23 @@ const SidebarContent = ({ listOfEventsId, eventsByIds, dispatch, style, formStat
 
     listOfEventsId.forEach((item) => {
         eventsList.push(
-            <div className='input-group'>
-                <li key={item} style={styles.sidebarLink}>
+            <div key={item} className='input-group'>
+                <li style={styles.sidebarLink}>
                     <Link to={`/app/event/${item}`} activeClassName='route--active'>
                         {eventsByIds.getIn([item, 'name'])}
                     </Link>
                 </li>
                 <span className='input-group-btn'>
-                    <button className='btn btn-link event-btns'>
-                        <i className='fa fa-edit fa-fw' />
-                    </button>
-                    <button className='btn btn-link event-btns'>
-                        <i className='fa fa-trash-o fa-lg' />
-                    </button>
+                    <Link to={`/app/event/${item}/settings`} activeClassName='route--active'>
+                        <button className='btn btn-link event-btns'>
+                            <i className='fa fa-cog fa-fw' />
+                        </button>
+                    </Link>
+                    <Link to={`/app/event/${item}/delete`} activeClassName='route--active'>
+                        <button className='btn btn-link event-btns'>
+                            <i className='fa fa-trash fa-fw' />
+                        </button>
+                    </Link>
                 </span>
             </div>
         );
@@ -65,7 +67,6 @@ const SidebarContent = ({ listOfEventsId, eventsByIds, dispatch, style, formStat
         <TitlePanel style={sidebarStyle}>
             <div style={styles.content} className='text-left'>
                 <AddEvent dispatch={dispatch} formState={formState} />
-                <Services dispatch={dispatch} formState={formState} />
                 <div style={styles.divider} />
                 {eventsList}
             </div>

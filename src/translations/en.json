@@ -13,6 +13,8 @@
   "app.event.blog.description": "Service: Blog",
   "app.event.quiz.description": "Service: Quiz",
   "app.event.notebook.description": "Service: Notebook",
+  "app.event.settings.description": "Settings",
+  "app.event.settings.section-services": "Event services",
 
   "app.route.home": "Home",
   "app.route.counter": "Counter",

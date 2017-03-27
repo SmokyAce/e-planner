@@ -9,7 +9,7 @@ export const AddEvent = ({ dispatch, formState }) => {
         const eventName = formState.get('eventName');
 
         if (target.charCode === 13 && eventName !== '') {
-            dispatch(addEvent({ name: eventName, services: formState.get('services') }));
+            dispatch(addEvent({ name: eventName }));
         }
     };
 
@@ -21,9 +21,10 @@ export const AddEvent = ({ dispatch, formState }) => {
         const eventName = formState.get('eventName');
 
         if (eventName !== '') {
-            dispatch(addEvent({ name: eventName, services: formState.get('services') }));
+            dispatch(addEvent(eventName));
         }
     };
+
 
     return (
         <div className='input-group'>

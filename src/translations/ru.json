@@ -13,6 +13,8 @@
   "app.event.blog.description": "Сервис: Блог!",
   "app.event.quiz.description": "Сервис: Опросы!",
   "app.event.notebook.description": "Сервис: Блокнот!",
+  "app.event.settings.description": "Настройки",
+  "app.event.settings.section-services": "Сервисы для события",
 
   "app.route.home": "Домой",
   "app.route.planner": "Планировщик",

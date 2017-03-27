@@ -10,17 +10,39 @@ import {
 // Constants
 // ------------------------------------
 export const ADD_EVENT         = 'ADD_EVENT';
-export const ADD_EVENT_SERVICE = 'ADD_EVENT_SERVICE';
+export const TOGGLE_EVENT_SERVICE = 'TOGGLE_EVENT_SERVICE';
 export const EVENT_NAME_CHANGE = 'EVENT_NAME_CHANGE';
+export const EVENT_SETTINGS_NAME_CHANGE = 'EVENT_SETTINGS_NAME_CHANGE';
+export const SAVE_EVENT_SETTINGS = 'SAVE_EVENT_SETTINGS';
 
+// The initial state of the Events reducer
+const initialEventId = _.uniqueId();
+const defaultEventOptions = {
+    id      : initialEventId,
+    name    : 'My first event',
+    services: {
+        counter    : true,
+        guests     : true,
+        todos      : true,
+        budjet     : false,
+        timing     : false,
+        contractors: false,
+        blog       : false,
+        quiz       : false,
+        notebook   : false
+    },
+    counter: 1
+};
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const addEvent = (options) => {
+export const addEvent = (eventName) => {
     const id = _.uniqueId();
 
-    options.counter = 0;
+    const options = defaultEventOptions;
+
+    options.name = eventName;
 
     return {
         type   : 'ADD_EVENT',
@@ -28,9 +50,11 @@ export const addEvent = (options) => {
     };
 };
 
-export const addServiceToEvent = (service) => ({
-    type   : 'ADD_EVENT_SERVICE',
-    payload: service
+export const toggleEventService = (eventId, service, checked) => ({
+    type: 'TOGGLE_EVENT_SERVICE',
+    eventId,
+    service,
+    checked
 });
 
 export const onEventNameChange = (eventName) => ({
@@ -38,22 +62,30 @@ export const onEventNameChange = (eventName) => ({
     payload: eventName
 });
 
+export const onEventSettingsNameChange = (eventName) => ({
+    type   : 'EVENT_SETTINGS_NAME_CHANGE',
+    payload: eventName
+});
 
-// The initial state of the Events reducer
-const initialEventId = _.uniqueId();
+export const saveEventSettings = (eventId, newEventName) => ({
+    type: 'SAVE_EVENT_SETTINGS',
+    eventId,
+    newEventName
+});
+
 
 const initialState = fromJS({
     listOfIds: [initialEventId],
     byIds    : {
-        [initialEventId]: {
-            name    : 'My first event',
-            services: ['Counter', 'Todos', 'Guests', 'Budjet', 'Timing', 'Contractors', 'Blog', 'Quiz', 'Notebook'],
-            counter : 1
-        }
+        [initialEventId]: defaultEventOptions
     },
     formState: {
-        eventName: '',
-        services : []
+        eventName: ''
+    },
+    settingsFormState: {
+        name     : '',
+        services : {},
+        isChanged: false
     }
 });
 
@@ -63,15 +95,25 @@ const EVENTS_ACTION_HANDLERS = {
         return state
             .updateIn(['listOfIds'], list => list.push(action.payload.id))
             .setIn(['byIds', action.payload.id], fromJS(action.payload.options))
-            .set('formState', fromJS({ eventName: '', services: [] }));
+            .setIn(['byIds', action.payload.id, 'id'], action.payload.id);
     },
-    [ADD_EVENT_SERVICE]: (state, action) => {
+    [TOGGLE_EVENT_SERVICE]: (state, action) => {
         return state
-            .updateIn(['formState', 'services'], list => list.push(action.payload));
+            .setIn(['byIds', action.eventId, 'services', action.service], action.checked);
     },
     [EVENT_NAME_CHANGE]: (state, action) => {
         return state
             .setIn(['formState', 'eventName'], action.payload);
+    },
+    [EVENT_SETTINGS_NAME_CHANGE]: (state, action) => {
+        return state
+            .setIn(['settingsFormState', 'name'], action.payload)
+            .setIn(['settingsFormState', 'isChanged'], true);
+    },
+    [SAVE_EVENT_SETTINGS]: (state, action) => {
+        return state
+            .setIn(['byIds', action.eventId, 'name'], action.newEventName)
+            .setIn(['byIds', action.eventId, 'isChanged'], false);
     },
     [COUNTER_INCREMENT]: (state, action) => {
         return state

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Immutable from 'immutable';
+import { Map } from 'immutable';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
@@ -7,18 +7,22 @@ import messages from './messages';
 
 
 const AppNavPanel = ({ eventId, services }) => {
+    const [...keys] = services.keys();
+
+    keys.unshift('home');
+
     return (
         <div className='app-nav-panel'>
             <ul className='nav nav-tabs'>
-                { services.unshift('Home').map((service) => {
-                    const route = (service === 'Home')
+                { keys.map((service) => {
+                    const route = (service === 'home')
                         ? `/app/event/${eventId}`
-                        : `/app/event/${eventId}/${service.toLowerCase()}`;
+                        : `/app/event/${eventId}/${service}`;
 
                     return (
                         <li key={service}>
                             <Link to={route} activeClassName='route--active'>
-                                <FormattedMessage {...messages[service.toLowerCase()]} />
+                                <FormattedMessage {...messages[service]} />
                             </Link>
                         </li>
                     );
@@ -31,7 +35,7 @@ const AppNavPanel = ({ eventId, services }) => {
 
 AppNavPanel.propTypes = {
     eventId : PropTypes.string.isRequired,
-    services: PropTypes.instanceOf(Immutable.List).isRequired
+    services: PropTypes.instanceOf(Map).isRequired
 };
 
 export default AppNavPanel;

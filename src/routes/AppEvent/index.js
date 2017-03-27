@@ -1,5 +1,5 @@
 // import { getAsyncInjectors } from '../../utils/asyncInjectors';
-import AppEvent from './components/Event';
+import AppEvent from './containers/Event';
 import EventHome from '../EventHome';
 
 export default (store) => {
@@ -8,7 +8,7 @@ export default (store) => {
         path: 'event/:id',
         getComponent(nextState, next) {
             require.ensure([
-                './components/Event'
+                './containers/Event'
             ], (require) => {
                 next(null, AppEvent);
             });
@@ -26,7 +26,9 @@ export default (store) => {
                     require('../EventGuests').default(store),
                     require('../EventNotebook').default(store),
                     require('../EventQuiz').default(store),
-                    require('../EventTiming').default(store)
+                    require('../EventTiming').default(store),
+                    require('../EventSettings').default(store),
+                    require('../EventDelete').default(store)
                 ]);
             });
         }

@@ -48,6 +48,11 @@ const makeSelectEventsByIds = () => createSelector(
     (globalState) => globalState.getIn(['events', 'byIds'])
 );
 
+const makeSelectEventsOptionsById = (eventId) => createSelector(
+    selectApp,
+    (globalState) => globalState.getIn(['events', 'byIds', eventId]).toJS()
+);
+
 const makeSelectEventsListOfIds = () => createSelector(
     selectApp,
     (globalState) => globalState.getIn(['events', 'listOfIds'])
@@ -56,6 +61,11 @@ const makeSelectEventsListOfIds = () => createSelector(
 const makeSelectEventsFormState = () => createSelector(
     selectApp,
     (globalState) => globalState.getIn(['events', 'formState'])
+);
+
+const makeSelectEventsSettingsFormState = () => createSelector(
+    selectApp,
+    (globalState) => globalState.getIn(['events', 'settingsFormState']).toJS()
 );
 
 export {
@@ -70,6 +80,8 @@ export {
     makeSelectCurrentlySending,
     // events
     makeSelectEventsByIds,
+    makeSelectEventsOptionsById,
     makeSelectEventsListOfIds,
-    makeSelectEventsFormState
+    makeSelectEventsFormState,
+    makeSelectEventsSettingsFormState
 };
