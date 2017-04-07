@@ -6,6 +6,7 @@
 import { browserHistory } from 'react-router';
 import { take, call, put, race } from 'redux-saga/effects';
 import firebaseTools from '../../../utils/firebaseTools';
+import auth from '../../../utils/auth';
 import { Map } from 'immutable';
 
 import {
@@ -27,7 +28,7 @@ import {
  * Effect to handle authorization
  * @param  {object} authType               The authType containes the result of race
  */
-export function* authorize(authType, isRegistring = false) {
+export function* authorize(authType) {
     // We send an action that tells Redux we're sending a request
     yield put({ type: SENDING_REQUEST, sending: true });
 
@@ -140,6 +141,35 @@ export function* logoutFlow() {
  * as a saga that is always listening to `fetch` actions
  */
 export function* fetchInfoFlow() {
+    while (true) {
+        yield take(FETCH_USER_INFO_REQUEST);
+
+        let userInfo = yield call(auth.getUserUID);
+
+        try {
+            let userRef = firebaseTools.getDatabaseReference("/users/"+userInfo.uid);
+            userInfo = yield userRef.once("value").then(snapshot => snapshot.val());
+        } catch (error) {
+            // If we get an error we send Redux the appropiate action and return
+            yield put({ type: REQUEST_ERROR, error: error.message });
+            return false;
+        }
+
+        if (!userInfo.error) {
+            yield put({ type: SET_USER_INFO, userInfo });
+        } else {
+            yield put({ type: REQUEST_ERROR, error: userInfo.errorMessage });
+            return false;
+        }
+    }
+}
+
+/**
+ * fetch user info out saga
+ * This is basically the same as the `if (winner.fetch)` of above, just written
+ * as a saga that is always listening to `fetch` actions
+ */
+export function* fetchInfoFlow_() {
     while (true) {
         yield take(FETCH_USER_INFO_REQUEST);
 

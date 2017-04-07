@@ -5,7 +5,6 @@ const auth = {
 
         return !!localStorage.getItem(key);
     },
-
     requireAuth: (nextState, replace) => {
         const key = Object.keys(localStorage).find(e => e.match(/firebase:authUser/));
         const data = JSON.parse(localStorage.getItem(key));
@@ -18,6 +17,17 @@ const auth = {
                 }
             });
         }
+    },
+    getUserUID: () => {
+        let userInfo;
+        const key = Object.keys(localStorage).find(e => e.match(/firebase:authUser/));
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(JSON.parse(localStorage.getItem(key)))
+            }, 100)
+        }
+        );
     }
 };
 
