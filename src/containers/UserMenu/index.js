@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
 import { LinkContainer } from 'react-router-bootstrap';
-import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { NavDropdown, MenuItem } from 'react-bootstrap';
 
@@ -12,7 +11,6 @@ import Spinner from '../../components/Spinner';
 import { fetchUserInfoRequest, logoutRequest } from '../../routes/App/modules/auth';
 import {
     makeSelectCurrentUser,
-    makeSelectCurrentlySending,
     makeSelectLoggedIn
 } from '../../routes/App/modules/selectors';
 
@@ -23,13 +21,13 @@ class UserMenu extends React.Component {
 
     constructor(props) {
         super(props);
-        if (this.props.loggedIn && !this.props.currentlySending && this.props.currentUser === null) {
+        if (this.props.loggedIn && this.props.currentUser === null) {
             this.props.fetchUserInfoRequest();
         }
     }
 
     render() {
-        const { currentUser, currentlySending } = this.props;
+        const { currentUser } = this.props;
         // if current user exists and user id exists than make user navigation
 
         if (currentUser && currentUser.uid) {
@@ -52,34 +50,16 @@ class UserMenu extends React.Component {
                 </NavDropdown>
             );
         }
-        if (currentlySending) {
-            return (
-                <li key={1}>
-                    <Spinner />
-                </li>
-            );
-        }
         return (
-            <ul className='nav navbar-nav navbar-right'>
-                <li key={1}>
-                    <Link to='/login'>
-                        <FormattedMessage {...messages.loginBtn} />
-                    </Link>
-                </li>
-                ,
-                <li key={2}>
-                    <Link to='/register'>
-                        <FormattedMessage {...messages.registerBtn} />
-                    </Link>
-                </li>
-            </ul>
+            <li key={1}>
+                <Spinner />
+            </li>
         );
     }
 }
 
 UserMenu.propTypes = {
     currentUser         : React.PropTypes.object,
-    currentlySending    : React.PropTypes.bool,
     loggedIn            : React.PropTypes.bool,
     logoutRequest       : React.PropTypes.func,
     fetchUserInfoRequest: React.PropTypes.func
@@ -94,9 +74,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = state => createStructuredSelector({
-    currentUser     : makeSelectCurrentUser(),
-    currentlySending: makeSelectCurrentlySending(),
-    loggedIn        : makeSelectLoggedIn()
+    currentUser: makeSelectCurrentUser(),
+    loggedIn   : makeSelectLoggedIn()
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);

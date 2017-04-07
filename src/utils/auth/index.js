@@ -19,15 +19,9 @@ const auth = {
         }
     },
     getUserUID: () => {
-        let userInfo;
         const key = Object.keys(localStorage).find(e => e.match(/firebase:authUser/));
 
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(JSON.parse(localStorage.getItem(key)))
-            }, 100)
-        }
-        );
+        return JSON.parse(localStorage.getItem(key));
     }
 };
 

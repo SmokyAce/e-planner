@@ -18,11 +18,6 @@ const makeSelectCurrentUser = () => createSelector(
     (globalState) => globalState.get('currentUser')
 );
 
-const makeSelectLoading = () => createSelector(
-    selectAuth,
-    (globalState) => globalState.get('loading')
-);
-
 const makeSelectMessage = () => createSelector(
     selectAuth,
     (globalState) => globalState.get('message')
@@ -36,11 +31,6 @@ const makeSelectFormState = () => createSelector(
 const makeSelectLoggedIn = () => createSelector(
     selectAuth,
     (globalState) => globalState.get('loggedIn')
-);
-
-const makeSelectCurrentlySending = () => createSelector(
-    selectAuth,
-    (globalState) => globalState.get('currentlySending')
 );
 
 const makeSelectEventsByIds = () => createSelector(
@@ -74,10 +64,8 @@ export {
     // auth
     makeSelectFormState,
     makeSelectCurrentUser,
-    makeSelectLoading,
     makeSelectMessage,
     makeSelectLoggedIn,
-    makeSelectCurrentlySending,
     // events
     makeSelectEventsByIds,
     makeSelectEventsOptionsById,

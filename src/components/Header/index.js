@@ -10,7 +10,32 @@ import LocaleToggle from '../../containers/LocaleToogle';
 import './Header.scss';
 import messages from './messages';
 
-const Header = () => {
+const Header = ({ landingPage }) => {
+    const getUserMenu = () => {
+        if (landingPage) {
+            return (
+                <ul className='nav navbar-nav navbar-right'>
+                    <li key={1}>
+                        <Link to='/login'>
+                            <FormattedMessage {...messages.loginBtn} />
+                        </Link>
+                    </li>
+                    ,
+                    <li key={2}>
+                        <Link to='/register'>
+                            <FormattedMessage {...messages.registerBtn} />
+                        </Link>
+                    </li>
+                </ul>
+            );
+        }
+
+        return (
+            <UserMenu />
+        );
+    };
+
+
     return (
         <div id='header'>
             <Navbar inverse fluid collapseOnSelect>
@@ -38,12 +63,16 @@ const Header = () => {
                     </ul>
                     <ul className='nav navbar-nav navbar-right' style={{ marginRight: '0px' }}>
                         <LocaleToggle />
-                        <UserMenu />
+                        {getUserMenu()}
                     </ul>
                 </Navbar.Collapse>
             </Navbar>
         </div>
     );
+};
+
+Header.propTypes = {
+    landingPage: React.PropTypes.bool
 };
 
 export default Header;

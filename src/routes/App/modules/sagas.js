@@ -4,13 +4,14 @@
 
 // Sagas help us gather all our side effects (network requests in this case) in one place
 import { browserHistory } from 'react-router';
-import { take, call, put, race } from 'redux-saga/effects';
-import firebaseTools from '../../../utils/firebaseTools';
-import auth from '../../../utils/auth';
 import { Map } from 'immutable';
+import { take, call, put, race } from 'redux-saga/effects';
+
+import firebaseTools from '../../../utils/firebaseTools';
+import api from './api';
+
 
 import {
-    SENDING_REQUEST,
     LOGIN_REQUEST,
     LOGIN_WITH_PROVIDER_REQUEST,
     REGISTER_REQUEST,
@@ -29,10 +30,6 @@ import {
  * @param  {object} authType               The authType containes the result of race
  */
 export function* authorize(authType) {
-    // We send an action that tells Redux we're sending a request
-    yield put({ type: SENDING_REQUEST, sending: true });
-
-
     // We then try to register or log in the user, depending on the request
     try {
         let userInfo;
@@ -43,8 +40,12 @@ export function* authorize(authType) {
             const result = yield firebaseTools.loginWithProvider(authType.loginWithProvider.provider);
 
             userInfo = (result.user) ? result.user : result;
+
+            yield api.setUserData(userInfo);
         } else if (authType.registration) {
             userInfo = yield firebaseTools.registerUser(authType.registration.data);
+
+            yield api.setUserData(userInfo);
         }
 
         if (userInfo.errorMessage) {
@@ -60,9 +61,6 @@ export function* authorize(authType) {
         yield put({ type: REQUEST_ERROR, error: error.message });
 
         return false;
-    } finally {
-        // When done, we tell Redux we're not in the middle of a request any more
-        yield put({ type: SENDING_REQUEST, sending: false });
     }
 }
 
@@ -144,13 +142,14 @@ export function* fetchInfoFlow() {
     while (true) {
         yield take(FETCH_USER_INFO_REQUEST);
 
-        let userInfo = yield call(auth.getUserUID);
+        let userInfo;
 
         try {
-            let userRef = firebaseTools.getDatabaseReference("/users/"+userInfo.uid);
-            userInfo = yield userRef.once("value").then(snapshot => snapshot.val());
+            userInfo = yield call(firebaseTools.fetchUser);
+            console.log(userInfo);
         } catch (error) {
             // If we get an error we send Redux the appropiate action and return
+            // We send an action that tells Redux we're sending a request
             yield put({ type: REQUEST_ERROR, error: error.message });
             return false;
         }
@@ -177,7 +176,9 @@ export function* fetchInfoFlow_() {
 
         try {
             userInfo = yield call(firebaseTools.fetchUser);
+            console.log(userInfo);
         } catch (error) {
+            console.log('error');
             // If we get an error we send Redux the appropiate action and return
             yield put({ type: REQUEST_ERROR, error: error.message });
             return false;

@@ -15,6 +15,7 @@ export default (store) => {
             ], (require) => {
                 injectSagas(require('./modules/sagas').default);
 
+                injectReducer('app.users', require('./modules/users').default);
                 injectReducer('app.sidebar', require('./modules/sidebar').default);
                 injectReducer('app.events', require('./modules/events').default);
 

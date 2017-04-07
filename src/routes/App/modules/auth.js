@@ -7,7 +7,6 @@ import auth from '../../../utils/auth';
 // ------------------------------------
 export const APP_LOADING = 'APP_LOADING';
 
-export const SENDING_REQUEST              = 'SENDING_REQUEST';
 export const LOGIN_REQUEST                = 'LOGIN_REQUEST';
 export const LOGIN_WITH_PROVIDER_REQUEST  = 'LOGIN_WITH_PROVIDER_REQUEST';
 export const REGISTER_REQUEST             = 'REGISTER_REQUEST';
@@ -115,11 +114,9 @@ const initialState = fromJS({
         rememberMe    : false,
         displayName   : ''
     },
-    loading         : false,
-    currentlySending: false,
-    message         : '',
-    currentUser     : null,
-    loggedIn        : auth.loggedIn()
+    message    : '',
+    currentUser: null,
+    loggedIn   : auth.loggedIn()
 
 });
 
@@ -131,10 +128,6 @@ const AUTH_ACTION_HANDLERS = {
     [SET_AUTH]: (state, action) => {
         return state
             .set('loggedIn', action.newAuthState);
-    },
-    [SENDING_REQUEST]: (state, action) => {
-        return state
-            .set('currentlySending', action.sending);
     },
     [SET_USER_INFO]: (state, action) => {
         return state
