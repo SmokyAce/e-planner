@@ -10,7 +10,7 @@ import { NavDropdown, MenuItem } from 'react-bootstrap';
 
 import Spinner from '../../components/Spinner';
 import { logoutRequest } from '../../routes/App/modules/auth';
-import { fetchUserInfoRequest, saveUserDataRequest } from '../../routes/App/modules/users';
+import { fetchUserInfoRequest } from '../../routes/App/modules/users';
 import {
     makeSelectLoggedIn,
     makeSelectCurrentUser
@@ -73,7 +73,6 @@ UserMenu.propTypes = {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         fetchUserInfoRequest,
-        saveUserDataRequest,
         logoutRequest
     }, dispatch);
 };

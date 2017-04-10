@@ -106,10 +106,8 @@ const initialState = fromJS({
         rememberMe    : false,
         displayName   : ''
     },
-    message    : '',
-    currentUser: null,
-    loggedIn   : auth.loggedIn()
-
+    message : '',
+    loggedIn: auth.loggedIn()
 });
 
 const AUTH_ACTION_HANDLERS = {
@@ -128,10 +126,6 @@ const AUTH_ACTION_HANDLERS = {
     [SET_MESSAGE]: (state, action) => {
         return state
             .set('message', action.message);
-    },
-    [SET_USER_INFO]: (state, action) => {
-        return state
-            .set('currentUser', action.userInfo);
     }
 };
 
