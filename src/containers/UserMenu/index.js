@@ -17,7 +17,7 @@ import {
 } from '../../routes/App/modules/selectors';
 
 import messages from './messages';
-
+import './UserMenu.scss';
 
 class UserMenu extends React.Component {
 
@@ -35,6 +35,7 @@ class UserMenu extends React.Component {
         const { currentUser } = this.props;
 
         if (currentUser && currentUser.uid) {
+
             return (
                 <NavDropdown title={
                     (currentUser.displayName === '' || currentUser.displayName === null)
@@ -42,6 +43,12 @@ class UserMenu extends React.Component {
                 }
                     id='user-dropdown' eventKey='2'
                 >
+                    <div className="media">
+                        <a href="#">
+                            <img className="media-object img-rounded user-photo" src={currentUser.providerData[0].photoURL}
+                                 alt={currentUser.providerData[0].providerId}/>
+                        </a>
+                     </div>
                     <LinkContainer to='/profile'>
                         <MenuItem eventKey='2.1'>
                             <FormattedMessage {...messages.profileBtn} />
@@ -54,6 +61,7 @@ class UserMenu extends React.Component {
                 </NavDropdown>
             );
         }
+
         return (
             <li key={1}>
                 <Spinner />
