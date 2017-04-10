@@ -13,7 +13,7 @@ const api = {
             .then(snapshot => {
                 console.log(snapshot.val());
                 // normalized data with users schema to put in redux store
-                return snapshot.val() === null ? null : snapshot.val()
+                return snapshot.val() === null ? null : snapshot.val();
             })
             .catch(error => console.log(error.message));
     },

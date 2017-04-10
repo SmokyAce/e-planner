@@ -6,11 +6,11 @@ import { browserHistory } from 'react-router';
 import { Map } from 'immutable';
 import { take, call, put, race } from 'redux-saga/effects';
 
-import firebaseTools, {firebaseAuth} from '../../../utils/firebaseTools';
+import firebaseTools, { firebaseAuth } from '../../../utils/firebaseTools';
 import api from './api';
 import { omit } from 'lodash';
-import { normalize } from 'normalizr';
-import * as schema from './schema';
+// import { normalize } from 'normalizr';
+// import * as schema from './schema';
 
 import {
     LOGIN_REQUEST,
@@ -30,7 +30,6 @@ import {
     FETCH_USER_DATA_SUCCESS,
     FETCH_USER_DATA_FAILURE
 } from './users';
-
 
 
 /**
@@ -156,8 +155,7 @@ export function* fetchInfoFlow() {
                 response.isSync = false;
             }
 
-            yield put({ type: FETCH_USER_DATA_SUCCESS,  response });
-
+            yield put({ type: FETCH_USER_DATA_SUCCESS, response });
         } catch (error) {
             yield put({ type: FETCH_USER_DATA_FAILURE, error: error.message });
             return false;

@@ -1,4 +1,5 @@
 import { fromJS } from 'immutable';
+import { browserHistory } from 'react-router';
 
 // ------------------------------------
 // Constants
@@ -25,7 +26,7 @@ export const updateLocation = ({ dispatch }) => {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = fromJS(null);
+const initialState = fromJS(browserHistory.getCurrentLocation());
 
 export const location = (state = initialState, action) => {
     return action.type === LOCATION_CHANGE

@@ -37,14 +37,14 @@ class UserMenu extends React.Component {
                     (currentUser.displayName === '' || currentUser.displayName === null)
                         ? currentUser.email : currentUser.displayName
                 }
-                             id='user-dropdown' eventKey='2'
+                    id='user-dropdown' eventKey='2'
                 >
                     <LinkContainer to='/profile'>
                         <MenuItem eventKey='2.1'>
                             <FormattedMessage {...messages.profileBtn} />
                         </MenuItem>
                     </LinkContainer>
-                    <MenuItem divider/>
+                    <MenuItem divider />
                     <MenuItem onClick={this.props.logoutRequest}>
                         <FormattedMessage {...messages.logoutBtn} />
                     </MenuItem>

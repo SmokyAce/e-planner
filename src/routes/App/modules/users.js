@@ -32,10 +32,9 @@ const USERS_ACTION_HANDLERS = {
     [FETCH_USER_DATA_SUCCESS]: (state, action) => {
         if (action.response) {
             return state
-                .set('currentUser', action.response)
-        } else {
-            return state;
+                .set('currentUser', action.response);
         }
+        return state;
     }
 };
 
