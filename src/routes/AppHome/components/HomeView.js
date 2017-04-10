@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
@@ -31,11 +32,11 @@ export const HomeView = ({ docked, pullRight, onSetDocked, onSetOpen, onChangeSi
 };
 
 HomeView.propTypes = {
-    docked      : React.PropTypes.bool,
-    pullRight   : React.PropTypes.bool,
-    onSetOpen   : React.PropTypes.func,
-    onSetDocked : React.PropTypes.func,
-    onChangeSide: React.PropTypes.func
+    docked      : PropTypes.bool,
+    pullRight   : PropTypes.bool,
+    onSetOpen   : PropTypes.func,
+    onSetDocked : PropTypes.func,
+    onChangeSide: PropTypes.func
 };
 
 export default HomeView;

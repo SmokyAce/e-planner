@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Immutable from 'immutable';
 import { FormattedMessage } from 'react-intl';
 import { changeUserPwdRequest, setMesssage, changeForm } from '../../App/modules/auth';
@@ -65,10 +66,10 @@ class ChangePassword extends React.Component {
 }
 
 ChangePassword.propTypes = {
-    messages : React.PropTypes.object,
-    formState: React.PropTypes.instanceOf(Immutable.Map),
-    message  : React.PropTypes.string,
-    dispatch : React.PropTypes.func
+    messages : PropTypes.object,
+    formState: PropTypes.instanceOf(Immutable.Map),
+    message  : PropTypes.string,
+    dispatch : PropTypes.func
 };
 
 export default ChangePassword;

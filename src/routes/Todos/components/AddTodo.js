@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Immutable from 'immutable';
 import { addTodo } from '../modules/todos';
+
 
 export const AddTodo = ({ dispatch, todoList }) => {
     let input;
@@ -35,8 +37,8 @@ export const AddTodo = ({ dispatch, todoList }) => {
 };
 
 AddTodo.propTypes = {
-    todoList: React.PropTypes.instanceOf(Immutable.List).isRequired,
-    dispatch: React.PropTypes.func.isRequired
+    todoList: PropTypes.instanceOf(Immutable.List).isRequired,
+    dispatch: PropTypes.func.isRequired
 };
 
 export default AddTodo;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import RadioButton from './RadioButton';
 import './Filters.scss';
@@ -21,8 +22,8 @@ const Filters = ({ filter, onClick }) => {
 };
 
 Filters.propTypes = {
-    filter : React.PropTypes.string.isRequired,
-    onClick: React.PropTypes.func.isRequired
+    filter : PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired
 };
 
 export default Filters;

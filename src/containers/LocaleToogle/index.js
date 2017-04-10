@@ -1,10 +1,5 @@
-/*
- *
- * LanguageToggle
- *
- */
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { NavDropdown, MenuItem } from 'react-bootstrap';
@@ -16,6 +11,11 @@ import { changeLocale } from '../LanguageProvider/module';
 import { selectLocale } from '../LanguageProvider/selectors';
 
 
+/*
+ *
+ * LanguageToggle
+ *
+ */
 export class LocaleToggle extends React.Component { // eslint-disable-line react/prefer-stateless-function
     render() {
         return (
@@ -33,8 +33,8 @@ export class LocaleToggle extends React.Component { // eslint-disable-line react
 }
 
 LocaleToggle.propTypes = {
-    onLocaleToggle: React.PropTypes.func,
-    locale        : React.PropTypes.string
+    onLocaleToggle: PropTypes.func,
+    locale        : PropTypes.string
 };
 
 const mapStateToProps = createSelector(

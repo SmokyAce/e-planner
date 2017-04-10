@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Immutable from 'immutable';
 
 import Sidebar from '../Sidebar';
@@ -37,10 +38,10 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-    children   : React.PropTypes.element,
-    sidebar    : React.PropTypes.instanceOf(Immutable.Map).isRequired,
-    onSetOpen  : React.PropTypes.func.isRequired,
-    onSetDocked: React.PropTypes.func.isRequired
+    children   : PropTypes.element,
+    sidebar    : PropTypes.instanceOf(Immutable.Map).isRequired,
+    onSetOpen  : PropTypes.func.isRequired,
+    onSetDocked: PropTypes.func.isRequired
 };
 
 export default App;

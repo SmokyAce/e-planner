@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -85,10 +86,10 @@ class UserProfile extends Component {
 }
 
 UserProfile.propTypes = {
-    currentUser: React.PropTypes.object,
-    formState  : React.PropTypes.object,
-    message    : React.PropTypes.string,
-    dispatch   : React.PropTypes.func.isRequired
+    currentUser: PropTypes.object,
+    formState  : PropTypes.object,
+    message    : PropTypes.string,
+    dispatch   : PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => createStructuredSelector({

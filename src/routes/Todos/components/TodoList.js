@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Immutable from 'immutable';
 import Todo from './Todo';
+
 
 const TodoList = ({ onTodoClick, onDelTodoClick, todoList, entries }) => {
     return (
@@ -21,10 +23,10 @@ const TodoList = ({ onTodoClick, onDelTodoClick, todoList, entries }) => {
 };
 
 TodoList.propTypes = {
-    entries       : React.PropTypes.instanceOf(Immutable.Map).isRequired,
-    todoList      : React.PropTypes.instanceOf(Immutable.List).isRequired,
-    onTodoClick   : React.PropTypes.func.isRequired,
-    onDelTodoClick: React.PropTypes.func.isRequired
+    entries       : PropTypes.instanceOf(Immutable.Map).isRequired,
+    todoList      : PropTypes.instanceOf(Immutable.List).isRequired,
+    onTodoClick   : PropTypes.func.isRequired,
+    onDelTodoClick: PropTypes.func.isRequired
 };
 
 export default TodoList;

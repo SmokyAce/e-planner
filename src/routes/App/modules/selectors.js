@@ -14,8 +14,8 @@ const makeSelectSidebar = () => createSelector(
 );
 
 const makeSelectCurrentUser = () => createSelector(
-    selectAuth,
-    (globalState) => globalState.get('currentUser')
+    selectApp,
+    (globalState) => globalState.getIn(['users', 'currentUser'])
 );
 
 const makeSelectMessage = () => createSelector(
@@ -63,9 +63,10 @@ export {
     makeSelectSidebar,
     // auth
     makeSelectFormState,
-    makeSelectCurrentUser,
     makeSelectMessage,
     makeSelectLoggedIn,
+    // user
+    makeSelectCurrentUser,
     // events
     makeSelectEventsByIds,
     makeSelectEventsOptionsById,

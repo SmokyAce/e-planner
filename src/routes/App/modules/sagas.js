@@ -1,15 +1,16 @@
 // This file contains the sagas used for async actions in our app. It's divided into
 // "effects" that the sagas call (`authorize` and `logout`) and the actual sagas themselves,
 // which listen for actions.
-
 // Sagas help us gather all our side effects (network requests in this case) in one place
 import { browserHistory } from 'react-router';
 import { Map } from 'immutable';
 import { take, call, put, race } from 'redux-saga/effects';
 
-import firebaseTools from '../../../utils/firebaseTools';
+import firebaseTools, {firebaseAuth} from '../../../utils/firebaseTools';
 import api from './api';
-
+import { omit } from 'lodash';
+import { normalize } from 'normalizr';
+import * as schema from './schema';
 
 import {
     LOGIN_REQUEST,
@@ -19,11 +20,18 @@ import {
     SET_AUTH,
     LOGOUT,
     CHANGE_FORM,
-    FETCH_USER_INFO_REQUEST,
     SET_USER_INFO,
     UPDATE_USER_INFO_REQUEST,
     CHANGE_USER_PASSWORD_REQUEST
 } from './auth';
+
+import {
+    FETCH_USER_DATA_REQUEST,
+    FETCH_USER_DATA_SUCCESS,
+    FETCH_USER_DATA_FAILURE
+} from './users';
+
+
 
 /**
  * Effect to handle authorization
@@ -40,12 +48,8 @@ export function* authorize(authType) {
             const result = yield firebaseTools.loginWithProvider(authType.loginWithProvider.provider);
 
             userInfo = (result.user) ? result.user : result;
-
-            yield api.setUserData(userInfo);
         } else if (authType.registration) {
             userInfo = yield firebaseTools.registerUser(authType.registration.data);
-
-            yield api.setUserData(userInfo);
         }
 
         if (userInfo.errorMessage) {
@@ -102,7 +106,6 @@ export function* loginFlow() {
     }
 }
 
-
 export function* logout() {
     try {
         const result = yield call(firebaseTools.logoutUser);
@@ -140,54 +143,23 @@ export function* logoutFlow() {
  */
 export function* fetchInfoFlow() {
     while (true) {
-        yield take(FETCH_USER_INFO_REQUEST);
+        yield take(FETCH_USER_DATA_REQUEST);
 
-        let userInfo;
-
-        try {
-            userInfo = yield call(firebaseTools.fetchUser);
-            console.log(userInfo);
-        } catch (error) {
-            // If we get an error we send Redux the appropiate action and return
-            // We send an action that tells Redux we're sending a request
-            yield put({ type: REQUEST_ERROR, error: error.message });
-            return false;
-        }
-
-        if (!userInfo.error) {
-            yield put({ type: SET_USER_INFO, userInfo });
-        } else {
-            yield put({ type: REQUEST_ERROR, error: userInfo.errorMessage });
-            return false;
-        }
-    }
-}
-
-/**
- * fetch user info out saga
- * This is basically the same as the `if (winner.fetch)` of above, just written
- * as a saga that is always listening to `fetch` actions
- */
-export function* fetchInfoFlow_() {
-    while (true) {
-        yield take(FETCH_USER_INFO_REQUEST);
-
-        let userInfo;
+        let response;
 
         try {
-            userInfo = yield call(firebaseTools.fetchUser);
-            console.log(userInfo);
-        } catch (error) {
-            console.log('error');
-            // If we get an error we send Redux the appropiate action and return
-            yield put({ type: REQUEST_ERROR, error: error.message });
-            return false;
-        }
+            response = yield call(api.fetchUserData);
 
-        if (!userInfo.error) {
-            yield put({ type: SET_USER_INFO, userInfo });
-        } else {
-            yield put({ type: REQUEST_ERROR, error: userInfo.errorMessage });
+            if (response === null) {  // take user data from firebase auth
+                response = firebaseAuth.currentUser.toJSON();
+                response = omit(response, ['appName', 'authDomain', 'redirectEventId']);
+                response.isSync = false;
+            }
+
+            yield put({ type: FETCH_USER_DATA_SUCCESS,  response });
+
+        } catch (error) {
+            yield put({ type: FETCH_USER_DATA_FAILURE, error: error.message });
             return false;
         }
     }
@@ -227,7 +199,6 @@ export function* updateUserInfoFlow() {
         }
     }
 }
-
 
 /**
  * Register saga

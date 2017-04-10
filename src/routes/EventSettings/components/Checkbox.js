@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 
@@ -20,10 +21,10 @@ const Checkbox = ({ isChecked, value, onChange, messages }) => {
 };
 
 Checkbox.propTypes = {
-    isChecked: React.PropTypes.bool.isRequired,
-    value    : React.PropTypes.string.isRequired,
-    messages : React.PropTypes.object.isRequired,
-    onChange : React.PropTypes.func.isRequired
+    isChecked: PropTypes.bool.isRequired,
+    value    : PropTypes.string.isRequired,
+    messages : PropTypes.object.isRequired,
+    onChange : PropTypes.func.isRequired
 };
 
 export default Checkbox;

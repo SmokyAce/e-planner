@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import './Todo.scss';
+
 
 const Todo = ({ onClick, onDelTodoClick, completed, text }) => {
     return (
@@ -22,10 +25,10 @@ const Todo = ({ onClick, onDelTodoClick, completed, text }) => {
 };
 
 Todo.propTypes = {
-    completed     : React.PropTypes.bool.isRequired,
-    text          : React.PropTypes.string.isRequired,
-    onClick       : React.PropTypes.func.isRequired,
-    onDelTodoClick: React.PropTypes.func.isRequired
+    completed     : PropTypes.bool.isRequired,
+    text          : PropTypes.string.isRequired,
+    onClick       : PropTypes.func.isRequired,
+    onDelTodoClick: PropTypes.func.isRequired
 };
 
 export default Todo;

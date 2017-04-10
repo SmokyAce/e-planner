@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
 
@@ -115,9 +116,9 @@ class UserRegister extends Component {
 
 
 UserRegister.propTypes = {
-    formState: React.PropTypes.instanceOf(Immutable.Map),
-    message  : React.PropTypes.string,
-    dispatch : React.PropTypes.func.isRequired
+    formState: PropTypes.instanceOf(Immutable.Map),
+    message  : PropTypes.string,
+    dispatch : PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => createStructuredSelector({

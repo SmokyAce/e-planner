@@ -1,5 +1,5 @@
 import { normalize } from 'normalizr';
-import { usersSchema } from './schema';
+import * as schema from './schema';
 import firebaseTools from '../../../utils/firebaseTools';
 import auth from '../../../utils/auth';
 
@@ -10,12 +10,16 @@ const api = {
         const uid = auth.getUserUID().uid;
 
         return firebaseTools.getDatabaseReference(`/users/${uid}`).once('value')
-            .then(snapshot => snapshot.val())
+            .then(snapshot => {
+                console.log(snapshot.val());
+                // normalized data with users schema to put in redux store
+                return snapshot.val() === null ? null : snapshot.val()
+            })
             .catch(error => console.log(error.message));
     },
     setUserData: (userInfo) => {
         console.log(userInfo);
-        const normalizedData = normalize(userInfo.toJSON(), usersSchema);
+        const normalizedData = normalize(userInfo.toJSON(), schema.users);
 
         console.log(normalizedData);
     }

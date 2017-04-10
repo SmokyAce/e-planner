@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 
 const RadioButton = ({ isChecked, value, name, onChange, filterName }) => {
@@ -19,11 +20,11 @@ const RadioButton = ({ isChecked, value, name, onChange, filterName }) => {
 };
 
 RadioButton.propTypes = {
-    isChecked : React.PropTypes.bool.isRequired,
-    value     : React.PropTypes.string.isRequired,
-    name      : React.PropTypes.string.isRequired,
-    filterName: React.PropTypes.string.isRequired,
-    onChange  : React.PropTypes.func.isRequired
+    isChecked : PropTypes.bool.isRequired,
+    value     : PropTypes.string.isRequired,
+    name      : PropTypes.string.isRequired,
+    filterName: PropTypes.string.isRequired,
+    onChange  : PropTypes.func.isRequired
 };
 
 export default RadioButton;

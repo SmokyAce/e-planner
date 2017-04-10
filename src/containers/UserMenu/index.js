@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -8,10 +9,11 @@ import { FormattedMessage } from 'react-intl';
 import { NavDropdown, MenuItem } from 'react-bootstrap';
 
 import Spinner from '../../components/Spinner';
-import { fetchUserInfoRequest, logoutRequest } from '../../routes/App/modules/auth';
+import { logoutRequest } from '../../routes/App/modules/auth';
+import { fetchUserInfoRequest } from '../../routes/App/modules/users';
 import {
-    makeSelectCurrentUser,
-    makeSelectLoggedIn
+    makeSelectLoggedIn,
+    makeSelectCurrentUser
 } from '../../routes/App/modules/selectors';
 
 import messages from './messages';
@@ -21,29 +23,28 @@ class UserMenu extends React.Component {
 
     constructor(props) {
         super(props);
-        if (this.props.loggedIn && this.props.currentUser === null) {
+        if (this.props.loggedIn && !this.props.currentUser) {
             this.props.fetchUserInfoRequest();
         }
     }
 
     render() {
         const { currentUser } = this.props;
-        // if current user exists and user id exists than make user navigation
 
         if (currentUser && currentUser.uid) {
             return (
                 <NavDropdown title={
                     (currentUser.displayName === '' || currentUser.displayName === null)
-                    ? currentUser.email : currentUser.displayName
+                        ? currentUser.email : currentUser.displayName
                 }
-                    id='user-dropdown' eventKey='2'
+                             id='user-dropdown' eventKey='2'
                 >
                     <LinkContainer to='/profile'>
                         <MenuItem eventKey='2.1'>
                             <FormattedMessage {...messages.profileBtn} />
                         </MenuItem>
                     </LinkContainer>
-                    <MenuItem divider />
+                    <MenuItem divider/>
                     <MenuItem onClick={this.props.logoutRequest}>
                         <FormattedMessage {...messages.logoutBtn} />
                     </MenuItem>
@@ -59,10 +60,10 @@ class UserMenu extends React.Component {
 }
 
 UserMenu.propTypes = {
-    currentUser         : React.PropTypes.object,
-    loggedIn            : React.PropTypes.bool,
-    logoutRequest       : React.PropTypes.func,
-    fetchUserInfoRequest: React.PropTypes.func
+    currentUser         : PropTypes.object,
+    loggedIn            : PropTypes.bool,
+    logoutRequest       : PropTypes.func,
+    fetchUserInfoRequest: PropTypes.func
 };
 
 

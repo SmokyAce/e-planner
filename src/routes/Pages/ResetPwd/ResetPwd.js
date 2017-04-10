@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FormattedMessage } from 'react-intl';
 
 import { resetPasswordEmail } from '../../App/modules/user';
 import messages from '../messages';
+
 
 class ResetPassword extends Component {
     constructor(props) {
@@ -54,7 +56,7 @@ class ResetPassword extends Component {
 }
 
 ResetPassword.propTypes = {
-    resetPasswordEmail: React.PropTypes.func.isRequired
+    resetPasswordEmail: PropTypes.func.isRequired
 };
 
 function mapDispatchToProps(dispatch) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { browserHistory, Router } from 'react-router';
 import { Provider } from 'react-redux';
 // translations
@@ -9,9 +10,9 @@ import 'bootstrap-social';
 
 class AppContainer extends React.Component {
     static propTypes = {
-        routes  : React.PropTypes.object.isRequired,
-        store   : React.PropTypes.object.isRequired,
-        messages: React.PropTypes.object
+        routes  : PropTypes.object.isRequired,
+        store   : PropTypes.object.isRequired,
+        messages: PropTypes.object
     };
 
     shouldComponentUpdate() {

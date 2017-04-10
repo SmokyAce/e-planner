@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { IndexLink, Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { Navbar } from 'react-bootstrap';
@@ -72,7 +73,7 @@ const Header = ({ landingPage }) => {
 };
 
 Header.propTypes = {
-    landingPage: React.PropTypes.bool
+    landingPage: PropTypes.bool
 };
 
 export default Header;

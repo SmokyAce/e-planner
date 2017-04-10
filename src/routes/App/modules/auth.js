@@ -10,7 +10,6 @@ export const APP_LOADING = 'APP_LOADING';
 export const LOGIN_REQUEST                = 'LOGIN_REQUEST';
 export const LOGIN_WITH_PROVIDER_REQUEST  = 'LOGIN_WITH_PROVIDER_REQUEST';
 export const REGISTER_REQUEST             = 'REGISTER_REQUEST';
-export const FETCH_USER_INFO_REQUEST      = 'FETCH_USER_INFO_REQUEST';
 export const UPDATE_USER_INFO_REQUEST     = 'UPDATE_USER_INFO_REQUEST';
 export const CHANGE_USER_PASSWORD_REQUEST = 'CHANGE_USER_PASSWORD_REQUEST';
 export const REQUEST_ERROR                = 'REQUEST_ERROR';
@@ -42,13 +41,6 @@ export const changeForm = (newFormState) => ({
 export const setMesssage = (message) => ({
     type: SET_MESSAGE,
     message
-});
-
-/**
- * Tells the app we want to fetch a user info
- */
-export const fetchUserInfoRequest = () => ({
-    type: FETCH_USER_INFO_REQUEST
 });
 
 /**
@@ -129,10 +121,6 @@ const AUTH_ACTION_HANDLERS = {
         return state
             .set('loggedIn', action.newAuthState);
     },
-    [SET_USER_INFO]: (state, action) => {
-        return state
-            .set('currentUser', action.userInfo);
-    },
     [REQUEST_ERROR]: (state, action) => {
         return state
             .set('message', action.error);
@@ -140,6 +128,10 @@ const AUTH_ACTION_HANDLERS = {
     [SET_MESSAGE]: (state, action) => {
         return state
             .set('message', action.message);
+    },
+    [SET_USER_INFO]: (state, action) => {
+        return state
+            .set('currentUser', action.userInfo);
     }
 };
 

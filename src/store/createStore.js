@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 import { Map } from 'immutable';
 
 import thunk from 'redux-thunk';
-import createLogger from 'redux-logger';
+import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 
 import makeRootReducer from './reducers';

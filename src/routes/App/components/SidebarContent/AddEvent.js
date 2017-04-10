@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { addEvent, onEventNameChange } from '../../modules/events';
 
@@ -45,8 +46,8 @@ export const AddEvent = ({ dispatch, formState }) => {
 };
 
 AddEvent.propTypes = {
-    dispatch : React.PropTypes.func.isRequired,
-    formState: React.PropTypes.instanceOf(Map).isRequired
+    dispatch : PropTypes.func.isRequired,
+    formState: PropTypes.instanceOf(Map).isRequired
 };
 
 export default AddEvent;

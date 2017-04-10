@@ -1,19 +1,10 @@
-/* @flow */
 import React from 'react';
+import PropTypes from 'prop-types';
 import Immutable from 'immutable';
 import classes from './Zen.scss';
 
 
-import type { ZenObject } from '../interfaces/zen';
-
-type Props = {
-    zen: ?ZenObject,
-    saved: Array<ZenObject>,
-    fetchZen: Function,
-    saveCurrentZen: Function
-};
-
-export const Zen = (props: Props) => {
+export const Zen = (props) => {
     return (
         <div>
             <div>
@@ -51,10 +42,10 @@ export const Zen = (props: Props) => {
 };
 
 Zen.propTypes = {
-    zen           : React.PropTypes.object,
-    saved         : React.PropTypes.instanceOf(Immutable.List).isRequired,
-    fetchZen      : React.PropTypes.func.isRequired,
-    saveCurrentZen: React.PropTypes.func.isRequired
+    zen           : PropTypes.object,
+    saved         : PropTypes.instanceOf(Immutable.List).isRequired,
+    fetchZen      : PropTypes.func.isRequired,
+    saveCurrentZen: PropTypes.func.isRequired
 };
 
 export default Zen;

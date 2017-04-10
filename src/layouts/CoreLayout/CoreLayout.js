@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import '../../styles/core.scss';
 import './CoreLayout.scss';
-
 import Header from '../../components/Header';
+
 
 export const CoreLayout = ({ children }) => {
     if (children.props.location && children.props.location.pathname.indexOf('app') >= 0) {
@@ -27,7 +28,7 @@ export const CoreLayout = ({ children }) => {
 };
 
 CoreLayout.propTypes = {
-    children: React.PropTypes.element.isRequired
+    children: PropTypes.element.isRequired
 };
 
 export default CoreLayout;
