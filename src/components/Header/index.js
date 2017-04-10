@@ -6,13 +6,14 @@ import { Navbar } from 'react-bootstrap';
 
 import UserMenu from '../../containers/UserMenu';
 import LocaleToggle from '../../containers/LocaleToogle';
+import AppStatus from '../../containers/AppStatus';
 
 // styles
 import './Header.scss';
 import messages from './messages';
 
 const Header = ({ landingPage }) => {
-    const getUserMenu = () => {
+    const renderUserMenu = () => {
         if (landingPage) {
             return (
                 <ul className='nav navbar-nav navbar-right'>
@@ -35,7 +36,13 @@ const Header = ({ landingPage }) => {
             <UserMenu />
         );
     };
-
+    const renderAppStatus = () => {
+        if (!landingPage) {
+            return (
+                <AppStatus />
+            );
+        }
+    };
 
     return (
         <div id='header'>
@@ -63,8 +70,9 @@ const Header = ({ landingPage }) => {
                         </li>
                     </ul>
                     <ul className='nav navbar-nav navbar-right' style={{ marginRight: '0px' }}>
+                        {renderAppStatus()}
                         <LocaleToggle />
-                        {getUserMenu()}
+                        {renderUserMenu()}
                     </ul>
                 </Navbar.Collapse>
             </Navbar>

@@ -28,44 +28,18 @@ import {
 import {
     FETCH_USER_DATA_REQUEST,
     FETCH_USER_DATA_SUCCESS,
-    FETCH_USER_DATA_FAILURE
+    FETCH_USER_DATA_FAILURE,
+    SET_USER_DATA_REQUEST,
+    SET_USER_DATA_SUCCESS,
+    SET_USER_DATA_FAILURE
 } from './users';
 
+import {
+    APP_SYNC_REQUEST,
+    APP_SYNC_SUCCESS,
+    APP_SYNC_FAILURE
+} from './status';
 
-/**
- * Effect to handle authorization
- * @param  {object} authType               The authType containes the result of race
- */
-export function* authorize(authType) {
-    // We then try to register or log in the user, depending on the request
-    try {
-        let userInfo;
-
-        if (authType.loginWithEmail) {
-            userInfo = yield call(firebaseTools.loginUser, authType.loginWithEmail.data);
-        } else if (authType.loginWithProvider) {
-            const result = yield firebaseTools.loginWithProvider(authType.loginWithProvider.provider);
-
-            userInfo = (result.user) ? result.user : result;
-        } else if (authType.registration) {
-            userInfo = yield firebaseTools.registerUser(authType.registration.data);
-        }
-
-        if (userInfo.errorMessage) {
-            yield put({ type: REQUEST_ERROR, error: userInfo.errorMessage });
-            return false;
-        }
-
-        yield put({ type: SET_USER_INFO, userInfo });
-
-        return true;
-    } catch (error) {
-        // If we get an error we send Redux the appropiate action and return
-        yield put({ type: REQUEST_ERROR, error: error.message });
-
-        return false;
-    }
-}
 
 /**
  * Log in saga
@@ -105,6 +79,62 @@ export function* loginFlow() {
     }
 }
 
+/**
+ * Register saga
+ * Very similar to log in saga!
+ */
+export function* registerFlow() {
+    while (true) {
+        // We always listen to `REGISTER_REQUEST` actions
+        const request = yield take(REGISTER_REQUEST);
+        // We call the `authorize` task with the data, telling it that we are registering a user
+        // This returns `true` if the registering was successful, `false` if not
+        const wasSuccessful = yield call(authorize, { registration: { data: request.data } });
+
+        // If we could register a user, we send the appropiate actions
+        if (wasSuccessful) {
+            yield put({ type: SET_AUTH, newAuthState: true }); // User is logged in (authorized) after being registered
+            yield put({ type: CHANGE_FORM, newFormState: Map({ email: '', password: '', rememberMe: false }) });
+            forwardTo('/app'); // Go to home app page
+        }
+    }
+}
+
+/**
+ * Effect to handle authorization
+ * @param  {object} authType               The authType containes the result of race
+ */
+export function* authorize(authType) {
+    // We then try to register or log in the user, depending on the request
+    try {
+        let userInfo;
+
+        if (authType.loginWithEmail) {
+            userInfo = yield call(firebaseTools.loginUser, authType.loginWithEmail.data);
+        } else if (authType.loginWithProvider) {
+            const result = yield firebaseTools.loginWithProvider(authType.loginWithProvider.provider);
+
+            userInfo = (result.user) ? result.user : result;
+        } else if (authType.registration) {
+            userInfo = yield firebaseTools.registerUser(authType.registration.data);
+        }
+
+        if (userInfo.errorMessage) {
+            yield put({ type: REQUEST_ERROR, error: userInfo.errorMessage });
+            return false;
+        }
+
+        yield put({ type: SET_USER_INFO, userInfo });
+
+        return true;
+    } catch (error) {
+        // If we get an error we send Redux the appropiate action and return
+        yield put({ type: REQUEST_ERROR, error: error.message });
+
+        return false;
+    }
+}
+
 export function* logout() {
     try {
         const result = yield call(firebaseTools.logoutUser);
@@ -116,55 +146,25 @@ export function* logout() {
 }
 
 /**
- * Log out saga
- * This is basically the same as the `if (winner.logout)` of above, just written
- * as a saga that is always listening to `LOGOUT` actions
+ * set user data to firebase
  */
-export function* logoutFlow() {
-    while (true) {
-        yield take(LOGOUT);
+export function* setUserData(userData) {
+    let result;
 
-        yield put({ type: SET_AUTH, newAuthState: false });
+    try {
+        result = yield call(api.setUserData, userData);
 
-        const result = yield call(logout);
+        yield put({ type: SET_USER_DATA_SUCCESS, result });
 
-        if (result.success) {
-            yield put({ type: SET_USER_INFO, userInfo: null });
-            forwardTo('/');
-        }
+        return true;
+    } catch (error) {
+        yield put({ type: SET_USER_DATA_FAILURE, error: error.message });
+        return false;
     }
 }
 
 /**
- * fetch user info out saga
- * This is basically the same as the `if (winner.fetch)` of above, just written
- * as a saga that is always listening to `fetch` actions
- */
-export function* fetchInfoFlow() {
-    while (true) {
-        yield take(FETCH_USER_DATA_REQUEST);
-
-        let response;
-
-        try {
-            response = yield call(api.fetchUserData);
-
-            if (response === null) {  // take user data from firebase auth
-                response = firebaseAuth.currentUser.toJSON();
-                response = omit(response, ['appName', 'authDomain', 'redirectEventId']);
-                response.isSync = false;
-            }
-
-            yield put({ type: FETCH_USER_DATA_SUCCESS, response });
-        } catch (error) {
-            yield put({ type: FETCH_USER_DATA_FAILURE, error: error.message });
-            return false;
-        }
-    }
-}
-
-/**
- * fetch user info out saga
+ * update user data out saga
  * This is basically the same as the `if (winner.fetch)` of above, just written
  * as a saga that is always listening to `fetch` actions
  */
@@ -198,23 +198,89 @@ export function* updateUserInfoFlow() {
     }
 }
 
-/**
- * Register saga
- * Very similar to log in saga!
- */
-export function* registerFlow() {
-    while (true) {
-        // We always listen to `REGISTER_REQUEST` actions
-        const request = yield take(REGISTER_REQUEST);
-        // We call the `authorize` task with the data, telling it that we are registering a user
-        // This returns `true` if the registering was successful, `false` if not
-        const wasSuccessful = yield call(authorize, { registration: { data: request.data } });
+// //////////////////////////////////////
+// watchers
+// //////////////////////////////////////
 
-        // If we could register a user, we send the appropiate actions
-        if (wasSuccessful) {
-            yield put({ type: SET_AUTH, newAuthState: true }); // User is logged in (authorized) after being registered
-            yield put({ type: CHANGE_FORM, newFormState: Map({ email: '', password: '', rememberMe: false }) });
-            forwardTo('/app'); // Go to home app page
+/**
+ * fetch user data out saga
+ * This is basically the same as the `if (winner.fetch)` of above, just written
+ * as a saga that is always listening to `fetch` actions
+ */
+export function* fetchUserDataFlow() {
+    while (true) {
+        yield take(FETCH_USER_DATA_REQUEST);
+
+        let response;
+
+        try {
+            response = yield call(api.fetchUserData);
+
+            if (response === null) {  // take user data from firebase auth
+                response = omit(firebaseAuth.currentUser.toJSON(),
+                    ['appName', 'authDomain', 'redirectEventId', 'stsTokenManager']);
+                response.isSync = false;
+            } else {
+                response.isSync = true;
+            }
+
+            yield put({ type: FETCH_USER_DATA_SUCCESS, response });
+
+            if (!response.isSync) {
+                yield put({ type: SET_USER_DATA_REQUEST, userData: response });
+            }
+        } catch (error) {
+            yield put({ type: FETCH_USER_DATA_FAILURE, error: error.message });
+            return false;
+        }
+    }
+}
+
+/**
+ * Sync app data flow
+ */
+export function* syncDataFlow() {
+    // Because sagas are generators, doing `while (true)` doesn't block our program
+    // Basically here we say "this saga is always listening for actions"
+    while (true) {
+        const action = yield take(SET_USER_DATA_REQUEST);
+
+        yield put({ type: APP_SYNC_REQUEST });
+
+        let result;
+
+        switch (action.type) {
+            case SET_USER_DATA_REQUEST:
+                result = yield call(setUserData, action.userData);
+                break;
+            default:
+                result = true;
+        }
+
+        if (result) {
+            yield put({ type: APP_SYNC_SUCCESS });
+        } else {
+            yield put({ type: APP_SYNC_FAILURE });
+        }
+    }
+}
+
+/**
+ * Log out saga
+ * This is basically the same as the `if (winner.logout)` of above, just written
+ * as a saga that is always listening to `LOGOUT` actions
+ */
+export function* logoutFlow() {
+    while (true) {
+        yield take(LOGOUT);
+
+        yield put({ type: SET_AUTH, newAuthState: false });
+
+        const result = yield call(logout);
+
+        if (result.success) {
+            yield put({ type: SET_USER_INFO, userInfo: null });
+            forwardTo('/');
         }
     }
 }
@@ -224,7 +290,8 @@ export function* registerFlow() {
 // Sagas are fired once at the start of an app and can be thought of as processes running
 // in the background, watching actions dispatched to the store.
 export default [
-    fetchInfoFlow,
+    fetchUserDataFlow,
+    syncDataFlow,
     logoutFlow
 ];
 

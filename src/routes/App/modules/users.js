@@ -7,9 +7,9 @@ import { fromJS } from 'immutable';
 export const FETCH_USER_DATA_REQUEST = 'FETCH_USER_DATA_REQUEST';
 export const FETCH_USER_DATA_SUCCESS = 'FETCH_USER_DATA_SUCCESS';
 export const FETCH_USER_DATA_FAILURE = 'FETCH_USER_DATA_FAILURE';
-export const SET_USER_DATA_REQUEST = 'SET_USER_DATA_REQUEST';
-export const SET_USER_DATA_SUCCESS = 'SET_USER_DATA_SUCCESS';
-export const SET_USER_DATA_FAILURE = 'SET_USER_DATA_FAILURE';
+export const SET_USER_DATA_REQUEST   = 'SET_USER_DATA_REQUEST';
+export const SET_USER_DATA_SUCCESS   = 'SET_USER_DATA_SUCCESS';
+export const SET_USER_DATA_FAILURE   = 'SET_USER_DATA_FAILURE';
 
 // ------------------------------------
 // Actions
@@ -30,11 +30,8 @@ const initialState = fromJS({
 
 const USERS_ACTION_HANDLERS = {
     [FETCH_USER_DATA_SUCCESS]: (state, action) => {
-        if (action.response) {
-            return state
-                .set('currentUser', action.response);
-        }
-        return state;
+        return state
+            .set('currentUser', action.response);
     }
 };
 

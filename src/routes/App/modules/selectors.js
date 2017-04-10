@@ -58,6 +58,16 @@ const makeSelectEventsSettingsFormState = () => createSelector(
     (globalState) => globalState.getIn(['events', 'settingsFormState']).toJS()
 );
 
+const makeSelectAppConnectionState = () => createSelector(
+    selectApp,
+    (globalState) => globalState.getIn(['status', 'connection'])
+);
+
+const makeSelectAppSyncState = () => createSelector(
+    selectApp,
+    (globalState) => globalState.getIn(['status', 'isSync'])
+);
+
 export {
     selectApp,
     makeSelectSidebar,
@@ -67,6 +77,9 @@ export {
     makeSelectLoggedIn,
     // user
     makeSelectCurrentUser,
+    // status
+    makeSelectAppConnectionState,
+    makeSelectAppSyncState,
     // events
     makeSelectEventsByIds,
     makeSelectEventsOptionsById,

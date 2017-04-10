@@ -11,17 +11,21 @@ const api = {
 
         return firebaseTools.getDatabaseReference(`/users/${uid}`).once('value')
             .then(snapshot => {
-                console.log(snapshot.val());
                 // normalized data with users schema to put in redux store
                 return snapshot.val() === null ? null : snapshot.val();
             })
             .catch(error => console.log(error.message));
     },
-    setUserData: (userInfo) => {
-        console.log(userInfo);
-        const normalizedData = normalize(userInfo.toJSON(), schema.users);
+    setUserData: (userData) => {
+        const normalazedData = normalize(userData, schema.users);
 
-        console.log(normalizedData);
+        return firebaseTools.getDatabaseReference(`/users/${normalazedData.result}`)
+            .set(normalazedData.entities.users[normalazedData.result])
+            .then(() => true)
+            .catch((error) => {
+                console.log(error.message);
+                return false;
+            });
     }
 };
 
