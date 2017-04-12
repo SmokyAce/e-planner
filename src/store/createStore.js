@@ -2,7 +2,6 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import { browserHistory } from 'react-router';
 import { Map } from 'immutable';
 
-import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 
@@ -16,7 +15,7 @@ export default (initialState = {}) => {
     // ======================================================
     // Middleware Configuration
     // ======================================================
-    const middleware = [thunk, sagaMiddleware];
+    const middleware = [sagaMiddleware];
 
     if (__DEV__) {
         middleware.push(logger);

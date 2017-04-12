@@ -8,6 +8,12 @@ import Header from '../../../../components/Header';
 import './App.scss';
 
 
+const styles = {
+    content: {
+        overflowY: 'auto'
+    }
+};
+
 class App extends React.Component {
 
     render = () => {
@@ -22,7 +28,8 @@ class App extends React.Component {
             open            : sidebar.get('sidebarOpen'),
             pullRight       : sidebar.get('pullRight'),
             onSetOpen,
-            onSetDocked
+            onSetDocked,
+            styles
         };
 
         return (
