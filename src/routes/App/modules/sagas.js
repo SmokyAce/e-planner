@@ -4,6 +4,7 @@
 // Sagas help us gather all our side effects (network requests in this case) in one place
 import { browserHistory } from 'react-router';
 import { Map } from 'immutable';
+import { channel } from 'redux-saga';
 import { take, call, put, race } from 'redux-saga/effects';
 
 import firebaseTools, { firebaseAuth } from '../../../utils/firebaseTools';
@@ -37,7 +38,9 @@ import {
 import {
     APP_SYNC_REQUEST,
     APP_SYNC_SUCCESS,
-    APP_SYNC_FAILURE
+    APP_SYNC_FAILURE,
+    FIREBASE_DISCONNECTED,
+    FIREBASE_CONNECTED
 } from './status';
 
 
@@ -285,6 +288,33 @@ export function* logoutFlow() {
     }
 }
 
+const connectionStatusWrapper = (connStatusChannel) => ({
+    connectionStatus(snapshot) {
+        connStatusChannel.put(snapshot.val());
+    }
+});
+
+/**
+ * Connection to Firebase status
+ * */
+export function* connectionStatusChangeFlow() {
+    const connectionStatusChannel = channel();
+    const wrapper = connectionStatusWrapper(connectionStatusChannel);
+    const connectionRef = firebaseTools.getDatabaseReference('.info/connected');
+
+    connectionRef.on('value', wrapper.connectionStatus);
+
+    while (true) {
+        const result = yield take(connectionStatusChannel);
+
+        if (result) {
+            yield put({ type: FIREBASE_CONNECTED });
+        } else {
+            yield put({ type: FIREBASE_DISCONNECTED });
+        }
+    }
+}
+
 // The root saga is what we actually send to Redux's middleware. In here we fork
 // each saga so that they are all "active" and listening.
 // Sagas are fired once at the start of an app and can be thought of as processes running
@@ -292,7 +322,8 @@ export function* logoutFlow() {
 export default [
     fetchUserDataFlow,
     syncDataFlow,
-    logoutFlow
+    logoutFlow,
+    connectionStatusChangeFlow
 ];
 
 // Little helper function to abstract going to different pages

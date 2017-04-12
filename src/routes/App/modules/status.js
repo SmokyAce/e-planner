@@ -7,7 +7,8 @@ import { fromJS } from 'immutable';
 export const APP_SYNC_REQUEST    = 'APP_SYNC_REQUEST';
 export const APP_SYNC_SUCCESS    = 'APP_SYNC_SUCCESS';
 export const APP_SYNC_FAILURE    = 'APP_SYNC_FAILURE';
-export const APP_LOST_CONNECTION = 'APP_LOST_CONNECTION';
+export const FIREBASE_CONNECTED = 'FIREBASE_CONNECTED';
+export const FIREBASE_DISCONNECTED = 'FIREBASE_DISCONNECTED';
 
 
 // ------------------------------------
@@ -33,9 +34,13 @@ const STATUS_ACTION_HANDLERS = {
         return state
             .set('isSync', true);
     },
-    [APP_LOST_CONNECTION]: (state) => {
+    [FIREBASE_DISCONNECTED]: (state) => {
         return state
             .set('connection', 'Offline');
+    },
+    [FIREBASE_CONNECTED]: (state) => {
+        return state
+            .set('connection', 'Online');
     }
 };
 
