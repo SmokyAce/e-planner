@@ -22,7 +22,7 @@ export const AddEvent = ({ dispatch, formState }) => {
         const eventName = formState.get('eventName');
 
         if (eventName !== '') {
-            dispatch(addEvent(eventName));
+            dispatch(addEvent({ name: eventName }));
         }
     };
 

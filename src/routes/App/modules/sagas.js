@@ -43,6 +43,8 @@ import {
     FIREBASE_CONNECTED
 } from './status';
 
+import { ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, ADD_EVENT_FAILURE } from './events';
+
 
 /**
  * Log in saga
@@ -246,7 +248,7 @@ export function* syncDataFlow() {
     // Because sagas are generators, doing `while (true)` doesn't block our program
     // Basically here we say "this saga is always listening for actions"
     while (true) {
-        const action = yield take(SET_USER_DATA_REQUEST);
+        let action = yield take(SET_USER_DATA_REQUEST);
 
         yield put({ type: APP_SYNC_REQUEST });
 
@@ -315,6 +317,22 @@ export function* connectionStatusChangeFlow() {
     }
 }
 
+export function* eventsFlow() {
+    while (true) {
+
+        let action = yield take(ADD_EVENT_REQUEST);
+
+        let response = yield call(api.addEvent, action.payload);
+        console.log(response);
+    }
+}
+
+fetchUserDataFlow.isDaemon          = true;
+syncDataFlow.isDaemon               = true;
+logoutFlow.isDaemon                 = true;
+connectionStatusChangeFlow.isDaemon = true;
+eventsFlow.isDaemon                 = true;
+
 // The root saga is what we actually send to Redux's middleware. In here we fork
 // each saga so that they are all "active" and listening.
 // Sagas are fired once at the start of an app and can be thought of as processes running
@@ -323,7 +341,8 @@ export default [
     fetchUserDataFlow,
     syncDataFlow,
     logoutFlow,
-    connectionStatusChangeFlow
+    connectionStatusChangeFlow,
+    eventsFlow
 ];
 
 // Little helper function to abstract going to different pages

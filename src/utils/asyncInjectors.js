@@ -56,10 +56,7 @@ export function injectAsyncReducer(store, isValid) {
         const keys = key.split('.');
 
         replaceAsyncReducers(store.asyncReducers, keys, asyncReducer);
-        //  store.asyncReducers[key] = reducer
         store.replaceReducer(createReducer(store.asyncReducers));
-        // store.asyncReducers[key] = asyncReducer; // eslint-disable-line no-param-reassign
-        // store.replaceReducer(createReducer(store.asyncReducers));
     };
 }
 
@@ -80,7 +77,12 @@ export function injectAsyncSagas(store, isValid) {
             '(app/utils...) injectAsyncSagas: Received an empty `sagas` array'
         );
 
-        sagas.map(store.runSaga);
+        sagas.forEach((saga) => {
+            if (!(saga.isDaemon === true && Reflect.has(store.asyncSagas, saga))) {
+                store.asyncSagas[saga] = true; // eslint-disable-line no-param-reassign
+                store.runSaga(saga);
+            }
+        });
     };
 }
 

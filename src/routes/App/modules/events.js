@@ -9,11 +9,16 @@ import {
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const ADD_EVENT         = 'ADD_EVENT';
-export const TOGGLE_EVENT_SERVICE = 'TOGGLE_EVENT_SERVICE';
-export const EVENT_NAME_CHANGE = 'EVENT_NAME_CHANGE';
+export const ADD_EVENT                  = 'ADD_EVENT';
+
+export const ADD_EVENT_REQUEST                  = 'ADD_EVENT_REQUEST';
+export const ADD_EVENT_SUCCESS                  = 'ADD_EVENT_SUCCESS';
+export const ADD_EVENT_FAILURE                  = 'ADD_EVENT_FAILURE';
+
+export const TOGGLE_EVENT_SERVICE       = 'TOGGLE_EVENT_SERVICE';
+export const EVENT_NAME_CHANGE          = 'EVENT_NAME_CHANGE';
 export const EVENT_SETTINGS_NAME_CHANGE = 'EVENT_SETTINGS_NAME_CHANGE';
-export const SAVE_EVENT_SETTINGS = 'SAVE_EVENT_SETTINGS';
+export const SAVE_EVENT_SETTINGS        = 'SAVE_EVENT_SETTINGS';
 
 // The initial state of the Events reducer
 const initialEventId = _.uniqueId();
@@ -37,7 +42,7 @@ const defaultEventOptions = {
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const addEvent = (eventName) => {
+export const addEvent_ = (eventName) => {
     const id = _.uniqueId();
 
     const options = defaultEventOptions;
@@ -49,6 +54,11 @@ export const addEvent = (eventName) => {
         payload: { id, options }
     };
 };
+
+export const addEvent = (payload) => ({
+    type   : 'ADD_EVENT_REQUEST',
+    payload
+});
 
 export const toggleEventService = (eventId, service, checked) => ({
     type: 'TOGGLE_EVENT_SERVICE',
@@ -75,10 +85,8 @@ export const saveEventSettings = (eventId, newEventName) => ({
 
 
 const initialState = fromJS({
-    listOfIds: [initialEventId],
-    byIds    : {
-        [initialEventId]: defaultEventOptions
-    },
+    listOfIds: [],
+    byIds    : {},
     formState: {
         eventName: ''
     },

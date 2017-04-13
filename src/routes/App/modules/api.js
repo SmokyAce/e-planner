@@ -1,6 +1,6 @@
 import { normalize } from 'normalizr';
 import * as schema from './schema';
-import firebaseTools from '../../../utils/firebaseTools';
+import firebaseTools, { firebaseDb } from '../../../utils/firebaseTools';
 import auth from '../../../utils/auth';
 
 
@@ -26,6 +26,35 @@ const api = {
                 console.log(error.message);
                 return false;
             });
+    },
+    addEvent: (payload) => {
+
+        let eventId = firebaseTools.getDatabaseReference().child('events').push().key;
+
+        const newEvent = {
+            id      : eventId,
+            services: {
+                counter    : true,
+                guests     : true,
+                todos      : true,
+                budjet     : false,
+                timing     : false,
+                contractors: false,
+                blog       : false,
+                quiz       : false,
+                notebook   : false
+            }
+        };
+
+        const uid = auth.getUserUID().uid;
+
+        let updates = {};
+        updates['/events/' + eventId] = { ...newEvent, ...payload };
+        updates['/users/' + uid + '/events/' + eventId] = true;
+
+        return firebaseDb.ref().update(updates)
+            .then(() => true)
+            .catch(error => error);
     }
 };
 

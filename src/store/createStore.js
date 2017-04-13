@@ -51,6 +51,7 @@ export default (initialState = {}) => {
     // Extensions
     store.runSaga = sagaMiddleware.run;
     store.asyncReducers = {};
+    store.asyncSagas = {};
 
     // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
     store.unsubscribeHistory = browserHistory.listen(updateLocation(store));
