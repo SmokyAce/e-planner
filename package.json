@@ -65,10 +65,7 @@
       }
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://a_simonyan@bitbucket.org/syndicat/wedplanner.git"
-  },
+  "repository": "https://a_simonyan@bitbucket.org/syndicat/wedplanner.git",
   "keywords": [
     "wedding",
     "planner",
