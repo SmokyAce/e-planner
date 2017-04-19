@@ -43,7 +43,11 @@ import {
     FIREBASE_CONNECTED
 } from './status';
 
-import { ADD_EVENT_REQUEST, ADD_EVENT_SUCCESS, ADD_EVENT_FAILURE } from './events';
+import {
+    ADD_EVENT_REQUEST
+    // ADD_EVENT_SUCCESS,
+    // ADD_EVENT_FAILURE
+} from './events';
 
 
 /**
@@ -248,7 +252,7 @@ export function* syncDataFlow() {
     // Because sagas are generators, doing `while (true)` doesn't block our program
     // Basically here we say "this saga is always listening for actions"
     while (true) {
-        let action = yield take(SET_USER_DATA_REQUEST);
+        const action = yield take(SET_USER_DATA_REQUEST);
 
         yield put({ type: APP_SYNC_REQUEST });
 
@@ -319,19 +323,25 @@ export function* connectionStatusChangeFlow() {
 
 export function* eventsFlow() {
     while (true) {
+        const action = yield take(ADD_EVENT_REQUEST);
 
-        let action = yield take(ADD_EVENT_REQUEST);
+        const response = yield call(api.addEvent, action.payload);
 
-        let response = yield call(api.addEvent, action.payload);
         console.log(response);
+
+        // if (!response.error) {
+        //     yield put({ type: ADD_EVENT_SUCCESS, payload: response })
+        // } else {
+        //     yield put({ type: ADD_EVENT_FAILURE, error: response.error })
+        // }
     }
 }
 
-fetchUserDataFlow.isDaemon          = true;
-syncDataFlow.isDaemon               = true;
-logoutFlow.isDaemon                 = true;
+fetchUserDataFlow.isDaemon = true;
+syncDataFlow.isDaemon = true;
+logoutFlow.isDaemon = true;
 connectionStatusChangeFlow.isDaemon = true;
-eventsFlow.isDaemon                 = true;
+eventsFlow.isDaemon = true;
 
 // The root saga is what we actually send to Redux's middleware. In here we fork
 // each saga so that they are all "active" and listening.

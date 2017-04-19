@@ -22,14 +22,10 @@ const api = {
         return firebaseTools.getDatabaseReference(`/users/${normalazedData.result}`)
             .set(normalazedData.entities.users[normalazedData.result])
             .then(() => true)
-            .catch((error) => {
-                console.log(error.message);
-                return false;
-            });
+            .catch(error => error);
     },
     addEvent: (payload) => {
-
-        let eventId = firebaseTools.getDatabaseReference().child('events').push().key;
+        const eventId = firebaseTools.getDatabaseReference().child('events').push().key;
 
         const newEvent = {
             id      : eventId,
@@ -48,12 +44,17 @@ const api = {
 
         const uid = auth.getUserUID().uid;
 
-        let updates = {};
-        updates['/events/' + eventId] = { ...newEvent, ...payload };
-        updates['/users/' + uid + '/events/' + eventId] = true;
+        const updates = {};
 
-        return firebaseDb.ref().update(updates)
-            .then(() => true)
+        updates[`/events/${eventId}`] = { ...newEvent, ...payload };
+        updates[`/users/${uid}/events/${eventId}`] = true;
+
+        firebaseDb.ref().update(updates)
+            .then(() => {
+                console.log('onComplete func');
+                console.log(newEvent);
+                return { ...newEvent, ...payload };
+            })
             .catch(error => error);
     }
 };

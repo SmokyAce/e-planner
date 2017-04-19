@@ -56,7 +56,7 @@ export const addEvent_ = (eventName) => {
 };
 
 export const addEvent = (payload) => ({
-    type   : 'ADD_EVENT_REQUEST',
+    type: 'ADD_EVENT_REQUEST',
     payload
 });
 
@@ -104,6 +104,11 @@ const EVENTS_ACTION_HANDLERS = {
             .updateIn(['listOfIds'], list => list.push(action.payload.id))
             .setIn(['byIds', action.payload.id], fromJS(action.payload.options))
             .setIn(['byIds', action.payload.id, 'id'], action.payload.id);
+    },
+    [ADD_EVENT_SUCCESS]: (state, action) => {
+        return state
+            .updateIn(['listOfIds'], list => list.push(action.payload.id))
+            .setIn(['byIds', action.payload.id], fromJS(action.payload));
     },
     [TOGGLE_EVENT_SERVICE]: (state, action) => {
         return state
