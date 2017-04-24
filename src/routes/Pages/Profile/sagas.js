@@ -1,7 +1,7 @@
 import { updateUserInfoFlow } from '../../App/modules/sagas';
 import { take, put, fork, cancel } from 'redux-saga/effects';
 
-import { SET_MESSAGE } from '../../App/modules/auth';
+import { SET_MESSAGE } from '../../App/modules/auth/actions';
 import { LOCATION_CHANGE } from '../../../store/reducers/location';
 
 /**

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { FormattedMessage } from 'react-intl';
 
-import { resetPasswordEmail } from '../../App/modules/user';
+import { resetPasswordEmail } from '../../App/modules/auth/actions';
 import messages from '../messages';
 
 

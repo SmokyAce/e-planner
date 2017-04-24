@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Immutable from 'immutable';
 
 import Sidebar from '../Sidebar';
-import SidebarContent from '../SidebarContent';
+import SidebarContent from '../../containers/SidebarContent';
 import Header from '../../../../components/Header';
 import './App.scss';
 

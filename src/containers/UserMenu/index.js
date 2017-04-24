@@ -9,8 +9,8 @@ import { FormattedMessage } from 'react-intl';
 import { NavDropdown, MenuItem } from 'react-bootstrap';
 
 import Spinner from '../../components/Spinner';
-import { logoutRequest } from '../../routes/App/modules/auth';
-import { fetchUserInfoRequest } from '../../routes/App/modules/users';
+import { logoutRequest } from '../../routes/App/modules/auth/actions';
+import { fetchUserInfoRequest } from '../../routes/App/modules/users/actions';
 import {
     makeSelectLoggedIn,
     makeSelectCurrentUser
@@ -34,17 +34,19 @@ class UserMenu extends React.Component {
     render() {
         const { currentUser } = this.props;
 
-        if (currentUser && currentUser.uid) {
+        if (currentUser && currentUser.get('uid')) {
             return (
                 <NavDropdown title={
-                    (currentUser.displayName === '' || currentUser.displayName === null)
-                        ? currentUser.email : currentUser.displayName
+                    (currentUser.get('displayName') === '' || currentUser.get('displayName') === null)
+                        ? currentUser.get('email') : currentUser.get('displayName')
                 }
                     id='user-dropdown' eventKey='2'
                 >
                     <LinkContainer to='/profile' className='media'>
                         <MenuItem eventKey='2.1'>
-                            <img className='media-object user-photo' src={currentUser.providerData[0].photoURL} />
+                            <img className='media-object user-photo'
+                                src={currentUser.getIn(['providerData', 0, 'photoURL'])}
+                            />
                         </MenuItem>
                     </LinkContainer>
                     <LinkContainer to='/profile'>

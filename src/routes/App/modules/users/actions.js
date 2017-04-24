@@ -1,6 +1,3 @@
-import { fromJS } from 'immutable';
-
-
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -21,22 +18,3 @@ export const SET_USER_DATA_FAILURE   = 'SET_USER_DATA_FAILURE';
 export const fetchUserInfoRequest = () => ({
     type: FETCH_USER_DATA_REQUEST
 });
-
-
-// The initial state of the App
-const initialState = fromJS({
-    currentUser: null
-});
-
-const USERS_ACTION_HANDLERS = {
-    [FETCH_USER_DATA_SUCCESS]: (state, action) => {
-        return state
-            .set('currentUser', action.response);
-    }
-};
-
-export default function usersReducer(state = initialState, action) {
-    const handler = USERS_ACTION_HANDLERS[action.type];
-
-    return handler ? handler(state, action) : state;
-}

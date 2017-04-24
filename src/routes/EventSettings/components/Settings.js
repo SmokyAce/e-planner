@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { onEventSettingsNameChange, saveEventSettings } from '../../App/modules/events';
+import { onEventSettingsNameChange, saveEventSettings } from '../../App/modules/events/actions';
 import Services from './Services';
 import messages from './messages';
 

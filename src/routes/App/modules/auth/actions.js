@@ -1,7 +1,3 @@
-import { fromJS } from 'immutable';
-import auth from '../../../utils/auth';
-
-
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -18,7 +14,7 @@ export const SET_USER_INFO                = 'SET_USER_INFO';
 export const SET_AUTH                     = 'SET_AUTH';
 export const CHANGE_FORM                  = 'CHANGE_FORM';
 export const SET_MESSAGE                  = 'SET_MESSAGE';
-
+export const RESET_PASSWORD               = 'RESET_PASSWORD';
 
 // ------------------------------------
 // Actions
@@ -96,41 +92,8 @@ export const registerRequest = (data) => ({
     data
 });
 
-
-// The initial state of the App
-const initialState = fromJS({
-    formState: {
-        email         : '',
-        password      : '',
-        repeatPassword: '',
-        rememberMe    : false,
-        displayName   : ''
-    },
-    message : '',
-    loggedIn: auth.loggedIn()
-});
-
-const AUTH_ACTION_HANDLERS = {
-    [CHANGE_FORM]: (state, action) => {
-        return state
-            .set('formState', action.newFormState);
-    },
-    [SET_AUTH]: (state, action) => {
-        return state
-            .set('loggedIn', action.newAuthState);
-    },
-    [REQUEST_ERROR]: (state, action) => {
-        return state
-            .set('message', action.error);
-    },
-    [SET_MESSAGE]: (state, action) => {
-        return state
-            .set('message', action.message);
-    }
-};
-
-export default function authReducer(state = initialState, action) {
-    const handler = AUTH_ACTION_HANDLERS[action.type];
-
-    return handler ? handler(state, action) : state;
+export function resetPasswordEmail(email) {
+    return {
+        type: RESET_PASSWORD
+    };
 }

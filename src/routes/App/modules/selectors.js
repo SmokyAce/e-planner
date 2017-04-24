@@ -1,7 +1,6 @@
 /**
  * The global state selectors
  */
-
 import { createSelector } from 'reselect';
 
 const selectApp = (state) => state.get('app');
@@ -16,6 +15,11 @@ const makeSelectSidebar = () => createSelector(
 const makeSelectCurrentUser = () => createSelector(
     selectApp,
     (globalState) => globalState.getIn(['users', 'currentUser'])
+);
+
+const makeSelectCurrentUserEvents = () => createSelector(
+    selectApp,
+    (globalState) => globalState.getIn(['users', 'currentUser', 'events'])
 );
 
 const makeSelectMessage = () => createSelector(
@@ -77,6 +81,7 @@ export {
     makeSelectLoggedIn,
     // user
     makeSelectCurrentUser,
+    makeSelectCurrentUserEvents,
     // status
     makeSelectAppConnectionState,
     makeSelectAppSyncState,

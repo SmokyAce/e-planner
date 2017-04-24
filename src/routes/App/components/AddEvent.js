@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
-import { addEvent, onEventNameChange } from '../../modules/events';
+import { addEvent, onEventNameChange } from '../modules/events/actions';
 
 export const AddEvent = ({ dispatch, formState }) => {
     let input;

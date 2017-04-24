@@ -49,11 +49,51 @@ const api = {
         updates[`/events/${eventId}`] = { ...newEvent, ...payload };
         updates[`/users/${uid}/events/${eventId}`] = true;
 
-        firebaseDb.ref().update(updates)
+        return firebaseDb.ref().update(updates)
             .then(() => {
                 console.log('onComplete func');
                 console.log(newEvent);
                 return { ...newEvent, ...payload };
+            })
+            .catch(error => error);
+    },
+    fetchUserEvents: () => {
+        const uid = auth.getUserUID().uid;
+
+        return firebaseTools.getDatabaseReference(`/users/${uid}/events`).once('value')
+            .then(snapshot => {
+                // normalized data with users schema to put in redux store
+                return snapshot.val() === null ? null : snapshot.val();
+            })
+            .catch(error => error);
+    },
+    fetchEvents: () => {
+        const uid = auth.getUserUID().uid;
+
+        return firebaseTools.getDatabaseReference(`/users/${uid}/events`).once('value')
+            .then(snapshot => {
+                const eventsIds = snapshot.val();
+
+                if (eventsIds === null) return null;
+                const promises = [];
+
+                for (const key in eventsIds) {
+                    if (eventsIds.hasOwnProperty(key)) {
+                        promises.push(firebaseTools.getDatabaseReference(`/events/${key}`).once('value'));
+                    }
+                }
+                return Promise.all(promises);
+            })
+            .then(values => {
+                const events = { result: [], response: {} };
+
+                values.forEach(snapshot => {
+                    const event = snapshot.val();
+
+                    events.result.push(event.id);
+                    events.response[event.id] = event;
+                });
+                return events;
             })
             .catch(error => error);
     }

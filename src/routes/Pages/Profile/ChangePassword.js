@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'immutable';
 import { FormattedMessage } from 'react-intl';
-import { changeUserPwdRequest, setMesssage, changeForm } from '../../App/modules/auth';
+import { changeUserPwdRequest, setMesssage, changeForm } from '../../App/modules/auth/actions';
 
 
 class ChangePassword extends React.Component {

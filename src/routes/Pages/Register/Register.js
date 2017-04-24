@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
 
-import { registerRequest, loginWithProviderRequest, changeForm } from '../../App/modules/auth';
+import { registerRequest, loginWithProviderRequest, changeForm } from '../../App/modules/auth/actions';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectFormState, makeSelectMessage } from '../../App/modules/selectors';
 
