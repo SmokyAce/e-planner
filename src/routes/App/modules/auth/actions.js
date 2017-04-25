@@ -1,19 +1,16 @@
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const APP_LOADING = 'APP_LOADING';
-
 export const LOGIN_REQUEST                = 'LOGIN_REQUEST';
 export const LOGIN_WITH_PROVIDER_REQUEST  = 'LOGIN_WITH_PROVIDER_REQUEST';
 export const REGISTER_REQUEST             = 'REGISTER_REQUEST';
 export const UPDATE_USER_INFO_REQUEST     = 'UPDATE_USER_INFO_REQUEST';
 export const CHANGE_USER_PASSWORD_REQUEST = 'CHANGE_USER_PASSWORD_REQUEST';
-export const REQUEST_ERROR                = 'REQUEST_ERROR';
 export const LOGOUT                       = 'LOGOUT';
 export const SET_USER_INFO                = 'SET_USER_INFO';
 export const SET_AUTH                     = 'SET_AUTH';
+export const SET_ERROR_MESSAGE            = 'SET_ERROR_MESSAGE';
 export const CHANGE_FORM                  = 'CHANGE_FORM';
-export const SET_MESSAGE                  = 'SET_MESSAGE';
 export const RESET_PASSWORD               = 'RESET_PASSWORD';
 
 // ------------------------------------
@@ -35,7 +32,7 @@ export const changeForm = (newFormState) => ({
  * @param  {string} message The new text of the error message on the form
  */
 export const setMesssage = (message) => ({
-    type: SET_MESSAGE,
+    type: SET_ERROR_MESSAGE,
     message
 });
 

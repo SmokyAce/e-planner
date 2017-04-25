@@ -1,7 +1,7 @@
 import { loginFlow } from '../../App/modules/sagas';
 import { take, put, fork, cancel } from 'redux-saga/effects';
 
-import { SET_MESSAGE } from '../../App/modules/auth/actions';
+import { SET_ERROR_MESSAGE } from '../../App/modules/auth/actions';
 import { LOCATION_CHANGE } from '../../../store/reducers/location';
 
 /**
@@ -15,7 +15,7 @@ export function* watchLoginFlow() {
     const data = yield take(LOCATION_CHANGE);
 
     if (data.payload.action !== 'POP') {
-        yield put({ type: SET_MESSAGE, message: '' });
+        yield put({ type: SET_ERROR_MESSAGE, message: '' });
         yield cancel(watcher);
     }
 }

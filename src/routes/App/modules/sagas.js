@@ -19,7 +19,6 @@ import {
     APP_SYNC_REQUEST,
     APP_SYNC_SUCCESS,
     APP_SYNC_FAILURE,
-    FIREBASE_DISCONNECTED,
     FIREBASE_CONNECTED
 } from './status';
 
@@ -110,7 +109,7 @@ export function* authorize(authType) {
         }
 
         if (userInfo.errorMessage) {
-            yield put({ type: authActions.REQUEST_ERROR, error: userInfo.errorMessage });
+            yield put({ type: authActions.SET_ERROR_MESSAGE, error: userInfo.errorMessage });
             return false;
         }
 
@@ -119,7 +118,7 @@ export function* authorize(authType) {
         return true;
     } catch (error) {
         // If we get an error we send Redux the appropiate action and return
-        yield put({ type: authActions.REQUEST_ERROR, error: error.message });
+        yield put({ type: authActions.SET_ERROR_MESSAGE, error: error.message });
 
         return false;
     }
@@ -131,7 +130,7 @@ export function* logout() {
 
         return result;
     } catch (error) {
-        yield put({ type: authActions.REQUEST_ERROR, error: error.message });
+        yield put({ type: authActions.SET_ERROR_MESSAGE, error: error.message });
     }
 }
 
@@ -175,14 +174,14 @@ export function* updateUserInfoFlow() {
             }
         } catch (error) {
             // If we get an error we send Redux the appropiate action and return
-            yield put({ type: authActions.REQUEST_ERROR, error: error.message });
+            yield put({ type: authActions.SET_ERROR_MESSAGE, error: error.message });
             return false;
         }
 
         if (!userInfo.error) {
             yield put({ type: authActions.SET_USER_INFO, userInfo });
         } else {
-            yield put({ type: authActions.REQUEST_ERROR, error: userInfo.errorMessage });
+            yield put({ type: authActions.SET_ERROR_MESSAGE, error: userInfo.errorMessage });
             return false;
         }
     }
@@ -294,11 +293,7 @@ export function* connectionStatusChangeFlow() {
     while (true) {
         const result = yield take(connectionStatusChannel);
 
-        if (result) {
-            yield put({ type: FIREBASE_CONNECTED });
-        } else {
-            yield put({ type: FIREBASE_DISCONNECTED });
-        }
+        yield put({ type: FIREBASE_CONNECTED, payload: result });
     }
 }
 

@@ -8,7 +8,6 @@ export const APP_SYNC_REQUEST    = 'APP_SYNC_REQUEST';
 export const APP_SYNC_SUCCESS    = 'APP_SYNC_SUCCESS';
 export const APP_SYNC_FAILURE    = 'APP_SYNC_FAILURE';
 export const FIREBASE_CONNECTED = 'FIREBASE_CONNECTED';
-export const FIREBASE_DISCONNECTED = 'FIREBASE_DISCONNECTED';
 
 
 // ------------------------------------
@@ -34,14 +33,7 @@ const STATUS_ACTION_HANDLERS = {
         return state
             .set('isSync', true);
     },
-    [FIREBASE_DISCONNECTED]: (state) => {
-        return state
-            .set('connection', 'Offline');
-    },
-    [FIREBASE_CONNECTED]: (state) => {
-        return state
-            .set('connection', 'Online');
-    }
+    [FIREBASE_CONNECTED]: (state, action) => state.set('connection', action.payload ? 'Online' : 'Offline')
 };
 
 export default function statusReducer(state = initialState, action) {

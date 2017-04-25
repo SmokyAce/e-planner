@@ -25,13 +25,9 @@ const AUTH_ACTION_HANDLERS = {
         return state
             .set('loggedIn', action.newAuthState);
     },
-    [actions.REQUEST_ERROR]: (state, action) => {
+    [actions.SET_ERROR_MESSAGE]: (state, action) => {
         return state
             .set('message', action.error);
-    },
-    [actions.SET_MESSAGE]: (state, action) => {
-        return state
-            .set('message', action.message);
     }
 };
 
