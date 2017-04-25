@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import Immutable from 'immutable';
-import { loginRequest, loginWithProviderRequest, changeForm } from '../../App/modules/auth/actions';
+import { Map } from 'immutable';
+
+import { registerRequest, loginWithProviderRequest, changeForm } from '../../App/modules/auth/actions';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectFormState, makeSelectMessage } from '../../App/modules/selectors';
 
 import { FormattedMessage } from 'react-intl';
 import messages from '../messages';
 
-
-class UserLogin extends Component {
+class UserRegister extends Component {
 
     constructor(props) {
         super(props);
@@ -25,7 +24,7 @@ class UserLogin extends Component {
     onFormSubmit(event) {
         event.preventDefault();
         this.props.dispatch(
-            loginRequest({
+            registerRequest({
                 email   : this.props.formState.get('email'),
                 password: this.props.formState.get('password')
             })
@@ -55,9 +54,9 @@ class UserLogin extends Component {
             <div>
                 <div className='col-md-4' />
                 <div className='col-md-4'>
-                    <form id='frmLogin' role='form' onSubmit={this.onFormSubmit}>
+                    <form id='frmRegister' role='form' onSubmit={this.onFormSubmit}>
                         <p>{message}</p>
-                        <h2><FormattedMessage {...messages.login_description} /></h2>
+                        <h2><FormattedMessage {...messages.register_description} /></h2>
                         <div className='form-group'>
                             <label htmlFor='txtEmail'>
                                 <FormattedMessage {...messages.email} />
@@ -65,6 +64,7 @@ class UserLogin extends Component {
                             <input type='email' className='form-control' id='txtEmail' placeholder='Enter email'
                                 name='email' value={formState.get('email')} onChange={this._changeEmail}
                             />
+
                         </div>
                         <div className='form-group'>
                             <label htmlFor='txtPass'>
@@ -75,14 +75,10 @@ class UserLogin extends Component {
                             />
                         </div>
                         <button type='submit' className='btn btn-primary btn-block'>
-                            <FormattedMessage {...messages.login_btn} />
+                            <FormattedMessage {...messages.register_btn} />
                         </button>
-                        <br />
-                        <h5>
-                            <Link to='/app/reset'>
-                                <FormattedMessage {...messages.forgot_pwd} />
-                            </Link>
-                        </h5>
+                        <br /><br />
+
                         <a href='#' className='btn btn-block btn-social btn-facebook'
                             onClick={() => {
                                 this.loginWithProvider('facebook');
@@ -116,11 +112,11 @@ class UserLogin extends Component {
             </div>
         );
     }
-
 }
 
-UserLogin.propTypes = {
-    formState: PropTypes.instanceOf(Immutable.Map),
+
+UserRegister.propTypes = {
+    formState: PropTypes.instanceOf(Map),
     message  : PropTypes.string,
     dispatch : PropTypes.func.isRequired
 };
@@ -130,4 +126,4 @@ const mapStateToProps = state => createStructuredSelector({
     message  : makeSelectMessage()
 });
 
-export default connect(mapStateToProps, null)(UserLogin);
+export default connect(mapStateToProps, null)(UserRegister);

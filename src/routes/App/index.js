@@ -29,7 +29,7 @@ export default (store) => {
                 next(null, [
                     require('../AppEvent').default(store),
 
-                    require('../Pages/Profile').default(store)
+                    require('../UserProfile').default(store)
                     // require('../Counter').default(store),
                     // require('../Zen').default(store),
                     // require('../Todos').default(store)

@@ -1,5 +1,5 @@
-import auth from '../../../utils/auth';
-import { getAsyncInjectors } from '../../../utils/asyncInjectors';
+import auth from '../../utils/auth';
+import { getAsyncInjectors } from '../../utils/asyncInjectors';
 
 
 // Sync route definition

@@ -26,9 +26,9 @@ export const createRoutes = (store) => {
                 next(null, [
                     require('./App').default(store),
 
-                    require('./Pages/Register').default(store),
-                    require('./Pages/Login').default(store),
-                    require('./Pages/ResetPwd').default(store)
+                    require('./AppAuth/Register').default(store),
+                    require('./AppAuth/Login').default(store),
+                    require('./AppAuth/ResetPwd').default(store)
                 ]);
             });
         }

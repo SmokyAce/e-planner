@@ -14,17 +14,9 @@ export default defineMessages({
         id            : 'app.register.description',
         defaultMessage: 'Register'
     },
-    profile_description: {
-        id            : 'app.profile.description',
-        defaultMessage: 'User Profile Page'
-    },
     change_description: {
         id            : 'app.change-pwd.description',
         defaultMessage: 'Register'
-    },
-    logout_description: {
-        id            : 'app.logout.description',
-        defaultMessage: 'You are logged out!'
     },
     email: {
         id            : 'app.email',
@@ -42,10 +34,6 @@ export default defineMessages({
         id            : 'app.register.btn',
         defaultMessage: 'Register'
     },
-    update_btn: {
-        id            : 'app.profile.update-btn',
-        defaultMessage: 'Register'
-    },
     forgot_pwd: {
         id            : 'app.login.forgot-pwd',
         defaultMessage: 'Forgot password?'
@@ -54,17 +42,9 @@ export default defineMessages({
         id            : 'app.login.with',
         defaultMessage: 'Login with'
     },
-    display_name: {
-        id            : 'app.profile.display-name',
-        defaultMessage: 'Login with'
-    },
     new_pwd: {
         id            : 'app.change-pwd.new-pwd',
         defaultMessage: 'New password'
-    },
-    repeat_pwd: {
-        id            : 'app.change-pwd.repeat-pwd',
-        defaultMessage: 'Repeat password'
     },
     change_pwd_btn: {
         id            : 'app.change-pwd.btn',

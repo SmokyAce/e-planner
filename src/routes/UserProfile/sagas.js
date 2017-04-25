@@ -1,8 +1,8 @@
-import { updateUserInfoFlow } from '../../App/modules/sagas';
+import { updateUserInfoFlow } from '../App/modules/sagas';
 import { take, put, fork, cancel } from 'redux-saga/effects';
 
-import { SET_ERROR_MESSAGE } from '../../App/modules/auth/actions';
-import { LOCATION_CHANGE } from '../../../store/reducers/location';
+import { SET_ERROR_MESSAGE } from '../App/modules/auth/actions';
+import { LOCATION_CHANGE } from '../../store/reducers/location';
 
 /**
  * Watchers
