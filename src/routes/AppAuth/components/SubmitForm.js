@@ -1,28 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { changeForm } from '../App/modules/auth/actions';
 
 
-const AuthForm = ({ email, password, onSubmit, error, messages, dispatch, children, formState }) => {
-
+const AuthForm = ({ children, email, password, error, onSubmit, onInputChange, messages }) => {
     const onFormSubmit = (event) => {
         event.preventDefault();
-        dispatch(onSubmit({email, password}))
+        onSubmit({ email, password });
     };
 
-    const _changeEmail = (event) => {
-        _emitChange(formState.set('email', event.target.value));
+    const onChange = (event) => {
+        onInputChange(event.target.name, event.target.value);
     };
-
-    const _changePassword = (event) => {
-        _emitChange(formState.set('password', event.target.value));
-    };
-
-    const _emitChange = (newFormState) => {
-        dispatch(changeForm(newFormState));
-    };
-
 
     return (
         <form className='col-md-4' id='frmLogin' role='form' onSubmit={onFormSubmit}>
@@ -33,7 +22,7 @@ const AuthForm = ({ email, password, onSubmit, error, messages, dispatch, childr
                     <FormattedMessage {...messages.email} />
                 </label>
                 <input type='email' className='form-control' id='txtEmail' placeholder='Enter email'
-                       name='email' value={email} onChange={_changeEmail}
+                    name='email' value={email} onChange={onChange}
                 />
             </div>
             <div className='form-group'>
@@ -41,7 +30,7 @@ const AuthForm = ({ email, password, onSubmit, error, messages, dispatch, childr
                     <FormattedMessage {...messages.pwd} />
                 </label>
                 <input type='password' className='form-control' id='txtPass' placeholder='password'
-                       name='password' value={password} onChange={_changePassword}
+                    name='password' value={password} onChange={onChange}
                 />
             </div>
             <button type='submit' className='btn btn-primary btn-block'>
@@ -49,14 +38,17 @@ const AuthForm = ({ email, password, onSubmit, error, messages, dispatch, childr
             </button>
             { children }
         </form>
-    )
+    );
 };
 
 AuthForm.propTypes = {
-    email: PropTypes.string.isRequired,
-    password  : PropTypes.string.isRequired,
-    messages : PropTypes.object.isRequired,
-    onSubmit: PropTypes.func.isRequired,
+    children     : PropTypes.element,
+    email        : PropTypes.string,
+    password     : PropTypes.string,
+    error        : PropTypes.string,
+    onSubmit     : PropTypes.func,
+    onInputChange: PropTypes.func,
+    messages     : PropTypes.object
 };
 
 export default AuthForm;

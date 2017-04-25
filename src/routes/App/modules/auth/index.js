@@ -19,7 +19,7 @@ const initialState = fromJS({
 const AUTH_ACTION_HANDLERS = {
     [actions.CHANGE_FORM]: (state, action) => {
         return state
-            .set('formState', action.newFormState);
+            .setIn(['formState', action.name], action.value);
     },
     [actions.SET_AUTH]: (state, action) => {
         return state

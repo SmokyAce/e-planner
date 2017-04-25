@@ -10,7 +10,7 @@ export default (store) => {
         getComponent(nextState, next) {
             require.ensure([], (require) => {
                 injectSagas(require('./sagas').default);
-                const Register = require('./Register').default;
+                const Register = require('./RegisterContainer').default;
 
                 next(null, Register);
             }, 'register');

@@ -9,7 +9,7 @@ export default (store) => {
             require.ensure([], (require) => {
                 injectSagas(require('./sagas').default);
 
-                const Login = require('./Login_').default;
+                const Login = require('./LoginContainer').default;
 
                 next(null, Login);
             }, 'login');

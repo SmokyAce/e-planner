@@ -18,13 +18,13 @@ export const RESET_PASSWORD               = 'RESET_PASSWORD';
 // ------------------------------------
 /**
  * Sets the form state
- * @param  {object} newFormState          The new state of the form
- * @param  {string} newFormState.username The new text of the username input field of the form
- * @param  {string} newFormState.password The new text of the password input field of the form
+ * @param  {string} name (email, password) The name of input that user change
+ * @param  {string} value The value of input that user change
  */
-export const changeForm = (newFormState) => ({
+export const changeForm = (name, value) => ({
     type: CHANGE_FORM,
-    newFormState
+    name,
+    value
 });
 
 /**
