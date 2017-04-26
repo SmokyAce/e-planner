@@ -7,8 +7,7 @@
     "plugins": [
         "babel",
         "react",
-        "promise",
-        "flow-vars"
+        "promise"
     ],
     "env": {
         "browser" : true
@@ -21,8 +20,6 @@
     },
 
     "rules":{
-        "flow-vars/define-flow-type": 1,
-        "flow-vars/use-flow-type": 1,
         // Possible errors
         "comma-dangle": [2, "never"],
         "no-cond-assign": [2, "always"],

@@ -30,7 +30,7 @@ export const createRoutes = (store) => {
                     require('./AppAuth/Login').default(store),
                     require('./AppAuth/ResetPwd').default(store)
                 ]);
-            });
+            }, 'layout');
         }
     }
     );

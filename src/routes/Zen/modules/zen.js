@@ -12,13 +12,13 @@ export const SAVE_CURRENT_ZEN = 'SAVE_CURRENT_ZEN';
 // Actions
 // ------------------------------------
 
-export function requestZen(): Action {
+export function requestZen() {
     return {
         type: REQUEST_ZEN
     };
 }
 
-export function recieveZen(value, current): Action {
+export function recieveZen(value, current) {
     let newId = current;
 
     return {
@@ -30,7 +30,7 @@ export function recieveZen(value, current): Action {
     };
 }
 
-export function saveCurrentZen(): Action {
+export function saveCurrentZen() {
     return {
         type: SAVE_CURRENT_ZEN
     };
@@ -48,7 +48,6 @@ export const fetchZen = (current = 0) => {
 
 export const actions = {
     requestZen,
-    recieveZen,
     fetchZen,
     saveCurrentZen
 };
