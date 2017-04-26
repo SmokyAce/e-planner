@@ -16,7 +16,7 @@ export const createRoutes = (store) => {
             require.ensure([], (require) => {
                 injectReducer('app.auth', require('./App/modules/auth').default);
 
-                cb(null, require('../layouts/CoreLayout'));
+                cb(null, require('../layouts/CoreLayout').default);
             }, 'core');
         },
         indexRoute: Home,
