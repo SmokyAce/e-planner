@@ -4,7 +4,7 @@ import { Map } from 'immutable';
 
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
-import messages from '../messages';
+import messages from './messages';
 import SubmitForm from './SubmitForm.js';
 import SocialButton from './SocialButton.js';
 
