@@ -9,12 +9,10 @@ export default (store) => {
     return ({
         path: 'profile',
         getComponent(nextState, next) {
-            require.ensure([
-                './Profile'
-            ], (require) => {
-                injectSagas(require('./sagas').default);
-                next(null, require('./Profile').default);
-            });
+            require.ensure([], (require) => {
+                injectSagas(require('./modules/sagas').default);
+                next(null, require('./containers/Profile').default);
+            }, 'profile');
         },
         onEnter: auth.requireAuth
     });

@@ -1,5 +1,3 @@
-// import { getAsyncInjectors } from '../../utils/asyncInjectors';
-import AppEvent from './containers/Event';
 import EventHome from '../EventHome';
 
 export default (store) => {
@@ -7,11 +5,9 @@ export default (store) => {
     return ({
         path: 'event/:id',
         getComponent(nextState, next) {
-            require.ensure([
-                './containers/Event'
-            ], (require) => {
-                next(null, AppEvent);
-            });
+            require.ensure([], (require) => {
+                next(null, require('./containers/Event').default);
+            }, 'event');
         },
         indexRoute: EventHome,
         getChildRoutes(location, next) {
@@ -30,7 +26,7 @@ export default (store) => {
                     require('../EventSettings').default(store),
                     require('../EventDelete').default(store)
                 ]);
-            });
+            }, 'event-routes');
         }
     });
 };

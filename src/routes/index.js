@@ -1,8 +1,7 @@
 // We only need to import the modules necessary for initial render
 import { getAsyncInjectors } from '../utils/asyncInjectors';
-
-import CoreLayout from '../layouts/CoreLayout';
 import Home from './Home';
+
 
 /*  Note: Instead of using JSX, we recommend using react-router
  PlainRoute objects to build route definitions.   */
@@ -17,8 +16,8 @@ export const createRoutes = (store) => {
             require.ensure([], (require) => {
                 injectReducer('app.auth', require('./App/modules/auth').default);
 
-                cb(null, CoreLayout);
-            });
+                cb(null, require('../layouts/CoreLayout'));
+            }, 'core');
         },
         indexRoute: Home,
         getChildRoutes(location, next) {
@@ -30,7 +29,7 @@ export const createRoutes = (store) => {
                     require('./AppAuth/Login').default(store),
                     require('./AppAuth/ResetPwd').default(store)
                 ]);
-            }, 'layout');
+            }, 'core-routes');
         }
     }
     );

@@ -6,17 +6,11 @@ export default (store) => {
     return ({
         path: 'zen',
         getComponent(nextState, next) {
-            require.ensure([
-                './containers/ZenContainer',
-                './modules/zen'
-            ], (require) => {
-                const Zen = require('./containers/ZenContainer').default;
-                const zenReducer = require('./modules/zen').default;
+            require.ensure([], (require) => {
+                injectReducer('zen', require('./modules/zen').default);
 
-                injectReducer('zen', zenReducer);
-
-                next(null, Zen);
-            });
+                next(null, require('./containers/ZenContainer').default);
+            }, 'zen');
         }
     });
 };

@@ -53,7 +53,9 @@ const config = {
         'react',
         'react-redux',
         'react-router',
-        'redux'
+        'redux',
+        'react-intl',
+        'redux-saga'
     ],
 
     // ----------------------------------

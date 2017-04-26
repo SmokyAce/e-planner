@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { makeSelectCurrentUser, makeSelectMessage, makeSelectFormState } from '../App/modules/selectors';
+import { makeSelectCurrentUser, makeSelectMessage, makeSelectFormState } from '../../App/modules/selectors';
 
-import { updateUserInfoRequest, changeForm } from '../App/modules/auth/actions';
-import Loading from './Loading';
+import { updateUserInfoRequest, changeForm } from '../../App/modules/auth/actions';
+import Loading from '../components/Loading';
 import ChangePassword from './ChangePassword';
 
 import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import messages from '../modules/messages';
 
 
 class UserProfile extends Component {

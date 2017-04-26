@@ -9,10 +9,7 @@ export default (store) => {
     return ({
         path: 'app',
         getComponent(nextState, next) {
-            require.ensure([
-                './containers/AppContainer',
-                './modules/sagas'
-            ], (require) => {
+            require.ensure([], (require) => {
                 injectSagas(require('./modules/sagas').default);
 
                 injectReducer('app.status', require('./modules/status').default);
@@ -21,7 +18,7 @@ export default (store) => {
                 injectReducer('app.events', require('./modules/events').default);
 
                 next(null, AppContainer);
-            });
+            }, 'planner');
         },
         indexRoute: AppHome,
         getChildRoutes(location, next) {
@@ -34,7 +31,7 @@ export default (store) => {
                     // require('../Zen').default(store),
                     // require('../Todos').default(store)
                 ]);
-            });
+            }, 'planner-routes');
         },
         onEnter: auth.requireAuth
     });
