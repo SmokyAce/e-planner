@@ -129,7 +129,7 @@
     "offline-plugin": "^4.7.0",
     "postcss-loader": "^1.2.1",
     "react": "^15.5.3",
-    "react-bootstrap": "^0.30.10",
+    "react-bootstrap": "^0.31.0",
     "react-dom": "^15.5.3",
     "react-intl": "^2.2.2",
     "react-redux": "^5.0.1",
