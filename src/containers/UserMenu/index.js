@@ -37,7 +37,7 @@ class UserMenu extends React.Component {
         if (currentUser && currentUser.get('uid')) {
             return (
                 <NavDropdown title={
-                    (currentUser.get('displayName') === '' || currentUser.get('displayName') === null)
+                    (currentUser.get('displayName') === '' || !currentUser.get('displayName'))
                         ? currentUser.get('email') : currentUser.get('displayName')
                 }
                     id='user-dropdown' eventKey='2'

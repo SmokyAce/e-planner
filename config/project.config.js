@@ -54,8 +54,7 @@ const config = {
         'react-redux',
         'react-router',
         'redux',
-        'react-intl',
-        'redux-saga'
+        'firebase'
     ],
 
     // ----------------------------------

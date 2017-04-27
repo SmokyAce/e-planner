@@ -46,7 +46,8 @@ class SidebarContent extends React.Component {
     };
 
     shouldComponentUpdate = nextProps => {
-        return true; // !this.listOfEventsId.equals(nextProps.listOfEventsId);
+        return !this.props.listOfEventsId.equals(nextProps.listOfEventsId) ||
+            !this.props.formState.equals(nextProps.formState);
     };
 
     render = () => {

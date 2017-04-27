@@ -85,6 +85,7 @@ const api = {
             .then(values => {
                 const events = { result: [], response: {} };
 
+                if (values === null) return events;
                 values.forEach(snapshot => {
                     const event = snapshot.val();
 
