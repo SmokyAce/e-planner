@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 import { createStructuredSelector } from 'reselect';
 // import { FormattedMessage } from 'react-intl';
 
@@ -23,6 +23,7 @@ const styles = {
         display       : 'block',
         padding       : '7px 0px',
         color         : '#757575',
+        paddingLeft   : '5px',
         textDecoration: 'none'
     },
     divider: {
@@ -93,7 +94,7 @@ class SidebarContent extends React.Component {
 
 SidebarContent.propTypes = {
     dispatch      : PropTypes.func.isRequired,
-    listOfEventsId: PropTypes.instanceOf(Map),
+    listOfEventsId: PropTypes.instanceOf(List),
     eventsByIds   : PropTypes.instanceOf(Map),
     formState     : PropTypes.instanceOf(Map),
     style         : PropTypes.object

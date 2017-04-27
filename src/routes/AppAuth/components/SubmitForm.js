@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 
-const AuthForm = ({ children, email, password, error, onSubmit, onInputChange, messages }) => {
+const SubmitForm = ({ children, email, password, error, onSubmit, onInputChange, messages }) => {
     const onFormSubmit = (event) => {
         event.preventDefault();
         onSubmit({ email, password });
@@ -41,7 +41,7 @@ const AuthForm = ({ children, email, password, error, onSubmit, onInputChange, m
     );
 };
 
-AuthForm.propTypes = {
+SubmitForm.propTypes = {
     children     : PropTypes.element,
     email        : PropTypes.string,
     password     : PropTypes.string,
@@ -51,4 +51,4 @@ AuthForm.propTypes = {
     messages     : PropTypes.object
 };
 
-export default AuthForm;
+export default SubmitForm;

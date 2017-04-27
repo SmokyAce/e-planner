@@ -28,11 +28,13 @@ const AuthForm = ({ formState, message, onSubmit, onInputChange, onButtonClick, 
             <SubmitForm email={formState.get('email')} password={formState.get('password')} messages={messages}
                 onSubmit={onSubmit} error={message} onInputChange={onInputChange}
             >
-                <br />
-                {renderReset()}
-                <SocialButton name='Google' message={messages.login_with} onButtonClick={onButtonClick} />
-                { /* <SocialButton name="Facebook" message={messages.login_with} onButtonClick={onButtonClick}/>
-                <SocialButton name="Twitter" message={messages.login_with} onButtonClick={onButtonClick}/> */ }
+                <div>
+                    <br />
+                    {renderReset()}
+                    <SocialButton name='Google' message={messages.login_with} onButtonClick={onButtonClick} />
+                    { /* <SocialButton name="Facebook" message={messages.login_with} onButtonClick={onButtonClick}/>
+                     <SocialButton name="Twitter" message={messages.login_with} onButtonClick={onButtonClick}/> */ }
+                </div>
             </SubmitForm>
         </div>
     );

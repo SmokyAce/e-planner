@@ -1,0 +1,27 @@
+import React  from 'react';
+// import PropTypes from 'prop-types';
+import AuthContainer from './AuthContainer';
+import { registerRequest } from '../../App/modules/auth/actions';
+
+const RegisterHOC = (Component) => {
+    class HOC extends React.Component {
+
+        componentWillMount = () => {
+            this.setState({
+                type    : 'register',
+                onSubmit: registerRequest
+            });
+        };
+
+
+        render() {
+            return <Component {...this.state} />;
+        }
+    }
+    // LoginHOC.propTypes = {
+    //     //onSetDocked: PropTypes.func.isRequired
+    // };
+    return HOC;
+};
+
+export default RegisterHOC(AuthContainer);

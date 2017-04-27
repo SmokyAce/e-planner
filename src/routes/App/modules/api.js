@@ -1,6 +1,6 @@
 import { normalize } from 'normalizr';
 import * as schema from './schema';
-import firebaseTools, { firebaseDb } from '../../../utils/firebaseTools';
+import { firebaseDb } from '../../../utils/firebaseTools';
 import auth from '../../../utils/auth';
 
 
@@ -9,7 +9,7 @@ const api = {
     fetchUserData: () => {
         const uid = auth.getUserUID().uid;
 
-        return firebaseTools.getDatabaseReference(`/users/${uid}`).once('value')
+        return firebaseDb.ref(`/users/${uid}`).once('value')
             .then(snapshot => {
                 // normalized data with users schema to put in redux store
                 return snapshot.val() === null ? null : snapshot.val();
@@ -19,13 +19,13 @@ const api = {
     setUserData: (userData) => {
         const normalazedData = normalize(userData, schema.users);
 
-        return firebaseTools.getDatabaseReference(`/users/${normalazedData.result}`)
+        return firebaseDb.ref(`/users/${normalazedData.result}`)
             .set(normalazedData.entities.users[normalazedData.result])
             .then(() => true)
             .catch(error => error);
     },
     addEvent: (payload) => {
-        const eventId = firebaseTools.getDatabaseReference().child('events').push().key;
+        const eventId = firebaseDb.ref().child('events').push().key;
 
         const newEvent = {
             id      : eventId,
@@ -51,8 +51,6 @@ const api = {
 
         return firebaseDb.ref().update(updates)
             .then(() => {
-                console.log('onComplete func');
-                console.log(newEvent);
                 return { ...newEvent, ...payload };
             })
             .catch(error => error);
@@ -60,7 +58,7 @@ const api = {
     fetchUserEvents: () => {
         const uid = auth.getUserUID().uid;
 
-        return firebaseTools.getDatabaseReference(`/users/${uid}/events`).once('value')
+        return firebaseDb.ref(`/users/${uid}/events`).once('value')
             .then(snapshot => {
                 // normalized data with users schema to put in redux store
                 return snapshot.val() === null ? null : snapshot.val();
@@ -70,7 +68,7 @@ const api = {
     fetchEvents: () => {
         const uid = auth.getUserUID().uid;
 
-        return firebaseTools.getDatabaseReference(`/users/${uid}/events`).once('value')
+        return firebaseDb.ref(`/users/${uid}/events`).once('value')
             .then(snapshot => {
                 const eventsIds = snapshot.val();
 
@@ -79,7 +77,7 @@ const api = {
 
                 for (const key in eventsIds) {
                     if (eventsIds.hasOwnProperty(key)) {
-                        promises.push(firebaseTools.getDatabaseReference(`/events/${key}`).once('value'));
+                        promises.push(firebaseDb.ref(`/events/${key}`).once('value'));
                     }
                 }
                 return Promise.all(promises);
