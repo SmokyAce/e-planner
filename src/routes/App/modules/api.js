@@ -65,7 +65,6 @@ const api = {
     fetchEvents: () => {
         return api.fetchUserEvents()
             .then(eventsIds => {
-
                 if (eventsIds === null) return [];
                 const promises = [];
 
