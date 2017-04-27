@@ -59,20 +59,14 @@ const api = {
         const uid = auth.getUserUID().uid;
 
         return firebaseDb.ref(`/users/${uid}/events`).once('value')
-            .then(snapshot => {
-                // normalized data with users schema to put in redux store
-                return snapshot.val() === null ? null : snapshot.val();
-            })
+            .then(snapshot => snapshot.val())
             .catch(error => error);
     },
     fetchEvents: () => {
-        const uid = auth.getUserUID().uid;
+        return api.fetchUserEvents()
+            .then(eventsIds => {
 
-        return firebaseDb.ref(`/users/${uid}/events`).once('value')
-            .then(snapshot => {
-                const eventsIds = snapshot.val();
-
-                if (eventsIds === null) return null;
+                if (eventsIds === null) return [];
                 const promises = [];
 
                 for (const key in eventsIds) {
@@ -85,7 +79,6 @@ const api = {
             .then(values => {
                 const events = { result: [], response: {} };
 
-                if (values === null) return events;
                 values.forEach(snapshot => {
                     const event = snapshot.val();
 
