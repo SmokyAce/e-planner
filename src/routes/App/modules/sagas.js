@@ -171,7 +171,6 @@ const authWrapper = (authStateChannel) => ({
  * Firebase Connection status observer
  * */
 export function* connectionObserver() {
-
     yield delay(2000);
 
     const connectionStatusChannel = channel();
@@ -181,7 +180,7 @@ export function* connectionObserver() {
     connectionRef.on('value', wrapper.connectionStatus);
 
     while (true) {
-        let result = yield take(connectionStatusChannel);
+        const result = yield take(connectionStatusChannel);
 
         yield put({ type: FIREBASE_CONNECTED, payload: result });
     }
@@ -191,7 +190,6 @@ export function* connectionObserver() {
  * Firebase Authentification status observer
  * */
 export function* authObserver() {
-
     yield delay(2000);
 
     const authStateChannel = channel();
@@ -200,18 +198,17 @@ export function* authObserver() {
     firebaseAuth.onAuthStateChanged(wrapper.onChange);
 
     while (true) {
-        let loggedIn = yield take(authStateChannel);
+        const loggedIn = yield take(authStateChannel);
 
         // get cuure
-        let loggedIn_ = yield select(makeSelectLoggedIn());
+        const loggedIn_ = yield select(makeSelectLoggedIn());
 
         if (loggedIn !== loggedIn_) {
             yield put({ type: authActions.SET_AUTH, payload: loggedIn });
         }
-        if(!loggedIn) {
+        if (!loggedIn) {
             yield put({ type: authActions.LOGOUT });
         }
-
     }
 }
 

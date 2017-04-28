@@ -24,7 +24,7 @@ const auth = {
             if (user === null) {
                 replace({
                     pathname: '/login',
-                    state: { nextPathname: nextState.location.pathname },
+                    state   : { nextPathname: nextState.location.pathname }
                 });
             }
             callback();
