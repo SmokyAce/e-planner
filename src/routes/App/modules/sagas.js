@@ -2,8 +2,8 @@
 // "effects" that the sagas call (`authorize` and `logout`) and the actual sagas themselves,
 // which listen for actions.
 // Sagas help us gather all our side effects (network requests in this case) in one place
-import { channel } from 'redux-saga';
-import { take, call, put, race } from 'redux-saga/effects';
+import { channel, delay } from 'redux-saga';
+import { take, call, put, race, select } from 'redux-saga/effects';
 
 import { logoutFlow } from '../../AppAuth/modules/sagas';
 
@@ -11,6 +11,7 @@ import firebaseTools, { firebaseAuth } from '../../../utils/firebaseTools';
 import api from './api';
 import { omit } from 'lodash';
 
+import { makeSelectLoggedIn } from './selectors';
 import * as authActions from './auth/actions';
 import * as eventActions from './events/actions';
 import * as userActions from './users/actions';
@@ -21,6 +22,7 @@ import {
     APP_SYNC_FAILURE,
     FIREBASE_CONNECTED
 } from './status';
+
 
 export function* logout() {
     try {
@@ -159,10 +161,19 @@ const connectionStatusWrapper = (connStatusChannel) => ({
     }
 });
 
+const authWrapper = (authStateChannel) => ({
+    onChange(user) {
+        authStateChannel.put(user !== null);
+    }
+});
+
 /**
- * Connection to Firebase status
+ * Firebase Connection status observer
  * */
-export function* connectionStatusChangeFlow() {
+export function* connectionObserver() {
+
+    yield delay(2000);
+
     const connectionStatusChannel = channel();
     const wrapper = connectionStatusWrapper(connectionStatusChannel);
     const connectionRef = firebaseTools.getDatabaseReference('.info/connected');
@@ -170,9 +181,37 @@ export function* connectionStatusChangeFlow() {
     connectionRef.on('value', wrapper.connectionStatus);
 
     while (true) {
-        const result = yield take(connectionStatusChannel);
+        let result = yield take(connectionStatusChannel);
 
         yield put({ type: FIREBASE_CONNECTED, payload: result });
+    }
+}
+
+/**
+ * Firebase Authentification status observer
+ * */
+export function* authObserver() {
+
+    yield delay(2000);
+
+    const authStateChannel = channel();
+    const wrapper = authWrapper(authStateChannel);
+
+    firebaseAuth.onAuthStateChanged(wrapper.onChange);
+
+    while (true) {
+        let loggedIn = yield take(authStateChannel);
+
+        // get cuure
+        let loggedIn_ = yield select(makeSelectLoggedIn());
+
+        if (loggedIn !== loggedIn_) {
+            yield put({ type: authActions.SET_AUTH, payload: loggedIn });
+        }
+        if(!loggedIn) {
+            yield put({ type: authActions.LOGOUT });
+        }
+
     }
 }
 
@@ -207,10 +246,12 @@ export function* fetchEventsFlow() {
 
 fetchUserDataFlow.isDaemon = true;
 syncDataFlow.isDaemon = true;
-connectionStatusChangeFlow.isDaemon = true;
 addEventsFlow.isDaemon = true;
 fetchEventsFlow.isDaemon = true;
 logoutFlow.isDaemon = true;
+
+authObserver.isDaemon = true;
+connectionObserver.isDaemon = true;
 
 // The root saga is what we actually send to Redux's middleware. In here we fork
 // each saga so that they are all "active" and listening.
@@ -219,8 +260,10 @@ logoutFlow.isDaemon = true;
 export default [
     fetchUserDataFlow,
     syncDataFlow,
-    connectionStatusChangeFlow,
     addEventsFlow,
     fetchEventsFlow,
-    logoutFlow
+    logoutFlow,
+    // Firebase observers
+    connectionObserver,
+    authObserver
 ];

@@ -1,3 +1,4 @@
+import { firebaseAuth } from '../firebaseTools';
 
 const auth = {
     loggedIn: () => {
@@ -17,6 +18,17 @@ const auth = {
                 }
             });
         }
+    },
+    requireFirebaseAuth: (nextState, replace, callback) => {
+        firebaseAuth.onAuthStateChanged((user) => {
+            if (user === null) {
+                replace({
+                    pathname: '/login',
+                    state: { nextPathname: nextState.location.pathname },
+                });
+            }
+            callback();
+        });
     },
     getUserUID: () => {
         const key = Object.keys(localStorage).find(e => e.match(/firebase:authUser/));

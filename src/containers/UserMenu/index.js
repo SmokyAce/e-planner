@@ -21,9 +21,7 @@ import './UserMenu.scss';
 
 class UserMenu extends React.Component {
 
-    constructor(props) {
-        super(props);
-
+    componentWillMount() {
         const { currentUser } = this.props;
 
         if (this.props.loggedIn && !currentUser) {

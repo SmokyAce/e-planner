@@ -23,7 +23,7 @@ const AUTH_ACTION_HANDLERS = {
     },
     [actions.SET_AUTH]: (state, action) => {
         return state
-            .set('loggedIn', action.newAuthState);
+            .set('loggedIn', action.payload);
     },
     [actions.SET_ERROR_MESSAGE]: (state, action) => {
         return state
