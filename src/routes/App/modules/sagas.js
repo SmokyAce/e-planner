@@ -242,7 +242,7 @@ export function* fetchEventsFlow() {
     while (true) {
         yield take(eventActions.FETCH_EVENT_REQUEST);
 
-        yield fork(fetchEvents)
+        yield fork(fetchEvents);
     }
 }
 

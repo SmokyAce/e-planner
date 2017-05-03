@@ -7,7 +7,6 @@ import { createStructuredSelector } from 'reselect';
 // import { FormattedMessage } from 'react-intl';
 
 import { makeSelectEventsByIds, makeSelectEventsListOfIds, makeSelectEventsFormState } from '../../modules/selectors';
-import { fetchEvent } from '../../modules/events/actions';
 import TitlePanel from '../../components/TitlePanel';
 import AddEvent from '../../components/AddEvent';
 import './SidebarContent.scss';

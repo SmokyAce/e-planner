@@ -13,8 +13,8 @@ const initialState = fromJS({
         displayName   : ''
     },
     currentUser: null,
-    message : '',
-    loggedIn: auth.loggedIn()
+    message    : '',
+    loggedIn   : auth.loggedIn()
 });
 
 const AUTH_ACTION_HANDLERS = {
