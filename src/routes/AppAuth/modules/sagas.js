@@ -30,7 +30,7 @@ export function* authorize(authType) {
             return false;
         }
 
-        // yield put({ type: authActions.SET_USER_INFO, userInfo });
+        yield put({ type: authActions.SET_AUTH_INFO, payload: userInfo });
 
         return true;
     } catch (error) {
@@ -77,7 +77,7 @@ export function* loginFlow() {
         // If `authorize` was the winner...
         if (winner.auth) {
             // ...we send Redux appropiate actions
-            yield put({ type: authActions.SET_AUTH, newAuthState: true }); // User is logged in (authorized)
+            yield put({ type: authActions.SET_AUTH, payload: true }); // User is logged in (authorized)
             yield put({
                 type        : authActions.CHANGE_FORM,
                 newFormState: Map({ email: '', password: '', rememberMe: false })
@@ -87,19 +87,8 @@ export function* loginFlow() {
             // If `logout` won...
         } else if (winner.logout) {
             // ...we send Redux appropiate action
-            yield put({ type: authActions.SET_AUTH, newAuthState: false }); // User is not logged in (not authorized)
+            yield put({ type: authActions.SET_AUTH, payload: false }); // User is not logged in (not authorized)
             yield call(logout); // Call `logout` effect
-            forwardTo('/');
-        }
-
-        yield take(authActions.LOGOUT);
-
-        yield put({ type: authActions.SET_AUTH, newAuthState: false });
-
-        const result = yield call(logout);
-
-        if (result.success) {
-            yield put({ type: authActions.SET_USER_INFO, userInfo: null });
             forwardTo('/');
         }
     }
@@ -114,12 +103,12 @@ export function* logoutFlow() {
     while (true) {
         yield take(authActions.LOGOUT);
 
-        yield put({ type: authActions.SET_AUTH, newAuthState: false });
+        yield put({ type: authActions.SET_AUTH, payload: false });
 
         const result = yield call(logout);
 
         if (result.success) {
-            yield put({ type: authActions.SET_USER_INFO, userInfo: null });
+            yield put({ type: authActions.SET_AUTH_INFO, payload: null });
             forwardTo('/');
         }
     }

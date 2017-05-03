@@ -39,12 +39,6 @@ const styles = {
 
 class SidebarContent extends React.Component {
 
-    componentDidMount = () => {
-        if (this.props.listOfEventsId.size === 0) {
-            this.props.dispatch(fetchEvent());
-        }
-    };
-
     shouldComponentUpdate = nextProps => {
         return !this.props.listOfEventsId.equals(nextProps.listOfEventsId) ||
             !this.props.formState.equals(nextProps.formState);

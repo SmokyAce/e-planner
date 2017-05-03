@@ -3,7 +3,7 @@
 // which listen for actions.
 // Sagas help us gather all our side effects (network requests in this case) in one place
 import { channel, delay } from 'redux-saga';
-import { take, call, put, race, select } from 'redux-saga/effects';
+import { take, call, put, race, select, fork } from 'redux-saga/effects';
 
 import { logoutFlow } from '../../AppAuth/modules/sagas';
 
@@ -79,7 +79,7 @@ export function* updateUserInfoFlow() {
         }
 
         if (!userInfo.error) {
-            yield put({ type: authActions.SET_USER_INFO, userInfo });
+            yield put({ type: authActions.SET_AUTH_INFO, payload: userInfo });
         } else {
             yield put({ type: authActions.SET_ERROR_MESSAGE, error: userInfo.errorMessage });
             return false;
@@ -114,6 +114,7 @@ export function* fetchUserDataFlow() {
             }
 
             yield put({ type: userActions.FETCH_USER_DATA_SUCCESS, response });
+            yield fork(fetchEvents);
 
             if (!response.isSync) {
                 yield put({ type: userActions.SET_USER_DATA_REQUEST, userData: response });
@@ -220,10 +221,20 @@ export function* addEventsFlow() {
 
         if (!response.error) {
             yield put({ type: eventActions.ADD_EVENT_SUCCESS, payload: response });
-            yield put({ type: userActions.FETCH_USER_DATA_REQUEST });
+            yield fork(fetchEvents);
         } else {
             yield put({ type: eventActions.ADD_EVENT_FAILURE, error: response.error });
         }
+    }
+}
+
+export function* fetchEvents() {
+    const response = yield call(api.fetchEvents);
+
+    if (!response.error) {
+        yield put({ type: eventActions.FETCH_EVENT_SUCCESS, payload: response });
+    } else {
+        yield put({ type: eventActions.FETCH_EVENT_FAILURE, error: response.error });
     }
 }
 
@@ -231,13 +242,7 @@ export function* fetchEventsFlow() {
     while (true) {
         yield take(eventActions.FETCH_EVENT_REQUEST);
 
-        const response = yield call(api.fetchEvents);
-
-        if (!response.error) {
-            yield put({ type: eventActions.FETCH_EVENT_SUCCESS, payload: response });
-        } else {
-            yield put({ type: eventActions.FETCH_EVENT_FAILURE, error: response.error });
-        }
+        yield fork(fetchEvents)
     }
 }
 

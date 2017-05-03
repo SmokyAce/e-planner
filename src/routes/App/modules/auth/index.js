@@ -12,6 +12,7 @@ const initialState = fromJS({
         rememberMe    : false,
         displayName   : ''
     },
+    currentUser: null,
     message : '',
     loggedIn: auth.loggedIn()
 });
@@ -24,6 +25,10 @@ const AUTH_ACTION_HANDLERS = {
     [actions.SET_AUTH]: (state, action) => {
         return state
             .set('loggedIn', action.payload);
+    },
+    [actions.SET_AUTH_INFO]: (state, action) => {
+        return state
+            .set('currentUser', fromJS(action.payload));
     },
     [actions.SET_ERROR_MESSAGE]: (state, action) => {
         return state

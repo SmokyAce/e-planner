@@ -20,11 +20,10 @@ import messages from './messages';
 import './UserMenu.scss';
 
 class UserMenu extends React.Component {
+    componentDidMount() {
+        const { currentUser, loggedIn } = this.props;
 
-    componentWillMount() {
-        const { currentUser } = this.props;
-
-        if (this.props.loggedIn && !currentUser) {
+        if (loggedIn && !currentUser) {
             this.props.fetchUserInfoRequest();
         }
     }
