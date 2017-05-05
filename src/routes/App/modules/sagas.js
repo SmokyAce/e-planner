@@ -34,6 +34,19 @@ export function* logout() {
     }
 }
 
+function* addEvent(action) {
+    yield put({ type: eventActions.ADD_EVENT_REQUEST });
+
+    const response = yield call(api.addEvent, action.payload);
+
+    if (!response.error) {
+        yield put({ type: eventActions.ADD_EVENT_SUCCESS, payload: response.id });
+    } else {
+        yield put({ type: eventActions.ADD_EVENT_FAILURE, payload: response.id, error: response.error });
+    }
+}
+
+
 /**
  * set user data to firebase
  */
@@ -215,16 +228,9 @@ export function* authObserver() {
 
 export function* addEventsFlow() {
     while (true) {
-        const action = yield take(eventActions.ADD_EVENT_REQUEST);
+        const action = yield take(eventActions.ADD_EVENT);
 
-        const response = yield call(api.addEvent, action.payload);
-
-        if (!response.error) {
-            yield put({ type: eventActions.ADD_EVENT_SUCCESS, payload: response });
-            yield fork(fetchEvents);
-        } else {
-            yield put({ type: eventActions.ADD_EVENT_FAILURE, error: response.error });
-        }
+        yield fork(addEvent, action);
     }
 }
 

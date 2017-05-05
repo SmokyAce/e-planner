@@ -20,11 +20,20 @@ const initialState = fromJS({
 
 
 const EVENTS_ACTION_HANDLERS = {
-    [actions.ADD_EVENT_SUCCESS]: (state, action) => {
+    [actions.ADD_EVENT]: (state, action) => {
         return state
             .updateIn(['listOfIds'], list => list.push(action.payload.id))
             .setIn(['byIds', action.payload.id], fromJS(action.payload))
+            .setIn(['byIds', action.payload.id, 'isSync'], false)
             .setIn(['formState', 'eventName'], '');
+    },
+    [actions.ADD_EVENT_SUCCESS]: (state, action) => {
+        return state
+            .setIn(['byIds', action.payload, 'isSync'], true);
+    },
+    [actions.ADD_EVENT_FAILURE]: (state, action) => {
+        return state
+            .setIn(['byIds', action.payload, 'isSync'], false);
     },
     [actions.FETCH_EVENT_SUCCESS]: (state, action) => {
         return state

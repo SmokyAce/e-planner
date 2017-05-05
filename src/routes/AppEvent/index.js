@@ -24,7 +24,7 @@ export default (store) => {
                     require('../EventQuiz').default(store),
                     require('../EventTiming').default(store),
                     require('../EventSettings').default(store),
-                    require('../EventDelete').default(store)
+                    require('../EventRemove').default(store)
                 ]);
             }, 'event-routes');
         }

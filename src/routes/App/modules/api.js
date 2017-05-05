@@ -22,45 +22,34 @@ const api = {
         return firebaseDb.ref(`/users/${normalazedData.result}`)
             .set(normalazedData.entities.users[normalazedData.result])
             .then(() => true)
-            .catch(error => error);
+            .catch(error => {
+                return { error };
+            });
     },
     addEvent: (payload) => {
-        const eventId = firebaseDb.ref().child('events').push().key;
-
-        const newEvent = {
-            id      : eventId,
-            services: {
-                counter    : true,
-                guests     : true,
-                todos      : true,
-                budjet     : false,
-                timing     : false,
-                contractors: false,
-                blog       : false,
-                quiz       : false,
-                notebook   : false
-            }
-        };
-
         const uid = auth.getUserUID().uid;
 
         const updates = {};
 
-        updates[`/events/${eventId}`] = { ...newEvent, ...payload };
-        updates[`/users/${uid}/events/${eventId}`] = true;
+        updates[`/events/${payload.id}`] = { ...payload };
+        updates[`/users/${uid}/events/${payload.id}`] = true;
 
         return firebaseDb.ref().update(updates)
             .then(() => {
-                return { ...newEvent, ...payload };
+                return { success: true, id: payload.id };
             })
-            .catch(error => error);
+            .catch(error => {
+                return { error };
+            });
     },
     fetchUserEvents: () => {
         const uid = auth.getUserUID().uid;
 
         return firebaseDb.ref(`/users/${uid}/events`).once('value')
             .then(snapshot => snapshot.val())
-            .catch(error => error);
+            .catch(error => {
+                return { error };
+            });
     },
     fetchEvents: () => {
         return api.fetchUserEvents()
@@ -86,7 +75,9 @@ const api = {
                 });
                 return events;
             })
-            .catch(error => error);
+            .catch(error => {
+                return { error };
+            });
     }
 };
 

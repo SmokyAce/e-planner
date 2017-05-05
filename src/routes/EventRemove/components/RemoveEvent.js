@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 
-export const EventDelete = () => {
+export const RemoveEvent = () => {
     return (
         <div>
             <h2><FormattedMessage {...messages.description} /></h2>
@@ -11,6 +11,6 @@ export const EventDelete = () => {
     );
 };
 
-EventDelete.propTypes = {};
+RemoveEvent.propTypes = {};
 
-export default EventDelete;
+export default RemoveEvent;
