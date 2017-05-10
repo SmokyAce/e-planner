@@ -39,7 +39,7 @@ class App extends React.Component {
 
         return (
             <Sidebar {...sidebarProps}>
-                <LoadingBar style={styles.loadingBar}/>
+                <LoadingBar style={styles.loadingBar} />
                 <Header>{ children }</Header>
                 <div className='app-container container-fluide'>
                     { children }

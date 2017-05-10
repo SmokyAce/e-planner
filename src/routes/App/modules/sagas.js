@@ -28,8 +28,7 @@ import {
 
 export function* logout() {
     try {
-
-        yield put(showLoading())
+        yield put(showLoading());
 
         const result = yield call(firebaseTools.logoutUser);
 
@@ -37,12 +36,11 @@ export function* logout() {
     } catch (error) {
         yield put({ type: authActions.SET_ERROR_MESSAGE, error: error.message });
     } finally {
-        yield put(hideLoading())
+        yield put(hideLoading());
     }
 }
 
 function* addEvent(action) {
-
     yield put(showLoading());
 
     yield put({ type: eventActions.ADD_EVENT_REQUEST });
@@ -55,7 +53,7 @@ function* addEvent(action) {
         yield put({ type: eventActions.ADD_EVENT_FAILURE, payload: response.id, error: response.error });
     }
 
-    yield put(hideLoading())
+    yield put(hideLoading());
 }
 
 

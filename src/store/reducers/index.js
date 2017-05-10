@@ -13,7 +13,7 @@ export const makeRootReducer = (asyncReducers) => {
     }
     return combineAsyncReducers({
         location,
-        language: languageProviderReducer,
+        language  : languageProviderReducer,
         loadingBar: loadingBarReducer,
         ...asyncReducers
     });
