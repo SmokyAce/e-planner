@@ -1,6 +1,8 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import { browserHistory } from 'react-router';
-import { Map } from 'immutable';
+import { fromJS } from 'immutable';
+import { persistStore, getStoredState } from 'redux-persist-immutable';
+import localForage from 'localforage';
 
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
@@ -11,7 +13,7 @@ import { updateLocation } from './reducers/location';
 const logger = createLogger();
 const sagaMiddleware = createSagaMiddleware();
 
-export default (initialState = {}) => {
+export default async (initialState = {}) => {
     // ======================================================
     // Middleware Configuration
     // ======================================================
@@ -36,17 +38,33 @@ export default (initialState = {}) => {
         }
     }
 
+    // Restore the state from localStorage
+    const config = {
+        whitelist: ['app'],
+        blacklist: ['auth, location'],
+        storage  : localForage,
+        keyPrefix: 'e-planner:'
+    };
+
+    initialState = await getStoredState(config);
+    if (typeof initialState === 'object') {
+        initialState = fromJS(initialState);
+    }
+
     // ======================================================
     // Store Instantiation and HMR Setup
     // ======================================================
     const store = createStore(
         makeRootReducer(),
-        Map(initialState),
+        initialState,
         composeEnhancers(
             applyMiddleware(...middleware),
             ...enhancers
         )
     );
+
+    // Persist store
+    persistStore(store, config);
 
     // Extensions
     store.runSaga = sagaMiddleware.run;
