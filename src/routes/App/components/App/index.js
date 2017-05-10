@@ -5,12 +5,17 @@ import Immutable from 'immutable';
 import Sidebar from '../Sidebar';
 import SidebarContent from '../../containers/SidebarContent';
 import Header from '../../../../components/Header';
+import { ImmutableLoadingBar as LoadingBar } from 'react-redux-loading-bar';
 import './App.scss';
 
 
 const styles = {
     content: {
         overflowY: 'auto'
+    },
+    loadingBar: {
+        zIndex: 1,
+        height: '2px'
     }
 };
 
@@ -34,6 +39,7 @@ class App extends React.Component {
 
         return (
             <Sidebar {...sidebarProps}>
+                <LoadingBar style={styles.loadingBar}/>
                 <Header>{ children }</Header>
                 <div className='app-container container-fluide'>
                     { children }

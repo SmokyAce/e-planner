@@ -5,6 +5,8 @@
 import { channel, delay } from 'redux-saga';
 import { take, call, put, race, select, fork } from 'redux-saga/effects';
 
+import { showLoading, hideLoading } from 'react-redux-loading-bar';
+
 import { logoutFlow } from '../../AppAuth/modules/sagas';
 
 import firebaseTools, { firebaseAuth } from '../../../utils/firebaseTools';
@@ -26,15 +28,23 @@ import {
 
 export function* logout() {
     try {
+
+        yield put(showLoading())
+
         const result = yield call(firebaseTools.logoutUser);
 
         return result;
     } catch (error) {
         yield put({ type: authActions.SET_ERROR_MESSAGE, error: error.message });
+    } finally {
+        yield put(hideLoading())
     }
 }
 
 function* addEvent(action) {
+
+    yield put(showLoading());
+
     yield put({ type: eventActions.ADD_EVENT_REQUEST });
 
     const response = yield call(api.addEvent, action.payload);
@@ -44,6 +54,8 @@ function* addEvent(action) {
     } else {
         yield put({ type: eventActions.ADD_EVENT_FAILURE, payload: response.id, error: response.error });
     }
+
+    yield put(hideLoading())
 }
 
 
@@ -113,6 +125,8 @@ export function* fetchUserDataFlow() {
     while (true) {
         yield take(userActions.FETCH_USER_DATA_REQUEST);
 
+        yield put(showLoading());
+
         let response;
 
         try {
@@ -135,6 +149,8 @@ export function* fetchUserDataFlow() {
         } catch (error) {
             yield put({ type: userActions.FETCH_USER_DATA_FAILURE, error: error.message });
             return false;
+        } finally {
+            yield put(hideLoading());
         }
     }
 }

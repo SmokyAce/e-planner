@@ -18,9 +18,6 @@ const RegisterHOC = (Component) => {
             return <Component {...this.state} />;
         }
     }
-    // LoginHOC.propTypes = {
-    //     //onSetDocked: PropTypes.func.isRequired
-    // };
     return HOC;
 };
 

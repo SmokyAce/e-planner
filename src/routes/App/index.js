@@ -3,6 +3,7 @@ import { getAsyncInjectors } from '../../utils/asyncInjectors';
 import AppHome from '../AppHome';
 import auth from '../../utils/auth';
 
+
 export default (store) => {
     const { injectSagas, injectReducer } = getAsyncInjectors(store);
 
