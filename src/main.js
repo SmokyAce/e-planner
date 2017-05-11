@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import createStore from './store/createStore';
+import { persistStore } from 'redux-persist-immutable';
+import localForage from 'localforage';
 import Main from './containers/Main';
 
 // Import translations messages
@@ -10,6 +12,18 @@ import { translationMessages } from './i18n';
 // Store Instantiation
 // ========================================================
 const store = createStore();
+
+// Persist config
+const config = {
+    whitelist: ['app', 'language'],
+    blacklist: ['auth', 'location'],
+    storage  : localForage,
+    keyPrefix: 'e-planner:'
+};
+
+// Persist store
+persistStore(store, config);
+
 
 // ========================================================
 // Render Setup

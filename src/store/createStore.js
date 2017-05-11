@@ -1,8 +1,6 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import { browserHistory } from 'react-router';
 import { fromJS } from 'immutable';
-import { persistStore, autoRehydrate } from 'redux-persist-immutable';
-import localForage from 'localforage';
 
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
@@ -39,19 +37,6 @@ export default (initialState = {}) => {
         }
     }
 
-    // Restore the state from localStorage
-    const config = {
-        whitelist: ['app', 'language'],
-        blacklist: ['auth', 'location'],
-        storage  : localForage,
-        keyPrefix: 'e-planner:'
-    };
-
-    // initialState = await getStoredState(config);
-    // if (typeof initialState === 'object') {
-    //     initialState = fromJS(initialState);
-    // }
-
     // ======================================================
     // Store Instantiation and HMR Setup
     // ======================================================
@@ -63,9 +48,6 @@ export default (initialState = {}) => {
             ...enhancers
         )
     );
-
-    // Persist store
-    persistStore(store, config);
 
     // Extensions
     store.runSaga = sagaMiddleware.run;
