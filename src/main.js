@@ -7,16 +7,16 @@ import Main from './containers/Main';
 import { translationMessages } from './i18n';
 
 // ========================================================
+// Store Instantiation
+// ========================================================
+const store = createStore();
+
+// ========================================================
 // Render Setup
 // ========================================================
 const MOUNT_NODE = document.getElementById('root');
 
-let render = async (messages) => {
-    // ========================================================
-    // Store Instantiation
-    // ========================================================
-    const store = await createStore();
-
+let render = (messages) => {
     const routes = require('./routes').default(store);
 
     ReactDOM.render(

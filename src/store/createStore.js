@@ -1,7 +1,7 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import { browserHistory } from 'react-router';
 import { fromJS } from 'immutable';
-import { persistStore, getStoredState } from 'redux-persist-immutable';
+import { persistStore, autoRehydrate } from 'redux-persist-immutable';
 import localForage from 'localforage';
 
 import { createLogger } from 'redux-logger';
@@ -13,7 +13,7 @@ import { updateLocation } from './reducers/location';
 const logger = createLogger();
 const sagaMiddleware = createSagaMiddleware();
 
-export default async (initialState = {}) => {
+export default (initialState = {}) => {
     // ======================================================
     // Middleware Configuration
     // ======================================================
@@ -26,6 +26,7 @@ export default async (initialState = {}) => {
     // Store Enhancers
     // ======================================================
     const enhancers = [
+        // autoRehydrate()
     ];
 
     let composeEnhancers = compose;
@@ -40,23 +41,23 @@ export default async (initialState = {}) => {
 
     // Restore the state from localStorage
     const config = {
-        whitelist: ['app'],
-        blacklist: ['auth, location'],
+        whitelist: ['app', 'language'],
+        blacklist: ['auth', 'location'],
         storage  : localForage,
         keyPrefix: 'e-planner:'
     };
 
-    initialState = await getStoredState(config);
-    if (typeof initialState === 'object') {
-        initialState = fromJS(initialState);
-    }
+    // initialState = await getStoredState(config);
+    // if (typeof initialState === 'object') {
+    //     initialState = fromJS(initialState);
+    // }
 
     // ======================================================
     // Store Instantiation and HMR Setup
     // ======================================================
     const store = createStore(
         makeRootReducer(),
-        initialState,
+        fromJS(initialState),
         composeEnhancers(
             applyMiddleware(...middleware),
             ...enhancers

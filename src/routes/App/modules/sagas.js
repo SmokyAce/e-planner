@@ -228,7 +228,7 @@ export function* authObserver() {
     while (true) {
         const loggedIn = yield take(authStateChannel);
 
-        // get cuure
+        // get current state
         const loggedIn_ = yield select(makeSelectLoggedIn());
 
         if (loggedIn !== loggedIn_) {

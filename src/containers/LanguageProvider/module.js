@@ -1,4 +1,5 @@
 import { fromJS } from 'immutable';
+import { REHYDRATE } from 'redux-persist/constants';
 
 // ------------------------------------
 // Constants
@@ -29,6 +30,13 @@ function languageProviderReducer(state = initialState, action) {
         case CHANGE_LOCALE:
             return state
                 .set('locale', action.locale);
+        case REHYDRATE:
+            const incoming = action.payload.language;
+
+            if (incoming) {
+                return state.set('locale', incoming.get('locale'));
+            }
+            return state;
         default:
             return state;
     }

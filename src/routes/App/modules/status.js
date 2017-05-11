@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-
+import { REHYDRATE } from 'redux-persist/constants';
 
 // ------------------------------------
 // Constants
@@ -33,7 +33,15 @@ const STATUS_ACTION_HANDLERS = {
         return state
             .set('isSync', true);
     },
-    [FIREBASE_CONNECTED]: (state, action) => state.set('connection', action.payload ? 'Online' : 'Offline')
+    [FIREBASE_CONNECTED]: (state, action) => state.set('connection', action.payload ? 'Online' : 'Offline'),
+    [REHYDRATE]         : (state, action) => {
+        const incoming = action.payload.app;
+
+        if (incoming) {
+            return incoming.get('status');
+        }
+        return state;
+    }
 };
 
 export default function statusReducer(state = initialState, action) {

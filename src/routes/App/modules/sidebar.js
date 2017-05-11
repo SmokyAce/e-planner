@@ -1,5 +1,5 @@
 import { fromJS } from 'immutable';
-
+import { REHYDRATE } from 'redux-persist/constants';
 
 // ------------------------------------
 // Constants
@@ -54,6 +54,14 @@ const APP_ACTION_HANDLERS = {
     },
     [SIDEBAR_WIDTH_SET]: (state, action) => {
         return state.set('sidebarWidth', action.payload);
+    },
+    [REHYDRATE]: (state, action) => {
+        const incoming = action.payload.app;
+
+        if (incoming) {
+            return incoming.get('sidebar');
+        }
+        return state;
     }
 };
 

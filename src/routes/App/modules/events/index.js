@@ -3,6 +3,7 @@ import * as actions from './actions';
 import {
     COUNTER_INCREMENT, COUNTER_DOUBLE_ASYNC
 } from '../../../Counter/modules/counter';
+import { REHYDRATE } from 'redux-persist/constants';
 
 
 const initialState = fromJS({
@@ -67,6 +68,14 @@ const EVENTS_ACTION_HANDLERS = {
 
         return state
             .setIn(['byIds', eventId, 'counter'], (state.getIn(['byIds', eventId, 'counter']) * 2));
+    },
+    [REHYDRATE]: (state, action) => {
+        const incoming = action.payload.app;
+
+        if (incoming) {
+            return incoming.get('events');
+        }
+        return state;
     }
 };
 

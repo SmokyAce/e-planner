@@ -1,6 +1,9 @@
 import { fromJS } from 'immutable';
 import * as actions from './actions';
 import { LOGOUT } from '../auth/actions';
+import { REHYDRATE } from 'redux-persist/constants';
+
+
 // The initial state of the App
 const initialState = fromJS({
     currentUser: null
@@ -11,7 +14,15 @@ const USERS_ACTION_HANDLERS = {
         return state
             .set('currentUser', fromJS(action.response));
     },
-    [LOGOUT]: (state) => state.set('currentUser', fromJS(null))
+    [LOGOUT]   : (state) => state.set('currentUser', fromJS(null)),
+    [REHYDRATE]: (state, action) => {
+        const incoming = action.payload.app;
+
+        if (incoming) {
+            return incoming.get('users');
+        }
+        return state;
+    }
 };
 
 export default function usersReducer(state = initialState, action) {
