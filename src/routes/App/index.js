@@ -13,10 +13,10 @@ export default (store) => {
             require.ensure([], (require) => {
                 injectSagas(require('./modules/sagas').default);
 
-                injectReducer('app.status', require('./modules/status').default);
-                injectReducer('app.users', require('./modules/users').default);
-                injectReducer('app.sidebar', require('./modules/sidebar').default);
-                injectReducer('app.events', require('./modules/events').default);
+                injectReducer('app', require('./modules/app').default);
+                // injectReducer('app.users', require('./modules/users').default);
+                // injectReducer('app.sidebar', require('./modules/sidebar').default);
+                // injectReducer('app.events', require('./modules/events').default);
 
                 next(null, AppContainer);
             }, 'planner');

@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { makeSelectCurrentUser, makeSelectMessage, makeSelectFormState } from '../../App/modules/selectors';
+import { makeSelectCurrentUser } from '../../App/modules/selectors';
+import { makeSelectMessage, makeSelectFormState } from '../../AppAuth/modules/selectors';
 
-import { updateUserInfoRequest, changeForm } from '../../App/modules/auth/actions';
+import { updateUserInfoRequest, changeForm } from '../../AppAuth/modules/auth/actions';
 import Loading from '../components/Loading';
 import ChangePassword from './ChangePassword';
 

@@ -3,7 +3,7 @@ import { Map } from 'immutable';
 import { browserHistory } from 'react-router';
 
 import firebaseTools from '../../../utils/firebaseTools';
-import * as authActions from '../../App/modules/auth/actions';
+import * as authActions from './auth/actions';
 
 
 /**

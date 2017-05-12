@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loginWithProviderRequest, changeForm } from '../../App/modules/auth/actions';
+import { loginWithProviderRequest, changeForm } from '../modules/auth/actions';
 import { createSelector } from 'reselect';
-import { makeSelectFormState, makeSelectMessage } from '../../App/modules/selectors';
+import { makeSelectFormState, makeSelectMessage } from '../../AppAuth/modules/selectors';
 
 import AuthForm from '../components/AuthForm';
 

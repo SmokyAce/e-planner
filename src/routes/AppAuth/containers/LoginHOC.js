@@ -1,7 +1,7 @@
 import React  from 'react';
 // import PropTypes from 'prop-types';
 import AuthContainer from './AuthContainer';
-import { loginRequest } from '../../App/modules/auth/actions';
+import { loginRequest } from '../modules/auth/actions';
 
 const LoginHOC = (Component) => {
     class HOC extends React.Component {

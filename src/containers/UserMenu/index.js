@@ -1,23 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// components
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { createStructuredSelector } from 'reselect';
-
 import { LinkContainer } from 'react-router-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { NavDropdown, MenuItem } from 'react-bootstrap';
-
 import Spinner from '../../components/Spinner';
-import { logoutRequest } from '../../routes/App/modules/auth/actions';
+// actions
+import { bindActionCreators } from 'redux';
+import { logoutRequest } from '../../routes/AppAuth/modules/auth/actions';
 import { fetchUserInfoRequest } from '../../routes/App/modules/users/actions';
-import {
-    makeSelectLoggedIn,
-    makeSelectCurrentUser
-} from '../../routes/App/modules/selectors';
-
+// selectors
+import { createStructuredSelector } from 'reselect';
+import { makeSelectCurrentUser } from '../../routes/App/modules/selectors';
+import { makeSelectLoggedIn } from '../../routes/AppAuth/modules/selectors';
+// intl
 import messages from './messages';
+// style
 import './UserMenu.scss';
+
 
 class UserMenu extends React.Component {
     componentDidMount() {

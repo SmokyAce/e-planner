@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
 import * as actions from './actions';
-import { LOGOUT } from '../auth/actions';
+import { LOGOUT } from '../../../AppAuth/modules/auth/actions';
 import { REHYDRATE } from 'redux-persist/constants';
 
 

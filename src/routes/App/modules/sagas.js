@@ -13,8 +13,9 @@ import firebaseTools, { firebaseAuth } from '../../../utils/firebaseTools';
 import api from './api';
 import { omit } from 'lodash';
 
-import { makeSelectLoggedIn } from './selectors';
-import * as authActions from './auth/actions';
+import { makeSelectLoggedIn } from '../../AppAuth/modules/selectors';
+
+import * as authActions from '../../AppAuth/modules/auth/actions';
 import * as eventActions from './events/actions';
 import * as userActions from './users/actions';
 
