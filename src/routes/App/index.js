@@ -12,11 +12,7 @@ export default (store) => {
         getComponent(nextState, next) {
             require.ensure([], (require) => {
                 injectSagas(require('./modules/sagas').default);
-
                 injectReducer('app', require('./modules/app').default);
-                // injectReducer('app.users', require('./modules/users').default);
-                // injectReducer('app.sidebar', require('./modules/sidebar').default);
-                // injectReducer('app.events', require('./modules/events').default);
 
                 next(null, AppContainer);
             }, 'planner');
@@ -28,9 +24,6 @@ export default (store) => {
                     require('../AppEvent').default(store),
 
                     require('../UserProfile').default(store)
-                    // require('../Counter').default(store),
-                    // require('../Zen').default(store),
-                    // require('../Todos').default(store)
                 ]);
             }, 'planner-routes');
         },
