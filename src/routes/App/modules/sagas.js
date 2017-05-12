@@ -7,7 +7,7 @@ import { take, call, put, race, select, fork } from 'redux-saga/effects';
 
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 
-import { logoutFlow } from '../../AppAuth/modules/sagas';
+import { logoutFlow, logout } from '../../AppAuth/modules/sagas';
 
 import firebaseTools, { firebaseAuth } from '../../../utils/firebaseTools';
 import api from './api';
@@ -25,20 +25,6 @@ import {
     FIREBASE_CONNECTED
 } from './status';
 
-
-export function* logout() {
-    try {
-        yield put(showLoading());
-
-        const result = yield call(firebaseTools.logoutUser);
-
-        return result;
-    } catch (error) {
-        yield put({ type: authActions.SET_ERROR_MESSAGE, error: error.message });
-    } finally {
-        yield put(hideLoading());
-    }
-}
 
 function* addEvent(action) {
     yield put(showLoading());
@@ -234,8 +220,8 @@ export function* authObserver() {
         if (loggedIn !== loggedIn_) {
             yield put({ type: authActions.SET_AUTH, payload: loggedIn });
         }
-        if (!loggedIn) {
-            yield put({ type: authActions.LOGOUT });
+        if (!loggedIn && loggedIn_) {
+            yield fork(logout);
         }
     }
 }

@@ -10,7 +10,7 @@ import * as authActions from '../../App/modules/auth/actions';
  * Effect to handle authorization
  * @param  {object} authType               The authType containes the result of race
  */
-export function* authorize(authType) {
+function* authorize(authType) {
     // We then try to register or log in the user, depending on the request
     try {
         let userInfo;
@@ -55,7 +55,7 @@ export function* logout() {
 /**
  * Log in saga
  */
-export function* loginFlow() {
+function* loginFlow() {
     // Because sagas are generators, doing `while (true)` doesn't block our program
     // Basically here we say "this saga is always listening for actions"
     while (true) {
