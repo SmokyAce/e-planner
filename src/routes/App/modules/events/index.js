@@ -72,7 +72,7 @@ const EVENTS_ACTION_HANDLERS = {
     [REHYDRATE]: (state, action) => {
         const incoming = action.payload.app;
 
-        if (incoming) {
+        if (incoming && incoming.get('events')) {
             return incoming.get('events');
         }
         return state;

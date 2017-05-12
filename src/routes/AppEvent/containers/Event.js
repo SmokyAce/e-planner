@@ -9,6 +9,10 @@ import AppNavPanel from '../components/AppNavPanel';
 
 
 const AppEvent = ({ children, params, eventsByIds }) => {
+    if (eventsByIds.size === 0) {
+        return <div>Loading ...</div>;
+    }
+
     const services = eventsByIds.getIn([params.id, 'services']).filter(isChecked => isChecked);
 
     return (

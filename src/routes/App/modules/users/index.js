@@ -18,7 +18,7 @@ const USERS_ACTION_HANDLERS = {
     [REHYDRATE]: (state, action) => {
         const incoming = action.payload.app;
 
-        if (incoming) {
+        if (incoming && incoming.get('users')) {
             return incoming.get('users');
         }
         return state;
