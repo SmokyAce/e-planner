@@ -1,9 +1,14 @@
-import { take, call, put, race } from 'redux-saga/effects';
+import { take, call, put, race, fork, select, cancel, takeLatest } from 'redux-saga/effects';
 import { Map } from 'immutable';
 import { browserHistory } from 'react-router';
-
+// api
 import firebaseTools from '../../../utils/firebaseTools';
-import * as authActions from './auth/actions';
+// selectors
+import { makeSelectEmailVerified } from './selectors';
+// actions types
+import * as actionTypes from './actionTypes';
+import { LOCATION_CHANGE } from '../../../store/reducers/location';
+import { CHANGE_LOCALE } from '../../../containers/LanguageProvider/module';
 
 
 /**
@@ -21,21 +26,27 @@ function* authorize(authType) {
             const result = yield firebaseTools.loginWithProvider(authType.loginWithProvider.provider);
 
             userInfo = (result.user) ? result.user : result;
+
+            // check if verification need
+            fork(registerVerification);
         } else if (authType.registration) {
             userInfo = yield firebaseTools.registerUser(authType.registration.data);
+
+            // check if verification need
+            fork(registerVerification);
         }
 
         if (userInfo.errorMessage) {
-            yield put({ type: authActions.SET_ERROR_MESSAGE, error: userInfo.errorMessage });
+            yield put({ type: actionTypes.SET_ERROR_MESSAGE, error: userInfo.errorMessage });
             return false;
         }
 
-        yield put({ type: authActions.SET_AUTH_INFO, payload: userInfo });
+        yield put({ type: actionTypes.SET_AUTH_INFO, payload: userInfo });
 
         return true;
     } catch (error) {
         // If we get an error we send Redux the appropiate action and return
-        yield put({ type: authActions.SET_ERROR_MESSAGE, error: error.message });
+        yield put({ type: actionTypes.SET_ERROR_MESSAGE, error: error.message });
 
         return false;
     }
@@ -47,7 +58,25 @@ export function* logout() {
 
         return result;
     } catch (error) {
-        yield put({ type: authActions.SET_ERROR_MESSAGE, error: error.message });
+        yield put({ type: actionTypes.SET_ERROR_MESSAGE, error: error.message });
+    }
+}
+
+function* registerVerification() {
+    yield takeLatest(actionTypes.REGISTER_VERIFICATION_REQUEST, sendEmailVerification);
+}
+
+function* sendEmailVerification() {
+    const verified = yield select(makeSelectEmailVerified());
+
+    if (!verified) {
+        const response = yield call(firebaseTools.sendEmailVerification);
+
+        if (!response.error) {
+            yield put({ type: actionTypes.REGISTER_VERIFICATION_SUCCESS });
+        } else {
+            yield put({ type: actionTypes.REGISTER_VERIFICATION_FAILURE, error: response.error });
+        }
     }
 }
 
@@ -61,9 +90,9 @@ function* loginFlow() {
     while (true) {
         // And we're listening for `LOGIN_REQUEST` actions and destructuring its payload
         const authType = yield race({
-            loginWithEmail   : take(authActions.LOGIN_REQUEST),
-            loginWithProvider: take(authActions.LOGIN_WITH_PROVIDER_REQUEST),
-            registration     : take(authActions.REGISTER_REQUEST)
+            loginWithEmail   : take(actionTypes.LOGIN_REQUEST),
+            loginWithProvider: take(actionTypes.LOGIN_WITH_PROVIDER_REQUEST),
+            registration     : take(actionTypes.REGISTER_REQUEST)
         });
 
         // A `LOGOUT` action may happen while the `authorize` effect is going on, which may
@@ -71,15 +100,15 @@ function* loginFlow() {
         // returns the "winner", i.e. the one that finished first
         const winner = yield race({
             auth  : call(authorize, authType),
-            logout: take(authActions.LOGOUT)
+            logout: take(actionTypes.LOGOUT)
         });
 
         // If `authorize` was the winner...
         if (winner.auth) {
             // ...we send Redux appropiate actions
-            yield put({ type: authActions.SET_AUTH, payload: true }); // User is logged in (authorized)
+            yield put({ type: actionTypes.SET_AUTH, payload: true }); // User is logged in (authorized)
             yield put({
-                type        : authActions.CHANGE_FORM,
+                type        : actionTypes.CHANGE_FORM,
                 newFormState: Map({ email: '', password: '', rememberMe: false })
             });
 
@@ -87,11 +116,18 @@ function* loginFlow() {
             // If `logout` won...
         } else if (winner.logout) {
             // ...we send Redux appropiate action
-            yield put({ type: authActions.SET_AUTH, payload: false }); // User is not logged in (not authorized)
+            yield put({ type: actionTypes.SET_AUTH, payload: false }); // User is not logged in (not authorized)
             yield call(logout); // Call `logout` effect
             forwardTo('/');
         }
     }
+}
+
+function* verificationFlow() {
+    const verificationTask = yield fork(registerVerification);
+
+    yield take([LOCATION_CHANGE, CHANGE_LOCALE]);
+    yield cancel(verificationTask);
 }
 
 /**
@@ -101,19 +137,18 @@ function* loginFlow() {
  */
 export function* logoutFlow() {
     while (true) {
-        yield take(authActions.LOGOUT);
+        yield take(actionTypes.LOGOUT);
 
-        yield put({ type: authActions.SET_AUTH, payload: false });
+        yield put({ type: actionTypes.SET_AUTH, payload: false });
 
         const result = yield call(logout);
 
         if (result.success) {
-            yield put({ type: authActions.SET_AUTH_INFO, payload: null });
+            yield put({ type: actionTypes.SET_AUTH_INFO, payload: null });
             forwardTo('/');
         }
     }
 }
-
 
 loginFlow.isDaemon = true;
 
@@ -122,7 +157,8 @@ loginFlow.isDaemon = true;
 // Sagas are fired once at the start of an app and can be thought of as processes running
 // in the background, watching actions dispatched to the store.
 export default [
-    loginFlow
+    loginFlow,
+    verificationFlow
 ];
 
 // Little helper function to abstract going to different pages

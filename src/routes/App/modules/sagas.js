@@ -15,7 +15,7 @@ import { omit } from 'lodash';
 
 import { makeSelectLoggedIn } from '../../AppAuth/modules/selectors';
 
-import * as authActions from '../../AppAuth/modules/auth/actions';
+import * as authActionTypes from '../../AppAuth/modules/actionTypes';
 import * as eventActions from './events/actions';
 import * as userActions from './users/actions';
 
@@ -70,8 +70,8 @@ export function* setUserData(userData) {
 export function* updateUserInfoFlow() {
     while (true) {
         const updateType = yield race({
-            updateUserProfile: take(authActions.UPDATE_USER_INFO_REQUEST),
-            changePassword   : take(authActions.CHANGE_USER_PASSWORD_REQUEST)
+            updateUserProfile: take(authActionTypes.UPDATE_USER_INFO_REQUEST),
+            changePassword   : take(authActionTypes.CHANGE_USER_PASSWORD_REQUEST)
         });
 
         let userInfo;
@@ -84,14 +84,14 @@ export function* updateUserInfoFlow() {
             }
         } catch (error) {
             // If we get an error we send Redux the appropiate action and return
-            yield put({ type: authActions.SET_ERROR_MESSAGE, error: error.message });
+            yield put({ type: authActionTypes.SET_ERROR_MESSAGE, error: error.message });
             return false;
         }
 
         if (!userInfo.error) {
-            yield put({ type: authActions.SET_AUTH_INFO, payload: userInfo });
+            yield put({ type: authActionTypes.SET_AUTH_INFO, payload: userInfo });
         } else {
-            yield put({ type: authActions.SET_ERROR_MESSAGE, error: userInfo.errorMessage });
+            yield put({ type: authActionTypes.SET_ERROR_MESSAGE, error: userInfo.errorMessage });
             return false;
         }
     }
@@ -219,7 +219,7 @@ export function* authObserver() {
         const loggedIn_ = yield select(makeSelectLoggedIn());
 
         if (loggedIn !== loggedIn_) {
-            yield put({ type: authActions.SET_AUTH, payload: loggedIn });
+            yield put({ type: authActionTypes.SET_AUTH, payload: loggedIn });
         }
         if (!loggedIn && loggedIn_) {
             yield fork(logout);

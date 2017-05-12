@@ -53,5 +53,13 @@ export default defineMessages({
     reset_pwd_btn: {
         id            : 'app.change-pwd.btn',
         defaultMessage: 'Change password'
+    },
+    email_verified_description: {
+        id            : 'app.email-verified.description',
+        defaultMessage: 'Please check your email and follow link for register verification!'
+    },
+    email_verified_retry_btn: {
+        id            : 'app.email-verified.retry-btn',
+        defaultMessage: 'Please check your email and follow link for register verification!'
     }
 });

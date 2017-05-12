@@ -1,7 +1,7 @@
 import React  from 'react';
 // import PropTypes from 'prop-types';
 import AuthContainer from './AuthContainer';
-import { registerRequest } from '../modules/auth/actions';
+import { registerRequest } from '../modules/actions';
 
 const RegisterHOC = (Component) => {
     class HOC extends React.Component {

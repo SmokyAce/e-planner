@@ -15,6 +15,7 @@
   "app.event.notebook.description": "Сервис: Блокнот!",
   "app.event.settings.description": "Настройки",
   "app.event.settings.section-services": "Сервисы для события",
+  "app.email-verified.description": "Пожалуйста проверьте e-mail и перейдите по ссылке для подтверждения регистрации!",
 
   "app.route.home": "Домой",
   "app.route.planner": "Планировщик",
@@ -48,5 +49,6 @@
   "app.logout.btn": "Выход",
   "app.register.description": "Регистрация",
   "app.register.btn": "Регистрация",
-  "app.planner.home.greeting": "Добро пожаловать в приложение - Event Planner"
+  "app.planner.home.greeting": "Добро пожаловать в приложение - Event Planner",
+  "app.email-verified.retry-btn": "Отправить повторно"
 }

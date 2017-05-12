@@ -26,7 +26,8 @@ export const createRoutes = (store) => {
                     require('./App').default(store),
 
                     require('./AppAuth').login(store),
-                    require('./AppAuth').register(store)
+                    require('./AppAuth').register(store),
+                    require('./AppAuth').verified(store)
                     // require('./AppAuth/Login').default(store),
                     // require('./AppAuth/ResetPwd').default(store)
                 ]);

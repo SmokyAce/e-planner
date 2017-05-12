@@ -8,7 +8,7 @@ import { NavDropdown, MenuItem } from 'react-bootstrap';
 import Spinner from '../../components/Spinner';
 // actions
 import { bindActionCreators } from 'redux';
-import { logoutRequest } from '../../routes/AppAuth/modules/auth/actions';
+import { logoutRequest } from '../../routes/AppAuth/modules/actions';
 import { fetchUserInfoRequest } from '../../routes/App/modules/users/actions';
 // selectors
 import { createStructuredSelector } from 'reselect';

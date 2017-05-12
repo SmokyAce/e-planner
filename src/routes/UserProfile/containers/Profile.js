@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { makeSelectCurrentUser } from '../../App/modules/selectors';
 import { makeSelectMessage, makeSelectFormState } from '../../AppAuth/modules/selectors';
 
-import { updateUserInfoRequest, changeForm } from '../../AppAuth/modules/auth/actions';
+import { updateUserInfoRequest, changeForm } from '../../AppAuth/modules/actions';
 import Loading from '../components/Loading';
 import ChangePassword from './ChangePassword';
 

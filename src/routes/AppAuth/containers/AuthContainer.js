@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loginWithProviderRequest, changeForm } from '../modules/auth/actions';
+import { loginWithProviderRequest, changeForm } from '../modules/actions';
 import { createSelector } from 'reselect';
 import { makeSelectFormState, makeSelectMessage } from '../../AppAuth/modules/selectors';
 

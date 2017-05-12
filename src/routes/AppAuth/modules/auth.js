@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
-import auth from '../../../../utils/auth';
-import * as actions from './actions';
+import auth from '../../../utils/auth';
+import * as actionTypes from './actionTypes';
 
 
 // The initial state of the App
@@ -12,27 +12,37 @@ const initialState = fromJS({
         rememberMe    : false,
         displayName   : ''
     },
-    currentUser: null,
-    message    : '',
-    loggedIn   : auth.loggedIn()
+    currentUser          : null,
+    message              : '',
+    loggedIn             : auth.loggedIn(),
+    sendEmailVerification: false
 });
 
 const AUTH_ACTION_HANDLERS = {
-    [actions.CHANGE_FORM]: (state, action) => {
+    [actionTypes.CHANGE_FORM]: (state, action) => {
         return state
             .setIn(['formState', action.name], action.value);
     },
-    [actions.SET_AUTH]: (state, action) => {
+    [actionTypes.SET_AUTH]: (state, action) => {
         return state
             .set('loggedIn', action.payload);
     },
-    [actions.SET_AUTH_INFO]: (state, action) => {
+    [actionTypes.SET_AUTH_INFO]: (state, action) => {
         return state
             .set('currentUser', fromJS(action.payload));
     },
-    [actions.SET_ERROR_MESSAGE]: (state, action) => {
+    [actionTypes.SET_ERROR_MESSAGE]: (state, action) => {
         return state
             .set('message', action.error);
+    },
+    [actionTypes.REGISTER_VERIFICATION_SUCCESS]: (state) => {
+        return state
+            .set('sendEmailVerification', true);
+    },
+    [actionTypes.REGISTER_VERIFICATION_FAILURE]: (state, action) => {
+        return state
+            .set('sendEmailVerification', false)
+            .set('message', action.error.message);
     }
 };
 

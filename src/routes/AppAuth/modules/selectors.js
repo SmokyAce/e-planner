@@ -22,9 +22,15 @@ const makeSelectLoggedIn = () => createSelector(
     (globalState) => globalState.get('loggedIn')
 );
 
+const makeSelectEmailVerified = () => createSelector(
+    selectAuth,
+    (globalState) => globalState.getIn(['currentUser', 'emailVerified'])
+);
+
 export {
     // auth
     makeSelectFormState,
     makeSelectMessage,
-    makeSelectLoggedIn
+    makeSelectLoggedIn,
+    makeSelectEmailVerified
 };

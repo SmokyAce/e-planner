@@ -1,17 +1,5 @@
-// ------------------------------------
-// Constants
-// ------------------------------------
-export const LOGIN_REQUEST                = 'LOGIN_REQUEST';
-export const LOGIN_WITH_PROVIDER_REQUEST  = 'LOGIN_WITH_PROVIDER_REQUEST';
-export const REGISTER_REQUEST             = 'REGISTER_REQUEST';
-export const UPDATE_USER_INFO_REQUEST     = 'UPDATE_USER_INFO_REQUEST';
-export const CHANGE_USER_PASSWORD_REQUEST = 'CHANGE_USER_PASSWORD_REQUEST';
-export const LOGOUT                       = 'LOGOUT';
-export const SET_AUTH_INFO                = 'SET_AUTH_INFO';
-export const SET_AUTH                     = 'SET_AUTH';
-export const SET_ERROR_MESSAGE            = 'SET_ERROR_MESSAGE';
-export const CHANGE_FORM                  = 'CHANGE_FORM';
-export const RESET_PASSWORD               = 'RESET_PASSWORD';
+import * as actionTypes from './actionTypes';
+
 
 // ------------------------------------
 // Actions
@@ -22,7 +10,7 @@ export const RESET_PASSWORD               = 'RESET_PASSWORD';
  * @param  {string} value The value of input that user change
  */
 export const changeForm = (name, value) => ({
-    type: CHANGE_FORM,
+    type: actionTypes.CHANGE_FORM,
     name,
     value
 });
@@ -32,7 +20,7 @@ export const changeForm = (name, value) => ({
  * @param  {string} message The new text of the error message on the form
  */
 export const setMesssage = (message) => ({
-    type: SET_ERROR_MESSAGE,
+    type: actionTypes.SET_ERROR_MESSAGE,
     message
 });
 
@@ -40,7 +28,7 @@ export const setMesssage = (message) => ({
  * Tells the app we want to update a user info
  */
 export const updateUserInfoRequest = (data) => ({
-    type: UPDATE_USER_INFO_REQUEST,
+    type: actionTypes.UPDATE_USER_INFO_REQUEST,
     data
 });
 
@@ -48,7 +36,7 @@ export const updateUserInfoRequest = (data) => ({
  * Tells the app we want to change a user password
  */
 export const changeUserPwdRequest = (newPassword) => ({
-    type: CHANGE_USER_PASSWORD_REQUEST, newPassword
+    type: actionTypes.CHANGE_USER_PASSWORD_REQUEST, newPassword
 });
 
 /**
@@ -58,7 +46,7 @@ export const changeUserPwdRequest = (newPassword) => ({
  * @param  {string} data.password The password of the user to log in
  */
 export const loginRequest = (data) => ({
-    type: LOGIN_REQUEST,
+    type: actionTypes.LOGIN_REQUEST,
     data
 });
 
@@ -67,7 +55,7 @@ export const loginRequest = (data) => ({
  * @param  {string} provider          The provider which selected user
  */
 export const loginWithProviderRequest = (provider) => ({
-    type: LOGIN_WITH_PROVIDER_REQUEST,
+    type: actionTypes.LOGIN_WITH_PROVIDER_REQUEST,
     provider
 });
 
@@ -75,7 +63,7 @@ export const loginWithProviderRequest = (provider) => ({
  * Tells the app we want to logout
  */
 export const logoutRequest = () => ({
-    type: LOGOUT
+    type: actionTypes.LOGOUT
 });
 
 /**
@@ -85,12 +73,16 @@ export const logoutRequest = () => ({
  * @param  {string} data.password The password of the user to register
  */
 export const registerRequest = (data) => ({
-    type: REGISTER_REQUEST,
+    type: actionTypes.REGISTER_REQUEST,
     data
 });
 
 export function resetPasswordEmail(email) {
     return {
-        type: RESET_PASSWORD
+        type: actionTypes.RESET_PASSWORD
     };
 }
+
+export const sendEmailVerification = () => ({
+    type: actionTypes.REGISTER_VERIFICATION_REQUEST
+});
