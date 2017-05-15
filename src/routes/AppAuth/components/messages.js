@@ -60,6 +60,18 @@ export default defineMessages({
     },
     email_verified_retry_btn: {
         id            : 'app.email-verified.retry-btn',
-        defaultMessage: 'Please check your email and follow link for register verification!'
+        defaultMessage: 'send again!'
+    },
+    email_verified_question: {
+        id            : 'app.email-verified.question',
+        defaultMessage: 'If you didn\'t receive the message please'
+    },
+    email_verified_success_desc: {
+        id            : 'app.email-verified.success-description',
+        defaultMessage: 'After your success verification'
+    },
+    email_verified_success_btn: {
+        id            : 'app.email-verified.success-btn',
+        defaultMessage: 'go to app!'
     }
 });

@@ -48,5 +48,8 @@
   "app.logout.btn": "Logout",
   "app.register.description": "Register",
   "app.register.btn": "Register",
-  "app.email-verified.retry-btn": "Retry send"
+  "app.email-verified.retry-btn": "send again!",
+  "app.email-verified.question": "If you didn't receive the message please",
+  "app.email-verified.success-desc": "After your success verification",
+  "app.email-verified.success-btn": "go to app!"
 }
