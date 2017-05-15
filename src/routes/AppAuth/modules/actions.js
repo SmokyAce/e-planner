@@ -83,6 +83,6 @@ export function resetPasswordEmail(email) {
     };
 }
 
-export const sendEmailVerification = () => ({
+export const sendEmailVerificationRequest = () => ({
     type: actionTypes.REGISTER_VERIFICATION_REQUEST
 });

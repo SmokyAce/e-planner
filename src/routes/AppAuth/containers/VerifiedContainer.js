@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import EmailVerified from '../components/EmailVerified';
 // actions
 import { bindActionCreators } from 'redux';
-import { sendEmailVerification } from '../modules/actions';
+import { sendEmailVerificationRequest } from '../modules/actions';
 // selectors
 import { createSelector } from 'reselect';
 import { makeSelectEmailVerified } from '../../AppAuth/modules/selectors';
 
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    sendEmailVerification
+    sendEmailVerification: sendEmailVerificationRequest
 }, dispatch);
 
 const mapStateToProps = (state, ownProps) => createSelector(

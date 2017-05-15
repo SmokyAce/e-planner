@@ -6,7 +6,7 @@ import { registerRequest } from '../modules/actions';
 const RegisterHOC = (Component) => {
     class HOC extends React.Component {
 
-        componentWillMount = () => {
+        componentDidMount = () => {
             this.setState({
                 type    : 'register',
                 onSubmit: registerRequest

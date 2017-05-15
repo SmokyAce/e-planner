@@ -9,6 +9,8 @@ import { makeSelectEmailVerified } from './selectors';
 import * as actionTypes from './actionTypes';
 import { LOCATION_CHANGE } from '../../../store/reducers/location';
 import { CHANGE_LOCALE } from '../../../containers/LanguageProvider/module';
+// actions
+import { sendEmailVerificationRequest } from './actions';
 
 
 /**
@@ -28,12 +30,16 @@ function* authorize(authType) {
             userInfo = (result.user) ? result.user : result;
 
             // check if verification need
-            fork(registerVerification);
+            const verified = yield select(makeSelectEmailVerified());
+
+            if (!verified) {
+                yield put(sendEmailVerificationRequest);
+            }
         } else if (authType.registration) {
             userInfo = yield firebaseTools.registerUser(authType.registration.data);
 
-            // check if verification need
-            fork(registerVerification);
+            // register verification need
+            yield put(sendEmailVerificationRequest);
         }
 
         if (userInfo.errorMessage) {
@@ -67,16 +73,12 @@ function* registerVerification() {
 }
 
 function* sendEmailVerification() {
-    const verified = yield select(makeSelectEmailVerified());
+    const response = yield call(firebaseTools.sendEmailVerification);
 
-    if (!verified) {
-        const response = yield call(firebaseTools.sendEmailVerification);
-
-        if (!response.error) {
-            yield put({ type: actionTypes.REGISTER_VERIFICATION_SUCCESS });
-        } else {
-            yield put({ type: actionTypes.REGISTER_VERIFICATION_FAILURE, error: response.error });
-        }
+    if (!response.error) {
+        yield put({ type: actionTypes.REGISTER_VERIFICATION_SUCCESS });
+    } else {
+        yield put({ type: actionTypes.REGISTER_VERIFICATION_FAILURE, error: response.error });
     }
 }
 
