@@ -23,7 +23,7 @@ export default (store) => {
                 next(null, [
                     require('../AppEvent').default(store),
 
-                    require('../UserProfile').default(store)
+                    require('../AppProfile').default(store)
                 ]);
             }, 'planner-routes');
         },

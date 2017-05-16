@@ -40,14 +40,7 @@ class UserMenu extends React.Component {
                 }
                     id='user-dropdown' eventKey='2'
                 >
-                    <LinkContainer to='app/profile' className='media'>
-                        <MenuItem eventKey='2.1'>
-                            <img className='media-object user-photo'
-                                src={currentUser.getIn(['providerData', 0, 'photoURL'])}
-                            />
-                        </MenuItem>
-                    </LinkContainer>
-                    <LinkContainer to='app/profile'>
+                    <LinkContainer to='/app/profile'>
                         <MenuItem eventKey='2.2'>
                             <FormattedMessage {...messages.profileBtn} />
                         </MenuItem>

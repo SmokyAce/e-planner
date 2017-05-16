@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { FormattedMessage } from 'react-intl';
 import { changeUserPwdRequest, setMesssage, changeForm } from '../../AppAuth/modules/actions';
+import messages from '../modules/messages';
 
 
 class ChangePassword extends React.Component {
@@ -38,13 +39,12 @@ class ChangePassword extends React.Component {
     }
 
     render() {
-        const { messages, formState, message } = this.props;
+        const { formState } = this.props;
 
         return (
-            <form id='ChangePassword' role='form' onSubmit={this.onFormSubmit}>
+            <form className='col-md-6' id='ChangePassword' role='form' onSubmit={this.onFormSubmit}>
+                <h4><strong><FormattedMessage {...messages.change_description} /></strong></h4>
                 <br />
-                <h4> <FormattedMessage {...messages.change_description} /></h4>
-                <h5> {message} </h5>
                 <div className='form-group'>
                     <label htmlFor='password'><FormattedMessage {...messages.new_pwd} /></label>
                     <input type='password' className='form-control' name='password' id='password'
@@ -57,18 +57,19 @@ class ChangePassword extends React.Component {
                         value={formState.get('repeatPassword')} onChange={this._changePassword}
                     />
                 </div>
-                <button type='submit' className='btn btn-primary'>
-                    <FormattedMessage {...messages.change_pwd_btn} />
-                </button>
+                <br />
+                <div className='button-container'>
+                    <button type='submit' className='btn btn-primary'>
+                        <FormattedMessage {...messages.change_pwd_btn} />
+                    </button>
+                </div>
             </form>
         );
     }
 }
 
 ChangePassword.propTypes = {
-    messages : PropTypes.object,
     formState: PropTypes.instanceOf(Map),
-    message  : PropTypes.string,
     dispatch : PropTypes.func
 };
 

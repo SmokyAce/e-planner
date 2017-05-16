@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { FormattedMessage } from 'react-intl';
 
 import { resetPasswordEmail } from '../modules/actions';
-import messages from '../components/messages';
+import messages from '../modules/messages';
 
 
 class ResetPassword extends Component {

@@ -1,0 +1,43 @@
+@import '../../../styles/variables';
+
+.form-inline label {
+  font-size: 14px;
+  color: #707070;
+  text-align: right;
+  width: 100px;
+}
+.form-inline a {
+  font-size: 12px;
+}
+.form-inline input {
+  width: 50%;
+}
+.form-inline > * {
+  margin: 3px 3px !important;
+}
+
+.media-object {
+  width: 10em;
+  height: 10em
+}
+.custom-settings {
+  border-right: 1px solid #ccc;
+}
+.button-container {
+  margin-left: 108px;
+}
+
+@media (max-width: $screen-sm-min) {
+  .custom-settings {
+    padding: 0 0;
+    border-right: 0 solid #ccc;
+  }
+
+  .form-inline label {
+    font-size: 12px;
+    text-align: left;
+  }
+  .form-inline input {
+    width: 100%;
+  }
+}

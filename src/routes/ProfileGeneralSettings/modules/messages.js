@@ -10,9 +10,17 @@ export default defineMessages({
         id            : 'app.profile.description',
         defaultMessage: 'User Profile Page'
     },
-    logout_description: {
-        id            : 'app.logout.description',
-        defaultMessage: 'You are logged out!'
+    account_settings_description: {
+        id            : 'app.profile.account-settings.description',
+        defaultMessage: 'Account settings'
+    },
+    change_description: {
+        id            : 'app.change-pwd.description',
+        defaultMessage: 'Change password'
+    },
+    change_email_description: {
+        id            : 'app.change-email.description',
+        defaultMessage: 'Change e-mail address'
     },
     email: {
         id            : 'app.email',
@@ -23,15 +31,23 @@ export default defineMessages({
         defaultMessage: 'Password'
     },
     update_btn: {
-        id            : 'app.profile.update-btn',
-        defaultMessage: 'Register'
+        id            : 'app.profile.save-btn',
+        defaultMessage: 'Save'
     },
-    login_with: {
-        id            : 'app.login.with',
-        defaultMessage: 'Login with'
+    display_name: {
+        id            : 'app.profile.display-name',
+        defaultMessage: 'Display name'
+    },
+    sex: {
+        id            : 'app.profile.sex',
+        defaultMessage: 'Sex'
     },
     repeat_pwd: {
         id            : 'app.change-pwd.repeat-pwd',
+        defaultMessage: 'Repeat password'
+    },
+    new_pwd: {
+        id            : 'app.change-pwd.new-pwd',
         defaultMessage: 'Repeat password'
     },
     change_pwd_btn: {
