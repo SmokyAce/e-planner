@@ -42,6 +42,10 @@ export default defineMessages({
         id            : 'app.profile.sex',
         defaultMessage: 'Sex'
     },
+    language: {
+        id            : 'app.profile.language',
+        defaultMessage: 'Language'
+    },
     repeat_pwd: {
         id            : 'app.change-pwd.repeat-pwd',
         defaultMessage: 'Repeat password'

@@ -1,19 +1,24 @@
+// utils
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+// actions
 import { updateUserInfoRequest, changeForm } from '../../AppAuth/modules/actions';
-import Loading from '../components/Loading';
-
+// components
 import { FormattedMessage } from 'react-intl';
+import Loading from '../components/Loading';
+import LocaleToogle from '../../../components/LocaleToogle';
+import { NavDropdown, MenuItem } from 'react-bootstrap';
+// translations
 import messages from '../modules/messages';
+// styles
 import './AccountSettings.scss';
 
-class UserProfile extends Component {
+
+class AccountSettings extends Component {
 
     constructor(props) {
         super(props);
         this.onFormSubmit = this.onFormSubmit.bind(this);
-        this._changeEmail = this._changeEmail.bind(this);
         this._changeDisplayName = this._changeDisplayName.bind(this);
     }
 
@@ -27,10 +32,6 @@ class UserProfile extends Component {
         );
     }
 
-    _changeEmail(event) {
-        this._emitChange(this.props.formState.set('email', event.target.value));
-    }
-
     _changeDisplayName(event) {
         this._emitChange(this.props.formState.set('displayName', event.target.value));
     }
@@ -41,7 +42,7 @@ class UserProfile extends Component {
 
 
     render() {
-        const { currentUser } = this.props;
+        const { currentUser, locale, onLocaleToggle } = this.props;
 
         if (!currentUser) {
             return <Loading />;
@@ -61,7 +62,7 @@ class UserProfile extends Component {
                     <div className='form-group form-inline'>
                         <label htmlFor='email'><FormattedMessage {...messages.email} />:</label>
                         <ins>{currentUser.get('email')}</ins>
-                        <a>change email</a>
+                        <a role='button'>change email</a>
                     </div>
                     <div className='form-group form-inline'>
                         <label htmlFor='displayName'><FormattedMessage {...messages.display_name} />:</label>
@@ -72,10 +73,16 @@ class UserProfile extends Component {
                     </div>
                     <div className='form-group form-inline'>
                         <label htmlFor='Sex'><FormattedMessage {...messages.sex} />:</label>
-                        <select className='form-control' id='sex-select'>
-                            <option>Male</option>
-                            <option>Female</option>
-                        </select>
+                        <NavDropdown className='form-control' id='lang-dropdown'
+                            title={!currentUser.get('sex') ? 'Female' : currentUser.get('sex')}
+                        >
+                            <MenuItem>Male</MenuItem>
+                            <MenuItem>Female</MenuItem>
+                        </NavDropdown>
+                    </div>
+                    <div className='form-group form-inline'>
+                        <label htmlFor='Language'><FormattedMessage {...messages.language} />:</label>
+                        <LocaleToogle locale={locale} onLocaleToggle={onLocaleToggle} className='form-control' />
                     </div>
                     <div className='button-container'>
                         <button type='submit' className='btn btn-primary'>
@@ -88,7 +95,7 @@ class UserProfile extends Component {
                     <a href='#'>
                         <img className='media-object img-responsive center-block' src={photoURL} />
                     </a>
-                    <a>change photo</a>
+                    <a role='button'>change photo</a>
                 </div>
             </form>
         );
@@ -96,10 +103,12 @@ class UserProfile extends Component {
 
 }
 
-UserProfile.propTypes = {
-    currentUser: PropTypes.object,
-    formState  : PropTypes.object,
-    dispatch   : PropTypes.func.isRequired
+AccountSettings.propTypes = {
+    currentUser   : PropTypes.object,
+    formState     : PropTypes.object,
+    dispatch      : PropTypes.func.isRequired,
+    locale        : PropTypes.string.isRequired,
+    onLocaleToggle: PropTypes.func.isRequired
 };
 
-export default UserProfile;
+export default AccountSettings;

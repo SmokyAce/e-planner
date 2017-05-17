@@ -1,52 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// components
 import { connect } from 'react-redux';
+import LocaleToggle from '../../components/LocaleToogle';
+// selectors
 import { createSelector } from 'reselect';
-import { NavDropdown, MenuItem } from 'react-bootstrap';
-
-// import Toggle from 'components/Toggle';
-import messages from './messages';
-import { appLocales } from '../../i18n';
-import { changeLocale } from '../LanguageProvider/module';
 import { selectLocale } from '../LanguageProvider/selectors';
+// actios
+import { bindActionCreators } from 'redux';
+import { changeLocale } from '../LanguageProvider/module';
 
-
-/*
- *
- * LanguageToggle
- *
- */
-export class LocaleToggle extends React.Component { // eslint-disable-line react/prefer-stateless-function
-    render() {
-        return (
-            <NavDropdown eventKey='1' title={messages[this.props.locale].defaultMessage} id='lang-dropdown'
-                onSelect={this.props.onLocaleToggle}
-            >
-                { appLocales.map(lang =>
-                    <MenuItem disabled={lang === this.props.locale} eventKey={lang} key={lang}>
-                        {messages[lang].defaultMessage}
-                    </MenuItem>
-                )}
-            </NavDropdown>
-        );
-    }
-}
-
-LocaleToggle.propTypes = {
-    onLocaleToggle: PropTypes.func,
-    locale        : PropTypes.string
-};
 
 const mapStateToProps = createSelector(
     selectLocale(),
     (locale) => ({ locale })
 );
 
-export function mapDispatchToProps(dispatch) {
-    return {
-        onLocaleToggle: (locale) => dispatch(changeLocale(locale)),
-        dispatch
-    };
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    onLocaleToggle: changeLocale
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LocaleToggle);
