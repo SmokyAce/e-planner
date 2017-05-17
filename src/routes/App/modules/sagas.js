@@ -43,7 +43,6 @@ function* addEvent(action) {
     yield put(hideLoading());
 }
 
-
 /**
  * set user data to firebase
  */
