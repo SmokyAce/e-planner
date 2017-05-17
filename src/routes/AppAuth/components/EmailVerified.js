@@ -18,9 +18,18 @@ const EmailVerified = ({ emailVerified, sendEmailVerification }) => {
             <h3>
                 <FormattedMessage {...messages.email_verified_description} />
             </h3>
-            <button className='btn btn-primary' onClick={sendEmailVerification}>
-                <FormattedMessage {...messages.email_verified_retry_btn} />
-            </button>
+            <h4>
+                <FormattedMessage {...messages.email_verified_question} />
+                <a className='btn btn-link' onClick={sendEmailVerification}>
+                    <FormattedMessage {...messages.email_verified_retry_btn} />
+                </a>
+            </h4>
+            <h4>
+                <FormattedMessage {...messages.email_verified_success_desc} />
+                <a className='btn btn-link' href='/app'>
+                    <FormattedMessage {...messages.email_verified_success_btn} />
+                </a>
+            </h4>
         </div>
     );
 };
