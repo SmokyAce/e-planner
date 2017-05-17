@@ -1,10 +1,9 @@
 // utils
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// actions
-import { updateUserInfoRequest, changeForm } from '../../AppAuth/modules/actions';
 // components
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router';
 import Loading from '../components/Loading';
 import LocaleToogle from '../../../components/LocaleToogle';
 import { NavDropdown, MenuItem } from 'react-bootstrap';
@@ -24,12 +23,10 @@ class AccountSettings extends Component {
 
     onFormSubmit(event) {
         event.preventDefault();
-        this.props.dispatch(
-            updateUserInfoRequest({
-                email      : this.props.formState.get('email'),
-                displayName: this.props.formState.get('displayName')
-            })
-        );
+        this.props.updateUserInfoRequest({
+            email      : this.props.formState.get('email'),
+            displayName: this.props.formState.get('displayName')
+        });
     }
 
     _changeDisplayName(event) {
@@ -37,7 +34,7 @@ class AccountSettings extends Component {
     }
 
     _emitChange(newFormState) {
-        this.props.dispatch(changeForm(newFormState));
+        this.props.changeForm(newFormState);
     }
 
 
@@ -62,7 +59,7 @@ class AccountSettings extends Component {
                     <div className='form-group form-inline'>
                         <label htmlFor='email'><FormattedMessage {...messages.email} />:</label>
                         <ins>{currentUser.get('email')}</ins>
-                        <a role='button'>change email</a>
+                        <Link className='link' to='/app/profile/change-email' >change email</Link>
                     </div>
                     <div className='form-group form-inline'>
                         <label htmlFor='displayName'><FormattedMessage {...messages.display_name} />:</label>
@@ -104,11 +101,12 @@ class AccountSettings extends Component {
 }
 
 AccountSettings.propTypes = {
-    currentUser   : PropTypes.object,
-    formState     : PropTypes.object,
-    dispatch      : PropTypes.func.isRequired,
-    locale        : PropTypes.string.isRequired,
-    onLocaleToggle: PropTypes.func.isRequired
+    currentUser          : PropTypes.object,
+    formState            : PropTypes.object,
+    locale               : PropTypes.string.isRequired,
+    onLocaleToggle       : PropTypes.func.isRequired,
+    changeForm           : PropTypes.func.isRequired,
+    updateUserInfoRequest: PropTypes.func.isRequired
 };
 
 export default AccountSettings;

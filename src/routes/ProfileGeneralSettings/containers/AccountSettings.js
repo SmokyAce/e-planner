@@ -8,8 +8,8 @@ import { makeSelectMessage, makeSelectFormState } from '../../AppAuth/modules/se
 import { selectLocale } from '../../../containers/LanguageProvider/selectors';
 // actios
 import { bindActionCreators } from 'redux';
-import { changeLocale } from '../../../containers/LanguageProvider/module';
-
+import { changeLocale as onLocaleToggle } from '../../../containers/LanguageProvider/module';
+import { updateUserInfoRequest, changeForm } from '../../AppAuth/modules/actions';
 
 const mapStateToProps = state => createStructuredSelector({
     currentUser: makeSelectCurrentUser(),
@@ -19,7 +19,9 @@ const mapStateToProps = state => createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    onLocaleToggle: changeLocale
+    onLocaleToggle,
+    updateUserInfoRequest,
+    changeForm
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountSettings);
