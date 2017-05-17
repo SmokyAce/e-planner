@@ -56,7 +56,7 @@ class UserProfile extends Component {
         return (
             <form id='frmProfile' role='form' onSubmit={this.onFormSubmit}>
                 <h4><strong><FormattedMessage {...messages.account_settings_description} /></strong></h4>
-                <div className='col-md-4 custom-settings'>
+                <div className='col-md-6 custom-settings'>
                     <br />
                     <div className='form-group form-inline'>
                         <label htmlFor='email'><FormattedMessage {...messages.email} />:</label>
@@ -83,7 +83,8 @@ class UserProfile extends Component {
                         </button>
                     </div>
                 </div>
-                <div className='col-md-4 media text-center'>
+                <div className='col-md-3' />
+                <div className='col-md-3 media text-center'>
                     <a href='#'>
                         <img className='media-object img-responsive center-block' src={photoURL} />
                     </a>
