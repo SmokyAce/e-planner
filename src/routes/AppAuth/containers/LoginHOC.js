@@ -6,16 +6,13 @@ import { loginRequest } from '../modules/actions';
 const LoginHOC = (Component) => {
     class HOC extends React.Component {
 
-        componentWillMount = () => {
-            this.setState({
-                type    : 'login',
-                onSubmit: loginRequest
-            });
+        extProps = {
+            type    : 'login',
+            onSubmit: loginRequest
         };
 
-
         render() {
-            return <Component {...this.state} />;
+            return <Component {...this.extProps} />;
         }
     }
     return HOC;

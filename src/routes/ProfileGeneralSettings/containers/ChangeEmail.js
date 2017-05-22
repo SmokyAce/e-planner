@@ -1,6 +1,7 @@
 // components
 import { connect } from 'react-redux';
 import ChangeEmail from '../components/ChangeEmail';
+// import withForm from '../../../containers/Form';
 // selectors
 import { createStructuredSelector } from 'reselect';
 import { makeSelectCurrentUser } from '../../App/modules/selectors';
@@ -14,3 +15,4 @@ const mapStateToProps = state => createStructuredSelector({
 });
 
 export default connect(mapStateToProps, null)(ChangeEmail);
+// export default withForm(ChangeEmail);

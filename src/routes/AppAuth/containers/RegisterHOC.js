@@ -6,16 +6,13 @@ import { registerRequest } from '../modules/actions';
 const RegisterHOC = (Component) => {
     class HOC extends React.Component {
 
-        componentWillMount = () => {
-            this.setState({
-                type    : 'register',
-                onSubmit: registerRequest
-            });
+        extProps = {
+            type    : 'register',
+            onSubmit: registerRequest
         };
 
-
         render() {
-            return <Component {...this.state} />;
+            return <Component {...this.extProps} />;
         }
     }
     return HOC;

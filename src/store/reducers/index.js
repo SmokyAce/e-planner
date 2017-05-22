@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux-immutable';
 import { location } from './location';
-import languageProviderReducer from '../../containers/LanguageProvider/module';
-import { loadingBarReducer } from 'react-redux-loading-bar';
+import language from '../../containers/LanguageProvider/module';
+import { loadingBarReducer as loadingBar } from 'react-redux-loading-bar';
 
 
 export const makeRootReducer = (asyncReducers) => {
@@ -13,8 +13,8 @@ export const makeRootReducer = (asyncReducers) => {
     }
     return combineAsyncReducers({
         location,
-        language  : languageProviderReducer,
-        loadingBar: loadingBarReducer,
+        language,
+        loadingBar,
         ...asyncReducers
     });
 };
