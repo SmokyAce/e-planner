@@ -2,6 +2,7 @@ import { combineReducers } from 'redux-immutable';
 import { location } from './location';
 import language from '../../containers/LanguageProvider/module';
 import { loadingBarReducer as loadingBar } from 'react-redux-loading-bar';
+import { reducer as form } from 'redux-form/immutable';
 
 
 export const makeRootReducer = (asyncReducers) => {
@@ -15,6 +16,7 @@ export const makeRootReducer = (asyncReducers) => {
         location,
         language,
         loadingBar,
+        form,
         ...asyncReducers
     });
 };

@@ -1,7 +1,9 @@
 // components
 import ProfileLayout from './components/ProfileLayout';
 // routes
-import { accountSettings, changeEmail, changePwd } from '../ProfileGeneralSettings';
+import accountSettings from '../ProfileGeneralSettings/AccountSettings';
+import changeEmail from '../ProfileGeneralSettings/ChangeEmail';
+import changePwd from '../ProfileGeneralSettings/ChangePwd';
 
 
 // Sync route definition

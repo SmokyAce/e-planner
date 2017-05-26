@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 // components
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router';
-import Loading from '../components/Loading';
-import LocaleToogle from '../../../components/LocaleToogle';
+import Loading from './Loading';
+import LocaleToogle from '../../../../components/LocaleToogle';
 import { NavDropdown, MenuItem } from 'react-bootstrap';
 // translations
 import messages from '../modules/messages';

@@ -1,6 +1,6 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import { browserHistory } from 'react-router';
-import { fromJS } from 'immutable';
+import { fromJS, Iterable } from 'immutable';
 
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
@@ -8,7 +8,14 @@ import createSagaMiddleware from 'redux-saga';
 import makeRootReducer from './reducers';
 import { updateLocation } from './reducers/location';
 
-const logger = createLogger();
+const stateTransformer = (state) => {
+    if (Iterable.isIterable(state)) return state.toJS();
+    return state;
+};
+
+const logger = createLogger({
+    stateTransformer
+});
 const sagaMiddleware = createSagaMiddleware();
 
 export default (initialState = {}) => {

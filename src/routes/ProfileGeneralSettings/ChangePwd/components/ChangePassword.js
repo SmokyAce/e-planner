@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 import { FormattedMessage } from 'react-intl';
-import { changeUserPwdRequest, setMesssage, changeForm } from '../../AppAuth/modules/actions';
+import { changeUserPwdRequest, setMesssage, changeForm } from '../../../AppAuth/modules/actions';
 import messages from '../modules/messages';
 
 

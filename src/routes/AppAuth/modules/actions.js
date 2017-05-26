@@ -86,3 +86,9 @@ export function resetPasswordEmail(email) {
 export const sendEmailVerificationRequest = () => ({
     type: actionTypes.REGISTER_VERIFICATION_REQUEST
 });
+
+export const changeAccountEmailRequest = (formState) => ({
+    type   : actionTypes.CHANGE_USER_EMAIL_REQUEST,
+    payload: formState.get('email')
+});
+
