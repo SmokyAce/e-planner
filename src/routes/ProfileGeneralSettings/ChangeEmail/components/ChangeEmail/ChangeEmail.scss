@@ -1,0 +1,6 @@
+    @import '../../../../../styles/variables.scss';
+    @media (min-width: $screen-sm-min) {
+        .email {
+            width: 400px;
+        }
+    }

@@ -1,3 +1,4 @@
+root=true
 [*]
 charset=utf-8
 end_of_line=crlf
@@ -5,7 +6,7 @@ insert_final_newline=false
 indent_style=space
 indent_size=4
 
-[{.eslintrc,.babelrc,.stylelintrc,jest.config,*.json,*.jsb3,*.jsb2,*.bowerrc}]
+[{.babelrc,.stylelintrc,.eslintrc,jest.config,*.json,*.jsb3,*.jsb2,*.bowerrc}]
 indent_style=space
 indent_size=2
 
