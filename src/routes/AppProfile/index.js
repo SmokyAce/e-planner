@@ -1,5 +1,5 @@
 // components
-import ProfileLayout from './components/ProfileLayout';
+import ProfileLayout from './containers/ProfileLayout';
 // routes
 import accountSettings from '../ProfileGeneralSettings/AccountSettings';
 import changeEmail from '../ProfileGeneralSettings/ChangeEmail';

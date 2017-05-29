@@ -15,7 +15,8 @@ const initialState = fromJS({
     currentUser          : null,
     message              : '',
     loggedIn             : auth.loggedIn(),
-    sendEmailVerification: false
+    sendEmailVerification: false,
+    changedEmailSucceeded: false
 });
 
 const AUTH_ACTION_HANDLERS = {
@@ -43,6 +44,14 @@ const AUTH_ACTION_HANDLERS = {
         return state
             .set('sendEmailVerification', false)
             .set('message', action.error.message);
+    },
+    [actionTypes.CHANGE_USER_EMAIL_SUCCESS]: (state) => {
+        return state
+        .set('changedEmailSucceeded', true);
+    },
+    [actionTypes.CHANGE_USER_EMAIL_FAILURE]: (state) => {
+        return state
+        .set('changedEmailSucceeded', false);
     }
 };
 

@@ -1,68 +1,76 @@
 @import '../../../../styles/variables.scss';
 $font-size-sm: 12px;
-
+// style
 .form-inline label {
-  font-size: 14px;
-  color: #707070;
-  text-align: right;
-  width: 140px;
+    font-size: $font-size-sm + 2px;
+    color: #707070;
+    text-align: right;
+    width: 100px;
 }
 
 .link {
-  font-size: 12px;
+    font-size: 12px;
 }
 
 .form-inline input {
-  width: 100%;
+    width: 100%;
 }
 
-.form-inline > * {
-  margin: 3px 3px !important;
+.form-inline>* {
+    margin: 3px 3px !important;
+}
+
+.media {
+    border-left: 1px solid #ccc;
+}
+
+.button-container {
+    margin-left: 108px;
 }
 
 .media-object {
-  width: 10em;
-  height: 10em
+    width: 60%;
+    height: 60%;
 }
-.media {
-  border-left: 1px solid #ccc;
-}
-.button-container {
-  margin-left: 148px;
+
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+    .media-object {
+        width: 50%;
+        height: 50%;
+    }
 }
 
 @media (max-width: $screen-sm-min) {
-
-  .form-inline label {
-    font-size: $font-size-sm;
-    width: auto;
-  }
-  .form-inline option {
-    font-size: $font-size-sm;
-  }
-
-  .form-inline label {
-    text-align: left;
-  }
-
-  .form-inline input, .form-inline li {
-    height: 30px;
-    padding: 2px 12px;
-    margin: 0 0;
-  }
-
-  .custom-settings {
-    padding: 0 0;
-    font-size: $font-size-sm;
-  }
-
-  .media {
-    padding: 0 0;
-    border-left: 0 solid #ccc;
-  }
-
-  .button-container{
-    text-align: center;
-    margin-left: 0;
-  }
+    .form-inline label {
+        font-size: $font-size-sm;
+        width: auto;
+    }
+    .form-inline option {
+        font-size: $font-size-sm;
+    }
+    .form-inline label {
+        text-align: left;
+    }
+    .form-inline input,
+    .form-inline li {
+        height: 30px;
+        padding: 2px 12px;
+        margin: 0 0;
+    }
+    .custom-settings {
+        padding: 0 0;
+        font-size: $font-size-sm;
+    }
+    .media {
+        padding: 0 0;
+        border-left: 0 solid #ccc;
+    }
+    .button-container {
+        text-align: center;
+        margin-left: 0;
+    }
+    .media-object {
+        width: 50%;
+        height: 50%;
+    }
 }

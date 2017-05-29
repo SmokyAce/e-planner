@@ -10,6 +10,16 @@ const makeSelectSidebar = () => createSelector(
     (globalState) => globalState.get('sidebar')
 );
 
+const makeSelectSidebarDocked = () => createSelector(
+    selectApp,
+    (globalState) => globalState.getIn(['sidebar', 'sidebarDocked'])
+);
+
+const makeSelectSidebarOpen = () => createSelector(
+    selectApp,
+    (globalState) => globalState.getIn(['sidebar', 'sidebarOpen'])
+);
+
 const makeSelectCurrentUser = () => createSelector(
     selectApp,
     (globalState) => globalState.getIn(['users', 'currentUser'])
@@ -62,7 +72,10 @@ const makeSelectAppSyncState = () => createSelector(
 
 export {
     selectApp,
+    // sidebar
     makeSelectSidebar,
+    makeSelectSidebarDocked,
+    makeSelectSidebarOpen,
     // user
     makeSelectCurrentUser,
     makeSelectCurrentUserEmail,

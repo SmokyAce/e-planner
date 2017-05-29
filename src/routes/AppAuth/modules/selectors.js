@@ -27,10 +27,22 @@ const makeSelectEmailVerified = () => createSelector(
     (globalState) => globalState.getIn(['currentUser', 'emailVerified'])
 );
 
+const makeSelectChangedEmailSucceeded = () => createSelector(
+    selectAuth,
+    (globalState) => globalState.get('changedEmailSucceeded')
+);
+
+const makeSelectCurrentUserEmail = () => createSelector(
+    selectAuth,
+    (globalState) => globalState.getIn(['currentUser', 'email'])
+);
+
 export {
     // auth
     makeSelectFormState,
     makeSelectMessage,
     makeSelectLoggedIn,
-    makeSelectEmailVerified
+    makeSelectEmailVerified,
+    makeSelectChangedEmailSucceeded,
+    makeSelectCurrentUserEmail
 };

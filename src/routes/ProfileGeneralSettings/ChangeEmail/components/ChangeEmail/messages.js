@@ -17,5 +17,17 @@ export default defineMessages({
     submit: {
         id            : 'app.change-email.btn',
         defaultMessage: 'Change email'
+    },
+    warning: {
+        id            : 'app.notification-status.warning',
+        defaultMessage: 'Warning!'
+    },
+    error: {
+        id            : 'app.notification-status.error',
+        defaultMessage: 'Error!'
+    },
+    success: {
+        id            : 'app.notification-status.success',
+        defaultMessage: 'Success!'
     }
 });

@@ -15,7 +15,6 @@
   "app.event.notebook.description": "Сервис: Блокнот!",
   "app.event.settings.description": "Настройки",
   "app.event.settings.section-services": "Сервисы для события",
-  "app.email-verified.description": "Пожалуйста проверьте e-mail и перейдите по ссылке для подтверждения регистрации!",
 
   "app.route.home": "Домой",
   "app.route.planner": "Планировщик",
@@ -50,8 +49,19 @@
   "app.register.description": "Регистрация",
   "app.register.btn": "Регистрация",
   "app.planner.home.greeting": "Добро пожаловать в приложение - Event Planner",
+
+  "app.email-verified.description": "Пожалуйста проверьте e-mail и перейдите по ссылке для подтверждения регистрации!",
   "app.email-verified.retry-btn": "отправить повторно!",
   "app.email-verified.question": "Если Вы не получили сообщение пожалуйста",
   "app.email-verified.success-description": "После успешной верификации",
-  "app.email-verified.success-btn": "перейти в приложение!"
+  "app.email-verified.success-btn": "перейти в приложение!",
+
+  "app.change-email.description": "Изменить адрес электронной почты",
+  "app.change-email.current-email": "Ваш текущий адрес эл. почты",
+  "app.change-email.new-email": "Новый адрес эл. почты",
+  "app.change-email.btn": "Изменить адрес эл. почты",
+
+  "app.notification-status.warning": "Предупреждение!",
+  "app.notification-status.error": "Ошибка!",
+  "app.notification-status.success": "Выполнено успешно!"
 }
