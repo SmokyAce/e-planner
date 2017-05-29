@@ -27,7 +27,7 @@ import {
 } from './status';
 
 
-function* addEvent(action) {
+function * addEvent(action) {
     yield put(showLoading());
 
     yield put({ type: eventActions.ADD_EVENT_REQUEST });
@@ -46,7 +46,7 @@ function* addEvent(action) {
 /**
  * set user data to firebase
  */
-export function* setUserData(userData) {
+export function * setUserData(userData) {
     let result;
 
     try {
@@ -66,7 +66,7 @@ export function* setUserData(userData) {
  * This is basically the same as the `if (winner.fetch)` of above, just written
  * as a saga that is always listening to `fetch` actions
  */
-export function* updateUserInfoFlow() {
+export function * updateUserInfoFlow() {
     while (true) {
         const updateType = yield race({
             updateUserProfile: take(authActionTypes.UPDATE_USER_INFO_REQUEST),
@@ -105,7 +105,7 @@ export function* updateUserInfoFlow() {
  * This is basically the same as the `if (winner.fetch)` of above, just written
  * as a saga that is always listening to `fetch` actions
  */
-export function* fetchUserDataFlow() {
+export function * fetchUserDataFlow() {
     while (true) {
         yield take(userActions.FETCH_USER_DATA_REQUEST);
 
@@ -142,7 +142,7 @@ export function* fetchUserDataFlow() {
 /**
  * Sync app data flow
  */
-export function* syncDataFlow() {
+export function * syncDataFlow() {
     // Because sagas are generators, doing `while (true)` doesn't block our program
     // Basically here we say "this saga is always listening for actions"
     while (true) {
@@ -184,7 +184,7 @@ const authWrapper = (authStateChannel) => ({
 /**
  * Firebase Connection status observer
  * */
-export function* connectionObserver() {
+export function * connectionObserver() {
     yield delay(2000);
 
     const connectionStatusChannel = channel();
@@ -203,7 +203,7 @@ export function* connectionObserver() {
 /**
  * Firebase Authentification status observer
  * */
-export function* authObserver() {
+export function * authObserver() {
     yield delay(2000);
 
     const authStateChannel = channel();
@@ -226,7 +226,7 @@ export function* authObserver() {
     }
 }
 
-export function* addEventsFlow() {
+export function * addEventsFlow() {
     while (true) {
         const action = yield take(eventActions.ADD_EVENT);
 
@@ -234,7 +234,7 @@ export function* addEventsFlow() {
     }
 }
 
-export function* fetchEvents() {
+export function * fetchEvents() {
     const response = yield call(api.fetchEvents);
 
     if (!response.error) {
@@ -244,7 +244,7 @@ export function* fetchEvents() {
     }
 }
 
-export function* fetchEventsFlow() {
+export function * fetchEventsFlow() {
     while (true) {
         yield take(eventActions.FETCH_EVENT_REQUEST);
 

@@ -2,7 +2,7 @@ import { startSubmit, stopSubmit, SubmissionError } from 'redux-form';
 import { put, call } from 'redux-saga/effects';
 
 
-export default function* formSaga(formId, apiSaga, ...apiSagaArgs) {
+export default function * formSaga(formId, apiSaga, ...apiSagaArgs) {
     // Start form submit
     yield put(startSubmit(formId));
 

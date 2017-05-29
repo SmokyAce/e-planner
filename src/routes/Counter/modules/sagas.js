@@ -3,7 +3,7 @@ import { delay } from 'redux-saga';
 import { COUNTER_DOUBLE_ASYNC_REQUEST, COUNTER_DOUBLE_ASYNC } from './counter';
 
 
-function* doubleIncrement(action) {
+function * doubleIncrement(action) {
     yield call(delay, 1000);
 
     const { eventId } = action.payload;
@@ -15,7 +15,7 @@ function* doubleIncrement(action) {
 /**
  * Watchers
  */
-export function* watchDoubleIncrement() {
+export function * watchDoubleIncrement() {
     yield takeEvery(COUNTER_DOUBLE_ASYNC_REQUEST, doubleIncrement);
 }
 

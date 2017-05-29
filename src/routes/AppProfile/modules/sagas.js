@@ -7,7 +7,7 @@ import { LOCATION_CHANGE } from '../../../store/reducers/location';
 /**
  * Watchers
  */
-function* watchUpdateUserInfoFlow() {
+function * watchUpdateUserInfoFlow() {
     // Fork watcher so we can continue execution
     const watcher = yield fork(updateUserInfoFlow);
 

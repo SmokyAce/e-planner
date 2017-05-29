@@ -23,7 +23,7 @@ const updateEmail = (newEmail) => {
         });
 };
 
-function* changeEmail(action) {
+function * changeEmail(action) {
     const result = yield call(formSaga, 'change-email', updateEmail, action.payload);
 
     if (result.success) {
@@ -33,7 +33,7 @@ function* changeEmail(action) {
     }
 }
 
-function* watchChangeEmail() {
+function * watchChangeEmail() {
     const task = yield fork(takeLatest, CHANGE_USER_EMAIL_REQUEST, changeEmail);
 
     yield take(LOCATION_CHANGE);

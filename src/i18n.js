@@ -10,6 +10,10 @@ import { DEFAULT_LOCALE } from './containers/LanguageProvider/module';
 import enLocaleData from 'react-intl/locale-data/en';
 import ruLocaleData from 'react-intl/locale-data/ru';
 
+import enTranslationMessages from './translations/en.json';
+import ruTranslationMessages from './translations/ru.json';
+
+
 addLocaleData(enLocaleData);
 addLocaleData(ruLocaleData);
 
@@ -17,9 +21,6 @@ export const appLocales = [
     'en',
     'ru'
 ];
-
-import enTranslationMessages from './translations/en.json';
-import ruTranslationMessages from './translations/ru.json';
 
 export const formatTranslationMessages = (locale, messages) => {
     const defaultFormattedMessages = locale !==

@@ -17,7 +17,7 @@ import { sendEmailVerificationRequest } from './actions';
  * Effect to handle authorization
  * @param  {object} authType               The authType containes the result of race
  */
-function* authorize(authType) {
+function * authorize(authType) {
     // We then try to register or log in the user, depending on the request
     try {
         let userInfo;
@@ -58,7 +58,7 @@ function* authorize(authType) {
     }
 }
 
-export function* logout() {
+export function * logout() {
     try {
         const result = yield call(firebaseTools.logoutUser);
 
@@ -68,11 +68,11 @@ export function* logout() {
     }
 }
 
-function* registerVerification() {
+function * registerVerification() {
     yield takeLatest(actionTypes.REGISTER_VERIFICATION_REQUEST, sendEmailVerification);
 }
 
-function* sendEmailVerification() {
+function * sendEmailVerification() {
     const response = yield call(firebaseTools.sendEmailVerification);
 
     if (!response.error) {
@@ -86,7 +86,7 @@ function* sendEmailVerification() {
 /**
  * Log in saga
  */
-function* loginFlow() {
+function * loginFlow() {
     // Because sagas are generators, doing `while (true)` doesn't block our program
     // Basically here we say "this saga is always listening for actions"
     while (true) {
@@ -125,7 +125,7 @@ function* loginFlow() {
     }
 }
 
-function* verificationFlow() {
+function * verificationFlow() {
     const verificationTask = yield fork(registerVerification);
 
     yield take([LOCATION_CHANGE, CHANGE_LOCALE]);
@@ -137,7 +137,7 @@ function* verificationFlow() {
  * This is basically the same as the `if (winner.logout)` of above, just written
  * as a saga that is always listening to `LOGOUT` actions
  */
-export function* logoutFlow() {
+export function * logoutFlow() {
     while (true) {
         yield take(actionTypes.LOGOUT);
 

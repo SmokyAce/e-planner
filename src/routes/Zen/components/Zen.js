@@ -29,9 +29,9 @@ export const Zen = (props) => {
                     </h3>
                     <ul>
                         {props.saved.map(zen =>
-                            <li key={zen.id}>
+                            (<li key={zen.id}>
                                 {zen.value}
-                            </li>
+                            </li>)
                         )}
                     </ul>
                 </div>
