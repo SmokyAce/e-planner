@@ -7,18 +7,11 @@ import './ProfileLayout.scss';
 class ProfileLayout extends React.Component {
 
     componentDidMount() {
-        const { sidebarOpen, sidebarDocked } = this.props;
+        const { sidebarDocked } = this.props;
 
-        if (sidebarDocked && !sidebarOpen) {
+        if (sidebarDocked) {
             this.props.onSetDocked(true);
         }
-        if (sidebarOpen) {
-            this.props.onSetOpen(false);
-        }
-    }
-
-    componentWillUnmount() {
-        this.props.onSetDocked(true);
     }
 
     render() {
@@ -47,10 +40,8 @@ class ProfileLayout extends React.Component {
 
 ProfileLayout.propTypes = {
     children     : PropTypes.element,
-    sidebarOpen  : PropTypes.bool,
     sidebarDocked: PropTypes.bool,
-    onSetDocked  : PropTypes.func,
-    onSetOpen    : PropTypes.func
+    onSetDocked  : PropTypes.func
 };
 
 export default ProfileLayout;

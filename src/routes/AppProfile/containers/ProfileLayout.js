@@ -3,20 +3,18 @@ import { connect } from 'react-redux';
 import ProfileLayout from '../components/ProfileLayout';
 // selectors
 import { createStructuredSelector } from 'reselect';
-import { makeSelectSidebarDocked, makeSelectSidebarOpen } from '../../App/modules/selectors';
+import { makeSelectSidebarDocked } from '../../App/modules/selectors';
 // actions
 import { bindActionCreators } from 'redux';
-import { onSetDocked, onSetOpen } from '../../App/modules/sidebar';
+import { onSetDocked } from '../../App/modules/sidebar';
 
 
 const mapStateToProps = state => createStructuredSelector({
-    sidebarOpened: makeSelectSidebarOpen(),
     sidebarDocked: makeSelectSidebarDocked()
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    onSetDocked,
-    onSetOpen
+    onSetDocked
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileLayout);
