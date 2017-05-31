@@ -27,9 +27,10 @@ const config = {
     },
     devtool: project.sourcemaps ? 'source-map' : false,
     output : {
-        path      : inProject(project.outDir),
-        filename  : __DEV__ ? '[name].js' : '[name].[chunkhash].js',
-        publicPath: project.publicPath
+        path         : inProject(project.outDir),
+        filename     : __DEV__ ? '[name].js' : '[name].[chunkhash].js',
+        chunkFilename: __DEV__ ? '[name].js' : '[id].[chunkhash].js',
+        publicPath   : project.publicPath
     },
     resolve: {
         modules: [
@@ -181,7 +182,7 @@ config.plugins.push(new HtmlWebpackPlugin({
     template: inProjectSrc('index.html'),
     inject  : true,
     minify  : {
-        collapseWhitespace: true
+        collapseWhitespace: false
     }
 }));
 
@@ -201,7 +202,7 @@ if (__PROD__) {
                 // All chunks marked as `additional`, loaded after main section
                 // and do not prevent SW to install. Change to `optional` if
                 // do not want them to be preloaded at all (cached only when first loaded)
-            additional: ['*.chunk.js']
+            additional: ['*.js']
         },
             // Removes warning for about `additional` section usage
         safeToUseOptionalCaches: true,

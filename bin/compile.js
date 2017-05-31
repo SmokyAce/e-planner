@@ -18,7 +18,10 @@ const webpackCompiler = (webpackConfig_) =>
             const jsonStats = stats.toJson();
 
             debug('Webpack compile completed.');
-            debug(stats.toString(project.compiler_stats));
+            debug(stats.toString({
+                colors: true,
+                chunks: false
+            }));
 
             if (jsonStats.errors.length > 0) {
                 debug('Webpack compiler encountered errors.');
@@ -39,11 +42,11 @@ const compile = () => {
     return Promise.resolve()
         .then(() => webpackCompiler(webpackConfig))
         .then(stats => {
-            if (stats.warnings.length && project.compiler_fail_on_warning) {
+            if (stats.warnings.length > 0) {
                 throw new Error('Config set to fail on warning, exiting with status code "1".');
             }
             debug('Copying static assets to dist folder.');
-            fs.copySync(project.paths.public(), project.paths.dist());
+            fs.copySync(project.basePath, project.outDir);
         })
         .then(() => {
             debug('Compilation completed successfully.');
