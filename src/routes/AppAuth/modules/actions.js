@@ -35,8 +35,9 @@ export const updateUserInfoRequest = (data) => ({
 /**
  * Tells the app we want to change a user password
  */
-export const changeUserPwdRequest = (newPassword) => ({
-    type: actionTypes.CHANGE_USER_PASSWORD_REQUEST, newPassword
+export const changeUserPwdRequest = (values) => ({
+    type   : actionTypes.CHANGE_USER_PASSWORD_REQUEST,
+    payload: values.get('newPwd')
 });
 
 /**

@@ -16,7 +16,8 @@ const initialState = fromJS({
     message              : '',
     loggedIn             : auth.loggedIn(),
     sendEmailVerification: false,
-    changedEmailSucceeded: false
+    changedEmailSucceeded: false,
+    changedPwdSucceeded  : false
 });
 
 const AUTH_ACTION_HANDLERS = {
@@ -47,11 +48,19 @@ const AUTH_ACTION_HANDLERS = {
     },
     [actionTypes.CHANGE_USER_EMAIL_SUCCESS]: (state) => {
         return state
-        .set('changedEmailSucceeded', true);
+            .set('changedEmailSucceeded', true);
     },
     [actionTypes.CHANGE_USER_EMAIL_FAILURE]: (state) => {
         return state
-        .set('changedEmailSucceeded', false);
+            .set('changedEmailSucceeded', false);
+    },
+    [actionTypes.CHANGE_USER_PASSWORD_SUCCESS]: (state) => {
+        return state
+            .set('changedPwdSucceeded', true);
+    },
+    [actionTypes.CHANGE_USER_PASSWORD_FAILURE]: (state) => {
+        return state
+            .set('changedPwdSucceeded', false);
     }
 };
 

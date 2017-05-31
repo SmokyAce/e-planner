@@ -1,16 +1,20 @@
 // components
 import { connect } from 'react-redux';
 import ChangePassword from '../components/ChangePassword';
+// actions
+import { bindActionCreators } from 'redux';
+import { changeUserPwdRequest } from '../../../AppAuth/modules/actions';
 // selectors
 import { createStructuredSelector } from 'reselect';
-import { makeSelectCurrentUser } from '../../../App/modules/selectors';
-import { makeSelectMessage, makeSelectFormState } from '../../../AppAuth/modules/selectors';
+import { makeSelectChangedPwdSucceeded } from '../../../AppAuth/modules/selectors';
 
 
-const mapStateToProps = state => createStructuredSelector({
-    currentUser: makeSelectCurrentUser(),
-    formState  : makeSelectFormState(),
-    message    : makeSelectMessage()
+const mapStateToProps = () => createStructuredSelector({
+    changedPwdSucceeded: makeSelectChangedPwdSucceeded()
 });
 
-export default connect(mapStateToProps, null)(ChangePassword);
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    onSubmit: changeUserPwdRequest
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePassword);
