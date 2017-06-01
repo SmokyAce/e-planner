@@ -3,11 +3,11 @@ const validate = (values) => {
     const errors = {};
 
     if (!values.get('newPwd') && values.get('repeatPwd')) {
-        errors.newPwd = 'Required';
+        errors.newPwd = 'required';
     } else if (!values.get('repeatPwd') && values.get('newPwd')) {
-        errors.repeatPwd = 'Required';
+        errors.repeatPwd = 'required';
     } else if (values.get('newPwd') !== values.get('repeatPwd')) {
-        errors.repeatPwd = 'new and repeat passwords must be equals!';
+        errors.repeatPwd = 'notEquals';
     }
     return errors;
 };

@@ -10,7 +10,7 @@ export default defineMessages({
         id            : 'app.change-email.current-email',
         defaultMessage: 'Your email address is currently'
     },
-    new_email: {
+    newEmail: {
         id            : 'app.change-email.new-email',
         defaultMessage: 'New email address'
     },
@@ -18,16 +18,20 @@ export default defineMessages({
         id            : 'app.change-email.btn',
         defaultMessage: 'Change email'
     },
-    warning: {
-        id            : 'app.notification-status.warning',
-        defaultMessage: 'Warning!'
+    changedEmailSucceeded: {
+        id            : 'app.change-email.email-succeeded-change',
+        defaultMessage: 'Your account email was changed succeeded!'
     },
-    error: {
-        id            : 'app.notification-status.error',
-        defaultMessage: 'Error!'
+    required: {
+        id            : 'app.notification.required',
+        defaultMessage: 'This is required field!'
     },
-    success: {
-        id            : 'app.notification-status.success',
-        defaultMessage: 'Success!'
+    invalidEmail: {
+        id            : 'app.notification.invalid-email',
+        defaultMessage: 'Invalid e-mail address!'
+    },
+    sameEmail: {
+        id            : 'app.notification.invalid-email',
+        defaultMessage: 'The same email address what you have now!'
     }
 });

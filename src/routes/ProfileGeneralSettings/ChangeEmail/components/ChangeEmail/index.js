@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field, reduxForm } from 'redux-form/immutable';
 import { Link } from 'react-router';
+import Warning from '../../../../../components/Indicators/Warning';
+import Error from '../../../../../components/Indicators/Error';
+import Success from '../../../../../components/Indicators/Success';
 // intl
 import messages from './messages';
 // validate
@@ -20,9 +23,18 @@ const renderError = (error) => (
 );
 
 const renderSuccess = () => (
-    <div className='alert alert-dismissible alert-success email'>
-        <strong><FormattedMessage {...messages.success} /></strong> You successfully changed account email,
+    <Success message={messages.changedEmailSucceeded}>
         <Link to='/login' className='alert-link'> please reauthentificated</Link>
+    </Success>
+);
+
+const renderField = ({ input, label, type, meta: { touched, visited, error } }) => (
+    <div className={`form-group ${(touched && error !== undefined) ? 'has-warning' : ''}`}>
+        <label className='control-label'>
+            <FormattedMessage {...messages[label]} />
+        </label>
+        <input className='form-control' {...input} type={type} />
+        {touched && error && (<Warning message={messages[error]} />)}
     </div>
 );
 
@@ -32,7 +44,7 @@ class ChangeEmail extends React.Component {
         const { submitting, currentEmail, error, changedEmailSucceeded } = this.props;
 
         return (
-            <form className='col-md-9' onSubmit={this.props.handleSubmit}>
+            <form className='col-md-6' onSubmit={this.props.handleSubmit}>
                 <h4><strong><FormattedMessage {...messages.description} /></strong></h4>
                 <br />
                 <span>
@@ -41,13 +53,8 @@ class ChangeEmail extends React.Component {
                 </span>
                 <br />
                 <br />
-                <div className='form-group'>
-                    <label htmlFor='email'><FormattedMessage {...messages.new_email} />:</label>
-                    <Field className='form-control email' name='email' component='input' type='email'
-                        placeholder='Email' label='Email'
-                    />
-                </div>
-                {error !== undefined && renderError(error)}
+                <Field type='email' name='email' component={renderField} label='newEmail' />
+                {error !== undefined && (<Error message={error} />)}
                 {changedEmailSucceeded && renderSuccess()}
                 <button type='submit' className='btn btn-primary' disabled={submitting}>
                     <FormattedMessage {...messages.submit} />
@@ -63,6 +70,13 @@ ChangeEmail.propTypes = {
     currentEmail         : PropTypes.string,
     handleSubmit         : PropTypes.func,
     error                : PropTypes.string
+};
+
+renderField.propTypes = {
+    input: PropTypes.object,
+    label: PropTypes.string,
+    type : PropTypes.string,
+    meta : PropTypes.object
 };
 
 export default reduxForm({

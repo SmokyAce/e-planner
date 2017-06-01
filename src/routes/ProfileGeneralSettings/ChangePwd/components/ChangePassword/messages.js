@@ -18,16 +18,16 @@ export default defineMessages({
         id            : 'app.change-pwd.btn',
         defaultMessage: 'Change password'
     },
-    warning: {
-        id            : 'app.notification-status.warning',
-        defaultMessage: 'Warning!'
+    required: {
+        id            : 'app.notification.required',
+        defaultMessage: 'This is required field!'
     },
-    error: {
-        id            : 'app.notification-status.error',
-        defaultMessage: 'Error!'
+    notEquals: {
+        id            : 'app.notification.not-equals-field',
+        defaultMessage: 'Entered passwords are not equal!'
     },
-    success: {
-        id            : 'app.notification-status.success',
-        defaultMessage: 'Success!'
+    changedPwdSucceeded: {
+        id            : 'app.change-pwd.pwd-succeeded-change',
+        defaultMessage: 'Your password was succeeded change!'
     }
 });
