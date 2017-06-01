@@ -1,4 +1,5 @@
 const fs = require('fs-extra');
+const path = require('path');
 const webpack = require('webpack');
 const debug = require('debug')('app:bin:compile');
 const webpackConfig = require('../config/webpack.config');
@@ -46,7 +47,10 @@ const compile = () => {
                 throw new Error('Config set to fail on warning, exiting with status code "1".');
             }
             debug('Copying static assets to dist folder.');
-            fs.copySync(project.basePath, project.outDir);
+            fs.copySync(
+                path.resolve(project.basePath, 'public'),
+                path.resolve(project.basePath, project.outDir)
+            );
         })
         .then(() => {
             debug('Compilation completed successfully.');
