@@ -15,13 +15,6 @@ import validate from './validate';
 import './ChangeEmail.scss';
 
 
-const renderError = (error) => (
-    <div className='alert alert-dismissible alert-warning email'>
-        <h4><FormattedMessage {...messages.warning} /></h4>
-        <p>{error}</p>
-    </div>
-);
-
 const renderSuccess = () => (
     <Success message={messages.changedEmailSucceeded}>
         <Link to='/login' className='alert-link'> please reauthentificated</Link>
