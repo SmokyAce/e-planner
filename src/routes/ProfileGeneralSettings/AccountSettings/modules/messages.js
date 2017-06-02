@@ -26,6 +26,10 @@ export default defineMessages({
         id            : 'app.profile.display-name',
         defaultMessage: 'Display name'
     },
+    displayName: {
+        id            : 'app.profile.display-name',
+        defaultMessage: 'Display name:'
+    },
     sex: {
         id            : 'app.profile.sex',
         defaultMessage: 'Sex'

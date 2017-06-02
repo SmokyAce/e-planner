@@ -37,7 +37,7 @@
   "app.login.forgot-pwd": "Forgot password?",
   "app.login.with": "Login with",
   "app.profile.description": "User Profile Page",
-  "app.profile.display-name": "Display name",
+  "app.profile.display-name": "Display name:",
   "app.profile.update-btn": "Update",
   "app.change-pwd.description": "Change password",
   "app.change-pwd.new-pwd": "New password:",

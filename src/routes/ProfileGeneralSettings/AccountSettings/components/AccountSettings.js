@@ -1,4 +1,3 @@
-// utils
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // components
@@ -7,39 +6,35 @@ import { Link } from 'react-router';
 import Loading from './Loading';
 import LocaleToogle from '../../../../components/LocaleToogle';
 import { NavDropdown, MenuItem } from 'react-bootstrap';
+import { Field, reduxForm } from 'redux-form/immutable';
+import Warning from '../../../../components/Indicators/Warning';
+// import Error from '../../../../components/Indicators/Error';
+// import Success from '../../../../components/Indicators/Success';
 // translations
 import messages from '../modules/messages';
 // styles
 import './AccountSettings.scss';
 
 
+const renderField = ({ input, label, type, meta: { touched, error }, inline, initialValue }) => {
+    const inlineForm = inline ? 'form-inline' : '';
+    const hasWarning = (touched && error !== undefined) ? 'has-warning' : '';
+
+    return (
+        <div className={`form-group ${hasWarning} ${inlineForm}`}>
+            <label className='control-label'>
+                <FormattedMessage {...messages[label]} />
+            </label>
+            <input className='form-control' {...input} type={type} value={initialValue} />
+            {touched && error && (<Warning message={messages[error]} />)}
+        </div>
+    );
+};
+
 class AccountSettings extends Component {
 
-    constructor(props) {
-        super(props);
-        this.onFormSubmit = this.onFormSubmit.bind(this);
-        this._changeDisplayName = this._changeDisplayName.bind(this);
-    }
-
-    onFormSubmit(event) {
-        event.preventDefault();
-        this.props.updateUserInfoRequest({
-            email      : this.props.formState.get('email'),
-            displayName: this.props.formState.get('displayName')
-        });
-    }
-
-    _changeDisplayName(event) {
-        this._emitChange(this.props.formState.set('displayName', event.target.value));
-    }
-
-    _emitChange(newFormState) {
-        this.props.changeForm(newFormState);
-    }
-
-
     render() {
-        const { currentUser, locale, onLocaleToggle } = this.props;
+        const { currentUser, locale, onLocaleToggle, fields: { displayName } } = this.props;
 
         if (!currentUser) {
             return <Loading />;
@@ -52,7 +47,7 @@ class AccountSettings extends Component {
         }
 
         return (
-            <form id='frmProfile' role='form' onSubmit={this.onFormSubmit}>
+            <form id='frmProfile' role='form'>
                 <h4><strong><FormattedMessage {...messages.account_settings_description} /></strong></h4>
                 <div className='col-md-6 custom-settings'>
                     <br />
@@ -61,13 +56,9 @@ class AccountSettings extends Component {
                         <ins>{currentUser.get('email')}</ins>
                         <Link className='link' to='/app/profile/change-email' >change email</Link>
                     </div>
-                    <div className='form-group form-inline'>
-                        <label htmlFor='displayName'><FormattedMessage {...messages.display_name} />:</label>
-                        <input type='text' className='form-control' id='displayName' placeholder='Display name'
-                            name='displayName' defaultValue={currentUser.get('displayName')}
-                            onChange={this._changeDisplayName}
-                        />
-                    </div>
+                    <Field name='displayName' label='displayName' type='text' initialValue={displayName}
+                        component={renderField} inline
+                    />
                     <div className='form-group form-inline'>
                         <label htmlFor='Sex'><FormattedMessage {...messages.sex} />:</label>
                         <NavDropdown className='form-control' id='lang-dropdown'
@@ -101,12 +92,24 @@ class AccountSettings extends Component {
 }
 
 AccountSettings.propTypes = {
-    currentUser          : PropTypes.object,
-    formState            : PropTypes.object,
-    locale               : PropTypes.string.isRequired,
-    onLocaleToggle       : PropTypes.func.isRequired,
-    changeForm           : PropTypes.func.isRequired,
-    updateUserInfoRequest: PropTypes.func.isRequired
+    currentUser   : PropTypes.object,
+    locale        : PropTypes.string.isRequired,
+    onLocaleToggle: PropTypes.func.isRequired,
+    fields        : PropTypes.object
+    // updateUserInfoRequest: PropTypes.func.isRequired,
 };
 
-export default AccountSettings;
+renderField.propTypes = {
+    input       : PropTypes.object,
+    label       : PropTypes.string,
+    type        : PropTypes.string,
+    meta        : PropTypes.object,
+    inline      : PropTypes.bool,
+    initialValue: PropTypes.string
+};
+
+export default reduxForm({
+    form  : 'account-settings',
+    fields: { displayName: 'Andranik Simonyan' }
+    // validate
+})(AccountSettings);
