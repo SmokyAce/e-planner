@@ -25,6 +25,13 @@ const makeSelectCurrentUser = () => createSelector(
     (globalState) => globalState.getIn(['users', 'currentUser'])
 );
 
+const makeSelectCurrentUserField = (field) => {
+    return createSelector(
+        selectApp,
+        (globalState) => globalState.getIn(['users', 'currentUser', field])
+    );
+};
+
 const makeSelectCurrentUserEmail = () => createSelector(
     selectApp,
     (globalState) => globalState.getIn(['users', 'currentUser', 'email'])
@@ -80,6 +87,7 @@ export {
     makeSelectCurrentUser,
     makeSelectCurrentUserEmail,
     makeSelectCurrentUserEvents,
+    makeSelectCurrentUserField,
     // status
     makeSelectAppConnectionState,
     makeSelectAppSyncState,

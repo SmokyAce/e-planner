@@ -16,7 +16,7 @@ import messages from '../modules/messages';
 import './AccountSettings.scss';
 
 
-const renderField = ({ input, label, type, meta: { touched, error }, inline, initialValue }) => {
+const renderField = ({ input, label, type, meta: { touched, error }, inline }) => {
     const inlineForm = inline ? 'form-inline' : '';
     const hasWarning = (touched && error !== undefined) ? 'has-warning' : '';
 
@@ -25,7 +25,7 @@ const renderField = ({ input, label, type, meta: { touched, error }, inline, ini
             <label className='control-label'>
                 <FormattedMessage {...messages[label]} />
             </label>
-            <input className='form-control' {...input} type={type} value={initialValue} />
+            <input className='form-control' {...input} type={type} />
             {touched && error && (<Warning message={messages[error]} />)}
         </div>
     );
@@ -34,7 +34,7 @@ const renderField = ({ input, label, type, meta: { touched, error }, inline, ini
 class AccountSettings extends Component {
 
     render() {
-        const { currentUser, locale, onLocaleToggle, fields: { displayName } } = this.props;
+        const { currentUser, locale, onLocaleToggle } = this.props;
 
         if (!currentUser) {
             return <Loading />;
@@ -56,9 +56,7 @@ class AccountSettings extends Component {
                         <ins>{currentUser.get('email')}</ins>
                         <Link className='link' to='/app/profile/change-email' >change email</Link>
                     </div>
-                    <Field name='displayName' label='displayName' type='text' initialValue={displayName}
-                        component={renderField} inline
-                    />
+                    <Field name='displayName' label='displayName' type='text' component={renderField} inline />
                     <div className='form-group form-inline'>
                         <label htmlFor='Sex'><FormattedMessage {...messages.sex} />:</label>
                         <NavDropdown className='form-control' id='lang-dropdown'
@@ -94,22 +92,20 @@ class AccountSettings extends Component {
 AccountSettings.propTypes = {
     currentUser   : PropTypes.object,
     locale        : PropTypes.string.isRequired,
-    onLocaleToggle: PropTypes.func.isRequired,
-    fields        : PropTypes.object
+    onLocaleToggle: PropTypes.func.isRequired
     // updateUserInfoRequest: PropTypes.func.isRequired,
 };
 
 renderField.propTypes = {
-    input       : PropTypes.object,
-    label       : PropTypes.string,
-    type        : PropTypes.string,
-    meta        : PropTypes.object,
-    inline      : PropTypes.bool,
-    initialValue: PropTypes.string
+    input : PropTypes.object,
+    label : PropTypes.string,
+    type  : PropTypes.string,
+    meta  : PropTypes.object,
+    inline: PropTypes.bool
 };
 
 export default reduxForm({
-    form  : 'account-settings',
-    fields: { displayName: 'Andranik Simonyan' }
+    form: 'account-settings'
+    // initialValues: { displayName: 'Andranik Simonyan' }
     // validate
 })(AccountSettings);
