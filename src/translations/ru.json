@@ -1,10 +1,11 @@
 {
-  "app.language": "Русский",
+  "app.language": "Язык:",
+  "app.language.en": "English",
+  "app.language.ru": "Русский",
   "app.description": "Event Planner",
   "app.greeting": "Добро пожаловать!",
   "app.home.greeting": "Добро пожаловать на главную страницу приложения!",
   "app.event.home.greeting": "Добро пожаловать на Домашнюю страницу!",
-
   "app.title-panel.description": "Мои события",
   "app.event.guests.description": "Сервис: Список гостей!",
   "app.event.budjet.description": "Сервис: Бюджет!",
@@ -15,7 +16,6 @@
   "app.event.notebook.description": "Сервис: Блокнот!",
   "app.event.settings.description": "Настройки",
   "app.event.settings.section-services": "Сервисы для события",
-
   "app.route.home": "Домой",
   "app.route.planner": "Планировщик",
   "app.route.counter": "Счетчик",
@@ -28,7 +28,6 @@
   "app.route.blog": "Блог",
   "app.route.quiz": "Опросы",
   "app.route.notebook": "Блокнот",
-
   "app.lang": "Язык",
   "app.profile.btn": "Профиль",
   "app.email": "Электронная почта",
@@ -38,8 +37,13 @@
   "app.login.forgot-pwd": "Забыли пароль?",
   "app.login.with": "Вход с",
   "app.profile.description": "Профиль пользователя",
-  "app.profile.display-name": "Отображаемое имя",
+  "app.profile.display-name": "Отображаемое имя:",
   "app.profile.update-btn": "Обновить",
+  "app.profile.save-btn": "Сохранить",
+  "app.profile.sex": "Пол:",
+  "app.profile.sex-male": "Мужской",
+  "app.profile.sex-female": "Женский",
+  "app.account-settings.description": "Настройки аккаунта",
   "app.change-pwd.description": "Изменить пароль",
   "app.change-pwd.new-pwd": "Новый пароль:",
   "app.change-pwd.repeat-pwd": "Повторить пароль:",
@@ -49,18 +53,15 @@
   "app.register.description": "Регистрация",
   "app.register.btn": "Регистрация",
   "app.planner.home.greeting": "Добро пожаловать в приложение - Event Planner",
-
   "app.email-verified.description": "Пожалуйста проверьте e-mail и перейдите по ссылке для подтверждения регистрации!",
   "app.email-verified.retry-btn": "отправить повторно!",
   "app.email-verified.question": "Если Вы не получили сообщение пожалуйста",
   "app.email-verified.success-description": "После успешной верификации",
   "app.email-verified.success-btn": "перейти в приложение!",
-
   "app.change-email.description": "Изменить адрес электронной почты",
   "app.change-email.current-email": "Ваш текущий адрес эл. почты",
   "app.change-email.new-email": "Новый адрес эл. почты",
   "app.change-email.btn": "Изменить адрес эл. почты",
-
   "app.notification-status.warning": "Предупреждение!",
   "app.notification-status.error": "Ошибка!",
   "app.notification-status.success": "Выполнено успешно!"

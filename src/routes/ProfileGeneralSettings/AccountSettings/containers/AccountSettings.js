@@ -14,9 +14,9 @@ import { updateUserInfoRequest, changeForm } from '../../../AppAuth/modules/acti
 
 const mapStateToProps = state => createStructuredSelector({
     currentUser  : makeSelectCurrentUser(),
-    locale       : selectLocale(),
     initialValues: createStructuredSelector({
-        displayName: makeSelectCurrentUserField('displayName')
+        displayName: makeSelectCurrentUserField('displayName'),
+        language   : selectLocale()
     })
 });
 

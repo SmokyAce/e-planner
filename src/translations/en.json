@@ -1,10 +1,11 @@
 {
-  "app.language": "English",
+  "app.language": "Language:",
+  "app.language.en": "English",
+  "app.language.ru": "Русский",
   "app.description": "Event Planner",
   "app.greeting": "Welcome!",
   "app.home.greeting": "Welcome to the Application Home Page",
   "app.event.home.greeting": "Welcome to the Event Home Page",
-
   "app.title-panel.description": "My Events",
   "app.event.guests.description": "Service: Guests",
   "app.event.budjet.description": "Service: Budjet",
@@ -15,7 +16,6 @@
   "app.event.notebook.description": "Service: Notebook",
   "app.event.settings.description": "Settings",
   "app.event.settings.section-services": "Event services",
-
   "app.route.home": "Home",
   "app.route.counter": "Counter",
   "app.route.zen": "Zen",
@@ -27,7 +27,6 @@
   "app.route.blog": "Blog",
   "app.route.quiz": "Quiz",
   "app.route.notebook": "Notebook",
-
   "app.lang": "Language",
   "app.profile.btn": "Profile",
   "app.email": "E-mail",
@@ -47,18 +46,15 @@
   "app.logout.btn": "Logout",
   "app.register.description": "Register",
   "app.register.btn": "Register",
-
   "app.email-verified.description": "Please check your email and follow link for register verification!",
   "app.email-verified.retry-btn": "send again!",
   "app.email-verified.question": "If you didn't receive the message please",
   "app.email-verified.success-desc": "After your success verification",
   "app.email-verified.success-btn": "go to app!",
-
   "app.change-email.description": "Change email address",
   "app.change-email.current-email": "Your email address is currently",
   "app.change-email.new-email": "New email address",
   "app.change-email.btn": "Change email",
-
   "app.notification-status.warning": "Warning!",
   "app.notification-status.error": "Error!",
   "app.notification-status.success": "Success!"

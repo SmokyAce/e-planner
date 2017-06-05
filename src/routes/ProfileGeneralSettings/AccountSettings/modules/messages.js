@@ -6,12 +6,8 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-    profile_description: {
-        id            : 'app.profile.description',
-        defaultMessage: 'User Profile Page'
-    },
-    account_settings_description: {
-        id            : 'app.profile.account-settings.description',
+    description: {
+        id            : 'app.account-settings.description',
         defaultMessage: 'Account settings'
     },
     email: {
@@ -22,20 +18,32 @@ export default defineMessages({
         id            : 'app.profile.save-btn',
         defaultMessage: 'Save'
     },
-    display_name: {
-        id            : 'app.profile.display-name',
-        defaultMessage: 'Display name'
-    },
     displayName: {
         id            : 'app.profile.display-name',
         defaultMessage: 'Display name:'
     },
     sex: {
         id            : 'app.profile.sex',
-        defaultMessage: 'Sex'
+        defaultMessage: 'Sex:'
+    },
+    male: {
+        id            : 'app.profile.sex-male',
+        defaultMessage: 'Male'
+    },
+    female: {
+        id            : 'app.profile.sex-female',
+        defaultMessage: 'Female'
     },
     language: {
-        id            : 'app.profile.language',
-        defaultMessage: 'Language'
+        id            : 'app.language',
+        defaultMessage: 'Language:'
+    },
+    en: {
+        id            : 'app.language.en',
+        defaultMessage: 'English'
+    },
+    ru: {
+        id            : 'app.language.ru',
+        defaultMessage: 'Русский'
     }
 });

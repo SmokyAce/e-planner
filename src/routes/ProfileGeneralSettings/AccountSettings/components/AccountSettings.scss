@@ -1,7 +1,7 @@
 @import '../../../../styles/variables.scss';
 $font-size-sm: 12px;
 // style
-.form-inline label {
+.form-inline #label {
     font-size: $font-size-sm + 2px;
     color: #707070;
     text-align: right;
@@ -10,10 +10,6 @@ $font-size-sm: 12px;
 
 .link {
     font-size: 12px;
-}
-
-.form-inline input {
-    width: 100%;
 }
 
 .form-inline>* {
@@ -41,21 +37,21 @@ $font-size-sm: 12px;
 }
 
 @media (max-width: $screen-sm-min) {
-    .form-inline label {
+    .form-group {
+        margin-bottom: 8px
+    }
+    .form-inline #label {
         font-size: $font-size-sm;
         width: auto;
-    }
-    .form-inline option {
-        font-size: $font-size-sm;
-    }
-    .form-inline label {
         text-align: left;
     }
+    .form-inline select,
     .form-inline input,
     .form-inline li {
         height: 30px;
         padding: 2px 12px;
         margin: 0 0;
+        margin-top: -6px
     }
     .custom-settings {
         padding: 0 0;

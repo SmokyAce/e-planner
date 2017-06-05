@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // components
 import { FormattedMessage } from 'react-intl';
-import Warning from '../Indicators/Warning';
 
 
-const ExtendField = ({ input, label, type, meta: { touched, error }, messages, inline }) => {
+const SelectList = ({ input, label, type, meta: { touched, error }, messages, inline, data }) => {
     const inlineForm = inline ? 'form-inline' : '';
     const hasWarning = (touched && error !== undefined) ? 'has-warning' : '';
 
@@ -14,20 +13,30 @@ const ExtendField = ({ input, label, type, meta: { touched, error }, messages, i
             <label className='control-label' id='label'>
                 <FormattedMessage {...messages[label]} />
             </label>
-            <input className='form-control' {...input} type={type} />
-            {touched && error && (<Warning message={messages[error]} />)}
+            <select
+                {...input}
+                className='form-control'
+                name={`select ${label}`}
+            >
+                {data.map(dataOption =>
+                    (<option value={dataOption} key={dataOption}>
+                        {messages[dataOption].defaultMessage}
+                    </option>)
+                )}
+            </select>
         </div>
     );
 };
 
 
-ExtendField.propTypes = {
+SelectList.propTypes = {
     input   : PropTypes.object,
     label   : PropTypes.string,
     type    : PropTypes.string,
     meta    : PropTypes.object,
     messages: PropTypes.object,
-    inline  : PropTypes.bool
+    inline  : PropTypes.bool,
+    data    : PropTypes.array
 };
 
-export default ExtendField;
+export default SelectList;

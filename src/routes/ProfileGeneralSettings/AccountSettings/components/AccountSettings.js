@@ -4,37 +4,24 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router';
 import Loading from './Loading';
-import LocaleToogle from '../../../../components/LocaleToogle';
-import { NavDropdown, MenuItem } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form/immutable';
-import Warning from '../../../../components/Indicators/Warning';
-// import Error from '../../../../components/Indicators/Error';
-// import Success from '../../../../components/Indicators/Success';
+import ExtendField from '../../../../components/Form/ExtendField';
+import SelectList from '../../../../components/Form/SelectList';
 // translations
+import { appLocales } from '../../../../i18n';
 import messages from '../modules/messages';
 // styles
 import './AccountSettings.scss';
 
 
-const renderField = ({ input, label, type, meta: { touched, error }, inline }) => {
-    const inlineForm = inline ? 'form-inline' : '';
-    const hasWarning = (touched && error !== undefined) ? 'has-warning' : '';
+const renderField = (props) => (<ExtendField {...props} />);
 
-    return (
-        <div className={`form-group ${hasWarning} ${inlineForm}`}>
-            <label className='control-label'>
-                <FormattedMessage {...messages[label]} />
-            </label>
-            <input className='form-control' {...input} type={type} />
-            {touched && error && (<Warning message={messages[error]} />)}
-        </div>
-    );
-};
+const renderSelect = (props) => (<SelectList {...props} />);
 
 class AccountSettings extends Component {
 
     render() {
-        const { currentUser, locale, onLocaleToggle } = this.props;
+        const { currentUser, onLocaleToggle } = this.props;
 
         if (!currentUser) {
             return <Loading />;
@@ -48,28 +35,33 @@ class AccountSettings extends Component {
 
         return (
             <form id='frmProfile' role='form'>
-                <h4><strong><FormattedMessage {...messages.account_settings_description} /></strong></h4>
+                <h4><strong><FormattedMessage {...messages.description} /></strong></h4>
                 <div className='col-md-6 custom-settings'>
                     <br />
                     <div className='form-group form-inline'>
-                        <label htmlFor='email'><FormattedMessage {...messages.email} />:</label>
+                        <label htmlFor='email' id='label'><FormattedMessage {...messages.email} />:</label>
                         <ins>{currentUser.get('email')}</ins>
                         <Link className='link' to='/app/profile/change-email' >change email</Link>
                     </div>
-                    <Field name='displayName' label='displayName' type='text' component={renderField} inline />
+                    <Field name='displayName' label='displayName' type='text'
+                        component={renderField} messages={messages} inline
+                    />
                     <div className='form-group form-inline'>
-                        <label htmlFor='Sex'><FormattedMessage {...messages.sex} />:</label>
-                        <NavDropdown className='form-control' id='lang-dropdown'
-                            title={!currentUser.get('sex') ? 'Female' : currentUser.get('sex')}
-                        >
-                            <MenuItem>Male</MenuItem>
-                            <MenuItem>Female</MenuItem>
-                        </NavDropdown>
+                        <label className='control-label' id='label'>
+                            <FormattedMessage {...messages.sex} />
+                        </label>
+                        <label className='radio-inline'>
+                            <Field name='sex' component='input' type='radio' value='male' />
+                            <FormattedMessage {...messages.male} />
+                        </label>
+                        <label className='radio-inline'>
+                            <Field name='sex' component='input' type='radio' value='female' />
+                            <FormattedMessage {...messages.female} />
+                        </label>
                     </div>
-                    <div className='form-group form-inline'>
-                        <label htmlFor='Language'><FormattedMessage {...messages.language} />:</label>
-                        <LocaleToogle locale={locale} onLocaleToggle={onLocaleToggle} className='form-control' />
-                    </div>
+                    <Field name='language' label='language' onChange={(e, nextValue) => onLocaleToggle(nextValue)}
+                        component={renderSelect} messages={messages} data={appLocales} inline
+                    />
                     <div className='button-container'>
                         <button type='submit' className='btn btn-primary'>
                             <FormattedMessage {...messages.update_btn} />
@@ -91,21 +83,11 @@ class AccountSettings extends Component {
 
 AccountSettings.propTypes = {
     currentUser   : PropTypes.object,
-    locale        : PropTypes.string.isRequired,
     onLocaleToggle: PropTypes.func.isRequired
     // updateUserInfoRequest: PropTypes.func.isRequired,
 };
 
-renderField.propTypes = {
-    input : PropTypes.object,
-    label : PropTypes.string,
-    type  : PropTypes.string,
-    meta  : PropTypes.object,
-    inline: PropTypes.bool
-};
-
 export default reduxForm({
     form: 'account-settings'
-    // initialValues: { displayName: 'Andranik Simonyan' }
     // validate
 })(AccountSettings);
