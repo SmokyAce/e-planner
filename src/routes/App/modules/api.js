@@ -35,21 +35,15 @@ const api = {
         updates[`/users/${uid}/events/${payload.id}`] = true;
 
         return firebaseDb.ref().update(updates)
-            .then(() => {
-                return { success: true, id: payload.id };
-            })
-            .catch(error => {
-                return { error };
-            });
+            .then(() => ({ success: true, id: payload.id }))
+            .catch(error => ({ error }));
     },
     fetchUserEvents: () => {
         const uid = auth.getUserUID().uid;
 
         return firebaseDb.ref(`/users/${uid}/events`).once('value')
             .then(snapshot => snapshot.val())
-            .catch(error => {
-                return { error };
-            });
+            .catch(error => ({ error }));
     },
     fetchEvents: () => {
         return api.fetchUserEvents()
@@ -75,9 +69,7 @@ const api = {
                 });
                 return events;
             })
-            .catch(error => {
-                return { error };
-            });
+            .catch(error => ({ error }));
     }
 };
 

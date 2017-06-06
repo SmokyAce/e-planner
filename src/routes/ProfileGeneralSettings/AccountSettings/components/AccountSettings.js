@@ -21,7 +21,7 @@ const renderSelect = (props) => (<SelectList {...props} />);
 class AccountSettings extends Component {
 
     render() {
-        const { currentUser, onLocaleToggle } = this.props;
+        const { currentUser, onLocaleToggle, submitting } = this.props;
 
         if (!currentUser) {
             return <Loading />;
@@ -34,7 +34,7 @@ class AccountSettings extends Component {
         }
 
         return (
-            <form id='frmProfile' role='form'>
+            <form id='frmProfile' role='form' onSubmit={this.props.handleSubmit}>
                 <h4><strong><FormattedMessage {...messages.description} /></strong></h4>
                 <div className='col-md-6 custom-settings'>
                     <br />
@@ -63,7 +63,7 @@ class AccountSettings extends Component {
                         component={renderSelect} messages={messages} data={appLocales} inline
                     />
                     <div className='button-container'>
-                        <button type='submit' className='btn btn-primary'>
+                        <button type='submit' className='btn btn-primary' disabled={submitting}>
                             <FormattedMessage {...messages.update_btn} />
                         </button>
                     </div>
@@ -83,8 +83,9 @@ class AccountSettings extends Component {
 
 AccountSettings.propTypes = {
     currentUser   : PropTypes.object,
-    onLocaleToggle: PropTypes.func.isRequired
-    // updateUserInfoRequest: PropTypes.func.isRequired,
+    onLocaleToggle: PropTypes.func.isRequired,
+    handleSubmit  : PropTypes.func.isRequired,
+    submitting    : PropTypes.bool.isRequired
 };
 
 export default reduxForm({

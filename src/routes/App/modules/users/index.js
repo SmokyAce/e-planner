@@ -14,6 +14,10 @@ const USERS_ACTION_HANDLERS = {
         return state
             .set('currentUser', fromJS(action.response));
     },
+    [actions.SAVE_USER_DATA]: (state, action) => {
+        return state
+            .update('currentUser', currentUser => currentUser.merge(action.payload));
+    },
     [LOGOUT]   : (state) => state.set('currentUser', fromJS(null)),
     [REHYDRATE]: (state, action) => {
         const incoming = action.payload.app;

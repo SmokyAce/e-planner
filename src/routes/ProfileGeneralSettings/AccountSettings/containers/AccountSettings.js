@@ -9,21 +9,21 @@ import { selectLocale } from '../../../../containers/LanguageProvider/selectors'
 // actios
 import { bindActionCreators } from 'redux';
 import { changeLocale as onLocaleToggle } from '../../../../containers/LanguageProvider/module';
-import { updateUserInfoRequest, changeForm } from '../../../AppAuth/modules/actions';
+import { saveUserInfoRequest } from '../../../App/modules/users/actions';
 
 
 const mapStateToProps = state => createStructuredSelector({
     currentUser  : makeSelectCurrentUser(),
     initialValues: createStructuredSelector({
         displayName: makeSelectCurrentUserField('displayName'),
-        language   : selectLocale()
+        language   : makeSelectCurrentUserField('language') || selectLocale(),
+        sex        : makeSelectCurrentUserField('sex')
     })
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     onLocaleToggle,
-    updateUserInfoRequest,
-    changeForm
+    onSubmit: saveUserInfoRequest
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountSettings);
