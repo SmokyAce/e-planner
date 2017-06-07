@@ -5,7 +5,6 @@ const accountSettings = (store) => {
     const { injectSagas } = getAsyncInjectors(store);
 
     return ({
-        path: 'account-settings',
         getComponent(nextState, next) {
             injectSagas(require('./modules/sagas').default);
 

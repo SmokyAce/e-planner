@@ -13,7 +13,6 @@ import messages from '../modules/messages';
 // styles
 import './AccountSettings.scss';
 
-
 const renderField = (props) => (<ExtendField {...props} />);
 
 const renderSelect = (props) => (<SelectList {...props} />);
@@ -21,7 +20,7 @@ const renderSelect = (props) => (<SelectList {...props} />);
 class AccountSettings extends Component {
 
     render() {
-        const { currentUser, onLocaleToggle, submitting } = this.props;
+        const { currentUser, onLocaleToggle, submitting, dirty } = this.props;
 
         if (!currentUser) {
             return <Loading />;
@@ -32,6 +31,10 @@ class AccountSettings extends Component {
         if (!photoURL && currentUser.get('providerData').size > 0) {
             photoURL = currentUser.getIn(['providerData', '0', 'photoURL']);
         }
+        // debugger;
+        // if (initialValues.get('language') === undefined) {
+        //     appLocales.unshift('choice');
+        // }
 
         return (
             <form id='frmProfile' role='form' onSubmit={this.props.handleSubmit}>
@@ -59,11 +62,12 @@ class AccountSettings extends Component {
                             <FormattedMessage {...messages.female} />
                         </label>
                     </div>
-                    <Field name='language' label='language' onChange={(e, nextValue) => onLocaleToggle(nextValue)}
+                    <Field name='language' label='language'
+                        onChange={(e, nextValue) => onLocaleToggle(nextValue)}
                         component={renderSelect} messages={messages} data={appLocales} inline
                     />
                     <div className='button-container'>
-                        <button type='submit' className='btn btn-primary' disabled={submitting}>
+                        <button type='submit' className='btn btn-primary' disabled={submitting || !dirty}>
                             <FormattedMessage {...messages.update_btn} />
                         </button>
                     </div>
@@ -85,7 +89,8 @@ AccountSettings.propTypes = {
     currentUser   : PropTypes.object,
     onLocaleToggle: PropTypes.func.isRequired,
     handleSubmit  : PropTypes.func.isRequired,
-    submitting    : PropTypes.bool.isRequired
+    submitting    : PropTypes.bool.isRequired,
+    dirty         : PropTypes.bool.isRequired
 };
 
 export default reduxForm({

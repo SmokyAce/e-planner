@@ -52,11 +52,11 @@ export function * setUserData(userData) {
     try {
         result = yield call(api.setUserData, userData);
 
-        yield put({ type: userActions.SET_USER_DATA_SUCCESS, result });
+        yield put({ type: userActions.SAVE_USER_DATA_SUCCESS, result });
 
         return true;
     } catch (error) {
-        yield put({ type: userActions.SET_USER_DATA_FAILURE, error: error.message });
+        yield put({ type: userActions.SAVE_USER_DATA_FAILURE, error: error.message });
         return false;
     }
 }
@@ -128,7 +128,7 @@ export function * fetchUserDataFlow() {
             yield fork(fetchEvents);
 
             if (!response.isSync) {
-                yield put({ type: userActions.SET_USER_DATA_REQUEST, userData: response });
+                yield put({ type: userActions.SAVE_USER_DATA_REQUEST, userData: response });
             }
         } catch (error) {
             yield put({ type: userActions.FETCH_USER_DATA_FAILURE, error: error.message });
@@ -146,14 +146,14 @@ export function * syncDataFlow() {
     // Because sagas are generators, doing `while (true)` doesn't block our program
     // Basically here we say "this saga is always listening for actions"
     while (true) {
-        const action = yield take(userActions.SET_USER_DATA_REQUEST);
+        const action = yield take(userActions.SAVE_USER_DATA_REQUEST);
 
         yield put({ type: APP_SYNC_REQUEST });
 
         let result;
 
         switch (action.type) {
-            case userActions.SET_USER_DATA_REQUEST:
+            case userActions.SAVE_USER_DATA_REQUEST:
                 result = yield call(setUserData, action.userData);
                 break;
             default:

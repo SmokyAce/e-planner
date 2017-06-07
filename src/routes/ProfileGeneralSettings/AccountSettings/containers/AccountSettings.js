@@ -14,9 +14,10 @@ import { saveUserInfoRequest } from '../../../App/modules/users/actions';
 
 const mapStateToProps = state => createStructuredSelector({
     currentUser  : makeSelectCurrentUser(),
+    locale       : selectLocale(),
     initialValues: createStructuredSelector({
         displayName: makeSelectCurrentUserField('displayName'),
-        language   : makeSelectCurrentUserField('language') || selectLocale(),
+        language   : makeSelectCurrentUserField('language'),
         sex        : makeSelectCurrentUserField('sex')
     })
 });

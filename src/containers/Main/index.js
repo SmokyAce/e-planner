@@ -15,9 +15,7 @@ class AppContainer extends React.Component {
         messages: PropTypes.object
     };
 
-    shouldComponentUpdate() {
-        return false;
-    }
+    shouldComponentUpdate = () => false;
 
     render() {
         const { routes, store, messages } = this.props;
