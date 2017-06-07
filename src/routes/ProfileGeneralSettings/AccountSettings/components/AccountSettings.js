@@ -19,8 +19,10 @@ const renderSelect = (props) => (<SelectList {...props} />);
 
 class AccountSettings extends Component {
 
+    shouldComponentUpdate = (nextState) => (nextState.locale === this.props.locale);
+
     render() {
-        const { currentUser, onLocaleToggle, submitting, dirty } = this.props;
+        const { currentUser, onLocaleToggle, submitting, dirty, initialValues, locale } = this.props;
 
         if (!currentUser) {
             return <Loading />;
@@ -31,10 +33,9 @@ class AccountSettings extends Component {
         if (!photoURL && currentUser.get('providerData').size > 0) {
             photoURL = currentUser.getIn(['providerData', '0', 'photoURL']);
         }
-        // debugger;
-        // if (initialValues.get('language') === undefined) {
-        //     appLocales.unshift('choice');
-        // }
+
+        // if user settings 'language' is empty take from global locale
+        const defaultLanguage = (initialValues.get('language') === undefined) ? locale : initialValues.get('language');
 
         return (
             <form id='frmProfile' role='form' onSubmit={this.props.handleSubmit}>
@@ -62,7 +63,7 @@ class AccountSettings extends Component {
                             <FormattedMessage {...messages.female} />
                         </label>
                     </div>
-                    <Field name='language' label='language'
+                    <Field name='language' label='language' defaultValue={defaultLanguage}
                         onChange={(e, nextValue) => onLocaleToggle(nextValue)}
                         component={renderSelect} messages={messages} data={appLocales} inline
                     />
@@ -90,10 +91,13 @@ AccountSettings.propTypes = {
     onLocaleToggle: PropTypes.func.isRequired,
     handleSubmit  : PropTypes.func.isRequired,
     submitting    : PropTypes.bool.isRequired,
-    dirty         : PropTypes.bool.isRequired
+    dirty         : PropTypes.bool.isRequired,
+    initialValues : PropTypes.object.isRequired,
+    locale        : PropTypes.string.isRequired
 };
 
 export default reduxForm({
-    form: 'account-settings'
+    form            : 'account-settings',
+    destroyOnUnmount: false
     // validate
 })(AccountSettings);

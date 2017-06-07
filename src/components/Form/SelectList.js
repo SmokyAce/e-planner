@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 
-const SelectList = ({ input, label, type, meta: { touched, error }, messages, inline, data }) => {
+const SelectList = ({ input, label, type, meta: { touched, error }, messages, inline, data, defaultValue }) => {
     const inlineForm = inline ? 'form-inline' : '';
     const hasWarning = (touched && error !== undefined) ? 'has-warning' : '';
 
@@ -17,6 +17,7 @@ const SelectList = ({ input, label, type, meta: { touched, error }, messages, in
                 {...input}
                 className='form-control'
                 name={`select ${label}`}
+                value={input.value === '' ? defaultValue : input.value}
             >
                 {data.map(dataOption =>
                     (<option value={dataOption} key={dataOption}>
@@ -30,13 +31,14 @@ const SelectList = ({ input, label, type, meta: { touched, error }, messages, in
 
 
 SelectList.propTypes = {
-    input   : PropTypes.object,
-    label   : PropTypes.string,
-    type    : PropTypes.string,
-    meta    : PropTypes.object,
-    messages: PropTypes.object,
-    inline  : PropTypes.bool,
-    data    : PropTypes.array
+    input       : PropTypes.object,
+    label       : PropTypes.string,
+    type        : PropTypes.string,
+    meta        : PropTypes.object,
+    messages    : PropTypes.object,
+    inline      : PropTypes.bool,
+    data        : PropTypes.array,
+    defaultValue: PropTypes.string
 };
 
 export default SelectList;

@@ -4,7 +4,6 @@ import AccountSettings from '../components/AccountSettings';
 // selectors
 import { createStructuredSelector } from 'reselect';
 import { makeSelectCurrentUser, makeSelectCurrentUserField } from '../../../App/modules/selectors';
-// import { makeSelectMessage, makeSelectFormState } from '../../../AppAuth/modules/selectors';
 import { selectLocale } from '../../../../containers/LanguageProvider/selectors';
 // actios
 import { bindActionCreators } from 'redux';
