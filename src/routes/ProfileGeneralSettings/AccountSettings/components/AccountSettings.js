@@ -19,9 +19,10 @@ const renderSelect = (props) => (<SelectList {...props} />);
 
 class AccountSettings extends Component {
 
-    shouldComponentUpdate = (nextState) => (nextState.locale === this.props.locale);
+    // shouldComponentUpdate = (nextState) => (nextState.locale === this.props.locale);
 
     render() {
+        console.log('render AccountSettings');
         const { currentUser, onLocaleToggle, submitting, dirty, initialValues, locale } = this.props;
 
         if (!currentUser) {
@@ -35,7 +36,7 @@ class AccountSettings extends Component {
         }
 
         // if user settings 'language' is empty take from global locale
-        const defaultLanguage = (initialValues.get('language') === undefined) ? locale : initialValues.get('language');
+        const defaultLanguage = (initialValues.get('language') === null) ? locale : initialValues.get('language');
 
         return (
             <form id='frmProfile' role='form' onSubmit={this.props.handleSubmit}>
@@ -97,7 +98,9 @@ AccountSettings.propTypes = {
 };
 
 export default reduxForm({
-    form            : 'account-settings',
-    destroyOnUnmount: false
+    form                   : 'account-settings',
+    destroyOnUnmount       : false,
+    enableReinitialize     : true,
+    keepDirtyOnReinitialize: true
     // validate
 })(AccountSettings);
