@@ -33,13 +33,13 @@ function * authorize(authType) {
             const verified = yield select(makeSelectEmailVerified());
 
             if (!verified) {
-                yield put(sendEmailVerificationRequest);
+                yield put(sendEmailVerificationRequest());
             }
         } else if (authType.registration) {
             userInfo = yield firebaseTools.registerUser(authType.registration.data);
 
             // register verification need
-            yield put(sendEmailVerificationRequest);
+            yield put(sendEmailVerificationRequest());
         }
 
         if (userInfo.errorMessage) {
