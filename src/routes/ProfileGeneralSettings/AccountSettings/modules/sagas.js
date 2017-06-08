@@ -1,5 +1,5 @@
 // lib
-import { cancel, put, take, fork, call, takeLatest } from 'redux-saga/effects';
+import { cancel, put, take, fork, call, takeLatest, select } from 'redux-saga/effects';
 import { SubmissionError, reset } from 'redux-form';
 // action types
 import {
@@ -10,35 +10,34 @@ import {
 } from '../../../App/modules/users/actions';
 import { LOCATION_CHANGE } from '../../../../store/reducers/location';
 // selectors
-// import { makeSelectCurrentUserField } from '../../../App/modules/selectors';
+import { makeSelectCurrentUserField } from '../../../App/modules/selectors';
 // utils
-import { firebaseAuth } from '../../../../utils/firebaseTools';
+import { firebaseAuth, firebaseDb } from '../../../../utils/firebaseTools';
 import formSaga from '../../../../utils/reduxFormSaga';
+import { omit } from 'lodash';
 
 
-const saveSettings = (settings) => {
-    const User = firebaseAuth.currentUser;
+function * saveSettings(settings) {
+    const uid = yield select(makeSelectCurrentUserField('uid'));
+    const updates = {};
 
-    const profile = {
-        displayName: settings.get('displayName'),
-        photoURL   : settings.get('photoURL')
-    };
+    settings.mapKeys((key, value) => {
+        if (value !== undefined) {
+            updates[`/users/${uid}/${key}`] = value;
+        }
+    });
 
-    return User.updateProfile(profile)
-        // .then(() => {
-        //     // success update profile, so we can update settings in db
-        //     const uid = select(makeSelectCurrentUserField('uid'));
+    return firebaseDb.ref().update(updates)
+        .then(() => {
+            omit(settings, ['language', 'sex']);
 
-        //     const updates = {};
-        //     settings.map(value => {
-        //         updates[`/users/${uid}/`] = value;
-        //     })
-        // })
+            return firebaseAuth.currentUser.updateProfile(settings);
+        })
         .then(() => ({ success: true }))
         .catch(error => {
             throw new SubmissionError({ _error: error.message });
         });
-};
+}
 
 function * saveUserSettings(action) {
     yield put({ type: SAVE_USER_DATA_REQUEST });

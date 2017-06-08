@@ -1,24 +1,36 @@
 import { fromJS } from 'immutable';
 import { REHYDRATE } from 'redux-persist/constants';
 
+
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const APP_SYNC_REQUEST    = 'APP_SYNC_REQUEST';
-export const APP_SYNC_SUCCESS    = 'APP_SYNC_SUCCESS';
-export const APP_SYNC_FAILURE    = 'APP_SYNC_FAILURE';
-export const FIREBASE_CONNECTED = 'FIREBASE_CONNECTED';
-
+const APP_SYNC_REQUEST   = 'APP_SYNC_REQUEST';
+const APP_SYNC_SUCCESS   = 'APP_SYNC_SUCCESS';
+const APP_SYNC_FAILURE   = 'APP_SYNC_FAILURE';
+const FIREBASE_CONNECTED = 'FIREBASE_CONNECTED';
 
 // ------------------------------------
 // Actions
 // ------------------------------------
+const appSyncRequest = () => ({ type: APP_SYNC_REQUEST });
 
-/**
- * Tells the app we want to fetch a user info
- */
+const appSyncSuccess = () => ({ type: APP_SYNC_SUCCESS });
 
-// The initial state of the App
+const appSyncFailure = (error) => ({ type: APP_SYNC_FAILURE, error });
+
+const changeFirebaseConnectionStatus = (status) => ({ type: FIREBASE_CONNECTED, payload: status });
+
+export const actions = {
+    appSyncRequest,
+    appSyncSuccess,
+    appSyncFailure,
+    changeFirebaseConnectionStatus
+};
+
+// ------------------------------------
+// Reducer
+// ------------------------------------
 const initialState = fromJS({
     connection: 'Online',
     isSync    : true

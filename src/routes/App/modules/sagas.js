@@ -18,18 +18,10 @@ import { makeSelectLoggedIn } from '../../AppAuth/modules/selectors';
 import * as authActionTypes from '../../AppAuth/modules/actionTypes';
 import * as eventActions from './events/actions';
 import * as userActions from './users/actions';
-
-import {
-    APP_SYNC_REQUEST,
-    APP_SYNC_SUCCESS,
-    APP_SYNC_FAILURE,
-    FIREBASE_CONNECTED
-} from './status';
+import { actions as statusActions } from './status';
 
 
 function * addEvent(action) {
-    yield put(showLoading());
-
     yield put({ type: eventActions.ADD_EVENT_REQUEST });
 
     const response = yield call(api.addEvent, action.payload);
@@ -39,8 +31,6 @@ function * addEvent(action) {
     } else {
         yield put({ type: eventActions.ADD_EVENT_FAILURE, payload: response.id, error: response.error });
     }
-
-    yield put(hideLoading());
 }
 
 /**
@@ -143,28 +133,24 @@ export function * fetchUserDataFlow() {
  * Sync app data flow
  */
 export function * syncDataFlow() {
-    // Because sagas are generators, doing `while (true)` doesn't block our program
-    // Basically here we say "this saga is always listening for actions"
     while (true) {
-        const action = yield take(userActions.SAVE_USER_DATA_REQUEST);
+        yield take(action => action.type.indexOf('REQUEST') > 0);
 
-        yield put({ type: APP_SYNC_REQUEST });
+        yield put(showLoading());
+        yield put(statusActions.appSyncRequest());
 
-        let result;
+        const result = yield race({
+            success: take(action => action.type.indexOf('SUCCESS') > 0),
+            failure: take(action => action.type.indexOf('FAILURE') > 0)
+        });
 
-        switch (action.type) {
-            case userActions.SAVE_USER_DATA_REQUEST:
-                result = yield call(setUserData, action.userData);
-                break;
-            default:
-                result = true;
-        }
-
-        if (result) {
-            yield put({ type: APP_SYNC_SUCCESS });
+        if (result.success) {
+            yield put(statusActions.appSyncSuccess());
         } else {
-            yield put({ type: APP_SYNC_FAILURE });
+            yield put(statusActions.appSyncFailure());
         }
+
+        yield put(hideLoading());
     }
 }
 
@@ -196,7 +182,7 @@ export function * connectionObserver() {
     while (true) {
         const result = yield take(connectionStatusChannel);
 
-        yield put({ type: FIREBASE_CONNECTED, payload: result });
+        yield put(statusActions.changeFirebaseConnectionStatus(result));
     }
 }
 
