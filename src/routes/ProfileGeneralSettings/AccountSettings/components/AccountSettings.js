@@ -22,7 +22,6 @@ class AccountSettings extends Component {
     // shouldComponentUpdate = (nextState) => (nextState.locale === this.props.locale);
 
     render() {
-        console.log('render AccountSettings');
         const { currentUser, onLocaleToggle, submitting, dirty, initialValues, locale } = this.props;
 
         if (!currentUser) {

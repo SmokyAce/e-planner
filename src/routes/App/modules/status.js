@@ -5,48 +5,39 @@ import { REHYDRATE } from 'redux-persist/constants';
 // ------------------------------------
 // Constants
 // ------------------------------------
-const APP_SYNC_REQUEST   = 'APP_SYNC_REQUEST';
-const APP_SYNC_SUCCESS   = 'APP_SYNC_SUCCESS';
-const APP_SYNC_FAILURE   = 'APP_SYNC_FAILURE';
-const FIREBASE_CONNECTED = 'FIREBASE_CONNECTED';
+const SET_APP_SYNC_STATUS            = 'APP_SYNC_REQUEST';
+const SET_APP_INITIALIZATION_STATUS  = 'APP_INITIALIZATION';
+const SET_FIREBASE_CONNECTION_STATUS = 'FIREBASE_CONNECTED';
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-const appSyncRequest = () => ({ type: APP_SYNC_REQUEST });
+const changeAppSyncStatus = (status) => ({ type: SET_APP_SYNC_STATUS, payload: status });
 
-const appSyncSuccess = () => ({ type: APP_SYNC_SUCCESS });
+const changeFirebaseConnectionStatus = (status) => ({ type: SET_FIREBASE_CONNECTION_STATUS, payload: status });
 
-const appSyncFailure = (error) => ({ type: APP_SYNC_FAILURE, error });
-
-const changeFirebaseConnectionStatus = (status) => ({ type: FIREBASE_CONNECTED, payload: status });
+const changeAppInitializationStatus = (status) => ({ type: SET_APP_INITIALIZATION_STATUS, payload: status });
 
 export const actions = {
-    appSyncRequest,
-    appSyncSuccess,
-    appSyncFailure,
-    changeFirebaseConnectionStatus
+    changeAppSyncStatus,
+    changeFirebaseConnectionStatus,
+    changeAppInitializationStatus
 };
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 const initialState = fromJS({
-    connection: 'Online',
-    isSync    : true
+    connection    : 'Online',
+    isSync        : true,
+    initialization: false
 });
 
 const STATUS_ACTION_HANDLERS = {
-    [APP_SYNC_REQUEST]: (state) => {
-        return state
-            .set('isSync', false);
-    },
-    [APP_SYNC_SUCCESS]: (state) => {
-        return state
-            .set('isSync', true);
-    },
-    [FIREBASE_CONNECTED]: (state, action) => state.set('connection', action.payload ? 'Online' : 'Offline'),
-    [REHYDRATE]         : (state, action) => {
+    [SET_APP_SYNC_STATUS]           : (state, action) => state.set('isSync', action.payload),
+    [SET_APP_INITIALIZATION_STATUS] : (state, action) => state.set('initialization', action.payload),
+    [SET_FIREBASE_CONNECTION_STATUS]: (state, action) => state.set('connection', action.payload ? 'Online' : 'Offline'),
+    [REHYDRATE]                     : (state, action) => {
         const incoming = action.payload.app;
 
         if (incoming && incoming.get('status')) {

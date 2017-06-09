@@ -130,14 +130,17 @@ export function * fetchUserDataFlow() {
 }
 
 /**
- * Sync app data flow
+ * Each action what consist 'REQUEST' start:
+ * - sync process
+ * - show loader
+ * After 'SUCCESS' action this processes will be end
  */
 export function * syncDataFlow() {
     while (true) {
         yield take(action => action.type.indexOf('REQUEST') > 0);
 
         yield put(showLoading());
-        yield put(statusActions.appSyncRequest());
+        yield put(statusActions.changeAppSyncStatus(false));
 
         const result = yield race({
             success: take(action => action.type.indexOf('SUCCESS') > 0),
@@ -145,9 +148,9 @@ export function * syncDataFlow() {
         });
 
         if (result.success) {
-            yield put(statusActions.appSyncSuccess());
+            yield put(statusActions.changeAppSyncStatus(true));
         } else {
-            yield put(statusActions.appSyncFailure());
+            yield put(statusActions.changeAppSyncStatus(result.failure.error));
         }
 
         yield put(hideLoading());
