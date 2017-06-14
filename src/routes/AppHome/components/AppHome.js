@@ -11,8 +11,12 @@ import './AppHome.scss';
 
 const style = {
     spinner: {
-        width : '60px',
-        height: '60px'
+        width    : '60px',
+        height   : '60px',
+        position : 'absolute',
+        top      : '50%',
+        left     : '50%',
+        transform: 'translate(-50%, -50%)'
     }
 };
 
@@ -29,7 +33,7 @@ export const AppHome = ({ docked, pullRight, isInitialized, onSetDocked, onSetOp
 
     if (!isInitialized) {
         return (
-            <div style={{ position: 'relative', height: '100%' }}>
+            <div style={{ position: 'relative', height: '200px' }}>
                 <Spinner style={style.spinner} />
             </div>
         );
