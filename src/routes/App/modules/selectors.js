@@ -22,24 +22,24 @@ const makeSelectSidebarOpen = () => createSelector(
 
 const makeSelectCurrentUser = () => createSelector(
     selectApp,
-    (globalState) => globalState.getIn(['users', 'currentUser'])
+    (globalState) => globalState.get('user')
 );
 
 const makeSelectCurrentUserField = (field) => {
     return createSelector(
         selectApp,
-        (globalState) => globalState.getIn(['users', 'currentUser', field])
+        (globalState) => globalState.getIn(['user', field])
     );
 };
 
 const makeSelectCurrentUserEmail = () => createSelector(
     selectApp,
-    (globalState) => globalState.getIn(['users', 'currentUser', 'email'])
+    (globalState) => globalState.getIn(['user', 'email'])
 );
 
 const makeSelectCurrentUserEvents = () => createSelector(
     selectApp,
-    (globalState) => globalState.getIn(['users', 'currentUser', 'events'])
+    (globalState) => globalState.getIn(['user', 'events'])
 );
 
 const makeSelectEventsByIds = () => createSelector(

@@ -9,11 +9,9 @@ import Spinner from '../../components/Spinner';
 // actions
 import { bindActionCreators } from 'redux';
 import { logoutRequest } from '../../routes/AppAuth/modules/actions';
-import { fetchUserInfoRequest } from '../../routes/App/modules/users/actions';
 // selectors
 import { createStructuredSelector } from 'reselect';
 import { makeSelectCurrentUser } from '../../routes/App/modules/selectors';
-import { makeSelectLoggedIn } from '../../routes/AppAuth/modules/selectors';
 // intl
 import messages from './messages';
 // style
@@ -21,13 +19,6 @@ import './UserMenu.scss';
 
 
 class UserMenu extends React.Component {
-    componentDidMount() {
-        const { currentUser, loggedIn } = this.props;
-
-        if (loggedIn && !currentUser) {
-            this.props.fetchUserInfoRequest();
-        }
-    }
 
     render() {
         const { currentUser } = this.props;
@@ -62,23 +53,18 @@ class UserMenu extends React.Component {
 }
 
 UserMenu.propTypes = {
-    currentUser         : PropTypes.object,
-    loggedIn            : PropTypes.bool,
-    logoutRequest       : PropTypes.func,
-    fetchUserInfoRequest: PropTypes.func
+    currentUser  : PropTypes.object,
+    logoutRequest: PropTypes.func
 };
-
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        fetchUserInfoRequest,
         logoutRequest
     }, dispatch);
 };
 
 const mapStateToProps = state => createStructuredSelector({
-    currentUser: makeSelectCurrentUser(),
-    loggedIn   : makeSelectLoggedIn()
+    currentUser: makeSelectCurrentUser()
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserMenu);

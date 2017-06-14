@@ -10,11 +10,8 @@ const api = {
         const uid = auth.getUserUID().uid;
 
         return firebaseDb.ref(`/users/${uid}`).once('value')
-            .then(snapshot => {
-                // normalized data with users schema to put in redux store
-                return snapshot.val() === null ? null : snapshot.val();
-            })
-            .catch(error => console.log(error.message));
+            .then(snapshot => ({ response: snapshot.val() }))
+            .catch(error => ({ error }));
     },
     setUserData: (userData) => {
         const normalazedData = normalize(userData, schema.users);
@@ -22,9 +19,7 @@ const api = {
         return firebaseDb.ref(`/users/${normalazedData.result}`)
             .set(normalazedData.entities.users[normalazedData.result])
             .then(() => true)
-            .catch(error => {
-                return { error };
-            });
+            .catch(error => ({ error }));
     },
     addEvent: (payload) => {
         const uid = auth.getUserUID().uid;

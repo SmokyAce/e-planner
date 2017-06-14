@@ -22,11 +22,6 @@ const makeSelectLoggedIn = () => createSelector(
     (globalState) => globalState.get('loggedIn')
 );
 
-const makeSelectEmailVerified = () => createSelector(
-    selectAuth,
-    (globalState) => globalState.getIn(['currentUser', 'emailVerified'])
-);
-
 const makeSelectChangedEmailSucceeded = () => createSelector(
     selectAuth,
     (globalState) => globalState.get('changedEmailSucceeded')
@@ -37,18 +32,11 @@ const makeSelectChangedPwdSucceeded = () => createSelector(
     (globalState) => globalState.get('changedPwdSucceeded')
 );
 
-const makeSelectCurrentUserEmail = () => createSelector(
-    selectAuth,
-    (globalState) => globalState.getIn(['currentUser', 'email'])
-);
-
 export {
     // auth
     makeSelectFormState,
     makeSelectMessage,
     makeSelectLoggedIn,
-    makeSelectEmailVerified,
     makeSelectChangedEmailSucceeded,
-    makeSelectChangedPwdSucceeded,
-    makeSelectCurrentUserEmail
+    makeSelectChangedPwdSucceeded
 };

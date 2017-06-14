@@ -1,29 +1,25 @@
-import { fromJS } from 'immutable';
+import { Map } from 'immutable';
 import * as actions from './actions';
 import { LOGOUT } from '../../../AppAuth/modules/actionTypes';
 import { REHYDRATE } from 'redux-persist/constants';
 
 
 // The initial state of the App
-const initialState = fromJS({
-    currentUser: null
-});
+const initialState = null;
 
 const USERS_ACTION_HANDLERS = {
     [actions.FETCH_USER_DATA_SUCCESS]: (state, action) => {
-        return state
-            .set('currentUser', fromJS(action.response));
+        return Map(action.payload);
     },
     [actions.SAVE_USER_DATA]: (state, action) => {
-        return state
-            .update('currentUser', currentUser => currentUser.merge(action.payload));
+        return state.merge(action.payload);
     },
-    [LOGOUT]   : (state) => state.set('currentUser', fromJS(null)),
+    [LOGOUT]   : () => null,
     [REHYDRATE]: (state, action) => {
         const incoming = action.payload.app;
 
-        if (incoming && incoming.get('users')) {
-            return incoming.get('users');
+        if (incoming && incoming.get('user')) {
+            return incoming.get('user');
         }
         return state;
     }

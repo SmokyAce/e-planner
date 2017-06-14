@@ -1,20 +1,17 @@
-// This file contains the sagas used for async actions in our app. It's divided into
-// "effects" that the sagas call (`authorize` and `logout`) and the actual sagas themselves,
-// which listen for actions.
-// Sagas help us gather all our side effects (network requests in this case) in one place
+// utils
 import { channel, delay } from 'redux-saga';
 import { take, call, put, race, select, fork } from 'redux-saga/effects';
-
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
-
+import { omit, keys, isEqual } from 'lodash';
+// auth sagas
 import { logoutFlow, logout } from '../../AppAuth/modules/sagas';
-
-import firebaseTools, { firebaseAuth } from '../../../utils/firebaseTools';
+// API
 import api from './api';
-import { omit } from 'lodash';
-
+import firebaseTools, { firebaseAuth } from '../../../utils/firebaseTools';
+// selectors
 import { makeSelectLoggedIn } from '../../AppAuth/modules/selectors';
-
+import { makeSelectEventsListOfIds } from '../../App/modules/selectors';
+// actions
+import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import * as authActionTypes from '../../AppAuth/modules/actionTypes';
 import * as eventActions from './events/actions';
 import * as userActions from './users/actions';
@@ -99,8 +96,6 @@ export function * fetchUserDataFlow() {
     while (true) {
         yield take(userActions.FETCH_USER_DATA_REQUEST);
 
-        yield put(showLoading());
-
         let response;
 
         try {
@@ -114,7 +109,7 @@ export function * fetchUserDataFlow() {
                 response.isSync = true;
             }
 
-            yield put({ type: userActions.FETCH_USER_DATA_SUCCESS, response });
+            yield put({ type: userActions.FETCH_USER_DATA_SUCCESS, payload: response });
             yield fork(fetchEvents);
 
             if (!response.isSync) {
@@ -123,11 +118,26 @@ export function * fetchUserDataFlow() {
         } catch (error) {
             yield put({ type: userActions.FETCH_USER_DATA_FAILURE, error: error.message });
             return false;
-        } finally {
-            yield put(hideLoading());
         }
     }
 }
+
+/**
+ * Fetch user data from DB
+ */
+export function * fetchUserData() {
+    yield put({ type: userActions.FETCH_USER_DATA_REQUEST });
+
+    const { response, error } = yield call(api.fetchUserData);
+
+    if (response) {
+        yield put({ type: userActions.FETCH_USER_DATA_SUCCESS, payload: response });
+    } else {
+        yield put({ type: userActions.FETCH_USER_DATA_FAILURE, error });
+    }
+    return response;
+}
+
 
 /**
  * Each action what consist 'REQUEST' start:
@@ -176,6 +186,7 @@ const authWrapper = (authStateChannel) => ({
 export function * connectionObserver() {
     yield delay(2000);
 
+    // console.log('Connection status observer was create!');
     const connectionStatusChannel = channel();
     const wrapper = connectionStatusWrapper(connectionStatusChannel);
     const connectionRef = firebaseTools.getDatabaseReference('.info/connected');
@@ -195,6 +206,7 @@ export function * connectionObserver() {
 export function * authObserver() {
     yield delay(2000);
 
+    // console.log('Connection status observer was create!');
     const authStateChannel = channel();
     const wrapper = authWrapper(authStateChannel);
 
@@ -241,12 +253,28 @@ export function * fetchEventsFlow() {
     }
 }
 
-fetchUserDataFlow.isDaemon = true;
+export function * initializationFlow() {
+    yield put(statusActions.changeAppInitializationStatus('start'));
+
+    const userData = yield call(fetchUserData);
+
+    // Take list of events ids from redux store and compare with events from user data
+    // if are not equals make fetch events from DB
+    const listOfEventsIds = yield select(makeSelectEventsListOfIds());
+
+    if (!isEqual(keys(userData.events).sort(), listOfEventsIds.toJS().sort())) {
+        yield fork(fetchEvents);
+    }
+
+    yield put(statusActions.changeAppInitializationStatus('end'));
+}
+
+initializationFlow.isDaemon = true;
 syncDataFlow.isDaemon = true;
 addEventsFlow.isDaemon = true;
 fetchEventsFlow.isDaemon = true;
 logoutFlow.isDaemon = true;
-
+// daemon observers
 authObserver.isDaemon = true;
 connectionObserver.isDaemon = true;
 
@@ -255,12 +283,13 @@ connectionObserver.isDaemon = true;
 // Sagas are fired once at the start of an app and can be thought of as processes running
 // in the background, watching actions dispatched to the store.
 export default [
-    fetchUserDataFlow,
     syncDataFlow,
     addEventsFlow,
     fetchEventsFlow,
     logoutFlow,
     // Firebase observers
     connectionObserver,
-    authObserver
+    authObserver,
+    // App initialization flow
+    initializationFlow
 ];
