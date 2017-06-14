@@ -1,7 +1,7 @@
-import AppContainer from './containers/AppHomeContainer';
+import AppHomeContainer from './containers/AppHomeContainer';
 
 
 // Sync route definition
 export default {
-    component: AppContainer
+    component: AppHomeContainer
 };

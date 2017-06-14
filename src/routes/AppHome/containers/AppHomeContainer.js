@@ -1,11 +1,12 @@
-import AppHome from '../components/HomeView';
+import AppHome from '../components/AppHome';
 import { connect } from 'react-redux';
 import { onSetOpen, onSetDocked, onChangeSide } from '../../App/modules/sidebar';
 
 const mapStateToProps = (state) => {
     return {
-        docked   : state.getIn(['app', 'sidebar', 'sidebarDocked']),
-        pullRight: state.getIn(['app', 'sidebar', 'pullRight'])
+        docked       : state.getIn(['app', 'sidebar', 'sidebarDocked']),
+        pullRight    : state.getIn(['app', 'sidebar', 'pullRight']),
+        isInitialized: state.getIn(['app', 'status', 'isInitialized'])
     };
 };
 

@@ -1,10 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// components
 import { FormattedMessage } from 'react-intl';
+import Spinner from '../../../components/Spinner';
+// intl
 import messages from './messages';
+// styles
+import './AppHome.scss';
 
 
-export const HomeView = ({ docked, pullRight, onSetDocked, onSetOpen, onChangeSide }) => {
+const style = {
+    spinner: {
+        width : '60px',
+        height: '60px'
+    }
+};
+
+export const AppHome = ({ docked, pullRight, isInitialized, onSetDocked, onSetOpen, onChangeSide }) => {
     const onDockedClick = () => {
         onSetDocked(docked);
     };
@@ -14,6 +26,14 @@ export const HomeView = ({ docked, pullRight, onSetDocked, onSetOpen, onChangeSi
     const onChangeSideClick = () => {
         onChangeSide(!pullRight);
     };
+
+    if (!isInitialized) {
+        return (
+            <div style={{ position: 'relative', height: '100%' }}>
+                <Spinner style={style.spinner} />
+            </div>
+        );
+    }
 
     return (
         <div>
@@ -31,13 +51,14 @@ export const HomeView = ({ docked, pullRight, onSetDocked, onSetOpen, onChangeSi
     );
 };
 
-HomeView.propTypes = {
-    docked      : PropTypes.bool,
-    pullRight   : PropTypes.bool,
-    onSetOpen   : PropTypes.func,
-    onSetDocked : PropTypes.func,
-    onChangeSide: PropTypes.func
+AppHome.propTypes = {
+    docked       : PropTypes.bool,
+    pullRight    : PropTypes.bool,
+    isInitialized: PropTypes.bool,
+    onSetOpen    : PropTypes.func,
+    onSetDocked  : PropTypes.func,
+    onChangeSide : PropTypes.func
 };
 
-export default HomeView;
+export default AppHome;
 

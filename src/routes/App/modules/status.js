@@ -53,8 +53,8 @@ const STATUS_ACTION_HANDLERS = {
     [SET_FIREBASE_CONNECTION_STATUS]: (state, action) => state.set('connection', action.payload ? 'Online' : 'Offline'),
 
     [APP_INITIALIZATION_START]: (state) => state.set('isInitialized', false),
-    [APP_INITIALIZATION_END]  : (state) => state.set('initialization', true),
-    [APP_INITIALIZATION_ERROR]: (state, action) => state.set('initialization', action.error)
+    [APP_INITIALIZATION_END]  : (state) => state.set('isInitialized', true),
+    [APP_INITIALIZATION_ERROR]: (state, action) => state.set('isInitialized', action.error)
 };
 
 export default function statusReducer(state = initialState, action) {
