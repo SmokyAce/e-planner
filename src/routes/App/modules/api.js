@@ -18,7 +18,7 @@ const api = {
 
         return firebaseDb.ref(`/users/${normalazedData.result}`)
             .set(normalazedData.entities.users[normalazedData.result])
-            .then(() => true)
+            .then(() => ({ success: true }))
             .catch(error => ({ error }));
     },
     addEvent: (payload) => {

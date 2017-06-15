@@ -8,7 +8,7 @@ import { selectLocale } from '../../../../containers/LanguageProvider/selectors'
 // actios
 import { bindActionCreators } from 'redux';
 import { changeLocale as onLocaleToggle } from '../../../../containers/LanguageProvider/module';
-import { saveUserInfoRequest } from '../../../App/modules/users/actions';
+import { saveUserData } from '../../../App/modules/user';
 
 
 const mapStateToProps = state => createStructuredSelector({
@@ -23,7 +23,7 @@ const mapStateToProps = state => createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     onLocaleToggle,
-    onSubmit: saveUserInfoRequest
+    onSubmit: saveUserData
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountSettings);

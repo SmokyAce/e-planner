@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Immutable from 'immutable';
-
+// components
 import Sidebar from '../Sidebar';
 import SidebarContent from '../../containers/SidebarContent';
 import Header from '../../../../components/Header';
 import { ImmutableLoadingBar as LoadingBar } from 'react-redux-loading-bar';
+// style
 import './App.scss';
 
 
@@ -20,6 +21,10 @@ const styles = {
 };
 
 class App extends React.Component {
+
+    componentWillMount() {
+        this.props.onSetInitStatus('start');
+    }
 
     render = () => {
         const { sidebar, onSetOpen, onSetDocked, children } = this.props;
@@ -51,10 +56,11 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-    children   : PropTypes.element,
-    sidebar    : PropTypes.instanceOf(Immutable.Map).isRequired,
-    onSetOpen  : PropTypes.func.isRequired,
-    onSetDocked: PropTypes.func.isRequired
+    children       : PropTypes.element,
+    sidebar        : PropTypes.instanceOf(Immutable.Map).isRequired,
+    onSetOpen      : PropTypes.func.isRequired,
+    onSetDocked    : PropTypes.func.isRequired,
+    onSetInitStatus: PropTypes.func.isRequired
 };
 
 export default App;

@@ -14,8 +14,8 @@ import { makeSelectEventsListOfIds } from '../../App/modules/selectors';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import * as authActionTypes from '../../AppAuth/modules/actionTypes';
 import * as eventActions from './events/actions';
-import * as userActions from './users/actions';
-import { actions as statusActions } from './status';
+import * as userActions from './user';
+import * as statusActions from './status';
 
 
 function * addEvent(action) {
@@ -34,18 +34,14 @@ function * addEvent(action) {
  * set user data to firebase
  */
 export function * setUserData(userData) {
-    let result;
+    const { success, error } = yield call(api.setUserData, userData);
 
-    try {
-        result = yield call(api.setUserData, userData);
-
-        yield put({ type: userActions.SAVE_USER_DATA_SUCCESS, result });
-
-        return true;
-    } catch (error) {
-        yield put({ type: userActions.SAVE_USER_DATA_FAILURE, error: error.message });
-        return false;
+    if (success) {
+        yield put(userActions.saveUserDataAction('success'));
+    } else {
+        yield put(userActions.saveUserDataAction('failure', error));
     }
+    return success;
 }
 
 /**
@@ -94,7 +90,7 @@ export function * updateUserInfoFlow() {
  */
 export function * fetchUserDataFlow() {
     while (true) {
-        yield take(userActions.FETCH_USER_DATA_REQUEST);
+        yield take(userActions.type.FETCH_USER_DATA_REQUEST);
 
         let response;
 
@@ -109,14 +105,14 @@ export function * fetchUserDataFlow() {
                 response.isSync = true;
             }
 
-            yield put({ type: userActions.FETCH_USER_DATA_SUCCESS, payload: response });
+            yield put(userActions.fetchUserDataSuccess(response));
             yield fork(fetchEvents);
 
             if (!response.isSync) {
-                yield put({ type: userActions.SAVE_USER_DATA_REQUEST, userData: response });
+                yield put(userActions.saveUserData(response));
             }
         } catch (error) {
-            yield put({ type: userActions.FETCH_USER_DATA_FAILURE, error: error.message });
+            yield put(userActions.fetchUserDataFailure(error));
             return false;
         }
     }
@@ -126,14 +122,14 @@ export function * fetchUserDataFlow() {
  * Fetch user data from DB
  */
 export function * fetchUserData() {
-    yield put({ type: userActions.FETCH_USER_DATA_REQUEST });
+    yield put({ type: userActions.type.FETCH_USER_DATA_REQUEST });
 
     const { response, error } = yield call(api.fetchUserData);
 
     if (response) {
-        yield put({ type: userActions.FETCH_USER_DATA_SUCCESS, payload: response });
+        yield put(userActions.fetchUserDataSuccess(response));
     } else {
-        yield put({ type: userActions.FETCH_USER_DATA_FAILURE, error });
+        yield put(userActions.fetchUserDataFailure(error));
     }
     return response;
 }
@@ -254,8 +250,14 @@ export function * fetchEventsFlow() {
 }
 
 export function * initializationFlow() {
-    yield put(statusActions.changeAppInitializationStatus('start'));
+    yield take(statusActions.types.APP_INITIALIZATION_START);
 
+    yield call(appInitializationFlow);
+
+    yield put(statusActions.changeAppInitializationStatus('finish'));
+}
+
+export function * appInitializationFlow() {
     const userData = yield call(fetchUserData);
 
     // Take list of events ids from redux store and compare with events from user data
@@ -265,8 +267,6 @@ export function * initializationFlow() {
     if (!isEqual(keys(userData.events).sort(), listOfEventsIds.toJS().sort())) {
         yield fork(fetchEvents);
     }
-
-    yield put(statusActions.changeAppInitializationStatus('end'));
 }
 
 initializationFlow.isDaemon = true;

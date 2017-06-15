@@ -1,13 +1,8 @@
 // lib
 import { cancel, put, take, fork, call, takeLatest, select } from 'redux-saga/effects';
 import { SubmissionError, reset } from 'redux-form';
-// action types
-import {
-    SAVE_USER_DATA,
-    SAVE_USER_DATA_REQUEST,
-    SAVE_USER_DATA_SUCCESS,
-    SAVE_USER_DATA_FAILURE
-} from '../../../App/modules/users/actions';
+// actions
+import * as userActions from '../../../App/modules/user';
 import { LOCATION_CHANGE } from '../../../../store/reducers/location';
 // selectors
 import { makeSelectCurrentUserField } from '../../../App/modules/selectors';
@@ -40,19 +35,19 @@ function * saveSettings(settings) {
 }
 
 function * saveUserSettings(action) {
-    yield put({ type: SAVE_USER_DATA_REQUEST });
+    yield put(userActions.saveUserDataAction('request'));
 
     const result = yield call(formSaga, 'account-settings', saveSettings, action.payload);
 
     if (result.success) {
-        yield put({ type: SAVE_USER_DATA_SUCCESS });
+        yield put(userActions.saveUserDataAction('success'));
     } else {
-        yield put({ type: SAVE_USER_DATA_FAILURE });
+        yield put(userActions.saveUserDataAction('failure'));
     }
 }
 
 function * watchSaveUserSettings() {
-    const task = yield fork(takeLatest, SAVE_USER_DATA, saveUserSettings);
+    const task = yield fork(takeLatest, userActions.type.SAVE_USER_DATA, saveUserSettings);
 
     yield take(LOCATION_CHANGE);
     yield put(reset('account-settings'));

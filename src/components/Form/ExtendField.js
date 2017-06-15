@@ -20,7 +20,6 @@ const ExtendField = ({ input, label, type, meta: { touched, error }, messages, i
     );
 };
 
-
 ExtendField.propTypes = {
     input   : PropTypes.object,
     label   : PropTypes.string,
