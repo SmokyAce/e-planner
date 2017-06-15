@@ -250,11 +250,13 @@ export function * fetchEventsFlow() {
 }
 
 export function * initializationFlow() {
-    yield take(statusActions.types.APP_INITIALIZATION_START);
+    while (true) {
+        yield take(statusActions.types.APP_INITIALIZATION_START);
 
-    yield call(appInitializationFlow);
+        yield call(appInitializationFlow);
 
-    yield put(statusActions.changeAppInitializationStatus('finish'));
+        yield put(statusActions.changeAppInitializationStatus('finish'));
+    }
 }
 
 export function * appInitializationFlow() {
