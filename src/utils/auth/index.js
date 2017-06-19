@@ -7,23 +7,19 @@ const auth = {
         return !!localStorage.getItem(key);
     },
     requireAuth: (nextState, replace) => {
+        const nextPath = nextState.location.pathname;
         const key = Object.keys(localStorage).find(e => e.match(/firebase:authUser/));
-        const data = JSON.parse(localStorage.getItem(key));
 
-        if (data === null) {
-            replace({
-                pathname: '/login',
-                state   : {
-                    nextPathname: nextState.location.pathname
-                }
-            });
-        } else if (!data.emailVerified) {
-            replace({
-                pathname: '/verified',
-                state   : {
-                    nextPathname: nextState.location.pathname
-                }
-            });
+        if (key === undefined) { // user must authentifacate
+            if (nextPath !== '/login') {
+                replace('/login');
+            }
+        } else {
+            const data = JSON.parse(localStorage.getItem(key));
+
+            if (!data.emailVerified) {
+                replace('/verified');
+            }
         }
     },
     getUserUID: () => {

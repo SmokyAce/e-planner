@@ -62,7 +62,7 @@ const api = {
                     events.result.push(event.id);
                     events.response[event.id] = event;
                 });
-                return events;
+                return { response: events };
             })
             .catch(error => ({ error }));
     }

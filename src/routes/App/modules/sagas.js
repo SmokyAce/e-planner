@@ -20,6 +20,9 @@ import * as syncActions from './sync';
 import * as connectionActions from './connection';
 
 
+// /////////////////////
+// Events
+// /////////////////////
 function * addEvent(action) {
     yield put({ type: eventActions.ADD_EVENT_REQUEST });
 
@@ -32,6 +35,21 @@ function * addEvent(action) {
     }
 }
 
+
+export function* fetchEvents() {
+    const { response, error } = yield call(api.fetchEvents);
+
+    if (response) {
+        yield put(eventActions.fetchEventSuccess(response));
+    } else {
+        yield put(eventActions.fetchEventFailure(error));
+    }
+}
+
+
+// /////////////////////
+// User
+// /////////////////////
 /**
  * set user data to firebase
  */
@@ -45,6 +63,24 @@ export function * setUserData(userData) {
     }
     return success;
 }
+
+
+/**
+ * Fetch user data from DB
+ */
+export function* fetchUserData() {
+    yield put({ type: userActions.type.FETCH_USER_DATA_REQUEST });
+
+    const { response, error } = yield call(api.fetchUserData);
+
+    if (response) {
+        yield put(userActions.fetchUserDataSuccess(response));
+        return response;
+    }
+    yield put(userActions.fetchUserDataFailure(error));
+    throw new Error(error);
+}
+
 
 /**
  * update user data out saga
@@ -81,6 +117,10 @@ export function * updateUserInfoFlow() {
     }
 }
 
+
+// /////////////////////
+// Sync
+// /////////////////////
 export function * appSyncFlow() {
     try {
         yield call(delay, 100);
@@ -94,29 +134,15 @@ export function * appSyncFlow() {
         const listOfEventsIds = yield select(makeSelectEventsListOfIds());
 
         if (!isEqual(keys(userData.events).sort(), listOfEventsIds.toJS().sort())) {
-            yield fork(fetchEvents);
+            yield put(eventActions.fetchEventRequest());
+
+            yield call(fetchEvents);
         }
 
         yield put(syncActions.finishSync());
     } catch (error) {
         yield put(syncActions.errorSync(error));
     }
-}
-
-/**
- * Fetch user data from DB
- */
-export function * fetchUserData() {
-    yield put({ type: userActions.type.FETCH_USER_DATA_REQUEST });
-
-    const { response, error } = yield call(api.fetchUserData);
-
-    if (response) {
-        yield put(userActions.fetchUserDataSuccess(response));
-        return response;
-    }
-    yield put(userActions.fetchUserDataFailure(error));
-    throw new Error(error);
 }
 
 // //////////////////////////////////////
@@ -264,29 +290,11 @@ export function * addEventsFlow() {
     }
 }
 
-export function * fetchEvents() {
-    const response = yield call(api.fetchEvents);
-
-    if (!response.error) {
-        yield put({ type: eventActions.FETCH_EVENT_SUCCESS, payload: response });
-    } else {
-        yield put({ type: eventActions.FETCH_EVENT_FAILURE, error: response.error });
-    }
-}
-
-export function * fetchEventsFlow() {
-    while (true) {
-        yield take(eventActions.FETCH_EVENT_REQUEST);
-
-        yield fork(fetchEvents);
-    }
-}
 
 // daemon watchers
 watchSync.isDaemon = true;
 loadingFlow.isDaemon = true;
 addEventsFlow.isDaemon = true;
-fetchEventsFlow.isDaemon = true;
 logoutFlow.isDaemon = true;
 // daemon observers
 authObserver.isDaemon = true;
@@ -300,7 +308,6 @@ export default [
     watchSync,
     loadingFlow,
     addEventsFlow,
-    fetchEventsFlow,
     logoutFlow,
     // Firebase observers
     connectionObserver,

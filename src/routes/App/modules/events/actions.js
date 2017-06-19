@@ -4,9 +4,9 @@ import { firebaseDb } from '../../../../utils/firebaseTools';
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const FETCH_EVENT_REQUEST = 'FETCH_EVENT_REQUEST';
-export const FETCH_EVENT_SUCCESS = 'FETCH_EVENT_SUCCESS';
-export const FETCH_EVENT_FAILURE = 'FETCH_EVENT_FAILURE';
+const FETCH_EVENT_REQUEST = 'FETCH_EVENT_REQUEST';
+const FETCH_EVENT_SUCCESS = 'FETCH_EVENT_SUCCESS';
+const FETCH_EVENT_FAILURE = 'FETCH_EVENT_FAILURE';
 
 export const ADD_EVENT = 'ADD_EVENT';
 export const ADD_EVENT_REQUEST = 'ADD_EVENT_REQUEST';
@@ -21,6 +21,10 @@ export const TOGGLE_EVENT_SERVICE       = 'TOGGLE_EVENT_SERVICE';
 export const EVENT_NAME_CHANGE          = 'EVENT_NAME_CHANGE';
 export const EVENT_SETTINGS_NAME_CHANGE = 'EVENT_SETTINGS_NAME_CHANGE';
 export const SAVE_EVENT_SETTINGS        = 'SAVE_EVENT_SETTINGS';
+
+export const types = {
+    FETCH_EVENT_REQUEST
+}
 
 // ------------------------------------
 // Actions
@@ -51,8 +55,18 @@ export const addEvent = (options) => {
     });
 };
 
-export const fetchEvent = () => ({
+export const fetchEventRequest = () => ({
     type: FETCH_EVENT_REQUEST
+});
+
+export const fetchEventSuccess = (response) => ({
+    type   : FETCH_EVENT_SUCCESS,
+    payload: response
+});
+
+export const fetchEventFailure = (error) => ({
+    type: FETCH_EVENT_FAILURE,
+    error
 });
 
 export const toggleEventService = (eventId, service, checked) => ({
