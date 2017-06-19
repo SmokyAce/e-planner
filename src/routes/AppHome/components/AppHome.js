@@ -20,18 +20,8 @@ const style = {
     }
 };
 
-export const AppHome = ({ docked, pullRight, isInitialized, onSetDocked, onSetOpen, onChangeSide }) => {
-    const onDockedClick = () => {
-        onSetDocked(docked);
-    };
-    const onOpenClick = () => {
-        onSetOpen(true);
-    };
-    const onChangeSideClick = () => {
-        onChangeSide(!pullRight);
-    };
-
-    if (!isInitialized) {
+export const AppHome = ({ docked, pullRight, restored, onSetDocked, onSetOpen, onChangeSide }) => {
+    if (!restored) {
         return (
             <div style={{ position: 'relative', height: '200px' }}>
                 <Spinner style={style.spinner} />
@@ -42,13 +32,13 @@ export const AppHome = ({ docked, pullRight, isInitialized, onSetDocked, onSetOp
     return (
         <div>
             <h2><FormattedMessage {...messages.greeting} /></h2>
-            <button className='btn btn-primary' onClick={onOpenClick}>
+            <button className='btn btn-primary' onClick={() => onSetOpen(true)}>
                 Open
             </button>
-            <button className='btn btn-primary' onClick={onDockedClick}>
+            <button className='btn btn-primary' onClick={() => onSetDocked(docked)}>
                 Docked
             </button>
-            <button className='btn btn-primary' onClick={onChangeSideClick}>
+            <button className='btn btn-primary' onClick={() => onChangeSide(!pullRight)}>
                 Change Side
             </button>
         </div>
@@ -56,12 +46,12 @@ export const AppHome = ({ docked, pullRight, isInitialized, onSetDocked, onSetOp
 };
 
 AppHome.propTypes = {
-    docked       : PropTypes.bool,
-    pullRight    : PropTypes.bool,
-    isInitialized: PropTypes.bool,
-    onSetOpen    : PropTypes.func,
-    onSetDocked  : PropTypes.func,
-    onChangeSide : PropTypes.func
+    restored    : PropTypes.bool.isRequired,
+    docked      : PropTypes.bool,
+    pullRight   : PropTypes.bool,
+    onSetOpen   : PropTypes.func,
+    onSetDocked : PropTypes.func,
+    onChangeSide: PropTypes.func
 };
 
 export default AppHome;

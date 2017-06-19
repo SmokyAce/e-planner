@@ -9,22 +9,21 @@ import { makeSelectCurrentUserField } from '../../../App/modules/selectors';
 // utils
 import { firebaseAuth, firebaseDb } from '../../../../utils/firebaseTools';
 import formSaga from '../../../../utils/reduxFormSaga';
-import { omit } from 'lodash';
+import { pick } from 'lodash';
 
 
-function * saveSettings(settings) {
-    const uid = yield select(makeSelectCurrentUserField('uid'));
+function saveSettings(settings) {
     const updates = {};
 
     settings.mapKeys((key, value) => {
         if (value !== undefined) {
-            updates[`/users/${uid}/${key}`] = value;
+            updates[`/users/${settings.uid}/${key}`] = value;
         }
     });
 
     return firebaseDb.ref().update(updates)
         .then(() => {
-            omit(settings, ['language', 'sex']);
+            pick(settings, ['displayName', 'photoURL']);
 
             return firebaseAuth.currentUser.updateProfile(settings);
         })
@@ -36,6 +35,8 @@ function * saveSettings(settings) {
 
 function * saveUserSettings(action) {
     yield put(userActions.saveUserDataAction('request'));
+
+    action.payload.uid = yield select(makeSelectCurrentUserField('uid'));
 
     const result = yield call(formSaga, 'account-settings', saveSettings, action.payload);
 

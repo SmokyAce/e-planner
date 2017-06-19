@@ -9,13 +9,15 @@ import api from './api';
 import firebaseTools, { firebaseAuth } from '../../../utils/firebaseTools';
 // selectors
 import { makeSelectLoggedIn } from '../../AppAuth/modules/selectors';
-import { makeSelectEventsListOfIds } from '../../App/modules/selectors';
+import { makeSelectEventsListOfIds, makeSelectAppRestoreState } from '../../App/modules/selectors';
 // actions
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import { REHYDRATE } from 'redux-persist/constants';
 import * as authActionTypes from '../../AppAuth/modules/actionTypes';
 import * as eventActions from './events/actions';
 import * as userActions from './user';
-import * as statusActions from './status';
+import * as syncActions from './sync';
+import * as connectionActions from './connection';
 
 
 function * addEvent(action) {
@@ -79,6 +81,44 @@ export function * updateUserInfoFlow() {
     }
 }
 
+export function * appSyncFlow() {
+    try {
+        yield call(delay, 100);
+
+        const userData = yield fork(fetchUserData);
+
+        yield take(userActions.type.FETCH_USER_DATA_SUCCESS);
+
+        // Take list of events ids from redux store and compare with events from user data
+        // if are not equals make fetch events from DB
+        const listOfEventsIds = yield select(makeSelectEventsListOfIds());
+
+        if (!isEqual(keys(userData.events).sort(), listOfEventsIds.toJS().sort())) {
+            yield fork(fetchEvents);
+        }
+
+        yield put(syncActions.finishSync());
+    } catch (error) {
+        yield put(syncActions.errorSync(error));
+    }
+}
+
+/**
+ * Fetch user data from DB
+ */
+export function * fetchUserData() {
+    yield put({ type: userActions.type.FETCH_USER_DATA_REQUEST });
+
+    const { response, error } = yield call(api.fetchUserData);
+
+    if (response) {
+        yield put(userActions.fetchUserDataSuccess(response));
+        return response;
+    }
+    yield put(userActions.fetchUserDataFailure(error));
+    throw new Error(error);
+}
+
 // //////////////////////////////////////
 // watchers
 // //////////////////////////////////////
@@ -119,50 +159,43 @@ export function * fetchUserDataFlow() {
 }
 
 /**
- * Fetch user data from DB
- */
-export function * fetchUserData() {
-    yield put({ type: userActions.type.FETCH_USER_DATA_REQUEST });
-
-    const { response, error } = yield call(api.fetchUserData);
-
-    if (response) {
-        yield put(userActions.fetchUserDataSuccess(response));
-    } else {
-        yield put(userActions.fetchUserDataFailure(error));
-    }
-    return response;
-}
-
-
-/**
- * Each action what consist 'REQUEST' start:
- * - sync process
+ * For each action, what has 'REQUEST':
  * - show loader
- * After 'SUCCESS' action this processes will be end
+ * After 'SUCCESS' action will:
+ * - hide loader
  */
-export function * syncDataFlow() {
+export function * loadingFlow() {
     while (true) {
         yield take(action => action.type.indexOf('REQUEST') > 0);
 
         yield put(showLoading());
-        yield put(statusActions.changeAppSyncStatus(false));
 
-        const result = yield race({
+        yield race({
             success: take(action => action.type.indexOf('SUCCESS') > 0),
-            failure: take(action => action.type.indexOf('FAILURE') > 0)
+            failure: take(action => action.type.indexOf('FAILURE') > 0),
+            delay  : call(delay, 3000)
         });
-
-        if (result.success) {
-            yield put(statusActions.changeAppSyncStatus(true));
-        } else {
-            yield put(statusActions.changeAppSyncStatus(result.failure.error));
-        }
 
         yield put(hideLoading());
     }
 }
 
+/**
+ * watch for start sync action
+ */
+export function * watchSync() {
+    while (true) {
+        yield take(syncActions.types.APP_START_SYNC);
+
+        const appRestored = yield select(makeSelectAppRestoreState());
+
+        if (!appRestored) {
+            yield take(REHYDRATE);
+        }
+
+        yield fork(appSyncFlow);
+    }
+}
 
 const connectionStatusWrapper = (connStatusChannel) => ({
     connectionStatus(snapshot) {
@@ -192,7 +225,7 @@ export function * connectionObserver() {
     while (true) {
         const result = yield take(connectionStatusChannel);
 
-        yield put(statusActions.changeFirebaseConnectionStatus(result));
+        yield put(connectionActions.changeFirebaseConnectionStatus(result ? 'Online' : 'Offline'));
     }
 }
 
@@ -249,30 +282,9 @@ export function * fetchEventsFlow() {
     }
 }
 
-export function * initializationFlow() {
-    while (true) {
-        yield take(statusActions.types.APP_INITIALIZATION_START);
-
-        yield call(appInitializationFlow);
-
-        yield put(statusActions.changeAppInitializationStatus('finish'));
-    }
-}
-
-export function * appInitializationFlow() {
-    const userData = yield call(fetchUserData);
-
-    // Take list of events ids from redux store and compare with events from user data
-    // if are not equals make fetch events from DB
-    const listOfEventsIds = yield select(makeSelectEventsListOfIds());
-
-    if (!isEqual(keys(userData.events).sort(), listOfEventsIds.toJS().sort())) {
-        yield fork(fetchEvents);
-    }
-}
-
-initializationFlow.isDaemon = true;
-syncDataFlow.isDaemon = true;
+// daemon watchers
+watchSync.isDaemon = true;
+loadingFlow.isDaemon = true;
 addEventsFlow.isDaemon = true;
 fetchEventsFlow.isDaemon = true;
 logoutFlow.isDaemon = true;
@@ -285,13 +297,12 @@ connectionObserver.isDaemon = true;
 // Sagas are fired once at the start of an app and can be thought of as processes running
 // in the background, watching actions dispatched to the store.
 export default [
-    syncDataFlow,
+    watchSync,
+    loadingFlow,
     addEventsFlow,
     fetchEventsFlow,
     logoutFlow,
     // Firebase observers
     connectionObserver,
-    authObserver,
-    // App initialization flow
-    initializationFlow
+    authObserver
 ];

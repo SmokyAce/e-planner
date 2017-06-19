@@ -22,8 +22,9 @@ const styles = {
 
 class App extends React.Component {
 
-    componentWillMount() {
-        this.props.onSetInitStatus('start');
+    constructor(props) {
+        super(props);
+        this.props.startSync();
     }
 
     render = () => {
@@ -45,7 +46,7 @@ class App extends React.Component {
         return (
             <Sidebar {...sidebarProps}>
                 <LoadingBar style={styles.loadingBar} />
-                <Header>{ children }</Header>
+                <Header />
                 <div className='app-container container-fluide'>
                     { children }
                 </div>
@@ -56,11 +57,11 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-    children       : PropTypes.element,
-    sidebar        : PropTypes.instanceOf(Immutable.Map).isRequired,
-    onSetOpen      : PropTypes.func.isRequired,
-    onSetDocked    : PropTypes.func.isRequired,
-    onSetInitStatus: PropTypes.func.isRequired
+    children   : PropTypes.element,
+    sidebar    : PropTypes.instanceOf(Immutable.Map).isRequired,
+    onSetOpen  : PropTypes.func.isRequired,
+    onSetDocked: PropTypes.func.isRequired,
+    startSync  : PropTypes.func.isRequired
 };
 
 export default App;

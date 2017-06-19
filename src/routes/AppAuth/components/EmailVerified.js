@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import messages from '../modules/messages';
 
 
-const EmailVerified = ({ emailVerified, sendEmailVerification }) => {
+const EmailVerified = ({ sendEmailVerification }) => {
     /* TODO: Реализовать интересное ожидание для пользователя
     Это может быть:
     - красивая анимация;
@@ -35,7 +35,6 @@ const EmailVerified = ({ emailVerified, sendEmailVerification }) => {
 };
 
 EmailVerified.propTypes = {
-    emailVerified        : PropTypes.bool,
     sendEmailVerification: PropTypes.func
 };
 

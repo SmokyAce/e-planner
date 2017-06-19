@@ -9,9 +9,9 @@ import {
 } from '../../routes/App/modules/selectors';
 
 
-const AppStatus = ({ connection, isSync }) => {
+const AppStatus = ({ connection, synchronization }) => {
     const renderSyncStatus = () => {
-        if (!isSync) {
+        if (synchronization === 'start') {
             return (
                 <li>
                     <a><i className='fa fa-refresh fa-spin fa-lg fa-fw' /> </a>
@@ -38,14 +38,14 @@ const AppStatus = ({ connection, isSync }) => {
 };
 
 AppStatus.propTypes = {
-    connection: PropTypes.string,
-    isSync    : PropTypes.bool
+    connection     : PropTypes.string,
+    synchronization: PropTypes.string
 };
 
 
 const mapStateToProps = state => createStructuredSelector({
-    connection: makeSelectAppConnectionState(),
-    isSync    : makeSelectAppSyncState()
+    connection     : makeSelectAppConnectionState(),
+    synchronization: makeSelectAppSyncState()
 });
 
 export default connect(mapStateToProps, null)(AppStatus);

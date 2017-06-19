@@ -37,8 +37,8 @@ export const onSetWidth = (width) => ({
 // The initial state of the App
 const initialState = fromJS({
     sidebarOpen  : false,
-    sidebarDocked: (window.innerWidth > 800),
-    pullRight    : true,
+    sidebarDocked: false,
+    pullRight    : false,
     sidebarWidth : 256
 });
 

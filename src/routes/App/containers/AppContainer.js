@@ -7,7 +7,7 @@ import { makeSelectSidebar } from '../modules/selectors';
 // actions
 import { bindActionCreators } from 'redux';
 import { onSetOpen, onSetDocked } from '../modules/sidebar';
-import { changeAppInitializationStatus } from '../modules/status';
+import { startSync } from '../modules/sync';
 
 
 const mapStateToProps = (state) => createStructuredSelector({
@@ -15,9 +15,9 @@ const mapStateToProps = (state) => createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-    onSetOpen      : (open) => onSetOpen(open),
-    onSetDocked    : (docked) => onSetDocked(docked),
-    onSetInitStatus: (status) => changeAppInitializationStatus(status)
+    onSetOpen  : (open) => onSetOpen(open),
+    onSetDocked: (docked) => onSetDocked(docked),
+    startSync
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

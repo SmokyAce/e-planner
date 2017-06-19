@@ -15,6 +15,11 @@ const makeSelectSidebarDocked = () => createSelector(
     (globalState) => globalState.getIn(['sidebar', 'sidebarDocked'])
 );
 
+const makeSelectSidebarPullRight = () => createSelector(
+    selectApp,
+    (globalState) => globalState.getIn(['sidebar', 'pullRight'])
+);
+
 const makeSelectSidebarOpen = () => createSelector(
     selectApp,
     (globalState) => globalState.getIn(['sidebar', 'sidebarOpen'])
@@ -69,12 +74,17 @@ const makeSelectEventsSettingsFormState = () => createSelector(
 
 const makeSelectAppConnectionState = () => createSelector(
     selectApp,
-    (globalState) => globalState.getIn(['status', 'connection'])
+    (globalState) => globalState.get('connection')
 );
 
 const makeSelectAppSyncState = () => createSelector(
     selectApp,
-    (globalState) => globalState.getIn(['status', 'isSync'])
+    (globalState) => globalState.getIn(['sync', 'status'])
+);
+
+const makeSelectAppRestoreState = () => createSelector(
+    selectApp,
+    (globalState) => globalState.get('restored')
 );
 
 export {
@@ -83,14 +93,18 @@ export {
     makeSelectSidebar,
     makeSelectSidebarDocked,
     makeSelectSidebarOpen,
+    makeSelectSidebarPullRight,
     // user
     makeSelectCurrentUser,
     makeSelectCurrentUserEmail,
     makeSelectCurrentUserEvents,
     makeSelectCurrentUserField,
-    // status
+    // connection status
     makeSelectAppConnectionState,
+    // sync status
     makeSelectAppSyncState,
+    // rehydrate
+    makeSelectAppRestoreState,
     // events
     makeSelectEventsByIds,
     makeSelectEventsOptionsById,
