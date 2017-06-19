@@ -3,6 +3,7 @@ import { FormattedDate, FormattedMessage } from 'react-intl';
 import messages from './messages';
 import './HomeView.scss';
 
+
 export const HomeView = () => {
     return (
         <div>

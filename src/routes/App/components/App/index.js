@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 // components
 import Sidebar from '../Sidebar';
 import SidebarContent from '../../containers/SidebarContent';
-import Header from '../../../../components/Header';
+import Header from '../../../../components/AppHeader';
 import { ImmutableLoadingBar as LoadingBar } from 'react-redux-loading-bar';
 // style
 import './App.scss';

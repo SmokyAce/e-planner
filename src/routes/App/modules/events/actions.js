@@ -24,7 +24,7 @@ export const SAVE_EVENT_SETTINGS        = 'SAVE_EVENT_SETTINGS';
 
 export const types = {
     FETCH_EVENT_REQUEST
-}
+};
 
 // ------------------------------------
 // Actions

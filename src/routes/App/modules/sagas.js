@@ -36,7 +36,7 @@ function * addEvent(action) {
 }
 
 
-export function* fetchEvents() {
+export function * fetchEvents() {
     const { response, error } = yield call(api.fetchEvents);
 
     if (response) {
@@ -68,7 +68,7 @@ export function * setUserData(userData) {
 /**
  * Fetch user data from DB
  */
-export function* fetchUserData() {
+export function * fetchUserData() {
     yield put({ type: userActions.type.FETCH_USER_DATA_REQUEST });
 
     const { response, error } = yield call(api.fetchUserData);
