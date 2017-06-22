@@ -14,7 +14,7 @@ import { makeSelectEventsListOfIds, makeSelectAppRestoreState } from '../../App/
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { REHYDRATE } from 'redux-persist/constants';
 import * as authActionTypes from '../../AppAuth/modules/actionTypes';
-import * as eventActions from './events/actions';
+import * as eventActions from './events';
 import * as userActions from './user';
 import * as syncActions from './sync';
 import * as connectionActions from './connection';
@@ -24,14 +24,14 @@ import * as connectionActions from './connection';
 // Events
 // /////////////////////
 function * addEvent(action) {
-    yield put({ type: eventActions.ADD_EVENT_REQUEST });
+    yield put({ type: eventActions.addEventRequest });
 
     const response = yield call(api.addEvent, action.payload);
 
     if (!response.error) {
-        yield put({ type: eventActions.ADD_EVENT_SUCCESS, payload: response.id });
+        yield put(eventActions.addEventSuccess(response.id));
     } else {
-        yield put({ type: eventActions.ADD_EVENT_FAILURE, payload: response.id, error: response.error });
+        yield put(eventActions.addEventFailure(response.id, response.error));
     }
 }
 
@@ -284,7 +284,7 @@ export function * authObserver() {
 
 export function * addEventsFlow() {
     while (true) {
-        const action = yield take(eventActions.ADD_EVENT);
+        const action = yield take(eventActions.types.ADD_EVENT);
 
         yield fork(addEvent, action);
     }

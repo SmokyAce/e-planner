@@ -1,10 +1,8 @@
-import { take, call, put, race, fork, select, cancel, takeLatest } from 'redux-saga/effects';
+import { take, call, put, race, fork, cancel, takeLatest } from 'redux-saga/effects';
 import { Map } from 'immutable';
 import { browserHistory } from 'react-router';
 // api
 import firebaseTools from '../../../utils/firebaseTools';
-// selectors
-import { makeSelectEmailVerified } from './selectors';
 // actions types
 import * as actionTypes from './actionTypes';
 import { LOCATION_CHANGE } from '../../../store/reducers/location';
@@ -30,9 +28,7 @@ function * authorize(authType) {
             userInfo = (result.user) ? result.user : result;
 
             // check if verification need
-            const verified = yield select(makeSelectEmailVerified());
-
-            if (!verified) {
+            if (!userInfo.emailVerified) {
                 yield put(sendEmailVerificationRequest());
             }
         } else if (authType.registration) {

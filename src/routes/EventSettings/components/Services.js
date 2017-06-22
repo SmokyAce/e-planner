@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import Checkbox from './Checkbox';
-import { toggleEventService } from '../../App/modules/events/actions';
+import { toggleEventService } from '../../App/modules/events';
 
 
 const Services = ({ dispatch, services, eventId, messages }) => {
