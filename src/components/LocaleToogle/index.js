@@ -1,31 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavDropdown, MenuItem } from 'react-bootstrap';
-import messages from './messages';
 import { appLocales } from '../../i18n';
-
+import DropdownMenu from './DropdownMenuMUI';
 
 /*
  * LanguageToggle
  */
-const LocaleToggle = ({ locale, onLocaleToggle, className }) => {
+const LocaleToggle = ({ locale, onLocaleToggle, className, style }) => {
     return (
-        <NavDropdown eventKey='1' title={messages[locale].defaultMessage} id='lang-dropdown'
-            onSelect={onLocaleToggle} className={className}
-        >
-            { appLocales.map(lang =>
-                (<MenuItem disabled={lang === locale} eventKey={lang} key={lang}>
-                    {messages[lang].defaultMessage}
-                </MenuItem>)
-            )}
-        </NavDropdown>
+        <DropdownMenu
+            onChange={onLocaleToggle}
+            className={className}
+            data={appLocales}
+            defaultValue={locale}
+            style={style}
+        />
     );
 };
 
 LocaleToggle.propTypes = {
     onLocaleToggle: PropTypes.func,
     locale        : PropTypes.string,
-    className     : PropTypes.string
+    className     : PropTypes.string,
+    style         : PropTypes.object
 };
 
 export default LocaleToggle;
