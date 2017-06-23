@@ -16,6 +16,7 @@ export const HomeView = () => {
                 className='duck'
                 src='/img/Duck.jpg'
             />
+            <div style={{ height: '1000px' }} />
         </div>
     );
 };

@@ -1,73 +1,23 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-
-import LocaleToggle from '../../containers/LocaleToogle';
-// Material-UI
+// Components
 import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
-
+import LoginButton from '../FlatButton';
+import { FormattedMessage } from 'react-intl';
 // styles
 import './Header.scss';
+// intl
 import messages from './messages';
 
 
-const Title = () => (
-    <FormattedMessage{...messages.description} />
-);
-
-class Login extends React.Component {
-    static muiName = 'FlatButton';
-
-    render() {
-        return (
-            <div>
-                <LocaleToggle {...this.props} />
-                <FlatButton {...this.props} label='Login' />
-            </div>
-        );
-    }
-}
-
 const Header = () => {
     return (
-        <div>
+        <div className='header-cont'>
             <AppBar
-                title={<Title />}
-                iconElementRight={<Login />}
-                className='text-left'
+                title={<FormattedMessage{...messages.description} />}
+                iconElementRight={<LoginButton label={<FormattedMessage{...messages.loginBtn} />} />}
             />
         </div>
     );
-    // return (
-    //     <div id='header'>
-    //         <Navbar inverse fluid collapseOnSelect>
-    //             <Navbar.Header>
-    //                 <Navbar.Brand>
-    //                     <Link to='/'>
-    //                         <FormattedMessage{...messages.description} />
-    //                     </Link>
-    //                 </Navbar.Brand>
-    //                 <Navbar.Toggle />
-    //             </Navbar.Header>
-    //             <ul className='nav navbar-nav'>
-    //                 <li>
-    //                     <Link to='/app' activeClassName='route--active'>
-    //                         <FormattedMessage {...messages.planner} />
-    //                     </Link>
-    //                 </li>
-    //             </ul>
-
-    //             <ul className='nav navbar-nav navbar-right' style={{ marginRight: '0px' }}>
-    //                 <LocaleToggle />
-    //                 <li key={3}>
-    //                     <Link to='/login'>
-    //                         <FormattedMessage {...messages.loginBtn} />
-    //                     </Link>
-    //                 </li>
-    //             </ul>
-    //         </Navbar>
-    //     </div>
-    // );
 };
 
 export default Header;

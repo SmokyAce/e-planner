@@ -6,6 +6,15 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
 
+const styles = {
+    labelStyle: {
+        color: '#fff'
+    },
+    style: {
+        margin: '-10px 0px 0px'
+    }
+};
+
 class DropDownMenuMUI extends React.Component {
 
     handleChange = (event, index, value) => this.props.onChange(value);
@@ -16,7 +25,12 @@ class DropDownMenuMUI extends React.Component {
         const { defaultValue, data, style } = this.props;
 
         return (
-            <DropDownMenu value={defaultValue} onChange={this.handleChange} labelStyle={style}>
+            <DropDownMenu
+                value={defaultValue}
+                onChange={this.handleChange}
+                labelStyle={styles.labelStyle}
+                style={{ ...styles.style, style }}
+            >
                 {data.map(item =>
                     (<MenuItem key={item.key} value={item.key} primaryText={item.value} />)
                 )}
