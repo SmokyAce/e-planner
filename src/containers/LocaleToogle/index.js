@@ -1,6 +1,6 @@
 // components
 import { connect } from 'react-redux';
-import LocaleToggle from '../../components/LocaleToogle';
+import LocaleToggle from '../../components/LocaleToogle_';
 // selectors
 import { createSelector } from 'reselect';
 import { selectLocale } from '../LanguageProvider/selectors';

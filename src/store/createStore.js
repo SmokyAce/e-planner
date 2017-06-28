@@ -1,6 +1,6 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import { browserHistory } from 'react-router';
-import { fromJS, Iterable } from 'immutable';
+import { Iterable } from 'immutable';
 
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
@@ -49,7 +49,6 @@ export default (initialState = {}) => {
     // ======================================================
     const store = createStore(
         makeRootReducer(),
-        fromJS(initialState),
         composeEnhancers(
             applyMiddleware(...middleware),
             ...enhancers

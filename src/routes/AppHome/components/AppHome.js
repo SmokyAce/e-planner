@@ -32,15 +32,15 @@ export const AppHome = ({ docked, pullRight, restored, onSetDocked, onSetOpen, o
     return (
         <div>
             <h2><FormattedMessage {...messages.greeting} /></h2>
-            <button className='btn btn-primary' onClick={() => onSetOpen(true)}>
-                Open
-            </button>
-            <button className='btn btn-primary' onClick={() => onSetDocked(docked)}>
-                Docked
-            </button>
-            <button className='btn btn-primary' onClick={() => onChangeSide(!pullRight)}>
-                Change Side
-            </button>
+            <div className='col-md-3' />
+            <div className='col-md-6'>
+                <div className='btn-group btn-group-justified'>
+                    <a className='btn btn-default' onClick={() => onSetOpen(true)}>Open</a>
+                    <a className='btn btn-default' onClick={() => onSetDocked(docked)}>Docked</a>
+                    <a className='btn btn-default' onClick={() => onChangeSide(!pullRight)}>Change Side</a>
+                </div>
+            </div>
+            <div className='col-md-3' />
         </div>
     );
 };

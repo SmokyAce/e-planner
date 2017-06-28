@@ -19,16 +19,16 @@ import './UserMenu.scss';
 
 
 class UserMenu extends React.Component {
-
     render() {
         const { currentUser } = this.props;
 
         if (currentUser && currentUser.get('uid')) {
             return (
-                <NavDropdown title={
-                    (currentUser.get('displayName') === '' || !currentUser.get('displayName'))
-                        ? currentUser.get('email') : currentUser.get('displayName')
-                }
+                <NavDropdown
+                    title={
+                        (currentUser.get('displayName') === '' || !currentUser.get('displayName'))
+                            ? currentUser.get('email') : currentUser.get('displayName')
+                    }
                     id='user-dropdown' eventKey='2'
                 >
                     <LinkContainer to='/app/profile'>

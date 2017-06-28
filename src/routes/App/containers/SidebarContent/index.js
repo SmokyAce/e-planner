@@ -37,7 +37,6 @@ const styles = {
 };
 
 class SidebarContent extends React.Component {
-
     shouldComponentUpdate = nextProps => {
         return !this.props.listOfEventsId.equals(nextProps.listOfEventsId) ||
             !this.props.formState.equals(nextProps.formState);

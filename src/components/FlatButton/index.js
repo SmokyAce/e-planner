@@ -7,9 +7,7 @@ class FlatButton extends React.Component {
     static muiName = 'FlatButton';
 
     render() {
-        return (
-            <FlatButtonMUI {...this.props} />
-        );
+        return (<FlatButtonMUI {...this.props} />);
     }
 }
 

@@ -5,7 +5,6 @@ import { loginRequest } from '../modules/actions';
 
 const LoginHOC = (Component) => {
     class HOC extends React.Component {
-
         extProps = {
             type    : 'login',
             onSubmit: loginRequest

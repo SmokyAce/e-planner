@@ -8,7 +8,7 @@ import messages from './messages';
 const TitlePanel = (props) => {
     return (
         <div style={props.style}>
-            <Navbar inverse>
+            <Navbar>
                 <Navbar.Header>
                     <div className='navbar-brand'>
                         <FormattedMessage {...messages.titlePanel} />

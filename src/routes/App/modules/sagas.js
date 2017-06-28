@@ -163,7 +163,7 @@ export function * fetchUserDataFlow() {
         try {
             response = yield call(api.fetchUserData);
 
-            if (response === null) {  // take user data from firebase auth
+            if (response === null) { // take user data from firebase auth
                 response = omit(firebaseAuth.currentUser.toJSON(),
                     ['appName', 'authDomain', 'redirectEventId', 'stsTokenManager']);
                 response.isSync = false;

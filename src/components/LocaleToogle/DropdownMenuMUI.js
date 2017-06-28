@@ -16,7 +16,6 @@ const styles = {
 };
 
 class DropDownMenuMUI extends React.Component {
-
     handleChange = (event, index, value) => this.props.onChange(value);
 
     static muiName = 'DropDownMenu';

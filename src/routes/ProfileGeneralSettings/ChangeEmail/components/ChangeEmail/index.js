@@ -32,7 +32,6 @@ const renderField = ({ input, label, type, meta: { touched, visited, error } }) 
 );
 
 class ChangeEmail extends React.Component {
-
     render() {
         const { submitting, currentEmail, error, changedEmailSucceeded } = this.props;
 

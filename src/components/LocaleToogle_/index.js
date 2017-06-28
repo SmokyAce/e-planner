@@ -13,9 +13,9 @@ const LocaleToggle = ({ locale, onLocaleToggle, className }) => {
         <NavDropdown eventKey='1' title={messages[locale].defaultMessage} id='lang-dropdown'
             onSelect={onLocaleToggle} className={className}
         >
-            { appLocales.map(lang =>
-                (<MenuItem disabled={lang === locale} eventKey={lang} key={lang}>
-                    {messages[lang].defaultMessage}
+            {appLocales.map(item =>
+                (<MenuItem disabled={item.key === locale} eventKey={item.key} key={item.key}>
+                    {item.value}
                 </MenuItem>)
             )}
         </NavDropdown>

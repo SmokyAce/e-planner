@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 
 
 class SelectList extends React.Component {
-
     shouldComponentUpdate = (nextState) => !isEqual(nextState, this.props);
 
     render() {
@@ -25,9 +24,9 @@ class SelectList extends React.Component {
                     name={`select ${label}`}
                     value={input.value === '' ? defaultValue : input.value}
                 >
-                    {data.map(dataOption =>
-                        (<option value={dataOption} key={dataOption}>
-                            {messages[dataOption].defaultMessage}
+                    {data.map(item =>
+                        (<option value={item.key} key={item.key}>
+                            {item.value}
                         </option>)
                     )}
                 </select>

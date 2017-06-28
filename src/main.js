@@ -18,7 +18,7 @@ const config = {
     whitelist: ['language', 'app'],
     blacklist: ['auth', 'location', 'form'],
     storage  : localForage,
-    keyPrefix: 'e-planner:'
+    keyPrefix: 'planner:'
 };
 
 // Persist store

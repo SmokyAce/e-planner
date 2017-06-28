@@ -19,10 +19,10 @@ export const CoreLayout = ({ children }) => {
     return (
         <div className='text-center'>
             <Header />
-            <div className='core-layout__viewport container'>
+            <div className='core-layout'>
                 {children}
+                <Footer />
             </div>
-            <Footer />
         </div>
     );
 };

@@ -59,8 +59,8 @@ const ZEN_ACTION_HANDLERS = {
     },
     [RECIEVE_ZEN]: (state, action) => {
         return state.set('zens', state.get('zens').concat(action.payload))
-                    .set('current', action.payload.id)
-                    .set('fetching', false);
+            .set('current', action.payload.id)
+            .set('fetching', false);
     },
     [SAVE_CURRENT_ZEN]: (state) => {
         const current = state.get('current');

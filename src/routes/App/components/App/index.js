@@ -21,7 +21,6 @@ const styles = {
 };
 
 class App extends React.Component {
-
     constructor(props) {
         super(props);
         this.props.startSync();
@@ -53,7 +52,6 @@ class App extends React.Component {
             </Sidebar>
         );
     }
-
 }
 
 App.propTypes = {

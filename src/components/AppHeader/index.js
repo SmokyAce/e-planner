@@ -46,7 +46,7 @@ const Header = ({ landingPage }) => {
 
     return (
         <div id='header'>
-            <Navbar inverse fluid collapseOnSelect>
+            <Navbar fluid collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
                         <Link to='/'>

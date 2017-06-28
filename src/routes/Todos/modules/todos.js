@@ -101,9 +101,9 @@ const TODOS_ACTION_HANDLERS = {
     },
     [DELETE_TODO]: (state, action) => {
         return state
-                .set('todoList', state.get('todoList')
+            .set('todoList', state.get('todoList')
                 .filter(id => id !== action.id))
-                .deleteIn(['entries', action.id]);
+            .deleteIn(['entries', action.id]);
     },
     [SET_VISIBILITY_FILTER]: (state, action) => {
         return state.set('filter', action.filter);

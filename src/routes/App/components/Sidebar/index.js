@@ -7,7 +7,6 @@ import './Sidebar.scss';
 
 const HOC = (Component) => {
     class SidebarHOC extends React.Component {
-
         componentWillMount = () => {
             const mql = window.matchMedia('(min-width: 800px)');
 

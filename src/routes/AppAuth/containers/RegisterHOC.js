@@ -5,7 +5,6 @@ import { registerRequest } from '../modules/actions';
 
 const RegisterHOC = (Component) => {
     class HOC extends React.Component {
-
         extProps = {
             type    : 'register',
             onSubmit: registerRequest

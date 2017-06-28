@@ -152,29 +152,29 @@ config.module.rules.push({
     }
 })
 
-    // Fonts
-    // ------------------------------------
-    ;[
-        ['woff', 'application/font-woff'],
-        ['woff2', 'application/font-woff2'],
-        ['otf', 'font/opentype'],
-        ['ttf', 'application/octet-stream'],
-        ['eot', 'application/vnd.ms-fontobject'],
-        ['svg', 'image/svg+xml']
-    ].forEach((font) => {
-        const extension = font[0];
-        const mimetype = font[1];
+// Fonts
+// ------------------------------------
+;[
+    ['woff', 'application/font-woff'],
+    ['woff2', 'application/font-woff2'],
+    ['otf', 'font/opentype'],
+    ['ttf', 'application/octet-stream'],
+    ['eot', 'application/vnd.ms-fontobject'],
+    ['svg', 'image/svg+xml']
+].forEach((font) => {
+    const extension = font[0];
+    const mimetype = font[1];
 
-        config.module.rules.push({
-            test   : new RegExp(`\\.${extension}$`),
-            loader : 'url-loader',
-            options: {
-                name : 'fonts/[name].[ext]',
-                limit: 10000,
-                mimetype
-            }
-        });
+    config.module.rules.push({
+        test   : new RegExp(`\\.${extension}$`),
+        loader : 'url-loader',
+        options: {
+            name : 'fonts/[name].[ext]',
+            limit: 10000,
+            mimetype
+        }
     });
+});
 
 // HTML Template
 // ------------------------------------
@@ -194,17 +194,17 @@ if (__PROD__) {
     config.plugins.push(new OfflinePlugin({
         relativePaths: false,
         publicPath   : '/',
-            // No need to cache .htaccess. See http://mxs.is/googmp,
-            // this is applied before any match in `caches` section
+        // No need to cache .htaccess. See http://mxs.is/googmp,
+        // this is applied before any match in `caches` section
         excludes     : ['.htaccess'],
         caches       : {
             main      : [':rest:'],
-                // All chunks marked as `additional`, loaded after main section
-                // and do not prevent SW to install. Change to `optional` if
-                // do not want them to be preloaded at all (cached only when first loaded)
+            // All chunks marked as `additional`, loaded after main section
+            // and do not prevent SW to install. Change to `optional` if
+            // do not want them to be preloaded at all (cached only when first loaded)
             additional: ['*.js']
         },
-            // Removes warning for about `additional` section usage
+        // Removes warning for about `additional` section usage
         safeToUseOptionalCaches: true,
         AppCache               : false
     })
