@@ -2,29 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Material-UI
-import DropDownMenu from 'material-ui/DropDownMenu';
+import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
 
 const styles = {
     labelStyle: {
-        color: '#fff'
+        color: '#7b8994'
     },
     style: {
-        margin: '-10px 0px 0px'
+        margin: '-10px 0px 0px',
+        width : 'auto'
     }
 };
 
-class DropDownMenuMUI extends React.Component {
+class SelectList extends React.Component {
     handleChange = (event, index, value) => this.props.onChange(value);
 
-    static muiName = 'DropDownMenu';
+    static muiName = 'SelectField';
 
     render() {
         const { defaultValue, data, style } = this.props;
 
         return (
-            <DropDownMenu
+            <SelectField
                 value={defaultValue}
                 onChange={this.handleChange}
                 labelStyle={styles.labelStyle}
@@ -33,16 +34,16 @@ class DropDownMenuMUI extends React.Component {
                 {data.map(item =>
                     (<MenuItem key={item.key} value={item.key} primaryText={item.value} />)
                 )}
-            </DropDownMenu>
+            </SelectField>
         );
     }
 }
 
-DropDownMenuMUI.propTypes = {
+SelectList.propTypes = {
     data        : PropTypes.array,
     defaultValue: PropTypes.string,
     onChange    : PropTypes.func,
     style       : PropTypes.object
 };
 
-export default DropDownMenuMUI;
+export default SelectList;

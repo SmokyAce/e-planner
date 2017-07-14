@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { appLocales } from '../../i18n';
-import DropdownMenu from './DropdownMenuMUI';
+import SelectList from '../SelectList';
 
 
 /*
@@ -9,7 +9,7 @@ import DropdownMenu from './DropdownMenuMUI';
  */
 const LocaleToggle = ({ locale, onLocaleToggle, className, style }) => {
     return (
-        <DropdownMenu
+        <SelectList
             onChange={onLocaleToggle}
             className={className}
             data={appLocales}

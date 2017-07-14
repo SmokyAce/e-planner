@@ -40,9 +40,7 @@ class AppContainer extends React.Component {
             <Provider store={store}>
                 <LanguageProvider messages={messages}>
                     <MuiThemeProvider muiTheme={muiTheme}>
-                        <div style={{ height: '100%' }}>
-                            <Router history={browserHistory} children={routes} />
-                        </div>
+                        <Router history={browserHistory} children={routes} />
                     </MuiThemeProvider>
                 </LanguageProvider>
             </Provider>

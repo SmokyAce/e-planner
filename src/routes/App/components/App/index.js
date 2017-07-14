@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 // components
 import Sidebar from '../Sidebar';
 import SidebarContent from '../../containers/SidebarContent';
-import Header from '../../../../components/AppHeader';
+// import Header from '../../../../components/AppHeader';
 import { ImmutableLoadingBar as LoadingBar } from 'react-redux-loading-bar';
 // style
 import './App.scss';
@@ -45,7 +45,7 @@ class App extends React.Component {
         return (
             <Sidebar {...sidebarProps}>
                 <LoadingBar style={styles.loadingBar} />
-                <Header />
+                {/* <Header /> */}
                 <div className='app-container container-fluide'>
                     { children }
                 </div>
