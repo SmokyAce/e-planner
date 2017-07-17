@@ -11,6 +11,13 @@ import './Header.scss';
 // intl
 import messages from './messages';
 
+
+const styles = {
+    iconStyleRight: {
+        margin: 'auto'
+    }
+};
+
 const SignIn = () => (
     <FlatButton
         label={<FormattedMessage{...messages.loginBtn} />}
@@ -26,6 +33,7 @@ class Header extends React.Component {
                     title={<Link to='/app'><FormattedMessage{...messages.description} /></Link>}
                     showMenuIconButton={false}
                     iconElementRight={this.props.loggedIn ? <UserMenu /> : <SignIn />}
+                    iconStyleRight={styles.iconStyleRight}
                 />
             </div>
         );

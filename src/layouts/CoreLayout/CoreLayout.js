@@ -8,13 +8,13 @@ import Footer from '../../components/Footer';
 
 
 export const CoreLayout = ({ children, loggedIn }) => {
-    // if (children.props.location && children.props.location.pathname.indexOf('app') >= 0) {
-    //     return (
-    //         <div className='text-center'>
-    //             {children}
-    //         </div>
-    //     );
-    // }
+    if (children.props.location && children.props.location.pathname.indexOf('app') >= 0) {
+        return (
+            <div className='text-center'>
+                {children}
+            </div>
+        );
+    }
 
     return (
         <div className='text-center'>

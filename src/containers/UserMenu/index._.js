@@ -2,14 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // components
 import { connect } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import Avatar from 'material-ui/Avatar';
-import IconMenu from 'material-ui/IconMenu';
-import IconButton from 'material-ui/IconButton';
-import MenuItem from 'material-ui/MenuItem';
-import Divider from 'material-ui/Divider';
-import { Link } from 'react-router';
-// import { NavDropdown, MenuItem } from 'react-bootstrap';
+import { NavDropdown, MenuItem } from 'react-bootstrap';
 import Spinner from '../../components/Spinner';
 // actions
 import { bindActionCreators } from 'redux';
@@ -23,43 +18,34 @@ import messages from './messages';
 import './UserMenu.scss';
 
 
-const styles = {
-    menuStyle: {
-        width: '200px'
-    }
-};
-
 class UserMenu extends React.Component {
     render() {
         const { currentUser } = this.props;
 
         if (currentUser && currentUser.get('uid')) {
-            const title = (currentUser.get('displayName') === '' || !currentUser.get('displayName'))
-                ? currentUser.get('email') : currentUser.get('displayName');
-
             return (
-                <IconMenu
-                    anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-                    iconButtonElement={
-                        <IconButton style={{ padding: '0px' }}>
-                            <Avatar>{title[0]}</Avatar>
-                        </IconButton>}
-                    menuStyle={styles.menuStyle}
+                <NavDropdown
+                    title={
+                        (currentUser.get('displayName') === '' || !currentUser.get('displayName'))
+                            ? currentUser.get('email') : currentUser.get('displayName')
+                    }
+                    id='user-dropdown' eventKey='2'
                 >
-                    <MenuItem
-                        primaryText={<FormattedMessage {...messages.profileBtn} />}
-                        containerElement={<Link to='/app/profile' />}
-                    />
-                    <Divider />
+                    <LinkContainer to='/app/profile'>
+                        <MenuItem eventKey='2.2'>
+                            <FormattedMessage {...messages.profileBtn} />
+                        </MenuItem>
+                    </LinkContainer>
+                    <MenuItem divider />
                     <MenuItem onClick={this.props.logoutRequest}>
                         <FormattedMessage {...messages.logoutBtn} />
                     </MenuItem>
-                </IconMenu>
+                </NavDropdown>
             );
         }
 
         return (
-            <li key={1} style={{ listStyleType: 'none' }}>
+            <li key={1}>
                 <Spinner />
             </li>
         );

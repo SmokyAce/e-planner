@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 // components
 import Sidebar from '../Sidebar';
 import SidebarContent from '../../containers/SidebarContent';
-// import Header from '../../../../components/AppHeader';
+import Header from '../../../../components/Header';
 import { ImmutableLoadingBar as LoadingBar } from 'react-redux-loading-bar';
 // style
 import './App.scss';
@@ -27,7 +27,7 @@ class App extends React.Component {
     }
 
     render = () => {
-        const { sidebar, onSetOpen, onSetDocked, children } = this.props;
+        const { sidebar, loggedIn, onSetOpen, onSetDocked, children } = this.props;
 
         const content = <SidebarContent style={{ width: sidebar.get('sidebarWidth') }} />;
 
@@ -45,7 +45,7 @@ class App extends React.Component {
         return (
             <Sidebar {...sidebarProps}>
                 <LoadingBar style={styles.loadingBar} />
-                {/* <Header /> */}
+                <Header loggedIn={loggedIn} />
                 <div className='app-container container-fluide'>
                     { children }
                 </div>
@@ -57,6 +57,7 @@ class App extends React.Component {
 App.propTypes = {
     children   : PropTypes.element,
     sidebar    : PropTypes.instanceOf(Immutable.Map).isRequired,
+    loggedIn   : PropTypes.bool.isRequired,
     onSetOpen  : PropTypes.func.isRequired,
     onSetDocked: PropTypes.func.isRequired,
     startSync  : PropTypes.func.isRequired

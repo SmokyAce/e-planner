@@ -4,8 +4,8 @@ import './Spinner.scss';
 
 
 const defaultStyle = {
-    width : '30px',
-    height: '30px'
+    width : '40px',
+    height: '40px'
 };
 
 export const Spinner = ({ style }) => (<div className='loader' style={{ ...defaultStyle, ...style }} />);
