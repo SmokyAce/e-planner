@@ -55,4 +55,3 @@ AppHome.propTypes = {
 };
 
 export default AppHome;
-

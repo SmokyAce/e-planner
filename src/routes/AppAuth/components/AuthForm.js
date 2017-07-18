@@ -16,22 +16,24 @@ const AuthForm = ({ formState, message, onSubmit, onInputChange, onButtonClick, 
     const renderReset = () => {
         if (type === 'register') return null;
         return (
-            <h5><Link to='/reset'>
-                <FormattedMessage {...messages.forgot_pwd} />
-            </Link></h5>
+            <h5>
+                <Link to='/reset'>
+                    <FormattedMessage {...messages.forgot_pwd} />
+                </Link>
+            </h5>
         );
     };
 
     return (
         <div>
             <div className='col-md-4' />
+            <SocialButton name='Google' message={messages.login_with} onButtonClick={onButtonClick} />
             <SubmitForm email={formState.get('email')} password={formState.get('password')} messages={messages}
                 onSubmit={onSubmit} error={message} onInputChange={onInputChange}
             >
                 <div>
                     <br />
                     {renderReset()}
-                    <SocialButton name='Google' message={messages.login_with} onButtonClick={onButtonClick} />
                     { /* <SocialButton name="Facebook" message={messages.login_with} onButtonClick={onButtonClick}/>
                      <SocialButton name="Twitter" message={messages.login_with} onButtonClick={onButtonClick}/> */ }
                 </div>

@@ -7,18 +7,17 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
 
-export const CoreLayout = ({ children, loggedIn }) => {
+export const CoreLayout = ({ children }) => {
     if (children.props.location && children.props.location.pathname.indexOf('app') >= 0) {
         return (
-            <div className='text-center'>
+            <div className='core-layout text-center'>
                 {children}
             </div>
         );
     }
-
     return (
         <div className='text-center'>
-            <Header loggedIn={loggedIn} />
+            <Header />
             <div className='core-layout'>
                 {children}
             </div>
@@ -28,8 +27,7 @@ export const CoreLayout = ({ children, loggedIn }) => {
 };
 
 CoreLayout.propTypes = {
-    children: PropTypes.element.isRequired,
-    loggedIn: PropTypes.bool.isRequired
+    children: PropTypes.element.isRequired
 };
 
 export default CoreLayout;

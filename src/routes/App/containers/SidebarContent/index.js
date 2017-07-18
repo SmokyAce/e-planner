@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { Map, List } from 'immutable';
-import { createStructuredSelector } from 'reselect';
 // import { FormattedMessage } from 'react-intl';
 
-import { makeSelectEventsByIds, makeSelectEventsListOfIds, makeSelectEventsFormState } from '../../modules/selectors';
 import TitlePanel from '../../components/TitlePanel';
 import AddEvent from '../../components/AddEvent';
 import './SidebarContent.scss';
@@ -31,8 +28,7 @@ const styles = {
         backgroundColor: '#008cba'
     },
     content: {
-        padding        : '5px',
-        backgroundColor: 'white'
+        padding: '5px'
     }
 };
 
@@ -93,10 +89,4 @@ SidebarContent.propTypes = {
     style         : PropTypes.object
 };
 
-const mapStateToProps = state => createStructuredSelector({
-    eventsByIds   : makeSelectEventsByIds(),
-    listOfEventsId: makeSelectEventsListOfIds(),
-    formState     : makeSelectEventsFormState()
-});
-
-export default connect(mapStateToProps, null)(SidebarContent);
+export default SidebarContent;
