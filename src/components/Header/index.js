@@ -33,7 +33,7 @@ class Header extends React.Component {
             <div className='header-cont'>
                 <AppBar
                     title={<Link to='/app'><FormattedMessage{...messages.description} /></Link>}
-                    showMenuIconButton={loggedIn}
+                    showMenuIconButton={loggedIn === undefined ? false : loggedIn}
                     onLeftIconButtonTouchTap={onMenuIconButtonTouchTap}
                     iconElementRight={loggedIn ? <UserMenu /> : <SignIn />}
                     iconStyleRight={styles.iconStyleRight}

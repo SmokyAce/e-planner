@@ -6,6 +6,8 @@ import { Map, List } from 'immutable';
 
 import TitlePanel from '../../components/TitlePanel';
 import AddEvent from '../../components/AddEvent';
+import IconButton from 'material-ui/IconButton';
+
 import './SidebarContent.scss';
 
 
@@ -29,17 +31,21 @@ const styles = {
     },
     content: {
         padding: '5px'
+    },
+    iconStyles: {
+        marginLeft: '200px'
     }
 };
 
 class SidebarContent extends React.Component {
     shouldComponentUpdate = nextProps => {
         return !this.props.listOfEventsId.equals(nextProps.listOfEventsId) ||
-            !this.props.formState.equals(nextProps.formState);
+            !this.props.formState.equals(nextProps.formState) ||
+            this.props.docked !== nextProps.docked;
     };
 
     render = () => {
-        const { listOfEventsId, eventsByIds, dispatch, style, formState } = this.props;
+        const { listOfEventsId, eventsByIds, dispatch, style, formState, onSetDocked, docked } = this.props;
 
         const sidebarStyle = style ? { ...styles.sidebar, ...style } : styles.sidebar;
         const eventsList = [];
@@ -70,6 +76,17 @@ class SidebarContent extends React.Component {
 
         return (
             <TitlePanel style={sidebarStyle}>
+                <IconButton
+                    iconClassName='material-icons'
+                    style={styles.iconStyles}
+                    tooltip='Закрепить панель'
+                    tooltipPosition='top-left'
+                    onTouchTap={() => {
+                        onSetDocked(docked);
+                    }}
+                >
+                    keyboard_tab
+                </IconButton>
                 <div style={styles.content} className='text-left'>
                     <AddEvent dispatch={dispatch} formState={formState} />
                     <div style={styles.divider} />
@@ -86,6 +103,8 @@ SidebarContent.propTypes = {
     listOfEventsId: PropTypes.instanceOf(List),
     eventsByIds   : PropTypes.instanceOf(Map),
     formState     : PropTypes.instanceOf(Map),
+    onSetDocked   : PropTypes.func,
+    docked        : PropTypes.bool,
     style         : PropTypes.object
 };
 

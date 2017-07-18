@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
 // components
 import Sidebar from '../Sidebar';
-import SidebarContent from '../../containers/SidebarContent';
+import SidebarContent from '../../components/SidebarContent';
 import Header from '../../../../components/Header';
 import { ImmutableLoadingBar as LoadingBar } from 'react-redux-loading-bar';
 // style
@@ -43,6 +43,8 @@ class App extends React.Component {
                 eventsByIds={eventsByIds}
                 listOfEventsId={listOfEventsId}
                 formState={formState}
+                onSetDocked={onSetDocked}
+                docked={sidebar.get('sidebarDocked')}
             />
         );
 
