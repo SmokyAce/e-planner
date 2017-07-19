@@ -20,7 +20,7 @@ const styles = {
 
 const SignIn = () => (
     <FlatButton
-        label={<Link to='/login'><FormattedMessage {...messages.loginBtn} /></Link>}
+        label={<Link to='/login' style={{ color: '#fff' }}><FormattedMessage {...messages.loginBtn} /></Link>}
         onTouchTap={this.handleOpen}
     />
 );
@@ -32,7 +32,11 @@ class Header extends React.Component {
         return (
             <div className='header-cont'>
                 <AppBar
-                    title={<Link to='/app'><FormattedMessage{...messages.description} /></Link>}
+                    title={
+                        <Link to='/app' style={{ color: '#fff' }}>
+                            <FormattedMessage {...messages.description} />
+                        </Link>
+                    }
                     showMenuIconButton={loggedIn === undefined ? false : loggedIn}
                     onLeftIconButtonTouchTap={onMenuIconButtonTouchTap}
                     iconElementRight={loggedIn ? <UserMenu /> : <SignIn />}

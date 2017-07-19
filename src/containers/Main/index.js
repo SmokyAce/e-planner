@@ -16,11 +16,11 @@ injectTapEventPlugin();
 
 const muiTheme = getMuiTheme({
     palette: {
-        primary1Color: '#fff'
+        primary1Color: '#21a3f6'
     },
     appBar: {
-        height   : 64,
-        textColor: '#666666'
+        height: 64
+        // textColor: '#666666'
     }
 });
 
