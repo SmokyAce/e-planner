@@ -6,7 +6,8 @@ import { Map, List } from 'immutable';
 
 import TitlePanel from '../../components/TitlePanel';
 import AddEvent from '../../components/AddEvent';
-import IconButton from 'material-ui/IconButton';
+import Toggle from 'material-ui/Toggle';
+// import IconButton from 'material-ui/IconButton';
 
 import './SidebarContent.scss';
 
@@ -14,8 +15,9 @@ import './SidebarContent.scss';
 // styles
 const styles = {
     sidebar: {
-        width : 256,
-        height: '100%'
+        width    : 256,
+        height   : '100%',
+        textAlign: 'left'
     },
     sidebarLink: {
         display       : 'block',
@@ -34,6 +36,15 @@ const styles = {
     },
     iconStyles: {
         marginLeft: '200px'
+    },
+    toggle: {
+        padding: '10px 0px 10px 10px'
+    },
+    thumbSwitched: {
+        backgroundColor: '#2196f3'
+    },
+    trackSwitched: {
+        backgroundColor: '#85c3f5'
     }
 };
 
@@ -76,17 +87,14 @@ class SidebarContent extends React.Component {
 
         return (
             <TitlePanel style={sidebarStyle}>
-                <IconButton
-                    iconClassName='material-icons'
-                    style={styles.iconStyles}
-                    tooltip='Закрепить панель'
-                    tooltipPosition='top-left'
-                    onTouchTap={() => {
+                <Toggle
+                    style={styles.toggle}
+                    thumbSwitchedStyle={styles.thumbSwitched}
+                    trackSwitchedStyle={styles.trackSwitched}
+                    onToggle={() => {
                         onSetDocked(docked);
                     }}
-                >
-                    keyboard_tab
-                </IconButton>
+                />
                 <div style={styles.content} className='text-left'>
                     <AddEvent dispatch={dispatch} formState={formState} />
                     <div style={styles.divider} />
