@@ -6,10 +6,9 @@ footer {
     background-color: #f6f9fc;
     color: #7b8994;
     text-align: center;
-    height: 120px;
-    margin-top: -120px;
+    flex-shrink: 0;
 }
 
 footer a {
-    color: #00bcd4;
+    color: #21a3f6;
 }

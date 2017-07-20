@@ -8,11 +8,11 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
     login_description: {
         id            : 'app.login.description',
-        defaultMessage: 'Login'
+        defaultMessage: 'Sign in'
     },
     register_description: {
         id            : 'app.register.description',
-        defaultMessage: 'Register'
+        defaultMessage: 'Create an account'
     },
     change_description: {
         id            : 'app.change-pwd.description',
