@@ -48,7 +48,7 @@ export const changeUserPwdRequest = (values) => ({
  */
 export const loginRequest = (data) => ({
     type: actionTypes.LOGIN_REQUEST,
-    data
+    data: data.toJS()
 });
 
 /**

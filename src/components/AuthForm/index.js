@@ -16,7 +16,7 @@ import './AuthForm.scss';
 class AuthForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { register: true };
+        this.state = { register: false };
 
         this.changeFormType = this.changeFormType.bind(this);
     }

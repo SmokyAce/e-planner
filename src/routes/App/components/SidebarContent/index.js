@@ -5,9 +5,7 @@ import { Map, List } from 'immutable';
 // import { FormattedMessage } from 'react-intl';
 
 import TitlePanel from '../../components/TitlePanel';
-import AddEvent from '../../components/AddEvent';
 import Toggle from 'material-ui/Toggle';
-// import IconButton from 'material-ui/IconButton';
 
 import './SidebarContent.scss';
 
@@ -51,12 +49,11 @@ const styles = {
 class SidebarContent extends React.Component {
     shouldComponentUpdate = nextProps => {
         return !this.props.listOfEventsId.equals(nextProps.listOfEventsId) ||
-            !this.props.formState.equals(nextProps.formState) ||
             this.props.docked !== nextProps.docked;
     };
 
     render = () => {
-        const { listOfEventsId, eventsByIds, dispatch, style, formState, onSetDocked, docked } = this.props;
+        const { listOfEventsId, eventsByIds, style, onSetDocked, docked } = this.props;
 
         const sidebarStyle = style ? { ...styles.sidebar, ...style } : styles.sidebar;
         const eventsList = [];
@@ -87,17 +84,15 @@ class SidebarContent extends React.Component {
 
         return (
             <TitlePanel style={sidebarStyle}>
-                <Toggle
-                    style={styles.toggle}
-                    thumbSwitchedStyle={styles.thumbSwitched}
-                    trackSwitchedStyle={styles.trackSwitched}
-                    onToggle={() => {
-                        onSetDocked(docked);
-                    }}
-                />
                 <div style={styles.content} className='text-left'>
-                    <AddEvent dispatch={dispatch} formState={formState} />
-                    <div style={styles.divider} />
+                    <Toggle
+                        style={styles.toggle}
+                        thumbSwitchedStyle={styles.thumbSwitched}
+                        trackSwitchedStyle={styles.trackSwitched}
+                        onToggle={() => {
+                            onSetDocked(docked);
+                        }}
+                    />
                     {eventsList}
                 </div>
             </TitlePanel>
@@ -107,10 +102,8 @@ class SidebarContent extends React.Component {
 
 
 SidebarContent.propTypes = {
-    dispatch      : PropTypes.func.isRequired,
     listOfEventsId: PropTypes.instanceOf(List),
     eventsByIds   : PropTypes.instanceOf(Map),
-    formState     : PropTypes.instanceOf(Map),
     onSetDocked   : PropTypes.func,
     docked        : PropTypes.bool,
     style         : PropTypes.object
