@@ -34,10 +34,10 @@ class AuthForm extends React.Component {
         return (
             <Paper zDepth={2} className='auth-form' style={{ backgroundColor: '#f6f9fc' }} >
                 <div className='auth-header'>
-                    <H2 style={{ paddingTop: '20px' }}>
+                    <H2>
                         <FormattedMessage {...messages[`${register ? 'register' : 'login'}_description`]} />
                     </H2>
-                    <div className='auth-header-swicher'>
+                    <div>
                         <span>or </span>
                         <a
                             onClick={this.changeFormType}

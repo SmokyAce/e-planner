@@ -33,15 +33,12 @@
 }
 
 .auth-header {
-    text-align: left;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
     padding: 20px;
-    background-color: #fff
-}
-
-.auth-header-swicher {
-    display: inline-block;
-    padding-top: 10px;
-    float: right;
+    background-color: #fff;
 }
 
 .auth-footer {

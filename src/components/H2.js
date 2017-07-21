@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 
 const H2 = ({ children }) => (
-    <span style={{ paddingTop: '20px', fontSize: '18pt' }}>
+    <span style={{ fontSize: '18pt' }}>
         {children}
     </span>
 );
