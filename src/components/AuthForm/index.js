@@ -32,7 +32,7 @@ class AuthForm extends React.Component {
         const { loginRequest, registerRequest, loginWithProviderRequest } = this.props;
 
         return (
-            <Paper zDepth={2} className='auth-form' style={{ backgroundColor: '#f6f9fc' }} >
+            <Paper zDepth={1} className='auth-form' style={{ backgroundColor: '#f6f9fc' }} >
                 <div className='auth-header'>
                     <H2>
                         <FormattedMessage {...messages[`${register ? 'register' : 'login'}_description`]} />
