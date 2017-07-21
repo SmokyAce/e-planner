@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
 import { Map, List } from 'immutable';
+// components
+import { Link } from 'react-router';
 // import { FormattedMessage } from 'react-intl';
-
 import TitlePanel from '../../components/TitlePanel';
 import Toggle from 'material-ui/Toggle';
-
+// styles
 import './SidebarContent.scss';
 
 
@@ -87,6 +87,7 @@ class SidebarContent extends React.Component {
                 <div style={styles.content} className='text-left'>
                     <Toggle
                         style={styles.toggle}
+                        defaultToggled={docked}
                         thumbSwitchedStyle={styles.thumbSwitched}
                         trackSwitchedStyle={styles.trackSwitched}
                         onToggle={() => {

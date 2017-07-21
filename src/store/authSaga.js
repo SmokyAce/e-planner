@@ -1,19 +1,18 @@
-import { take, call, put, race, fork, cancel, takeLatest } from 'redux-saga/effects';
+
+import { take, call, put, race, fork, takeLatest } from 'redux-saga/effects';
 import { Map } from 'immutable';
 import { browserHistory } from 'react-router';
 // api
-import firebaseTools from '../../../utils/firebaseTools';
+import firebaseTools from '../utils/firebaseTools';
 // actions types
-import * as actionTypes from './actionTypes';
-import { LOCATION_CHANGE } from '../../../store/reducers/location';
-import { CHANGE_LOCALE } from '../../../containers/LanguageProvider/module';
+import * as actionTypes from '../routes/AppAuth/modules/actionTypes';
 // actions
-import { sendEmailVerificationRequest } from './actions';
+import { sendEmailVerificationRequest } from '../routes/AppAuth/modules/actions';
 
 
 /**
  * Effect to handle authorization
- * @param  {object} authType               The authType containes the result of race
+ * @param  {object} authType  The authType containes the result of race
  */
 function * authorize(authType) {
     // We then try to register or log in the user, depending on the request
@@ -62,10 +61,6 @@ export function * logout() {
     } catch (error) {
         yield put({ type: actionTypes.SET_ERROR_MESSAGE, error: error.message });
     }
-}
-
-function * registerVerification() {
-    yield takeLatest(actionTypes.REGISTER_VERIFICATION_REQUEST, sendEmailVerification);
 }
 
 function * sendEmailVerification() {
@@ -124,19 +119,12 @@ function * loginFlow() {
     }
 }
 
-function * verificationFlow() {
-    const verificationTask = yield fork(registerVerification);
-
-    yield take([LOCATION_CHANGE, CHANGE_LOCALE]);
-    yield cancel(verificationTask);
-}
-
 /**
  * Log out saga
  * This is basically the same as the `if (winner.logout)` of above, just written
  * as a saga that is always listening to `LOGOUT` actions
  */
-export function * logoutFlow() {
+function * logoutFlow() {
     while (true) {
         yield take(actionTypes.LOGOUT);
 
@@ -151,16 +139,21 @@ export function * logoutFlow() {
     }
 }
 
-loginFlow.isDaemon = true;
+function * verificationFlow() {
+    yield takeLatest(actionTypes.REGISTER_VERIFICATION_REQUEST, sendEmailVerification);
+}
 
 // The root saga is what we actually send to Redux's middleware. In here we fork
 // each saga so that they are all "active" and listening.
 // Sagas are fired once at the start of an app and can be thought of as processes running
 // in the background, watching actions dispatched to the store.
-export default [
-    loginFlow,
-    verificationFlow
-];
+function * rootSaga() {
+    yield fork(loginFlow);
+    yield fork(logoutFlow);
+    yield fork(verificationFlow);
+}
+
+export default rootSaga;
 
 // Little helper function to abstract going to different pages
 function forwardTo(location) {

@@ -3,7 +3,7 @@ import { channel, delay } from 'redux-saga';
 import { take, call, put, race, select, fork } from 'redux-saga/effects';
 import { omit, keys, isEqual } from 'lodash';
 // auth sagas
-import { logoutFlow, logout } from '../../AppAuth/modules/sagas';
+import { logout } from '../../../store/rootSaga';
 // API
 import api from './api';
 import firebaseTools, { firebaseAuth } from '../../../utils/firebaseTools';
@@ -295,7 +295,6 @@ export function * addEventsFlow() {
 watchSync.isDaemon = true;
 loadingFlow.isDaemon = true;
 addEventsFlow.isDaemon = true;
-logoutFlow.isDaemon = true;
 // daemon observers
 authObserver.isDaemon = true;
 connectionObserver.isDaemon = true;
@@ -308,7 +307,6 @@ export default [
     watchSync,
     loadingFlow,
     addEventsFlow,
-    logoutFlow,
     // Firebase observers
     connectionObserver,
     authObserver

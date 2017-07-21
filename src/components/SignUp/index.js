@@ -57,6 +57,7 @@ class SignUp extends React.Component {
                 /><br />
                 <Field
                     name='password'
+                    type='password'
                     component={renderTextField}
                     label={<FormattedMessage {...messages.pwd} />}
                 /><br /><br />
