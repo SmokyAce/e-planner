@@ -3,7 +3,7 @@ import { channel, delay } from 'redux-saga';
 import { take, call, put, race, select, fork } from 'redux-saga/effects';
 import { omit, keys, isEqual } from 'lodash';
 // auth sagas
-import { logout } from '../../../store/rootSaga';
+import { logout } from '../../../store/authSaga';
 // API
 import api from './api';
 import firebaseTools, { firebaseAuth } from '../../../utils/firebaseTools';
