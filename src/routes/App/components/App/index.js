@@ -62,7 +62,10 @@ class App extends React.Component {
         return (
             <Sidebar {...sidebarProps}>
                 <LoadingBar style={styles.loadingBar} />
-                <Header loggedIn={loggedIn} onMenuIconButtonTouchTap={() => onSetOpen(true)} />
+                <Header
+                    loggedIn={loggedIn}
+                    onMenuIconButtonTouchTap={() => onSetOpen(true)}
+                />
                 <div className='app-container container-fluide'>
                     {children}
                 </div>

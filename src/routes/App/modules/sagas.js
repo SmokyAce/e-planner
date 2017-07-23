@@ -125,15 +125,15 @@ export function * appSyncFlow() {
     try {
         yield call(delay, 100);
 
-        const userData = yield fork(fetchUserData);
+        yield fork(fetchUserData);
 
-        yield take(userActions.type.FETCH_USER_DATA_SUCCESS);
+        const fetchAction = yield take(userActions.type.FETCH_USER_DATA_SUCCESS);
 
         // Take list of events ids from redux store and compare with events from user data
         // if are not equals make fetch events from DB
         const listOfEventsIds = yield select(makeSelectEventsListOfIds());
 
-        if (!isEqual(keys(userData.events).sort(), listOfEventsIds.toJS().sort())) {
+        if (!isEqual(keys(fetchAction.payload.events).sort(), listOfEventsIds.toJS().sort())) {
             yield put(eventActions.fetchEventRequest());
 
             yield call(fetchEvents);

@@ -5,7 +5,8 @@ import { createStructuredSelector } from 'reselect';
 import {
     makeSelectSidebarDocked,
     makeSelectSidebarPullRight,
-    makeSelectAppRestoreState
+    makeSelectAppRestoreState,
+    makeSelectEventsByIds
 } from '../../App/modules/selectors';
 // actions
 import { bindActionCreators } from 'redux';
@@ -14,9 +15,10 @@ import { onSetOpen, onSetDocked, onChangeSide } from '../../App/modules/sidebar'
 
 
 const mapStateToProps = (state) => createStructuredSelector({
-    docked   : makeSelectSidebarDocked(),
-    pullRight: makeSelectSidebarPullRight(),
-    restored : makeSelectAppRestoreState()
+    docked     : makeSelectSidebarDocked(),
+    pullRight  : makeSelectSidebarPullRight(),
+    restored   : makeSelectAppRestoreState(),
+    eventsByIds: makeSelectEventsByIds()
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Map } from 'immutable';
 // components
 import { FormattedMessage } from 'react-intl';
 import Spinner from '../../../components/Spinner';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import EventsList from './EventList';
 // intl
 import messages from './messages';
 // styles
@@ -20,7 +24,9 @@ const style = {
     }
 };
 
-export const AppHome = ({ docked, pullRight, restored, onSetDocked, onSetOpen, onChangeSide }) => {
+export const AppHome = props => {
+    const { restored, eventsByIds } = props;
+
     if (!restored) {
         return (
             <div style={{ position: 'relative', height: '200px' }}>
@@ -31,27 +37,20 @@ export const AppHome = ({ docked, pullRight, restored, onSetDocked, onSetOpen, o
 
     return (
         <div>
-            <h2><FormattedMessage {...messages.greeting} /></h2>
-            <div className='col-md-3' />
-            <div className='col-md-6'>
-                <div className='btn-group btn-group-justified'>
-                    <a className='btn btn-default' onClick={() => onSetOpen(true)}>Open</a>
-                    <a className='btn btn-default' onClick={() => onSetDocked(docked)}>Docked</a>
-                    <a className='btn btn-default' onClick={() => onChangeSide(!pullRight)}>Change Side</a>
-                </div>
+            <div className=''>
+                <h2><FormattedMessage {...messages.greeting} /></h2>
+                <EventsList eventsByIds={eventsByIds} />
             </div>
-            <div className='col-md-3' />
+            <FloatingActionButton className='add-event-btn'>
+                <ContentAdd />
+            </FloatingActionButton>
         </div>
     );
 };
 
 AppHome.propTypes = {
-    restored    : PropTypes.bool.isRequired,
-    docked      : PropTypes.bool,
-    pullRight   : PropTypes.bool,
-    onSetOpen   : PropTypes.func,
-    onSetDocked : PropTypes.func,
-    onChangeSide: PropTypes.func
+    restored   : PropTypes.bool.isRequired,
+    eventsByIds: PropTypes.instanceOf(Map)
 };
 
 export default AppHome;

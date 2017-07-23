@@ -16,6 +16,8 @@
   "app.event.notebook.description": "Service: Notebook",
   "app.event.settings.description": "Settings",
   "app.event.settings.section-services": "Event services",
+  "app.events.settings-btn": "Settings",
+  "app.events.delete-btn": "Delete",
   "app.route.home": "Home",
   "app.route.counter": "Counter",
   "app.route.zen": "Zen",
