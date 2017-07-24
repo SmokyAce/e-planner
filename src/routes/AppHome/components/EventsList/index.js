@@ -15,7 +15,6 @@ import './EventsList.scss';
 const EventsList = ({ eventsByIds }) => (
     <div className='events-cont'>
         {eventsByIds.map(event => {
-            console.log(event.toJS());
             return (
                 <Card
                     key={event.get('id')}

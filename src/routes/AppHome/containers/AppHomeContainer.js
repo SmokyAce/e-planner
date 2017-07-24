@@ -8,6 +8,7 @@ import {
     makeSelectAppRestoreState,
     makeSelectEventsByIds
 } from '../../App/modules/selectors';
+import { selectLocale } from '../../../containers/LanguageProvider/selectors';
 // actions
 import { bindActionCreators } from 'redux';
 // import { startSync } from '../modules/sync';
@@ -18,7 +19,8 @@ const mapStateToProps = (state) => createStructuredSelector({
     docked     : makeSelectSidebarDocked(),
     pullRight  : makeSelectSidebarPullRight(),
     restored   : makeSelectAppRestoreState(),
-    eventsByIds: makeSelectEventsByIds()
+    eventsByIds: makeSelectEventsByIds(),
+    locale     : selectLocale()
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

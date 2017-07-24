@@ -2,33 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // components
 import { Field, reduxForm } from 'redux-form/immutable';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { FormattedMessage } from 'react-intl';
+import ReduxFormTextField from '../Form/ReduxFormTextField';
+
 // intl
 import messages from './messages';
 
-const renderTextField = ({ input, label, meta: { touched, error }, ...custom, style }) => (
-    <TextField
-        hintText={label}
-        floatingLabelText={label}
-        errorText={touched && error}
-        {...input}
-        {...custom}
-        style={style}
-        fullWidth
-    />
-);
 
-renderTextField.propTypes = {
-    input   : PropTypes.object,
-    label   : PropTypes.element,
-    type    : PropTypes.string,
-    meta    : PropTypes.object,
-    messages: PropTypes.object,
-    inline  : PropTypes.bool,
-    style   : PropTypes.object
-};
+const renderTextField = props => (<ReduxFormTextField {...props} />);
 
 const styles = {
     form: {
