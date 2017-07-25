@@ -19,6 +19,7 @@
   "app.events.settings-btn"            : "Settings",
   "app.events.delete-btn"              : "Delete",
   "app.events.create-event-description": "Create new event",
+  "app.events.delete-event-description": "Do you really want delete event?",
   "app.events.event-name-field"        : "Event name",
   "app.events.event-date-field"        : "Event date",
   "app.route.home"                     : "Home",

@@ -19,6 +19,7 @@
   "app.events.settings-btn"               : "Настройки",
   "app.events.delete-btn"                 : "Удалить",
   "app.events.create-event-description"   : "Создать новое событие",
+  "app.events.delete-event-description"   : "Вы действительно хотите удалить событие?",
   "app.events.event-name-field"           : "Имя события",
   "app.events.event-date-field"           : "Дата события",
   "app.route.home"                        : "Домой",

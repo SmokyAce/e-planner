@@ -26,7 +26,7 @@ const renderTextField = props => (<ReduxFormTextField {...props} />);
 
 const Title = props => (
     <div {...props}>
-        <FormattedMessage {...props} {...messages.create_event_desc} />
+        <FormattedMessage {...messages.create_event_desc} />
     </div>
 );
 

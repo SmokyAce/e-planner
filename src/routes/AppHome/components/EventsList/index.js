@@ -12,7 +12,7 @@ import messages from './messages';
 import './EventsList.scss';
 
 
-const EventsList = ({ eventsByIds }) => (
+const EventsList = ({ eventsByIds, onDeleteEvent }) => (
     <div className='events-cont'>
         {eventsByIds.map(event => {
             return (
@@ -39,10 +39,9 @@ const EventsList = ({ eventsByIds }) => (
                                 </Link>}
                             style={{ marginLeft: '8px' }}
                         />
-                        <FlatButton label={
-                            <Link to={`/app/event/${event.get('id')}/delete`}>
-                                <FormattedMessage {...messages.delete_btn} />
-                            </Link>}
+                        <FlatButton
+                            label={<FormattedMessage {...messages.delete_btn} />}
+                            onTouchTap={() => onDeleteEvent(event.get('id'))}
                         />
                     </CardActions>
                 </Card>
@@ -52,7 +51,8 @@ const EventsList = ({ eventsByIds }) => (
 );
 
 EventsList.propTypes = {
-    eventsByIds: PropTypes.instanceOf(Map)
+    eventsByIds  : PropTypes.instanceOf(Map),
+    onDeleteEvent: PropTypes.func
 };
 
 export default EventsList;

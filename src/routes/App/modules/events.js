@@ -13,19 +13,20 @@ const FETCH_EVENT_REQUEST = 'FETCH_EVENT_REQUEST';
 const FETCH_EVENT_SUCCESS = 'FETCH_EVENT_SUCCESS';
 const FETCH_EVENT_FAILURE = 'FETCH_EVENT_FAILURE';
 
-const ADD_EVENT         = 'ADD_EVENT';
+const ADD_EVENT = 'ADD_EVENT';
 const ADD_EVENT_REQUEST = 'ADD_EVENT_REQUEST';
 const ADD_EVENT_SUCCESS = 'ADD_EVENT_SUCCESS';
 const ADD_EVENT_FAILURE = 'ADD_EVENT_FAILURE';
 
+const REMOVE_EVENT = 'REMOVE_EVENT';
 // const REMOVE_EVENT_REQUEST = 'REMOVE_EVENT_REQUEST';
 // const REMOVE_EVENT_SUCCESS = 'REMOVE_EVENT_SUCCESS';
 // const REMOVE_EVENT_FAILURE = 'REMOVE_EVENT_FAILURE';
 
-const TOGGLE_EVENT_SERVICE       = 'TOGGLE_EVENT_SERVICE';
-const EVENT_NAME_CHANGE          = 'EVENT_NAME_CHANGE';
+const TOGGLE_EVENT_SERVICE = 'TOGGLE_EVENT_SERVICE';
+const EVENT_NAME_CHANGE = 'EVENT_NAME_CHANGE';
 const EVENT_SETTINGS_NAME_CHANGE = 'EVENT_SETTINGS_NAME_CHANGE';
-const SAVE_EVENT_SETTINGS        = 'SAVE_EVENT_SETTINGS';
+const SAVE_EVENT_SETTINGS = 'SAVE_EVENT_SETTINGS';
 
 export const types = {
     FETCH_EVENT_REQUEST,
@@ -60,6 +61,11 @@ export const addEvent = (options) => {
         payload
     });
 };
+
+export const removeEvent = (id) => ({
+    type   : REMOVE_EVENT,
+    payload: id
+});
 
 export const addEventRequest = () => ({
     type: ADD_EVENT_REQUEST
@@ -141,6 +147,11 @@ const EVENTS_ACTION_HANDLERS = {
     [ADD_EVENT_FAILURE]: (state, action) => {
         return state
             .setIn(['byIds', action.payload, 'isSync'], false);
+    },
+    [REMOVE_EVENT]: (state, action) => {
+        return state
+            .updateIn(['listOfIds'], list => list.delete(list.indexOf(action.payload)))
+            .deleteIn(['byIds', action.payload]);
     },
     [FETCH_EVENT_SUCCESS]: (state, action) => {
         return state
