@@ -19,9 +19,9 @@ const ADD_EVENT_SUCCESS = 'ADD_EVENT_SUCCESS';
 const ADD_EVENT_FAILURE = 'ADD_EVENT_FAILURE';
 
 const REMOVE_EVENT = 'REMOVE_EVENT';
-// const REMOVE_EVENT_REQUEST = 'REMOVE_EVENT_REQUEST';
-// const REMOVE_EVENT_SUCCESS = 'REMOVE_EVENT_SUCCESS';
-// const REMOVE_EVENT_FAILURE = 'REMOVE_EVENT_FAILURE';
+const REMOVE_EVENT_REQUEST = 'REMOVE_EVENT_REQUEST';
+const REMOVE_EVENT_SUCCESS = 'REMOVE_EVENT_SUCCESS';
+const REMOVE_EVENT_FAILURE = 'REMOVE_EVENT_FAILURE';
 
 const TOGGLE_EVENT_SERVICE = 'TOGGLE_EVENT_SERVICE';
 const EVENT_NAME_CHANGE = 'EVENT_NAME_CHANGE';
@@ -30,7 +30,8 @@ const SAVE_EVENT_SETTINGS = 'SAVE_EVENT_SETTINGS';
 
 export const types = {
     FETCH_EVENT_REQUEST,
-    ADD_EVENT
+    ADD_EVENT,
+    REMOVE_EVENT
 };
 
 const defaultServices = {
@@ -77,6 +78,21 @@ export const addEventSuccess = (eventId) => ({
 
 export const addEventFailure = (eventId, error) => ({
     type   : ADD_EVENT_FAILURE,
+    payload: eventId,
+    error
+});
+
+export const removeEventRequest = () => ({
+    type: REMOVE_EVENT_REQUEST
+});
+
+export const removeEventSuccess = (eventId) => ({
+    type   : REMOVE_EVENT_SUCCESS,
+    payload: eventId
+});
+
+export const removeEventFailure = (eventId, error) => ({
+    type   : REMOVE_EVENT_FAILURE,
     payload: eventId,
     error
 });

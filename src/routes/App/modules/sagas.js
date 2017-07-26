@@ -24,7 +24,7 @@ import * as connectionActions from './connection';
 // Events
 // /////////////////////
 function * addEvent(action) {
-    yield put({ type: eventActions.addEventRequest });
+    yield put(eventActions.addEventRequest());
 
     const response = yield call(api.addEvent, action.payload);
 
@@ -32,6 +32,18 @@ function * addEvent(action) {
         yield put(eventActions.addEventSuccess(response.id));
     } else {
         yield put(eventActions.addEventFailure(response.id, response.error));
+    }
+}
+
+function * removeEvent(action) {
+    yield put(eventActions.removeEventRequest());
+
+    const response = yield call(api.removeEvent, action.payload);
+
+    if (!response.error) {
+        yield put(eventActions.removeEventSuccess(response.id));
+    } else {
+        yield put(eventActions.removeEventFailure(response.id, response.error));
     }
 }
 
@@ -192,7 +204,9 @@ export function * fetchUserDataFlow() {
  */
 export function * loadingFlow() {
     while (true) {
-        yield take(action => action.type.indexOf('REQUEST') > 0);
+        yield take(action => {
+            return (action.type.indexOf('REQUEST') > 0);
+        });
 
         yield put(showLoading());
 
@@ -282,11 +296,18 @@ export function * authObserver() {
     }
 }
 
-export function * addEventsFlow() {
+export function * eventsFlow() {
     while (true) {
-        const action = yield take(eventActions.types.ADD_EVENT);
+        const winner = yield race({
+            addEvent   : take(eventActions.types.ADD_EVENT),
+            removeEvent: take(eventActions.types.REMOVE_EVENT)
+        });
 
-        yield fork(addEvent, action);
+        if (winner.addEvent) {
+            yield fork(addEvent, winner.addEvent);
+        } else if (winner.removeEvent) {
+            yield fork(removeEvent, winner.removeEvent);
+        }
     }
 }
 
@@ -294,7 +315,7 @@ export function * addEventsFlow() {
 // daemon watchers
 watchSync.isDaemon = true;
 loadingFlow.isDaemon = true;
-addEventsFlow.isDaemon = true;
+eventsFlow.isDaemon = true;
 // daemon observers
 authObserver.isDaemon = true;
 connectionObserver.isDaemon = true;
@@ -306,7 +327,7 @@ connectionObserver.isDaemon = true;
 export default [
     watchSync,
     loadingFlow,
-    addEventsFlow,
+    eventsFlow,
     // Firebase observers
     connectionObserver,
     authObserver
