@@ -35,9 +35,9 @@ export const types = {
 };
 
 const defaultServices = {
-    counter    : true,
-    guests     : true,
-    todos      : true,
+    counter    : false,
+    guests     : false,
+    todos      : false,
     budjet     : false,
     timing     : false,
     contractors: false,
@@ -52,11 +52,18 @@ const defaultServices = {
 
 
 export const addEvent = (options) => {
-    const payload = { ...options };
+    const eventOptions = { ...options.toJS() };
+    const payload = {};
 
     payload.id = firebaseDb.ref().child('events').push().key;
+    payload.name = eventOptions.name;
+    payload.date = eventOptions.date;
     payload.services = defaultServices;
-
+    Object.keys(eventOptions).map((key, index) => {
+        if (payload.services.hasOwnProperty(key)) {
+            payload.services[key] = eventOptions[key];
+        }
+    });
     return ({
         type: ADD_EVENT,
         payload

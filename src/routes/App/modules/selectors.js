@@ -87,6 +87,13 @@ const makeSelectAppRestoreState = () => createSelector(
     (globalState) => globalState.get('restored')
 );
 
+const selectForm = (state) => state.get('form');
+
+const makeSelectFormValues = (form) => createSelector(
+    selectForm,
+    (globalState) => globalState.getIn([form, 'values'])
+);
+
 export {
     selectApp,
     // sidebar
@@ -110,5 +117,7 @@ export {
     makeSelectEventsOptionsById,
     makeSelectEventsListOfIds,
     makeSelectEventsFormState,
-    makeSelectEventsSettingsFormState
+    makeSelectEventsSettingsFormState,
+    // form
+    makeSelectFormValues
 };

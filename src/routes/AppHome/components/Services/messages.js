@@ -1,14 +1,6 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-    event_name: {
-        id            : 'app.events.event-name-field',
-        defaultMessage: 'Event name'
-    },
-    event_date: {
-        id            : 'app.events.event-date-field',
-        defaultMessage: 'Event date'
-    },
     services_desc: {
         id            : 'app.events.services-description',
         defaultMessage: 'Choose services for Event'
