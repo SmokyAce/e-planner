@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 // import { FormattedMessage } from 'react-intl';
 import TitlePanel from '../../components/TitlePanel';
 import Toggle from 'material-ui/Toggle';
+import Checkbox from 'material-ui/Checkbox';
 // styles
 import './SidebarContent.scss';
 
@@ -36,7 +37,11 @@ const styles = {
         marginLeft: '200px'
     },
     toggle: {
-        padding: '10px 0px 10px 10px'
+        padding: '10px 0px 10px 10px',
+        width  : '25%'
+    },
+    checkbox: {
+        width: '75%'
     },
     thumbSwitched: {
         backgroundColor: '#2196f3'
@@ -49,11 +54,12 @@ const styles = {
 class SidebarContent extends React.Component {
     shouldComponentUpdate = nextProps => {
         return !this.props.listOfEventsId.equals(nextProps.listOfEventsId) ||
-            this.props.docked !== nextProps.docked;
+            this.props.docked !== nextProps.docked ||
+            this.props.pullRight !== nextProps.pullRight;
     };
 
     render = () => {
-        const { listOfEventsId, eventsByIds, style, onSetDocked, docked } = this.props;
+        const { listOfEventsId, eventsByIds, style, onSetDocked, docked, onChangeSide, pullRight } = this.props;
 
         const sidebarStyle = style ? { ...styles.sidebar, ...style } : styles.sidebar;
         const eventsList = [];
@@ -85,15 +91,24 @@ class SidebarContent extends React.Component {
         return (
             <TitlePanel style={sidebarStyle}>
                 <div style={styles.content} className='text-left'>
-                    <Toggle
-                        style={styles.toggle}
-                        defaultToggled={docked}
-                        thumbSwitchedStyle={styles.thumbSwitched}
-                        trackSwitchedStyle={styles.trackSwitched}
-                        onToggle={() => {
-                            onSetDocked(docked);
-                        }}
-                    />
+                    <div className='sidebar-prop-cont'>
+                        <Checkbox
+                            label='Pull right'
+                            defaultChecked={pullRight}
+                            onCheck={() => onChangeSide(!pullRight)}
+                            style={styles.checkbox}
+                        />
+                        <Toggle
+                            style={styles.toggle}
+                            defaultToggled={docked}
+                            thumbSwitchedStyle={styles.thumbSwitched}
+                            trackSwitchedStyle={styles.trackSwitched}
+                            onToggle={() => {
+                                onSetDocked(docked);
+                            }}
+                        />
+                    </div>
+                    <hr />
                     {eventsList}
                 </div>
             </TitlePanel>
@@ -106,7 +121,9 @@ SidebarContent.propTypes = {
     listOfEventsId: PropTypes.instanceOf(List),
     eventsByIds   : PropTypes.instanceOf(Map),
     onSetDocked   : PropTypes.func,
+    onChangeSide  : PropTypes.func,
     docked        : PropTypes.bool,
+    pullRight     : PropTypes.bool,
     style         : PropTypes.object
 };
 

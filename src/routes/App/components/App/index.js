@@ -34,7 +34,7 @@ class App extends React.Component {
     render = () => {
         const {
             children, sidebar, loggedIn, eventsByIds,
-            listOfEventsId, formState, onSetOpen, onSetDocked
+            listOfEventsId, formState, onSetOpen, onSetDocked, onChangeSide
         } = this.props;
 
         const content = (
@@ -45,6 +45,8 @@ class App extends React.Component {
                 formState={formState}
                 onSetDocked={onSetDocked}
                 docked={sidebar.get('sidebarDocked')}
+                onChangeSide={onChangeSide}
+                pullRight={sidebar.get('pullRight')}
             />
         );
 
@@ -83,6 +85,7 @@ App.propTypes = {
     formState     : PropTypes.instanceOf(Map),
     onSetOpen     : PropTypes.func.isRequired,
     onSetDocked   : PropTypes.func.isRequired,
+    onChangeSide  : PropTypes.func.isRequired,
     startSync     : PropTypes.func.isRequired
 };
 

@@ -15,14 +15,14 @@ import messages from './messages';
 // validate
 import validate from './validate';
 // styles
-// import './EventsList.scss';
+import './CreateEvent.scss';
 
 
 const services = {
     counter    : false,
-    guests     : false,
-    todos      : false,
-    budjet     : false,
+    guests     : true,
+    todos      : true,
+    budjet     : true,
     timing     : false,
     contractors: false,
     blog       : false,
@@ -86,22 +86,23 @@ class CreateEvent extends React.Component {
                     component={renderDateField}
                     DateTimeFormat={DateTimeFormat}
                     locale={locale}
-                    container='inline'
                     autoOk
                     hintText={<FormattedMessage {...messages.event_date} />}
                 /><br />
                 <h4><FormattedMessage {...messages.services_desc} /></h4>
-                {Object.keys(services).map((key, ind) => {
-                    return (
-                        <Field
-                            key={key}
-                            name={key}
-                            component={renderCheckbox}
-                            label={<FormattedMessage {...messages[key]} />}
-                            defaultChecked={services[key]}
-                        />
-                    );
-                })}
+                <div className='services-cont'>
+                    {Object.keys(services).map((key, ind) => {
+                        return (
+                            <Field
+                                key={key}
+                                name={key}
+                                component={renderCheckbox}
+                                label={<FormattedMessage {...messages[key]} />}
+                                defaultChecked={services[key]}
+                            />
+                        );
+                    })}
+                </div>
             </form>
         );
     }
