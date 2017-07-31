@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 // selectors
 import { createStructuredSelector } from 'reselect';
 import {
-    makeSelectAppRestoreState,
+    selectRestored,
     makeSelectEventsByIds,
     makeSelectFormValues
 } from '../../App/modules/selectors';
@@ -15,7 +15,7 @@ import { removeEvent, toggleEventService, addEvent } from '../../App/modules/eve
 
 
 const mapStateToProps = (state) => createStructuredSelector({
-    restored   : makeSelectAppRestoreState(),
+    restored   : selectRestored,
     eventsByIds: makeSelectEventsByIds(),
     locale     : selectLocale(),
     formValues : makeSelectFormValues('create-event')

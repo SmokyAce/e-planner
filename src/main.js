@@ -16,7 +16,7 @@ const store = createStore();
 // Persist config
 const config = {
     whitelist: ['language', 'app'],
-    blacklist: ['auth', 'location', 'form'],
+    blacklist: ['auth', 'location', 'form', 'restored'],
     storage  : localForage,
     keyPrefix: 'planner:'
 };

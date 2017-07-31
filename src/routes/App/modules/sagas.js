@@ -9,7 +9,7 @@ import api from './api';
 import firebaseTools, { firebaseAuth } from '../../../utils/firebaseTools';
 // selectors
 import { makeSelectLoggedIn } from '../../AppAuth/modules/selectors';
-import { makeSelectEventsListOfIds, makeSelectAppRestoreState } from '../../App/modules/selectors';
+import { makeSelectEventsListOfIds, selectRestored } from '../../App/modules/selectors';
 // actions
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { REHYDRATE } from 'redux-persist/constants';
@@ -135,7 +135,7 @@ export function * updateUserInfoFlow() {
 // /////////////////////
 export function * appSyncFlow() {
     try {
-        yield call(delay, 100);
+        // yield call(delay, 100);
 
         yield fork(fetchUserData);
 
@@ -225,9 +225,11 @@ export function * loadingFlow() {
  */
 export function * watchSync() {
     while (true) {
-        yield take(syncActions.types.APP_START_SYNC);
+        yield take([syncActions.types.APP_START_SYNC]);
 
-        const appRestored = yield select(makeSelectAppRestoreState());
+        yield call(delay, 500);
+
+        const appRestored = yield select(selectRestored);
 
         if (!appRestored) {
             yield take(REHYDRATE);

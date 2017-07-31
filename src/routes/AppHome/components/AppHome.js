@@ -28,8 +28,8 @@ const styles = {
         transform: 'translate(-50%, -50%)'
     },
     customContentStyle: {
-        width   : '30%',
-        maxWidth: 'none'
+        maxWidth: '400px',
+        minWidth: '300px'
     }
 };
 

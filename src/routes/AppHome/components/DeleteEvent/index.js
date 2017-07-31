@@ -10,8 +10,7 @@ import messages from './messages';
 
 
 const customContentStyle = {
-    width   : '30%',
-    maxWidth: 'none'
+    maxWidth: '400px'
 };
 
 

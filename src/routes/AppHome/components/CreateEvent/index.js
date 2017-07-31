@@ -19,15 +19,11 @@ import './CreateEvent.scss';
 
 
 const services = {
-    counter    : false,
-    guests     : true,
-    todos      : true,
-    budjet     : true,
-    timing     : false,
-    contractors: false,
-    blog       : false,
-    quiz       : false,
-    notebook   : false
+    guests : true,
+    todos  : true,
+    budjet : true,
+    timing : false,
+    counter: false
 };
 
 const renderTextField = props => (<ReduxFormTextField {...props} />);
@@ -72,6 +68,23 @@ class CreateEvent extends React.Component {
 
         const DateTimeFormat = global.Intl.DateTimeFormat;
 
+        const servicesList = [];
+
+        console.log(services);
+        for (const key in services) {
+            if (services.hasOwnProperty(key)) {
+                servicesList.push(
+                    <Field
+                        key={key}
+                        name={key}
+                        component={renderCheckbox}
+                        label={<FormattedMessage {...messages[key]} />}
+                        defaultChecked={services[key]}
+                    />
+                );
+            }
+        }
+
         return (
             <form
                 onSubmit={handleSubmit}
@@ -91,17 +104,7 @@ class CreateEvent extends React.Component {
                 /><br />
                 <h4><FormattedMessage {...messages.services_desc} /></h4>
                 <div className='services-cont'>
-                    {Object.keys(services).map((key, ind) => {
-                        return (
-                            <Field
-                                key={key}
-                                name={key}
-                                component={renderCheckbox}
-                                label={<FormattedMessage {...messages[key]} />}
-                                defaultChecked={services[key]}
-                            />
-                        );
-                    })}
+                    {servicesList}
                 </div>
             </form>
         );
