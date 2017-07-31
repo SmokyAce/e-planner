@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Map, List } from 'immutable';
+import { Map, List as imList } from 'immutable';
 // components
 import { Link } from 'react-router';
 // import { FormattedMessage } from 'react-intl';
 import TitlePanel from '../../components/TitlePanel';
 import Toggle from 'material-ui/Toggle';
-import Checkbox from 'material-ui/Checkbox';
+// import Checkbox from 'material-ui/Checkbox';
+import { List, ListItem } from 'material-ui/List';
+import Divider from 'material-ui/Divider';
+import EventIcon from 'material-ui/svg-icons/action/event';
+import GroupIcon from 'material-ui/svg-icons/social/group';
 // styles
 import './SidebarContent.scss';
 
@@ -25,29 +29,8 @@ const styles = {
         paddingLeft   : '5px',
         textDecoration: 'none'
     },
-    divider: {
-        margin         : '8px 0',
-        height         : 1,
-        backgroundColor: '#008cba'
-    },
     content: {
         padding: '5px'
-    },
-    iconStyles: {
-        marginLeft: '200px'
-    },
-    toggle: {
-        padding: '10px 0px 10px 10px',
-        width  : '25%'
-    },
-    checkbox: {
-        width: '75%'
-    },
-    thumbSwitched: {
-        backgroundColor: '#2196f3'
-    },
-    trackSwitched: {
-        backgroundColor: '#85c3f5'
     }
 };
 
@@ -62,54 +45,69 @@ class SidebarContent extends React.Component {
         const { listOfEventsId, eventsByIds, style, onSetDocked, docked, onChangeSide, pullRight } = this.props;
 
         const sidebarStyle = style ? { ...styles.sidebar, ...style } : styles.sidebar;
-        const eventsList = [];
+        const nestedList = [];
 
-        listOfEventsId.forEach((item) => {
-            eventsList.push(
-                <div key={item} className='input-group'>
-                    <li style={styles.sidebarLink}>
+        listOfEventsId.map((item) => {
+            nestedList.push(
+                <ListItem
+                    key={item}
+                    primaryText={eventsByIds.getIn([item, 'name'])}
+                    containerElement={
                         <Link to={`/app/event/${item}`} activeClassName='route--active'>
                             {eventsByIds.getIn([item, 'name'])}
                         </Link>
-                    </li>
-                    <span className='input-group-btn'>
-                        <Link to={`/app/event/${item}/settings`} activeClassName='route--active'>
-                            <button className='btn btn-link event-btns'>
-                                <i className='fa fa-cog fa-fw' />
-                            </button>
-                        </Link>
-                        <Link to={`/app/event/${item}/delete`} activeClassName='route--active'>
-                            <button className='btn btn-link event-btns'>
-                                <i className='fa fa-trash fa-fw' />
-                            </button>
-                        </Link>
-                    </span>
-                </div>
+                    }
+                />
             );
         });
+
+        console.log(nestedList);
 
         return (
             <TitlePanel style={sidebarStyle}>
                 <div style={styles.content} className='text-left'>
-                    <div className='sidebar-prop-cont'>
-                        <Checkbox
-                            label='Pull right'
-                            defaultChecked={pullRight}
-                            onCheck={() => onChangeSide(!pullRight)}
-                            style={styles.checkbox}
+                    <List>
+                        <ListItem
+                            primaryText='Sidebar'
+                            primaryTogglesNestedList
+                            nestedItems={[
+                                <ListItem
+                                    key={1}
+                                    primaryText='Docked'
+                                    rightToggle={
+                                        <Toggle
+                                            defaultToggled={docked}
+                                            onToggle={() => onSetDocked(docked)}
+                                        />
+                                    }
+                                />,
+                                <ListItem
+                                    key={2}
+                                    primaryText='Pull right'
+                                    rightToggle={
+                                        <Toggle
+                                            defaultToggled={pullRight}
+                                            onToggle={() => onChangeSide(!pullRight)}
+                                        />
+                                    }
+                                />
+                            ]}
                         />
-                        <Toggle
-                            style={styles.toggle}
-                            defaultToggled={docked}
-                            thumbSwitchedStyle={styles.thumbSwitched}
-                            trackSwitchedStyle={styles.trackSwitched}
-                            onToggle={() => {
-                                onSetDocked(docked);
-                            }}
+
+                        <Divider />
+                        <ListItem
+                            primaryText='Events'
+                            initiallyOpen
+                            leftIcon={<EventIcon />}
+                            primaryTogglesNestedList
+                            nestedItems={nestedList}
                         />
-                    </div>
-                    <hr />
-                    {eventsList}
+                        <Divider />
+                        <ListItem
+                            primaryText='Guests'
+                            leftIcon={<GroupIcon />}
+                        />
+                    </List>
                 </div>
             </TitlePanel>
         );
@@ -118,7 +116,7 @@ class SidebarContent extends React.Component {
 
 
 SidebarContent.propTypes = {
-    listOfEventsId: PropTypes.instanceOf(List),
+    listOfEventsId: PropTypes.instanceOf(imList),
     eventsByIds   : PropTypes.instanceOf(Map),
     onSetDocked   : PropTypes.func,
     onChangeSide  : PropTypes.func,
