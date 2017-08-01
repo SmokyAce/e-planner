@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // components
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import Avatar from 'material-ui/Avatar';
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
-import { Link } from 'react-router';
-// import { NavDropdown, MenuItem } from 'react-bootstrap';
 import Spinner from '../../components/Spinner';
 // actions
 import { bindActionCreators } from 'redux';
