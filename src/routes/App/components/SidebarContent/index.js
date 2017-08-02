@@ -61,8 +61,6 @@ class SidebarContent extends React.Component {
             );
         });
 
-        console.log(nestedList);
-
         return (
             <TitlePanel style={sidebarStyle}>
                 <div style={styles.content} className='text-left'>

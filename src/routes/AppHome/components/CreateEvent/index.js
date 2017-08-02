@@ -70,7 +70,6 @@ class CreateEvent extends React.Component {
 
         const servicesList = [];
 
-        console.log(services);
         for (const key in services) {
             if (services.hasOwnProperty(key)) {
                 servicesList.push(
