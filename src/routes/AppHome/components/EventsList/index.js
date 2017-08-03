@@ -23,7 +23,7 @@ const EventsList = ({ eventsByIds, onDeleteEvent, eventListOfIds }) => (
                     className='card'
                 >
                     <CardHeader
-                        title={<Link to=''>{eventsByIds.getIn([eventsByIds, 'name'])}</Link>}
+                        title={<Link to=''>{eventsByIds.getIn([eventId, 'name'])}</Link>}
                         actAsExpander
                         showExpandableButton
                     />
