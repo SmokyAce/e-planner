@@ -1,29 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
 import { Tabs, Tab } from 'material-ui/Tabs';
-import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
-import FontIcon from 'material-ui/FontIcon';
 import messages from './messages';
 
 
-const recentsIcon = <FontIcon className='material-icons'>restore</FontIcon>;
+const styles = {
+    tabs: {
+        overflowY: 'hidden'
+    },
+    tab: {
+        width       : 'auto',
+        flex        : '1 1 0%',
+        paddingLeft : '10px',
+        paddingRight: '10px'
+    }
+};
 
-const AppNavPanel = ({ eventId, services, onChange, value, selectedIndex, select }) => {
-    const [...keys] = services.keys();
-
-    keys.unshift('home');
-
+const AppNavPanel = ({ eventId, services, onChange, value }) => {
     return (
         <div >
             <Tabs
                 onChange={onChange}
                 value={value}
+                tabItemContainerStyle={styles.tabs}
             >
-                {keys.map((service, index) => {
+                {services.map((service, index) => {
                     const route = (service === 'home')
                         ? `/app/event/${eventId}`
                         : `/app/event/${eventId}/${service}`;
@@ -38,35 +42,20 @@ const AppNavPanel = ({ eventId, services, onChange, value, selectedIndex, select
                                     <FormattedMessage {...messages[service]} />
                                 </Link>
                             }
+                            style={styles.tab}
                         />
                     );
                 })}
             </Tabs>
-            <BottomNavigation
-                selectedIndex={selectedIndex}
-                style={{ position: 'absolute', bottom: '0px', width: '100%' }}
-            >
-                {keys.map((service, index) => (
-                    <BottomNavigationItem
-                        key={index}
-                        icon={recentsIcon}
-                        label={<FormattedMessage {...messages[service]} />}
-                        onTouchTap={() => select(index)}
-                    />
-                )
-                )}
-            </BottomNavigation>
         </div>
     );
 };
 
 AppNavPanel.propTypes = {
-    eventId      : PropTypes.string.isRequired,
-    services     : PropTypes.instanceOf(Map).isRequired,
-    onChange     : PropTypes.func,
-    value        : PropTypes.number,
-    selectedIndex: PropTypes.number,
-    select       : PropTypes.func
+    eventId : PropTypes.string.isRequired,
+    services: PropTypes.array.isRequired,
+    onChange: PropTypes.func,
+    value   : PropTypes.number
 };
 
 export default AppNavPanel;

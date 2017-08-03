@@ -15,7 +15,8 @@ import messages from './messages';
 const styles = {
     iconStyleRight: {
         margin: 'auto'
-    }
+    },
+    appBar: {}
 };
 
 const SignIn = () => (
@@ -27,7 +28,9 @@ const SignIn = () => (
 
 class Header extends React.Component {
     render() {
-        const { loggedIn, onMenuIconButtonTouchTap } = this.props;
+        const { loggedIn, onMenuIconButtonTouchTap, style } = this.props;
+
+        const appBarstyle = { ...styles.appBar, ...style };
 
         return (
             <div className='header-cont'>
@@ -41,6 +44,7 @@ class Header extends React.Component {
                     onLeftIconButtonTouchTap={onMenuIconButtonTouchTap}
                     iconElementRight={loggedIn ? <UserMenu /> : <SignIn />}
                     iconStyleRight={styles.iconStyleRight}
+                    style={appBarstyle}
                 />
             </div>
         );
@@ -49,7 +53,8 @@ class Header extends React.Component {
 
 Header.propTypes = {
     loggedIn                : PropTypes.bool,
-    onMenuIconButtonTouchTap: PropTypes.func
+    onMenuIconButtonTouchTap: PropTypes.func,
+    style                   : PropTypes.object
 };
 
 export default Header;

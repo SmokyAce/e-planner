@@ -11,6 +11,9 @@ import './App.scss';
 
 
 const styles = {
+    root: {
+        position: 'fixed'
+    },
     sidebar: {
         zIndex         : '1101',
         backgroundColor: '#f2f2f2'
@@ -22,7 +25,8 @@ const styles = {
     loadingBar: {
         zIndex: 1,
         height: '2px'
-    }
+    },
+    header: {}
 };
 
 class App extends React.Component {
@@ -33,8 +37,8 @@ class App extends React.Component {
 
     render = () => {
         const {
-            children, sidebar, loggedIn, eventsByIds,
-            listOfEventsId, formState, onSetOpen, onSetDocked, onChangeSide
+            children, sidebar, loggedIn, eventsByIds, listOfEventsId,
+            formState, onSetOpen, onSetDocked, onChangeSide
         } = this.props;
 
         const content = (
@@ -43,10 +47,12 @@ class App extends React.Component {
                 eventsByIds={eventsByIds}
                 listOfEventsId={listOfEventsId}
                 formState={formState}
-                onSetDocked={onSetDocked}
-                docked={sidebar.get('sidebarDocked')}
-                onChangeSide={onChangeSide}
-                pullRight={sidebar.get('pullRight')}
+                dockedSidebar={onSetDocked}
+                sidebarDocked={sidebar.get('sidebarDocked')}
+                pullRightSidebar={onChangeSide}
+                sidebarPullRight={sidebar.get('pullRight')}
+                openSidebar={onSetOpen}
+                sidebarOpened={sidebar.get('open')}
             />
         );
 
@@ -67,6 +73,7 @@ class App extends React.Component {
                 <Header
                     loggedIn={loggedIn}
                     onMenuIconButtonTouchTap={() => onSetOpen(true)}
+                    style={styles.header}
                 />
                 <div className='app-container container-fluide'>
                     {children}

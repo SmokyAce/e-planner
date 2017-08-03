@@ -37,13 +37,21 @@ const styles = {
 class SidebarContent extends React.Component {
     shouldComponentUpdate = nextProps => {
         return !this.props.listOfEventsId.equals(nextProps.listOfEventsId) ||
-            this.props.docked !== nextProps.docked ||
-            this.props.pullRight !== nextProps.pullRight;
+            this.props.sidebarDocked !== nextProps.sidebarDocked ||
+            this.props.sidebarPullRight !== nextProps.sidebarPullRight;
+    };
+
+    onNestedListToggle = () => {
+        console.log('yeah bitch!');
     };
 
     render = () => {
-        const { listOfEventsId, eventsByIds, style, onSetDocked, docked, onChangeSide, pullRight } = this.props;
-
+        const {
+            listOfEventsId, eventsByIds, style,
+            dockedSidebar, sidebarDocked,
+            pullRightSidebar, sidebarPullRight,
+            openSidebar, sidebarOpened
+        } = this.props;
         const sidebarStyle = style ? { ...styles.sidebar, ...style } : styles.sidebar;
         const nestedList = [];
 
@@ -57,9 +65,11 @@ class SidebarContent extends React.Component {
                             {eventsByIds.getIn([item, 'name'])}
                         </Link>
                     }
+                    onTouchTap={() => (!sidebarDocked && openSidebar(sidebarOpened))}
                 />
             );
         });
+
 
         return (
             <TitlePanel style={sidebarStyle}>
@@ -74,8 +84,8 @@ class SidebarContent extends React.Component {
                                     primaryText='Docked'
                                     rightToggle={
                                         <Toggle
-                                            defaultToggled={docked}
-                                            onToggle={() => onSetDocked(docked)}
+                                            defaultToggled={sidebarDocked}
+                                            onToggle={() => dockedSidebar(sidebarDocked)}
                                         />
                                     }
                                 />,
@@ -84,8 +94,8 @@ class SidebarContent extends React.Component {
                                     primaryText='Pull right'
                                     rightToggle={
                                         <Toggle
-                                            defaultToggled={pullRight}
-                                            onToggle={() => onChangeSide(!pullRight)}
+                                            defaultToggled={sidebarPullRight}
+                                            onToggle={() => pullRightSidebar(!sidebarPullRight)}
                                         />
                                     }
                                 />
@@ -99,6 +109,7 @@ class SidebarContent extends React.Component {
                             leftIcon={<EventIcon />}
                             primaryTogglesNestedList
                             nestedItems={nestedList}
+
                         />
                         <Divider />
                         <ListItem
@@ -114,13 +125,15 @@ class SidebarContent extends React.Component {
 
 
 SidebarContent.propTypes = {
-    listOfEventsId: PropTypes.instanceOf(imList),
-    eventsByIds   : PropTypes.instanceOf(Map),
-    onSetDocked   : PropTypes.func,
-    onChangeSide  : PropTypes.func,
-    docked        : PropTypes.bool,
-    pullRight     : PropTypes.bool,
-    style         : PropTypes.object
+    listOfEventsId  : PropTypes.instanceOf(imList),
+    eventsByIds     : PropTypes.instanceOf(Map),
+    dockedSidebar   : PropTypes.func,
+    pullRightSidebar: PropTypes.func,
+    openSidebar     : PropTypes.func,
+    sidebarDocked   : PropTypes.bool,
+    sidebarPullRight: PropTypes.bool,
+    sidebarOpened   : PropTypes.bool,
+    style           : PropTypes.object
 };
 
 export default SidebarContent;

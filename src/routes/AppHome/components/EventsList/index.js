@@ -18,7 +18,7 @@ const EventsList = ({ eventsByIds, onDeleteEvent }) => (
             return (
                 <Card
                     key={event.get('id')}
-                    style={{ marginBottom: '10px', zIndex: '0' }}
+                    style={{ margin: '0px 10px 10px 10px', zIndex: '0' }}
                     initiallyExpanded
                     className='card'
                 >
