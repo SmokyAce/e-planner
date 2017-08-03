@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 // components
 import { FormattedMessage } from 'react-intl';
 import Dialog from 'material-ui/Dialog';
@@ -63,7 +63,10 @@ class AppHome extends React.Component {
     };
 
     render() {
-        const { restored, eventsByIds, locale, addEvent, removeEvent, toggleEventService, formValues } = this.props;
+        const {
+            locale, restored, eventsByIds, eventListOfIds,
+            addEvent, removeEvent, toggleEventService, formValues
+        } = this.props;
 
         const actions = [
             <FlatButton
@@ -99,6 +102,7 @@ class AppHome extends React.Component {
                     <h2><FormattedMessage {...messages.greeting} /></h2>
                     <EventsList
                         eventsByIds={eventsByIds}
+                        eventListOfIds={eventListOfIds}
                         onDeleteEvent={(id) => {
                             this.setState({ activeEvent: id });
                             this.handleOpen('DeleteEvent');
@@ -145,7 +149,8 @@ class AppHome extends React.Component {
 
 AppHome.propTypes = {
     restored          : PropTypes.bool.isRequired,
-    eventsByIds       : PropTypes.instanceOf(Map),
+    eventsByIds       : PropTypes.instanceOf(Map).isRequired,
+    eventListOfIds    : PropTypes.instanceOf(List).isRequired,
     locale            : PropTypes.string.isRequired,
     removeEvent       : PropTypes.func.isRequired,
     addEvent          : PropTypes.func.isRequired,

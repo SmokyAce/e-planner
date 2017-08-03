@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 // components
 import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
@@ -12,18 +12,18 @@ import messages from './messages';
 import './EventsList.scss';
 
 
-const EventsList = ({ eventsByIds, onDeleteEvent }) => (
+const EventsList = ({ eventsByIds, onDeleteEvent, eventListOfIds }) => (
     <div className='events-cont'>
-        {eventsByIds.map(event => {
+        {eventListOfIds.map(eventId => {
             return (
                 <Card
-                    key={event.get('id')}
+                    key={eventId}
                     style={{ margin: '0px 10px 10px 10px', zIndex: '0' }}
                     initiallyExpanded
                     className='card'
                 >
                     <CardHeader
-                        title={<Link to=''>{event.get('name')}</Link>}
+                        title={<Link to=''>{eventsByIds.getIn([eventsByIds, 'name'])}</Link>}
                         actAsExpander
                         showExpandableButton
                     />
@@ -34,14 +34,14 @@ const EventsList = ({ eventsByIds, onDeleteEvent }) => (
                     <CardActions className='card-actions-cont'>
                         <FlatButton
                             label={
-                                <Link to={`/app/event/${event.get('id')}/settings`}>
+                                <Link to={`/app/event/${eventId}/settings`}>
                                     <FormattedMessage {...messages.settings_btn} />
                                 </Link>}
                             style={{ marginLeft: '8px' }}
                         />
                         <FlatButton
                             label={<FormattedMessage {...messages.delete_btn} />}
-                            onTouchTap={() => onDeleteEvent(event.get('id'))}
+                            onTouchTap={() => onDeleteEvent(eventId)}
                         />
                     </CardActions>
                 </Card>
@@ -51,8 +51,9 @@ const EventsList = ({ eventsByIds, onDeleteEvent }) => (
 );
 
 EventsList.propTypes = {
-    eventsByIds  : PropTypes.instanceOf(Map),
-    onDeleteEvent: PropTypes.func
+    eventsByIds   : PropTypes.instanceOf(Map),
+    eventListOfIds: PropTypes.instanceOf(List),
+    onDeleteEvent : PropTypes.func
 };
 
 export default EventsList;

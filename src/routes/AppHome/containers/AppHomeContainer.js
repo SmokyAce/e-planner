@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import {
     selectRestored,
     makeSelectEventsByIds,
+    makeSelectEventsListOfIds,
     makeSelectFormValues
 } from '../../App/modules/selectors';
 import { selectLocale } from '../../../containers/LanguageProvider/selectors';
@@ -15,10 +16,11 @@ import { removeEvent, toggleEventService, addEvent } from '../../App/modules/eve
 
 
 const mapStateToProps = (state) => createStructuredSelector({
-    restored   : selectRestored,
-    eventsByIds: makeSelectEventsByIds(),
-    locale     : selectLocale(),
-    formValues : makeSelectFormValues('create-event')
+    restored      : selectRestored,
+    eventsByIds   : makeSelectEventsByIds(),
+    eventListOfIds: makeSelectEventsListOfIds(),
+    locale        : selectLocale(),
+    formValues    : makeSelectFormValues('create-event')
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
