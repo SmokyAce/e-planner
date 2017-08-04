@@ -64,5 +64,7 @@
   "app.change-email.btn"               : "Change email",
   "app.notification-status.warning"    : "Warning!",
   "app.notification-status.error"      : "Error!",
-  "app.notification-status.success"    : "Success!"
+  "app.notification-status.success"    : "Success!",
+  "app.notification.required"          : "This is required field!",
+  "app.notification.invalid-email"     : "Invalid e-mail address!"
 }

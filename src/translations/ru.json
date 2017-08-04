@@ -71,5 +71,7 @@
   "app.change-email.btn"                  : "Изменить адрес эл. почты",
   "app.notification-status.warning"       : "Предупреждение!",
   "app.notification-status.error"         : "Ошибка!",
-  "app.notification-status.success"       : "Выполнено успешно!"
+  "app.notification-status.success"       : "Выполнено успешно!",
+  "app.notification.required"             : "Обязательное поле!",
+  "app.notification.invalid-email"        : "Некорректный адрес электронной почты!"
 }

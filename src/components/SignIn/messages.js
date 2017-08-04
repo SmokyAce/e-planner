@@ -1,8 +1,3 @@
-/*
- * HomePage Messages
- *
- * This contains all the text for the HomePage component.
- */
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
@@ -21,5 +16,17 @@ export default defineMessages({
     forgot_pwd: {
         id            : 'app.login.forgot-pwd',
         defaultMessage: 'Forgot password?'
+    },
+    undefined: {
+        id            : 'app.notification.required',
+        defaultMessage: 'This is required field!'
+    },
+    required: {
+        id            : 'app.notification.required',
+        defaultMessage: 'This is required field!'
+    },
+    invalidEmail: {
+        id            : 'app.notification.invalid-email',
+        defaultMessage: 'Invalid e-mail address!'
     }
 });

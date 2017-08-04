@@ -21,5 +21,13 @@ export default defineMessages({
     register_btn: {
         id            : 'app.register.btn',
         defaultMessage: 'Register'
+    },
+    required: {
+        id            : 'app.notification.required',
+        defaultMessage: 'This is required field!'
+    },
+    invalidEmail: {
+        id            : 'app.notification.invalid-email',
+        defaultMessage: 'Invalid e-mail address!'
     }
 });

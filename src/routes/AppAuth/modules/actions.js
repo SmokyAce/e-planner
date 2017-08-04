@@ -75,7 +75,7 @@ export const logoutRequest = () => ({
  */
 export const registerRequest = (data) => ({
     type: actionTypes.REGISTER_REQUEST,
-    data
+    data: data.toJS()
 });
 
 export function resetPasswordEmail(email) {

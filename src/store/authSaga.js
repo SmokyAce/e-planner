@@ -1,61 +1,28 @@
-
 import { take, call, put, race, fork, takeLatest } from 'redux-saga/effects';
-import { Map } from 'immutable';
 import { browserHistory } from 'react-router';
 // api
-import firebaseTools from '../utils/firebaseTools';
+import fbTools from '../utils/firebaseTools';
+// sagas
+import formSaga from '../utils/reduxFormSaga';
 // actions types
 import * as actionTypes from '../routes/AppAuth/modules/actionTypes';
 // actions
 import { sendEmailVerificationRequest } from '../routes/AppAuth/modules/actions';
+import { SubmissionError } from 'redux-form';
 
 
-/**
- * Effect to handle authorization
- * @param  {object} authType  The authType containes the result of race
- */
-function * authorize(authType) {
-    // We then try to register or log in the user, depending on the request
-    try {
-        let userInfo;
+function * authApiWrapper(apiMethod, ...apiArgs) {
+    const response = yield call(apiMethod, ...apiArgs);
 
-        if (authType.loginWithEmail) {
-            userInfo = yield firebaseTools.loginUser(authType.loginWithEmail.data);
-        } else if (authType.loginWithProvider) {
-            const result = yield firebaseTools.loginWithProvider(authType.loginWithProvider.provider);
-
-            userInfo = (result.user) ? result.user : result;
-
-            // check if verification need
-            if (!userInfo.emailVerified) {
-                yield put(sendEmailVerificationRequest());
-            }
-        } else if (authType.registration) {
-            userInfo = yield firebaseTools.registerUser(authType.registration.data);
-
-            // register verification need
-            yield put(sendEmailVerificationRequest());
-        }
-
-        if (userInfo.errorMessage) {
-            yield put({ type: actionTypes.SET_ERROR_MESSAGE, error: userInfo.errorMessage });
-            return false;
-        }
-
-        yield put({ type: actionTypes.SET_AUTH_INFO, payload: userInfo });
-
-        return true;
-    } catch (error) {
-        // If we get an error we send Redux the appropiate action and return
-        yield put({ type: actionTypes.SET_ERROR_MESSAGE, error: error.message });
-
-        return false;
+    if (response.errorMessage) {
+        throw new SubmissionError({ _error: response.errorMessage });
     }
+    return response;
 }
 
 export function * logout() {
     try {
-        const result = yield call(firebaseTools.logoutUser);
+        const result = yield call(fbTools.logoutUser);
 
         return result;
     } catch (error) {
@@ -64,7 +31,7 @@ export function * logout() {
 }
 
 function * sendEmailVerification() {
-    const response = yield call(firebaseTools.sendEmailVerification);
+    const response = yield call(fbTools.sendEmailVerification);
 
     if (!response.error) {
         yield put({ type: actionTypes.REGISTER_VERIFICATION_SUCCESS });
@@ -81,6 +48,8 @@ function * sendEmailVerification() {
  * Log in saga
  */
 function * loginFlow() {
+    let response;
+
     // Because sagas are generators, doing `while (true)` doesn't block our program
     // Basically here we say "this saga is always listening for actions"
     while (true) {
@@ -91,31 +60,65 @@ function * loginFlow() {
             registration     : take(actionTypes.REGISTER_REQUEST)
         });
 
-        // A `LOGOUT` action may happen while the `authorize` effect is going on, which may
-        // lead to a race condition. This is unlikely, but just in case, we call `race` which
-        // returns the "winner", i.e. the one that finished first
-        const winner = yield race({
-            auth  : call(authorize, authType),
-            logout: take(actionTypes.LOGOUT)
-        });
+        if (authType.loginWithEmail) {
+            response = yield call(
+                formSaga, 'login', authApiWrapper, fbTools.loginUser, authType.loginWithEmail.data
+            );
+        } else if (authType.loginWithProvider) {
+            response = yield call(
+                formSaga, 'register', authApiWrapper, fbTools.loginWithProvider, authType.loginWithProvider.provider
+            );
+        } else if (authType.registration) {
+            response = yield call(
+                formSaga, 'register', authApiWrapper, fbTools.registerUser, authType.registration.data
+            );
+        }
 
-        // If `authorize` was the winner...
-        if (winner.auth) {
-            // ...we send Redux appropiate actions
+        if (response.success) {
+            const { userInfo } = response;
+
+            // check if verification need
+            if (!userInfo.emailVerified) {
+                yield put(sendEmailVerificationRequest());
+            }
+
+            // if (userInfo.errorMessage) {
+            //     yield put({ type: actionTypes.SET_ERROR_MESSAGE, error: userInfo.errorMessage });
+            //     return false;
+            // }
+
+            // yield put({ type: actionTypes.SET_AUTH_INFO, payload: userInfo });
+
             yield put({ type: actionTypes.SET_AUTH, payload: true }); // User is logged in (authorized)
-            yield put({
-                type        : actionTypes.CHANGE_FORM,
-                newFormState: Map({ email: '', password: '', rememberMe: false })
-            });
 
             forwardTo('/app'); // Go to dashboard page
-            // If `logout` won...
-        } else if (winner.logout) {
-            // ...we send Redux appropiate action
-            yield put({ type: actionTypes.SET_AUTH, payload: false }); // User is not logged in (not authorized)
-            yield call(logout); // Call `logout` effect
-            forwardTo('/');
         }
+
+        // // A `LOGOUT` action may happen while the `authorize` effect is going on, which may
+        // // lead to a race condition. This is unlikely, but just in case, we call `race` which
+        // // returns the "winner", i.e. the one that finished first
+        // const winner = yield race({
+        //     auth  : call(formSaga, '', authorize, authType),
+        //     logout: take(actionTypes.LOGOUT)
+        // });
+
+        // // If `authorize` was the winner...
+        // if (winner.auth) {
+        //     // ...we send Redux appropiate actions
+        //     yield put({ type: actionTypes.SET_AUTH, payload: true }); // User is logged in (authorized)
+        //     yield put({
+        //         type        : actionTypes.CHANGE_FORM,
+        //         newFormState: Map({ email: '', password: '', rememberMe: false })
+        //     });
+
+        //     forwardTo('/app'); // Go to dashboard page
+        //     // If `logout` won...
+        // } else if (winner.logout) {
+        //     // ...we send Redux appropiate action
+        //     yield put({ type: actionTypes.SET_AUTH, payload: false }); // User is not logged in (not authorized)
+        //     yield call(logout); // Call `logout` effect
+        //     forwardTo('/');
+        // }
     }
 }
 

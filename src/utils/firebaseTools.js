@@ -40,7 +40,7 @@ const FireBaseTools = {
         const provider = FireBaseTools.getProvider(p);
 
         return firebaseAuth.signInWithPopup(provider)
-            .then(firebaseAuth.currentUser)
+            .then(result => result.user)
             .catch(error => ({
                 errorCode   : error.code,
                 errorMessage: error.message

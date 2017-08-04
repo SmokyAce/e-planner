@@ -5,12 +5,27 @@ import { Field, reduxForm } from 'redux-form/immutable';
 import RaisedButton from 'material-ui/RaisedButton';
 import { FormattedMessage } from 'react-intl';
 import ReduxFormTextField from '../Form/ReduxFormTextField';
-
+import Error from '../Indicators/Error';
+// validate
+import validate from './validate';
 // intl
 import messages from './messages';
 
 
-const renderTextField = props => (<ReduxFormTextField {...props} />);
+const renderTextField = props => {
+    const { meta } = props;
+
+    return (
+        <ReduxFormTextField
+            {...props}
+            formattedError={<FormattedMessage {...messages[meta.error]} />}
+        />
+    );
+};
+
+renderTextField.propTypes = {
+    meta: PropTypes.object
+};
 
 const styles = {
     form: {
@@ -21,6 +36,8 @@ const styles = {
 
 class SignIn extends React.Component {
     render() {
+        const { error } = this.props;
+
         return (
             <form
                 style={styles.form}
@@ -42,18 +59,20 @@ class SignIn extends React.Component {
                     label={<FormattedMessage {...messages.login_btn} />}
                     fullWidth
                     primary
-                />
+                /><br /><br />
+                {error !== undefined && (<Error message={error} />)}
             </form>
         );
     }
 }
 
 SignIn.propTypes = {
-    handleSubmit: PropTypes.func.isRequired
+    handleSubmit: PropTypes.func.isRequired,
+    error       : PropTypes.string
 };
 
 export default reduxForm({
     form  : 'login',
-    fields: ['email', 'password']
-    // validate
+    fields: ['email', 'password'],
+    validate
 })(SignIn);
