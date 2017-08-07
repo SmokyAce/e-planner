@@ -7,7 +7,7 @@ import { updateLocation } from './reducers/location';
 // middlewares
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
-import authSaga from './authSaga';
+import authSaga from './middlewares/authSaga';
 
 const stateTransformer = (state) => {
     if (Iterable.isIterable(state)) return state.toJS();

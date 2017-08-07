@@ -55,9 +55,9 @@ export const loginRequest = (data) => ({
  * Tells the app we want to log in a user
  * @param  {string} provider          The provider which selected user
  */
-export const loginWithProviderRequest = (provider) => ({
-    type: actionTypes.LOGIN_WITH_PROVIDER_REQUEST,
-    provider
+export const loginWithProviderRequest = (form, provider) => ({
+    type   : actionTypes.LOGIN_WITH_PROVIDER_REQUEST,
+    payload: { provider, form }
 });
 
 /**

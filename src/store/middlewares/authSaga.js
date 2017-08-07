@@ -1,13 +1,13 @@
 import { take, call, put, race, fork, takeLatest } from 'redux-saga/effects';
 import { browserHistory } from 'react-router';
 // api
-import fbTools from '../utils/firebaseTools';
+import fbTools from '../../utils/firebaseTools';
 // sagas
-import formSaga from '../utils/reduxFormSaga';
+import formSaga from './reduxFormSaga';
 // actions types
-import * as actionTypes from '../routes/AppAuth/modules/actionTypes';
+import * as actionTypes from '../../routes/AppAuth/modules/actionTypes';
 // actions
-import { sendEmailVerificationRequest } from '../routes/AppAuth/modules/actions';
+import { sendEmailVerificationRequest } from '../../routes/AppAuth/modules/actions';
 import { SubmissionError } from 'redux-form';
 
 
@@ -65,8 +65,10 @@ function * loginFlow() {
                 formSaga, 'login', authApiWrapper, fbTools.loginUser, authType.loginWithEmail.data
             );
         } else if (authType.loginWithProvider) {
+            const payload = authType.loginWithProvider.payload;
+
             response = yield call(
-                formSaga, 'register', authApiWrapper, fbTools.loginWithProvider, authType.loginWithProvider.provider
+                formSaga, payload.form, authApiWrapper, fbTools.loginWithProvider, payload.provider
             );
         } else if (authType.registration) {
             response = yield call(
@@ -75,10 +77,8 @@ function * loginFlow() {
         }
 
         if (response.success) {
-            const { userInfo } = response;
-
             // check if verification need
-            if (!userInfo.emailVerified) {
+            if (!response.result.emailVerified) {
                 yield put(sendEmailVerificationRequest());
             }
 
