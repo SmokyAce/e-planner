@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isEqual } from 'lodash';
 // components
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
@@ -29,6 +30,8 @@ const styles = {
 };
 
 class UserMenu extends React.Component {
+    shouldComponentUpdate = (nextProps) => (!isEqual(nextProps, this.props));
+
     render() {
         const { currentUser } = this.props;
 

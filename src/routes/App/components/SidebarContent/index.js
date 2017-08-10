@@ -41,10 +41,6 @@ class SidebarContent extends React.Component {
             this.props.sidebarPullRight !== nextProps.sidebarPullRight;
     };
 
-    onNestedListToggle = () => {
-        console.log('yeah bitch!');
-    };
-
     render = () => {
         const {
             listOfEventsId, eventsByIds, style,

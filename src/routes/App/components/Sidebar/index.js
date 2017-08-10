@@ -1,5 +1,7 @@
 import React  from 'react';
 import PropTypes from 'prop-types';
+import { isEqual } from 'lodash';
+// components
 import Sidebar from 'react-sidebar';
 
 import './Sidebar.scss';
@@ -13,6 +15,8 @@ const HOC = (Component) => {
             mql.addListener(this.mediaQueryChanged);
             this.setState({ mql, sidebarDocked: mql.matches });
         };
+
+        shouldComponentUpdate = (nextProps) => (!isEqual(nextProps, this.props));
 
         componentWillUnmount = () => {
             this.state.mql.removeListener(this.mediaQueryChanged);

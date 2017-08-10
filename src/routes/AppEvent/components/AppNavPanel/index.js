@@ -10,12 +10,17 @@ import messages from './messages';
 const styles = {
     tabs: {
         overflowY: 'hidden'
+        // display  : 'block'
     },
     tab: {
-        width       : 'auto',
+        width       : '80px',
         flex        : '1 1 0%',
         paddingLeft : '10px',
-        paddingRight: '10px'
+        paddingRight: '10px',
+        whiteSpace  : 'normal'
+    },
+    inkBarStyle: {
+        display: 'none'
     }
 };
 
@@ -26,11 +31,14 @@ const AppNavPanel = ({ eventId, services, onChange, value }) => {
                 onChange={onChange}
                 value={value}
                 tabItemContainerStyle={styles.tabs}
+                inkBarStyle={styles.inkBarStyle}
+                id='event-tabs'
             >
                 {services.map((service, index) => {
                     const route = (service === 'home')
                         ? `/app/event/${eventId}`
                         : `/app/event/${eventId}/${service}`;
+                    const tabStyle = { ...styles.tab, borderBottom: '2px solid red' };
 
                     return (
                         <Tab
@@ -42,7 +50,7 @@ const AppNavPanel = ({ eventId, services, onChange, value }) => {
                                     <FormattedMessage {...messages[service]} />
                                 </Link>
                             }
-                            style={styles.tab}
+                            style={value === index ? tabStyle : styles.tab}
                         />
                     );
                 })}
