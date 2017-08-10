@@ -16,8 +16,8 @@ const HomeView = ({ loginRequest, registerRequest, loginWithProviderRequest }) =
     return (
         <div className='content'>
             <Header />
-            <div className='container' style={{ flex: '1 0 auto' }}>
-                <div style={{ padding: '40px' }}>
+            <div className='container'>
+                <div style={{ paddingTop: '40px', paddingBottom: '40px' }}>
                     <Col md={8}>
                         <div>
                             <h4>
