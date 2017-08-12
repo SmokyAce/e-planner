@@ -23,7 +23,7 @@ const styles = {
         backgroundColor: '#f2f2f2'
     },
     loadingBar: {
-        zIndex: 1,
+        zIndex: 1101,
         height: '2px'
     },
     header: {}

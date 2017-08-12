@@ -30,6 +30,6 @@ const initialState = fromJS(browserHistory.getCurrentLocation());
 
 export const location = (state = initialState, action) => {
     return action.type === LOCATION_CHANGE
-        ? action.payload
+        ? fromJS(action.payload)
         : state;
 };

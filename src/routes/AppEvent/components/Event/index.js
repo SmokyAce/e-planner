@@ -24,11 +24,13 @@ class AppEvent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        // console.log(nextProps, this.props);
         this.setState(this.getComponentState(nextProps));
     }
 
-    shouldComponentUpdate = (nextProps, nextState) => (!isEqual(nextProps.location, this.props.location));
+    shouldComponentUpdate = (nextProps, nextState) => (
+        !isEqual(nextProps.location, this.props.location) ||
+        !isEqual(nextProps.eventsByIds, this.props.eventsByIds)
+    );
 
     handleChange = (value) => {
         this.setState({ slideIndex: value });
@@ -47,10 +49,15 @@ class AppEvent extends React.Component {
     }
 
     getComponentState = (props) => {
-        const { eventsByIds, params, location } = props;
-        const [...services] = eventsByIds.getIn([params.id, 'services']).filter(isChecked => isChecked).keys();
+        let services = [];
 
-        services.unshift('home');
+        const { eventsByIds, params, location } = props;
+
+        if (eventsByIds.size > 0) {
+            [...services] = eventsByIds.getIn([params.id, 'services']).filter(isChecked => isChecked).keys();
+
+            services.unshift('home');
+        }
 
         const service = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
         const slideIndex = services.indexOf(service);
@@ -62,9 +69,11 @@ class AppEvent extends React.Component {
     }
 
     tabsScrollLeft = (value) => {
-        const tabsEl = document.getElementById('event-tabs').childNodes[0];
+        const tabsEl = document.getElementById('event-tabs');
 
-        tabsEl.scrollLeft = value === 1 ? 0 : value * 20;
+        if (tabsEl) {
+            tabsEl.childNodes[0].scrollLeft = value === 1 ? 0 : value * 20;
+        }
     }
 
     render() {
