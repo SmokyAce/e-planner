@@ -1,6 +1,6 @@
 {
   "name": "e-planner",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Event Planner - this is best planner for events in the world :)",
   "main": "index.js",
   "scripts": {
