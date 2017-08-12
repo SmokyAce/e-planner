@@ -1,45 +1,60 @@
 import React from 'react';
-import { Link } from 'react-router';
+import PropTypes from 'prop-types';
+// Components
+import AppBar from 'material-ui/AppBar';
+import FlatButton from '../FlatButton';
 import { FormattedMessage } from 'react-intl';
-import { Navbar } from 'react-bootstrap';
-
-import LocaleToggle from '../../containers/LocaleToogle';
-
+import { Link } from 'react-router';
+import UserMenu from '../../containers/UserMenu';
 // styles
 import './Header.scss';
+// intl
 import messages from './messages';
 
-const Header = () => {
-    return (
-        <div id='header'>
-            <Navbar inverse fluid collapseOnSelect>
-                <Navbar.Header>
-                    <Navbar.Brand>
-                        <Link to='/'>
-                            <FormattedMessage{...messages.description} />
-                        </Link>
-                    </Navbar.Brand>
-                    <Navbar.Toggle />
-                </Navbar.Header>
-                <ul className='nav navbar-nav'>
-                    <li>
-                        <Link to='/app' activeClassName='route--active'>
-                            <FormattedMessage {...messages.planner} />
-                        </Link>
-                    </li>
-                </ul>
 
-                <ul className='nav navbar-nav navbar-right' style={{ marginRight: '0px' }}>
-                    <LocaleToggle />
-                    <li key={3}>
-                        <Link to='/login'>
-                            <FormattedMessage {...messages.loginBtn} />
+const styles = {
+    iconStyleRight: {
+        margin: 'auto'
+    },
+    appBar: {}
+};
+
+const SignIn = () => (
+    <FlatButton
+        label={<Link to='/login' style={{ color: '#fff' }}><FormattedMessage {...messages.loginBtn} /></Link>}
+        onTouchTap={this.handleOpen}
+    />
+);
+
+class Header extends React.Component {
+    render() {
+        const { loggedIn, onMenuIconButtonTouchTap, style } = this.props;
+
+        const appBarstyle = { ...styles.appBar, ...style };
+
+        return (
+            <div className='header-cont'>
+                <AppBar
+                    title={
+                        <Link to='/app' style={{ color: '#fff' }}>
+                            <FormattedMessage {...messages.description} />
                         </Link>
-                    </li>
-                </ul>
-            </Navbar>
-        </div>
-    );
+                    }
+                    showMenuIconButton={loggedIn === undefined ? false : loggedIn}
+                    onLeftIconButtonTouchTap={onMenuIconButtonTouchTap}
+                    iconElementRight={loggedIn ? <UserMenu /> : <SignIn />}
+                    iconStyleRight={styles.iconStyleRight}
+                    style={appBarstyle}
+                />
+            </div>
+        );
+    }
+}
+
+Header.propTypes = {
+    loggedIn                : PropTypes.bool,
+    onMenuIconButtonTouchTap: PropTypes.func,
+    style                   : PropTypes.object
 };
 
 export default Header;

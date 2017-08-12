@@ -13,12 +13,12 @@ import messages from '../modules/messages';
 // styles
 import './AccountSettings.scss';
 
+
 const renderField = (props) => (<ExtendField {...props} />);
 
 const renderSelect = (props) => (<SelectList {...props} />);
 
 class AccountSettings extends Component {
-
     // shouldComponentUpdate = (nextState) => (nextState.locale === this.props.locale);
 
     render() {
@@ -83,7 +83,6 @@ class AccountSettings extends Component {
             </form>
         );
     }
-
 }
 
 AccountSettings.propTypes = {

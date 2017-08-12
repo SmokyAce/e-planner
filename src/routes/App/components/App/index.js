@@ -1,36 +1,60 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Immutable from 'immutable';
+import { Map, List } from 'immutable';
 // components
 import Sidebar from '../Sidebar';
-import SidebarContent from '../../containers/SidebarContent';
-import Header from '../../../../components/AppHeader';
+import SidebarContent from '../../components/SidebarContent';
+import Header from '../../../../components/Header';
 import { ImmutableLoadingBar as LoadingBar } from 'react-redux-loading-bar';
 // style
 import './App.scss';
 
 
 const styles = {
+    root: {
+        position: 'fixed'
+    },
+    sidebar: {
+        zIndex         : '1101',
+        backgroundColor: '#f2f2f2'
+    },
     content: {
-        overflowY: 'auto'
+        overflowY      : 'auto',
+        backgroundColor: '#f2f2f2'
     },
     loadingBar: {
         zIndex: 1,
         height: '2px'
-    }
+    },
+    header: {}
 };
 
 class App extends React.Component {
-
     constructor(props) {
         super(props);
         this.props.startSync();
     }
 
     render = () => {
-        const { sidebar, onSetOpen, onSetDocked, children } = this.props;
+        const {
+            children, sidebar, loggedIn, eventsByIds, listOfEventsId,
+            formState, onSetOpen, onSetDocked, onChangeSide
+        } = this.props;
 
-        const content = <SidebarContent style={{ width: sidebar.get('sidebarWidth') }} />;
+        const content = (
+            <SidebarContent
+                style={{ width: sidebar.get('sidebarWidth') }}
+                eventsByIds={eventsByIds}
+                listOfEventsId={listOfEventsId}
+                formState={formState}
+                dockedSidebar={onSetDocked}
+                sidebarDocked={sidebar.get('sidebarDocked')}
+                pullRightSidebar={onChangeSide}
+                sidebarPullRight={sidebar.get('pullRight')}
+                openSidebar={onSetOpen}
+                sidebarOpened={sidebar.get('open')}
+            />
+        );
 
         const sidebarProps = {
             sidebar         : content,
@@ -46,22 +70,30 @@ class App extends React.Component {
         return (
             <Sidebar {...sidebarProps}>
                 <LoadingBar style={styles.loadingBar} />
-                <Header />
+                <Header
+                    loggedIn={loggedIn}
+                    onMenuIconButtonTouchTap={() => onSetOpen(true)}
+                    style={styles.header}
+                />
                 <div className='app-container container-fluide'>
-                    { children }
+                    {children}
                 </div>
             </Sidebar>
         );
     }
-
 }
 
 App.propTypes = {
-    children   : PropTypes.element,
-    sidebar    : PropTypes.instanceOf(Immutable.Map).isRequired,
-    onSetOpen  : PropTypes.func.isRequired,
-    onSetDocked: PropTypes.func.isRequired,
-    startSync  : PropTypes.func.isRequired
+    children      : PropTypes.element,
+    sidebar       : PropTypes.instanceOf(Map).isRequired,
+    loggedIn      : PropTypes.bool.isRequired,
+    listOfEventsId: PropTypes.instanceOf(List),
+    eventsByIds   : PropTypes.instanceOf(Map),
+    formState     : PropTypes.instanceOf(Map),
+    onSetOpen     : PropTypes.func.isRequired,
+    onSetDocked   : PropTypes.func.isRequired,
+    onChangeSide  : PropTypes.func.isRequired,
+    startSync     : PropTypes.func.isRequired
 };
 
 export default App;

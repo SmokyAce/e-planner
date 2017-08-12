@@ -3,13 +3,13 @@ import { channel, delay } from 'redux-saga';
 import { take, call, put, race, select, fork } from 'redux-saga/effects';
 import { omit, keys, isEqual } from 'lodash';
 // auth sagas
-import { logoutFlow, logout } from '../../AppAuth/modules/sagas';
+import { logout } from '../../../store/middlewares/authSaga';
 // API
 import api from './api';
 import firebaseTools, { firebaseAuth } from '../../../utils/firebaseTools';
 // selectors
 import { makeSelectLoggedIn } from '../../AppAuth/modules/selectors';
-import { makeSelectEventsListOfIds, makeSelectAppRestoreState } from '../../App/modules/selectors';
+import { makeSelectEventsListOfIds, selectRestored } from '../../App/modules/selectors';
 // actions
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { REHYDRATE } from 'redux-persist/constants';
@@ -24,7 +24,7 @@ import * as connectionActions from './connection';
 // Events
 // /////////////////////
 function * addEvent(action) {
-    yield put({ type: eventActions.addEventRequest });
+    yield put(eventActions.addEventRequest());
 
     const response = yield call(api.addEvent, action.payload);
 
@@ -32,6 +32,18 @@ function * addEvent(action) {
         yield put(eventActions.addEventSuccess(response.id));
     } else {
         yield put(eventActions.addEventFailure(response.id, response.error));
+    }
+}
+
+function * removeEvent(action) {
+    yield put(eventActions.removeEventRequest());
+
+    const response = yield call(api.removeEvent, action.payload);
+
+    if (!response.error) {
+        yield put(eventActions.removeEventSuccess(response.id));
+    } else {
+        yield put(eventActions.removeEventFailure(response.id, response.error));
     }
 }
 
@@ -123,17 +135,17 @@ export function * updateUserInfoFlow() {
 // /////////////////////
 export function * appSyncFlow() {
     try {
-        yield call(delay, 100);
+        // yield call(delay, 100);
 
-        const userData = yield fork(fetchUserData);
+        yield fork(fetchUserData);
 
-        yield take(userActions.type.FETCH_USER_DATA_SUCCESS);
+        const fetchAction = yield take(userActions.type.FETCH_USER_DATA_SUCCESS);
 
         // Take list of events ids from redux store and compare with events from user data
         // if are not equals make fetch events from DB
         const listOfEventsIds = yield select(makeSelectEventsListOfIds());
 
-        if (!isEqual(keys(userData.events).sort(), listOfEventsIds.toJS().sort())) {
+        if (!isEqual(keys(fetchAction.payload.events).sort(), listOfEventsIds.toJS().sort())) {
             yield put(eventActions.fetchEventRequest());
 
             yield call(fetchEvents);
@@ -163,7 +175,7 @@ export function * fetchUserDataFlow() {
         try {
             response = yield call(api.fetchUserData);
 
-            if (response === null) {  // take user data from firebase auth
+            if (response === null) { // take user data from firebase auth
                 response = omit(firebaseAuth.currentUser.toJSON(),
                     ['appName', 'authDomain', 'redirectEventId', 'stsTokenManager']);
                 response.isSync = false;
@@ -192,7 +204,9 @@ export function * fetchUserDataFlow() {
  */
 export function * loadingFlow() {
     while (true) {
-        yield take(action => action.type.indexOf('REQUEST') > 0);
+        yield take(action => {
+            return (action.type.indexOf('REQUEST') > 0);
+        });
 
         yield put(showLoading());
 
@@ -211,9 +225,11 @@ export function * loadingFlow() {
  */
 export function * watchSync() {
     while (true) {
-        yield take(syncActions.types.APP_START_SYNC);
+        yield take([syncActions.types.APP_START_SYNC]);
 
-        const appRestored = yield select(makeSelectAppRestoreState());
+        yield call(delay, 500);
+
+        const appRestored = yield select(selectRestored);
 
         if (!appRestored) {
             yield take(REHYDRATE);
@@ -282,11 +298,18 @@ export function * authObserver() {
     }
 }
 
-export function * addEventsFlow() {
+export function * eventsFlow() {
     while (true) {
-        const action = yield take(eventActions.types.ADD_EVENT);
+        const winner = yield race({
+            addEvent   : take(eventActions.types.ADD_EVENT),
+            removeEvent: take(eventActions.types.REMOVE_EVENT)
+        });
 
-        yield fork(addEvent, action);
+        if (winner.addEvent) {
+            yield fork(addEvent, winner.addEvent);
+        } else if (winner.removeEvent) {
+            yield fork(removeEvent, winner.removeEvent);
+        }
     }
 }
 
@@ -294,8 +317,7 @@ export function * addEventsFlow() {
 // daemon watchers
 watchSync.isDaemon = true;
 loadingFlow.isDaemon = true;
-addEventsFlow.isDaemon = true;
-logoutFlow.isDaemon = true;
+eventsFlow.isDaemon = true;
 // daemon observers
 authObserver.isDaemon = true;
 connectionObserver.isDaemon = true;
@@ -307,8 +329,7 @@ connectionObserver.isDaemon = true;
 export default [
     watchSync,
     loadingFlow,
-    addEventsFlow,
-    logoutFlow,
+    eventsFlow,
     // Firebase observers
     connectionObserver,
     authObserver

@@ -33,7 +33,6 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
 
 
 class ChangePassword extends React.Component {
-
     render() {
         const { handleSubmit, changedPwdSucceeded, submitting, error } = this.props;
 

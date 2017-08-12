@@ -48,16 +48,16 @@ export const changeUserPwdRequest = (values) => ({
  */
 export const loginRequest = (data) => ({
     type: actionTypes.LOGIN_REQUEST,
-    data
+    data: data.toJS()
 });
 
 /**
  * Tells the app we want to log in a user
  * @param  {string} provider          The provider which selected user
  */
-export const loginWithProviderRequest = (provider) => ({
-    type: actionTypes.LOGIN_WITH_PROVIDER_REQUEST,
-    provider
+export const loginWithProviderRequest = (form, provider) => ({
+    type   : actionTypes.LOGIN_WITH_PROVIDER_REQUEST,
+    payload: { provider, form }
 });
 
 /**
@@ -75,7 +75,7 @@ export const logoutRequest = () => ({
  */
 export const registerRequest = (data) => ({
     type: actionTypes.REGISTER_REQUEST,
-    data
+    data: data.toJS()
 });
 
 export function resetPasswordEmail(email) {

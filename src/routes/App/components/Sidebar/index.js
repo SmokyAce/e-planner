@@ -1,5 +1,7 @@
 import React  from 'react';
 import PropTypes from 'prop-types';
+import { isEqual } from 'lodash';
+// components
 import Sidebar from 'react-sidebar';
 
 import './Sidebar.scss';
@@ -7,13 +9,14 @@ import './Sidebar.scss';
 
 const HOC = (Component) => {
     class SidebarHOC extends React.Component {
-
         componentWillMount = () => {
             const mql = window.matchMedia('(min-width: 800px)');
 
             mql.addListener(this.mediaQueryChanged);
             this.setState({ mql, sidebarDocked: mql.matches });
         };
+
+        shouldComponentUpdate = (nextProps) => (!isEqual(nextProps, this.props));
 
         componentWillUnmount = () => {
             this.state.mql.removeListener(this.mediaQueryChanged);

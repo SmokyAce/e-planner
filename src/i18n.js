@@ -18,13 +18,13 @@ addLocaleData(enLocaleData);
 addLocaleData(ruLocaleData);
 
 export const appLocales = [
-    'en',
-    'ru'
+    { key: 'en', value: 'English' },
+    { key: 'ru', value: 'Русский' }
 ];
 
 export const formatTranslationMessages = (locale, messages) => {
     const defaultFormattedMessages = locale !==
-    DEFAULT_LOCALE ? formatTranslationMessages(DEFAULT_LOCALE, enTranslationMessages) : {};
+        DEFAULT_LOCALE ? formatTranslationMessages(DEFAULT_LOCALE, enTranslationMessages) : {};
     const formattedMessages = {};
     const messageKeys = Object.keys(messages);
 

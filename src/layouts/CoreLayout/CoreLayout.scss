@@ -1,3 +1,12 @@
-.core-layout__viewport {
-  padding-top: 4rem;
+#root>[data-reactroot] {
+    min-height: 100vh; 
+}
+
+.core-layout,
+.full-height {
+    min-height: 100vh; 
+}
+
+.text-center {
+    text-align: center;
 }

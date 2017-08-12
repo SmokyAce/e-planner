@@ -1,18 +1,18 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import { browserHistory } from 'react-router';
-import { fromJS, Iterable } from 'immutable';
-
-import { createLogger } from 'redux-logger';
-import createSagaMiddleware from 'redux-saga';
-
+import { Iterable } from 'immutable';
+// reducers
 import makeRootReducer from './reducers';
 import { updateLocation } from './reducers/location';
+// middlewares
+import { createLogger } from 'redux-logger';
+import createSagaMiddleware from 'redux-saga';
+import authSaga from './middlewares/authSaga';
 
 const stateTransformer = (state) => {
     if (Iterable.isIterable(state)) return state.toJS();
     return state;
 };
-
 const logger = createLogger({
     stateTransformer
 });
@@ -49,7 +49,6 @@ export default (initialState = {}) => {
     // ======================================================
     const store = createStore(
         makeRootReducer(),
-        fromJS(initialState),
         composeEnhancers(
             applyMiddleware(...middleware),
             ...enhancers
@@ -58,6 +57,8 @@ export default (initialState = {}) => {
 
     // Extensions
     store.runSaga = sagaMiddleware.run;
+    store.runSaga(authSaga);
+
     store.asyncReducers = {};
     store.asyncSagas = {};
 

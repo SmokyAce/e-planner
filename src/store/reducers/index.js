@@ -3,6 +3,7 @@ import { location } from './location';
 import language from '../../containers/LanguageProvider/module';
 import { loadingBarReducer as loadingBar } from 'react-redux-loading-bar';
 import { reducer as form } from 'redux-form/immutable';
+import restored from './persistor';
 
 
 export const makeRootReducer = (asyncReducers) => {
@@ -17,6 +18,7 @@ export const makeRootReducer = (asyncReducers) => {
         language,
         loadingBar,
         form,
+        restored,
         ...asyncReducers
     });
 };

@@ -1,20 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Navbar } from 'react-bootstrap';
+import AppBar from 'material-ui/AppBar';
 import messages from './messages';
 
 
 const TitlePanel = (props) => {
     return (
         <div style={props.style}>
-            <Navbar inverse>
-                <Navbar.Header>
-                    <div className='navbar-brand'>
-                        <FormattedMessage {...messages.titlePanel} />
-                    </div>
-                </Navbar.Header>
-            </Navbar>
+            <AppBar
+                title={<FormattedMessage {...messages.titlePanel} />}
+                showMenuIconButton={false}
+            />
             {props.children}
         </div>
     );

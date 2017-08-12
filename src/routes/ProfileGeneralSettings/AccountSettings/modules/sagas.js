@@ -8,7 +8,7 @@ import { LOCATION_CHANGE } from '../../../../store/reducers/location';
 import { makeSelectCurrentUserField } from '../../../App/modules/selectors';
 // utils
 import { firebaseAuth, firebaseDb } from '../../../../utils/firebaseTools';
-import formSaga from '../../../../utils/reduxFormSaga';
+import formSaga from '../../../../store/middlewares/reduxFormSaga';
 import { pick } from 'lodash';
 
 

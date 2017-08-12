@@ -33,6 +33,18 @@ const api = {
             .then(() => ({ success: true, id: payload.id }))
             .catch(error => ({ error }));
     },
+    removeEvent: (payload) => {
+        const uid = auth.getUserUID().uid;
+
+        const updates = {};
+
+        updates[`/events/${payload}`] = null;
+        updates[`/users/${uid}/events/${payload}`] = null;
+
+        return firebaseDb.ref().update(updates)
+            .then(() => ({ success: true, id: payload }))
+            .catch(error => ({ error }));
+    },
     fetchUserEvents: () => {
         const uid = auth.getUserUID().uid;
 

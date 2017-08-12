@@ -5,7 +5,6 @@ import './ProfileLayout.scss';
 
 
 class ProfileLayout extends React.Component {
-
     componentDidMount() {
         const { sidebarDocked } = this.props;
 

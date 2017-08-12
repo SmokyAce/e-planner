@@ -10,30 +10,29 @@ export const createRoutes = (store) => {
     const { injectReducer } = getAsyncInjectors(store);
 
     return (
-    {
-        path: '/',
-        getComponent(nextState, cb) {
-            require.ensure([], (require) => {
-                injectReducer('auth', require('./AppAuth/modules/auth').default);
+        {
+            path: '/',
+            getComponent(nextState, cb) {
+                require.ensure([], (require) => {
+                    injectReducer('auth', require('./AppAuth/modules/auth').default);
 
-                cb(null, require('../layouts/CoreLayout').default);
-            }, 'core');
-        },
-        indexRoute: Home,
-        getChildRoutes(location, next) {
-            require.ensure([], (require) => {
-                next(null, [
-                    require('./App').default(store),
+                    cb(null, require('../layouts/CoreLayout').default);
+                }, 'core');
+            },
+            indexRoute: Home,
+            getChildRoutes(location, next) {
+                require.ensure([], (require) => {
+                    next(null, [
+                        require('./App').default(store),
 
-                    require('./AppAuth').login(store),
-                    require('./AppAuth').register(store),
-                    require('./AppAuth').verified(store)
+                        require('./AppAuth').login(store),
+                        require('./AppAuth').verified(store)
                     // require('./AppAuth/Login').default(store),
                     // require('./AppAuth/ResetPwd').default(store)
-                ]);
-            }, 'core-routes');
+                    ]);
+                }, 'core-routes');
+            }
         }
-    }
     );
 };
 

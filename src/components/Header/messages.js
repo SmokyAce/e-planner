@@ -24,15 +24,15 @@ export default defineMessages({
     },
     loginBtn: {
         id            : 'app.login.btn',
-        defaultMessage: 'Login'
+        defaultMessage: 'Sign in'
     },
     registerBtn: {
         id            : 'app.register.btn',
-        defaultMessage: 'Register'
+        defaultMessage: 'Sign up'
     },
     logoutBtn: {
         id            : 'app.logout.btn',
-        defaultMessage: 'Logout'
+        defaultMessage: 'Sign out'
     },
     profileBtn: {
         id            : 'app.profile.btn',

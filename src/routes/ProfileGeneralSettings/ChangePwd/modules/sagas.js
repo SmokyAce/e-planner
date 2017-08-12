@@ -10,7 +10,7 @@ import {
 import { LOCATION_CHANGE } from '../../../../store/reducers/location';
 // utils
 import { firebaseAuth } from '../../../../utils/firebaseTools';
-import formSaga from '../../../../utils/reduxFormSaga';
+import formSaga from '../../../../store/middlewares/reduxFormSaga';
 
 
 const changeAccountPwd = (newPassword) => {

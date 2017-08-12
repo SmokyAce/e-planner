@@ -1,0 +1,47 @@
+.hr-label {
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    clear: both;
+    overflow: hidden;
+}
+
+.hr-label::before,
+.hr-label::after {
+    content: '';
+    position: relative;
+    width: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    height: 1px;
+    vertical-align: middle;
+}
+
+.hr-label::before {
+    right: 0.5em;
+    margin-left: -50%;
+}
+
+.hr-label::after {
+    left: 0.5em;
+    margin-right: -50%;
+}
+
+.goggle-social-btn i {
+    margin-right: 12px !important;
+}
+
+.auth-header {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.auth-footer {
+    margin-left: 20px;
+    margin-right: 20px;
+}

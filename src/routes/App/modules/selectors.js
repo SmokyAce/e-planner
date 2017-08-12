@@ -82,9 +82,13 @@ const makeSelectAppSyncState = () => createSelector(
     (globalState) => globalState.getIn(['sync', 'status'])
 );
 
-const makeSelectAppRestoreState = () => createSelector(
-    selectApp,
-    (globalState) => globalState.get('restored')
+const selectForm = (state) => state.get('form');
+
+const selectRestored = (state) => state.get('restored');
+
+const makeSelectFormValues = (form) => createSelector(
+    selectForm,
+    (globalState) => globalState.getIn([form, 'values'])
 );
 
 export {
@@ -104,11 +108,13 @@ export {
     // sync status
     makeSelectAppSyncState,
     // rehydrate
-    makeSelectAppRestoreState,
+    selectRestored,
     // events
     makeSelectEventsByIds,
     makeSelectEventsOptionsById,
     makeSelectEventsListOfIds,
     makeSelectEventsFormState,
-    makeSelectEventsSettingsFormState
+    makeSelectEventsSettingsFormState,
+    // form
+    makeSelectFormValues
 };

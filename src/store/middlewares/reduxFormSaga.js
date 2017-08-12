@@ -7,11 +7,11 @@ export default function * formSaga(formId, apiSaga, ...apiSagaArgs) {
     yield put(startSubmit(formId));
 
     try {
-        yield call(apiSaga, ...apiSagaArgs);
+        const result = yield call(apiSaga, ...apiSagaArgs);
 
         // Success
         yield put(stopSubmit(formId));
-        return { success: true };
+        return { success: true, result };
     } catch (err) {
         if (err instanceof SubmissionError) {
             yield put(stopSubmit(formId, err.errors));

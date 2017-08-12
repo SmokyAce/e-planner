@@ -6,7 +6,7 @@ export default (store) => {
         path: 'event/:id',
         getComponent(nextState, next) {
             require.ensure([], (require) => {
-                next(null, require('./containers/Event').default);
+                next(null, require('./containers/EventContainer').default);
             }, 'event');
         },
         indexRoute: EventHome,
