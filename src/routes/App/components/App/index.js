@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
+import { isEqual } from 'lodash';
 // components
 import Sidebar from '../Sidebar';
 import SidebarContent from '../../components/SidebarContent';
@@ -35,7 +36,10 @@ class App extends React.Component {
         this.props.startSync();
     }
 
+    shouldComponentUpdate = (nextState) => (!isEqual(nextState, this.props));
+
     render = () => {
+        // console.log('App render!');
         const {
             children, sidebar, loggedIn, eventsByIds, listOfEventsId,
             formState, onSetOpen, onSetDocked, onChangeSide

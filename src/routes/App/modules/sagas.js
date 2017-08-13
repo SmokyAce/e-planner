@@ -1,7 +1,7 @@
 // utils
 import { channel, delay } from 'redux-saga';
 import { take, call, put, race, select, fork } from 'redux-saga/effects';
-import { omit, keys, isEqual } from 'lodash';
+import { pick, keys, isEqual } from 'lodash';
 // auth sagas
 import { logout } from '../../../store/middlewares/authSaga';
 // API
@@ -81,16 +81,28 @@ export function * setUserData(userData) {
  * Fetch user data from DB
  */
 export function * fetchUserData() {
+    let userInfo;
+
     yield put({ type: userActions.type.FETCH_USER_DATA_REQUEST });
 
     const { response, error } = yield call(api.fetchUserData);
 
-    if (response) {
-        yield put(userActions.fetchUserDataSuccess(response));
-        return response;
+    if (error) {
+        yield put(userActions.fetchUserDataFailure(error));
+        throw new Error(error);
     }
-    yield put(userActions.fetchUserDataFailure(error));
-    throw new Error(error);
+
+    if (response === null) {
+        console.log('setUserData', response);
+        userInfo = pick(firebaseAuth.currentUser.toJSON(),
+            ['uid', 'email', 'displayName', 'providerData', 'isAnonymous', 'emailVerified']);
+
+        yield setUserData(userInfo);
+    } else {
+        userInfo = response;
+    }
+    yield put(userActions.fetchUserDataSuccess(userInfo));
+    return userInfo;
 }
 
 
@@ -159,45 +171,8 @@ export function * appSyncFlow() {
 // //////////////////////////////////////
 
 /**
- * fetch user data out saga
- * This is basically the same as the `if (winner.fetch)` of above, just written
- * as a saga that is always listening to `fetch` actions
- */
-export function * fetchUserDataFlow() {
-    while (true) {
-        yield take(userActions.type.FETCH_USER_DATA_REQUEST);
-
-        let response;
-
-        try {
-            response = yield call(api.fetchUserData);
-
-            if (response === null) { // take user data from firebase auth
-                response = omit(firebaseAuth.currentUser.toJSON(),
-                    ['appName', 'authDomain', 'redirectEventId', 'stsTokenManager']);
-                response.isSync = false;
-            } else {
-                response.isSync = true;
-            }
-
-            yield put(userActions.fetchUserDataSuccess(response));
-            yield fork(fetchEvents);
-
-            if (!response.isSync) {
-                yield put(userActions.saveUserData(response));
-            }
-        } catch (error) {
-            yield put(userActions.fetchUserDataFailure(error));
-            return false;
-        }
-    }
-}
-
-/**
- * For each action, what has 'REQUEST':
- * - show loader
- * After 'SUCCESS' action will:
- * - hide loader
+ * "Show loader" for each action, what has 'REQUEST':
+ * and "hide loader" after 'SUCCESS' action
  */
 export function * loadingFlow() {
     while (true) {

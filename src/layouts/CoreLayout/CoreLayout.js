@@ -6,11 +6,14 @@ import './CoreLayout.scss';
 
 
 class CoreLayout extends React.Component {
-    render = () => (
-        <div className='text-center core-layout'>
-            {this.props.children}
-        </div>
-    );
+    render = () => {
+        // console.log('CoreLayout render!');
+        return (
+            <div className='text-center core-layout'>
+                {this.props.children}
+            </div>
+        );
+    };
 }
 
 CoreLayout.propTypes = {

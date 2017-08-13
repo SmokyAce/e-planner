@@ -5,15 +5,6 @@ import * as actionTypes from './actionTypes';
 
 // The initial state of the App
 const initialState = fromJS({
-    formState: {
-        email         : '',
-        password      : '',
-        repeatPassword: '',
-        rememberMe    : false,
-        displayName   : ''
-    },
-    currentUser          : null,
-    message              : '',
     loggedIn             : auth.loggedIn(),
     sendEmailVerification: false,
     changedEmailSucceeded: false,

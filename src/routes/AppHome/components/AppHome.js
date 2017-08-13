@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
+import { isEqual } from 'lodash';
 // components
 import { FormattedMessage } from 'react-intl';
 import Dialog from 'material-ui/Dialog';
@@ -46,6 +47,10 @@ class AppHome extends React.Component {
         openDeleteEvent: false
     };
 
+    shouldComponentUpdate = (nextProps, nextState) => (
+        !isEqual(nextState, this.state) || !isEqual(nextProps, this.props)
+    );
+
     handleOpen = (component) => {
         const obj = {};
 
@@ -63,6 +68,7 @@ class AppHome extends React.Component {
     };
 
     render() {
+        // console.log('AppHome render!');
         const {
             locale, restored, eventsByIds, eventListOfIds,
             addEvent, removeEvent, toggleEventService, formValues

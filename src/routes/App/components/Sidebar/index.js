@@ -27,6 +27,7 @@ const HOC = (Component) => {
         };
 
         render() {
+            // console.log('Sidebar render!');
             return <Component {...this.props} />;
         }
     }
