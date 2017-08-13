@@ -1,29 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { fromJS } from 'immutable';
 import createStore from './store/createStore';
-import { persistStore } from 'redux-persist-immutable';
-import localForage from 'localforage';
+import { createTransform, persistStore } from 'redux-persist-immutable';
 import Main from './containers/Main';
-
 // Import translations messages
 import { translationMessages } from './i18n';
+
 
 // ========================================================
 // Store Instantiation
 // ========================================================
 const store = createStore();
 
-// Persist config
+// ========================================================
+// Persist store
+// ========================================================
+// transform state func
+const transformImmutableState = createTransform(
+    state => state.toJS(),
+    state => fromJS(state),
+    config => config
+);
+
+// config
 const config = {
-    whitelist: ['language', 'app'],
-    blacklist: ['auth', 'location', 'form', 'restored'],
-    storage  : localForage,
-    keyPrefix: 'planner:'
+    transforms: [transformImmutableState],
+    whitelist : ['language', 'app'],
+    blacklist : ['auth', 'location', 'form', 'restored'],
+    debounce  : 1000,
+    // storage   : localForage,
+    keyPrefix : 'planner:'
 };
 
-// Persist store
-persistStore(store, config);
-
+setTimeout(persistStore, 1000, store, config);
 
 // ========================================================
 // Render Setup

@@ -14,8 +14,10 @@ const stateTransformer = (state) => {
     if (Iterable.isIterable(state)) return state.toJS();
     return state;
 };
+
 const logger = createLogger({
-    stateTransformer
+    stateTransformer,
+    collapsed: (getState, action) => (action.type.indexOf('redux-form') > 0)
 });
 const sagaMiddleware = createSagaMiddleware();
 

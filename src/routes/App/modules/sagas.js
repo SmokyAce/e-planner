@@ -135,12 +135,9 @@ export function * updateUserInfoFlow() {
 // /////////////////////
 export function * appSyncFlow() {
     try {
-        // yield call(delay, 100);
-
         yield fork(fetchUserData);
 
         const fetchAction = yield take(userActions.type.FETCH_USER_DATA_SUCCESS);
-
         // Take list of events ids from redux store and compare with events from user data
         // if are not equals make fetch events from DB
         const listOfEventsIds = yield select(makeSelectEventsListOfIds());
@@ -227,7 +224,7 @@ export function * watchSync() {
     while (true) {
         yield take([syncActions.types.APP_START_SYNC]);
 
-        yield call(delay, 500);
+        yield call(delay, 1000);
 
         const appRestored = yield select(selectRestored);
 

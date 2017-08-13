@@ -5,6 +5,10 @@ import { createSelector } from 'reselect';
 
 const selectApp = (state) => state.get('app');
 
+const selectForm = (state) => state.get('form');
+
+const selectRestored = (state) => state.get('restored');
+
 const makeSelectSidebar = () => createSelector(
     selectApp,
     (globalState) => globalState.get('sidebar')
@@ -81,10 +85,6 @@ const makeSelectAppSyncState = () => createSelector(
     selectApp,
     (globalState) => globalState.getIn(['sync', 'status'])
 );
-
-const selectForm = (state) => state.get('form');
-
-const selectRestored = (state) => state.get('restored');
 
 const makeSelectFormValues = (form) => createSelector(
     selectForm,
