@@ -25,11 +25,11 @@ const config = {
             inProjectSrc(project.main)
         ]
     },
-    devtool: project.sourcemaps ? 'source-map' : false,
+    devtool: project.sourcemaps && __DEV__ ? 'source-map' : false,
     output : {
         path         : inProject(project.outDir),
         filename     : __DEV__ ? '[name].js' : '[name].[chunkhash].js',
-        chunkFilename: __DEV__ ? '[name].js' : '[id].[chunkhash].js',
+        chunkFilename: __DEV__ ? '[name].chunk.js' : '[id].[chunkhash].chunk.js',
         publicPath   : project.publicPath
     },
     resolve: {
@@ -190,7 +190,7 @@ config.plugins.push(new HtmlWebpackPlugin({
 // ------------------------------------
 
 if (__PROD__) {
-    debug('Enable plugins for production (OccurenceOrder, UglifyJS).');
+    debug('Enable plugins for production (OfflinePlugin).');
     config.plugins.push(new OfflinePlugin({
         relativePaths: false,
         publicPath   : '/',
@@ -202,7 +202,7 @@ if (__PROD__) {
             // All chunks marked as `additional`, loaded after main section
             // and do not prevent SW to install. Change to `optional` if
             // do not want them to be preloaded at all (cached only when first loaded)
-            additional: ['*.js']
+            additional: ['*.chunk.js']
         },
         // Removes warning for about `additional` section usage
         safeToUseOptionalCaches: true,
@@ -214,6 +214,7 @@ if (__PROD__) {
 // Development Tools
 // ------------------------------------
 if (__DEV__) {
+    debug('Enable plugins for development (HotModuleReplacementPlugin, NamedModulesPlugin).');
     config.entry.main.push(
         `webpack-hot-middleware/client.js?path=${config.output.publicPath}__webpack_hmr`
     );
@@ -238,6 +239,8 @@ if (!__TEST__) {
 // Production Optimizations
 // ------------------------------------
 if (__PROD__) {
+    debug('Enable plugins for production (LoaderOptions, UglifyJs).');
+
     config.plugins.push(
         new webpack.LoaderOptionsPlugin({
             minimize: true,
