@@ -22,6 +22,7 @@
   "app.events.delete-event-description": "Do you really want delete event?",
   "app.events.event-name-field"        : "Event name",
   "app.events.event-date-field"        : "Event date",
+  "app.events.services-description"    : "Choose services for event:",
   "app.route.home"                     : "Home",
   "app.route.counter"                  : "Counter",
   "app.route.zen"                      : "Zen",

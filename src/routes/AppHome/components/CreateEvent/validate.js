@@ -4,7 +4,7 @@ const validate = (values, props) => {
 
     if (!values.get('name')) {
         errors.name = 'required';
-    } else if (!values.get('name')) {
+    } else if (!values.get('date')) {
         errors.date = 'required';
     }
     return errors;

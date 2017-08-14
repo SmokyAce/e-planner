@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { fromJS } from 'immutable';
 // components
 import { Field, reduxForm } from 'redux-form/immutable';
 import ReduxFormTextField from '../../../../components/Form/ReduxFormTextField';
@@ -19,25 +20,39 @@ import './CreateEvent.scss';
 
 
 const services = {
-    guests : true,
-    todos  : true,
-    budjet : true,
-    timing : false,
-    counter: false
+    // counter    : false,
+    guests     : true,
+    todos      : true,
+    budjet     : true,
+    timing     : false,
+    contractors: false,
+    blog       : false,
+    quiz       : false,
+    notebook   : false
 };
+
+const initialValues = { date: new Date() };
+
+for (const key in services) {
+    if (services.hasOwnProperty(key)) {
+        initialValues[key] = services[key];
+    }
+}
 
 const renderTextField = props => (<ReduxFormTextField {...props} />);
 
-const renderDateField = ({ input: { onBlur, ...inputProps }, meta, onChange, ...props }) => (
+const renderDateField = ({ input: { onBlur, value, ...inputProps }, meta, onChange, ...props }) => (
     <DatePicker
         {...props}
         floatingLabelText={props.hintText}
-        onChange={(event, value) => {
-            inputProps.onChange(value);
+        onChange={(event, val) => {
+            inputProps.onChange(val);
             if (onChange) {
-                onChange(value);
+                onChange(val);
             }
         }}
+        fullWidth
+        value={value}
     />
 );
 
@@ -52,7 +67,7 @@ const renderCheckbox = ({ input, label, defaultChecked }) => (
     <Checkbox
         label={label}
         onCheck={input.onChange}
-        defaultChecked={defaultChecked}
+        defaultChecked={input.value}
     />
 );
 
@@ -65,9 +80,7 @@ renderCheckbox.propTypes = {
 class CreateEvent extends React.Component {
     render() {
         const { locale, handleSubmit } = this.props;
-
         const DateTimeFormat = global.Intl.DateTimeFormat;
-
         const servicesList = [];
 
         for (const key in services) {
@@ -85,9 +98,7 @@ class CreateEvent extends React.Component {
         }
 
         return (
-            <form
-                onSubmit={handleSubmit}
-            >
+            <form onSubmit={handleSubmit}>
                 <Field
                     name='name'
                     component={renderTextField}
@@ -100,6 +111,11 @@ class CreateEvent extends React.Component {
                     locale={locale}
                     autoOk
                     hintText={<FormattedMessage {...messages.event_date} />}
+                    formatDate={new DateTimeFormat(locale, {
+                        day  : 'numeric',
+                        month: 'long',
+                        year : 'numeric'
+                    }).format}
                 /><br />
                 <h4><FormattedMessage {...messages.services_desc} /></h4>
                 <div className='services-cont'>
@@ -116,6 +132,7 @@ CreateEvent.propTypes = {
 };
 
 export default reduxForm({
-    form: 'create-event',
+    form         : 'create-event',
+    initialValues: fromJS(initialValues),
     validate
 })(CreateEvent);

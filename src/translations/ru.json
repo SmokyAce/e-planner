@@ -22,6 +22,7 @@
   "app.events.delete-event-description"   : "Вы действительно хотите удалить событие?",
   "app.events.event-name-field"           : "Имя события",
   "app.events.event-date-field"           : "Дата события",
+  "app.events.services-description"       : "Выберите сервисы для события:",
   "app.route.home"                        : "Домой",
   "app.route.planner"                     : "Планировщик",
   "app.route.counter"                     : "Счетчик",
