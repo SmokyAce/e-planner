@@ -39,7 +39,7 @@ class App extends React.Component {
     shouldComponentUpdate = (nextState) => (!isEqual(nextState, this.props));
 
     render = () => {
-        console.log('App render!');
+        // console.log('App render!');
         const {
             children, sidebar, loggedIn, eventsByIds, listOfEventsId,
             formState, onSetOpen, onSetDocked, onChangeSide, currentPage
