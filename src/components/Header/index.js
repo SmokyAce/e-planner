@@ -26,6 +26,17 @@ const SignIn = () => (
     />
 );
 
+const renderTitle = (currentPage) => {
+    if (currentPage === undefined) {
+        return (
+            <Link to='/app' style={{ color: '#fff' }}>
+                <FormattedMessage {...messages.description} />
+            </Link>
+        );
+    }
+    return (<FormattedMessage {...messages[currentPage]} />);
+};
+
 class Header extends React.Component {
     render() {
         const { loggedIn, onMenuIconButtonTouchTap, style, currentPage } = this.props;
@@ -34,7 +45,7 @@ class Header extends React.Component {
         return (
             <div className='header-cont'>
                 <AppBar
-                    title={<FormattedMessage {...messages[currentPage === undefined ? 'description' : currentPage]} />}
+                    title={renderTitle(currentPage)}
                     showMenuIconButton={loggedIn === undefined ? false : loggedIn}
                     onLeftIconButtonTouchTap={onMenuIconButtonTouchTap}
                     iconElementRight={loggedIn ? <UserMenu /> : <SignIn />}
