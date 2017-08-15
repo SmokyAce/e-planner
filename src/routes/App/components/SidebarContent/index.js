@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Map, List as imList } from 'immutable';
 // components
 import { Link } from 'react-router';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import TitlePanel from '../../components/TitlePanel';
 import Toggle from 'material-ui/Toggle';
 // import Checkbox from 'material-ui/Checkbox';
@@ -13,6 +13,8 @@ import EventIcon from 'material-ui/svg-icons/action/event';
 import GroupIcon from 'material-ui/svg-icons/social/group';
 // styles
 import './SidebarContent.scss';
+// intl
+import messages from './messages';
 
 
 // styles
@@ -72,12 +74,12 @@ class SidebarContent extends React.Component {
                 <div style={styles.content} className='text-left'>
                     <List>
                         <ListItem
-                            primaryText='Sidebar'
+                            primaryText={<FormattedMessage {...messages.sidebar_description} />}
                             primaryTogglesNestedList
                             nestedItems={[
                                 <ListItem
                                     key={1}
-                                    primaryText='Docked'
+                                    primaryText={<FormattedMessage {...messages.sidebar_docked} />}
                                     rightToggle={
                                         <Toggle
                                             defaultToggled={sidebarDocked}
@@ -87,7 +89,7 @@ class SidebarContent extends React.Component {
                                 />,
                                 <ListItem
                                     key={2}
-                                    primaryText='Pull right'
+                                    primaryText={<FormattedMessage {...messages.sidebar_pullRight} />}
                                     rightToggle={
                                         <Toggle
                                             defaultToggled={sidebarPullRight}
@@ -100,7 +102,7 @@ class SidebarContent extends React.Component {
 
                         <Divider />
                         <ListItem
-                            primaryText='Events'
+                            primaryText={<FormattedMessage {...messages.events_description} />}
                             initiallyOpen
                             leftIcon={<EventIcon />}
                             primaryTogglesNestedList
@@ -109,8 +111,13 @@ class SidebarContent extends React.Component {
                         />
                         <Divider />
                         <ListItem
-                            primaryText='Guests'
+                            primaryText={<FormattedMessage {...messages.guests_description} />}
                             leftIcon={<GroupIcon />}
+                            containerElement={<Link to={'/app/guests'} />}
+                        />
+                        <ListItem
+                            primaryText={<FormattedMessage {...messages.contractors_description} />}
+                            containerElement={<Link to={'/app/contractors'} />}
                         />
                     </List>
                 </div>
