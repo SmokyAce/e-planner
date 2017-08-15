@@ -61,6 +61,8 @@ class SidebarContent extends React.Component {
         const sidebarStyle = style ? { ...styles.sidebar, ...style } : styles.sidebar;
         const nestedList = [];
 
+        const closeSidebar = () => (!sidebarDocked && openSidebar(sidebarOpened));
+
         listOfEventsId.map((item) => {
             nestedList.push(
                 <ListItem
@@ -71,7 +73,7 @@ class SidebarContent extends React.Component {
                             {eventsByIds.getIn([item, 'name'])}
                         </Link>
                     }
-                    onTouchTap={() => (!sidebarDocked && openSidebar(sidebarOpened))}
+                    onTouchTap={closeSidebar}
                 />
             );
         });
@@ -119,18 +121,19 @@ class SidebarContent extends React.Component {
                             leftIcon={<EventIcon />}
                             primaryTogglesNestedList
                             nestedItems={nestedList}
-
                         />
                         <Divider />
                         <ListItem
                             primaryText={<FormattedMessage {...messages.guests_description} />}
                             leftIcon={<GuestsIcon />}
                             containerElement={<Link to={'/app/guests'} />}
+                            onTouchTap={closeSidebar}
                         />
                         <ListItem
                             primaryText={<FormattedMessage {...messages.contractors_description} />}
                             leftIcon={<ContractorsIcon />}
                             containerElement={<Link to={'/app/contractors'} />}
+                            onTouchTap={closeSidebar}
                         />
                     </List>
                 </div>
