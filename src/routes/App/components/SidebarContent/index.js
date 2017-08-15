@@ -10,7 +10,9 @@ import Toggle from 'material-ui/Toggle';
 import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import EventIcon from 'material-ui/svg-icons/action/event';
-import GroupIcon from 'material-ui/svg-icons/social/group';
+import ContractorsIcon from 'material-ui/svg-icons/action/compare-arrows';
+import SidebarIcon from 'material-ui/svg-icons/action/chrome-reader-mode';
+import GuestsIcon from 'material-ui/svg-icons/social/group';
 // styles
 import './SidebarContent.scss';
 // intl
@@ -33,6 +35,12 @@ const styles = {
     },
     content: {
         padding: '5px'
+    },
+    toggle_on: {
+        backgroundImage: 'url(/img/docked_off.png)'
+    },
+    toggle_off: {
+        backgroundImage: 'url(/img/docked_on.png)'
     }
 };
 
@@ -75,7 +83,9 @@ class SidebarContent extends React.Component {
                     <List>
                         <ListItem
                             primaryText={<FormattedMessage {...messages.sidebar_description} />}
+                            leftIcon={<SidebarIcon />}
                             primaryTogglesNestedList
+                            nestedListStyle={{ fontWeight: 'inherit' }}
                             nestedItems={[
                                 <ListItem
                                     key={1}
@@ -84,6 +94,8 @@ class SidebarContent extends React.Component {
                                         <Toggle
                                             defaultToggled={sidebarDocked}
                                             onToggle={() => dockedSidebar(sidebarDocked)}
+                                            thumbSwitchedStyle={styles.toggle_on}
+                                            thumbStyle={styles.toggle_off}
                                         />
                                     }
                                 />,
@@ -112,11 +124,12 @@ class SidebarContent extends React.Component {
                         <Divider />
                         <ListItem
                             primaryText={<FormattedMessage {...messages.guests_description} />}
-                            leftIcon={<GroupIcon />}
+                            leftIcon={<GuestsIcon />}
                             containerElement={<Link to={'/app/guests'} />}
                         />
                         <ListItem
                             primaryText={<FormattedMessage {...messages.contractors_description} />}
+                            leftIcon={<ContractorsIcon />}
                             containerElement={<Link to={'/app/contractors'} />}
                         />
                     </List>

@@ -18,6 +18,22 @@ export default defineMessages({
         id            : 'app.route.home',
         defaultMessage: 'Home'
     },
+    guests: {
+        id            : 'app.route.guests',
+        defaultMessage: 'Guests'
+    },
+    contractors: {
+        id            : 'app.route.contractors',
+        defaultMessage: 'Contractors'
+    },
+    event: {
+        id            : 'app.route.event',
+        defaultMessage: 'Event'
+    },
+    profile: {
+        id            : 'app.route.profile',
+        defaultMessage: 'Profile'
+    },
     planner: {
         id            : 'app.route.planner',
         defaultMessage: 'App'

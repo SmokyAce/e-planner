@@ -10,6 +10,7 @@ import {
     makeSelectEventsFormState
 } from '../modules/selectors';
 import { makeSelectLoggedIn } from '../../AppAuth/modules/selectors';
+import { getCurrenPageLocation } from '../../../store/reducers/location';
 
 // actions
 import { bindActionCreators } from 'redux';
@@ -22,7 +23,8 @@ const mapStateToProps = (state) => createStructuredSelector({
     loggedIn      : makeSelectLoggedIn(),
     eventsByIds   : makeSelectEventsByIds(),
     listOfEventsId: makeSelectEventsListOfIds(),
-    formState     : makeSelectEventsFormState()
+    formState     : makeSelectEventsFormState(),
+    currentPage   : getCurrenPageLocation
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

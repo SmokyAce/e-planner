@@ -39,10 +39,10 @@ class App extends React.Component {
     shouldComponentUpdate = (nextState) => (!isEqual(nextState, this.props));
 
     render = () => {
-        // console.log('App render!');
+        console.log('App render!');
         const {
             children, sidebar, loggedIn, eventsByIds, listOfEventsId,
-            formState, onSetOpen, onSetDocked, onChangeSide
+            formState, onSetOpen, onSetDocked, onChangeSide, currentPage
         } = this.props;
 
         const content = (
@@ -78,6 +78,7 @@ class App extends React.Component {
                     loggedIn={loggedIn}
                     onMenuIconButtonTouchTap={() => onSetOpen(true)}
                     style={styles.header}
+                    currentPage={currentPage}
                 />
                 <div className='app-container container-fluide'>
                     {children}
@@ -97,7 +98,8 @@ App.propTypes = {
     onSetOpen     : PropTypes.func.isRequired,
     onSetDocked   : PropTypes.func.isRequired,
     onChangeSide  : PropTypes.func.isRequired,
-    startSync     : PropTypes.func.isRequired
+    startSync     : PropTypes.func.isRequired,
+    currentPage   : PropTypes.string.isRequired
 };
 
 export default App;

@@ -28,18 +28,14 @@ const SignIn = () => (
 
 class Header extends React.Component {
     render() {
-        const { loggedIn, onMenuIconButtonTouchTap, style } = this.props;
+        const { loggedIn, onMenuIconButtonTouchTap, style, currentPage } = this.props;
 
         const appBarstyle = { ...styles.appBar, ...style };
 
         return (
             <div className='header-cont'>
                 <AppBar
-                    title={
-                        <Link to='/app' style={{ color: '#fff' }}>
-                            <FormattedMessage {...messages.description} />
-                        </Link>
-                    }
+                    title={<FormattedMessage {...messages[currentPage]} />}
                     showMenuIconButton={loggedIn === undefined ? false : loggedIn}
                     onLeftIconButtonTouchTap={onMenuIconButtonTouchTap}
                     iconElementRight={loggedIn ? <UserMenu /> : <SignIn />}
@@ -54,7 +50,8 @@ class Header extends React.Component {
 Header.propTypes = {
     loggedIn                : PropTypes.bool,
     onMenuIconButtonTouchTap: PropTypes.func,
-    style                   : PropTypes.object
+    style                   : PropTypes.object,
+    currentPage             : PropTypes.string
 };
 
 export default Header;

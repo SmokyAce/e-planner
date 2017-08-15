@@ -23,6 +23,17 @@ export const updateLocation = ({ dispatch }) => {
     return (nextLocation) => dispatch(locationChange(nextLocation));
 };
 
+// Selector
+export const getCurrenPageLocation = (state) => {
+    let currPage = 'home';
+    const breadcrumbs = state.getIn(['location', 'pathname']).split('/');
+
+    if (breadcrumbs.length > 2) {
+        currPage = breadcrumbs[2];
+    }
+    return currPage;
+};
+
 // ------------------------------------
 // Reducer
 // ------------------------------------
