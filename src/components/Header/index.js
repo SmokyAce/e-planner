@@ -29,13 +29,12 @@ const SignIn = () => (
 class Header extends React.Component {
     render() {
         const { loggedIn, onMenuIconButtonTouchTap, style, currentPage } = this.props;
-
         const appBarstyle = { ...styles.appBar, ...style };
 
         return (
             <div className='header-cont'>
                 <AppBar
-                    title={<FormattedMessage {...messages[currentPage]} />}
+                    title={<FormattedMessage {...messages[currentPage === undefined ? 'description' : currentPage]} />}
                     showMenuIconButton={loggedIn === undefined ? false : loggedIn}
                     onLeftIconButtonTouchTap={onMenuIconButtonTouchTap}
                     iconElementRight={loggedIn ? <UserMenu /> : <SignIn />}
