@@ -62,7 +62,7 @@ class AuthForm extends React.Component {
                             labelStyle={{ borderLeft: '1px solid #e2e2e2' }}
                             fullWidth
                             primary
-                            onTouchTap={() => loginWithProviderRequest(form, 'google')}
+                            onClick={() => loginWithProviderRequest(form, 'google')}
                         />
                     </div>
                 </div>

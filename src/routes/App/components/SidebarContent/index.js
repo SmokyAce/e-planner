@@ -73,7 +73,7 @@ class SidebarContent extends React.Component {
                             {eventsByIds.getIn([item, 'name'])}
                         </Link>
                     }
-                    onTouchTap={closeSidebar}
+                    onClick={closeSidebar}
                 />
             );
         });
@@ -127,13 +127,13 @@ class SidebarContent extends React.Component {
                             primaryText={<FormattedMessage {...messages.guests_description} />}
                             leftIcon={<GuestsIcon />}
                             containerElement={<Link to={'/app/guests'} />}
-                            onTouchTap={closeSidebar}
+                            onClick={closeSidebar}
                         />
                         <ListItem
                             primaryText={<FormattedMessage {...messages.contractors_description} />}
                             leftIcon={<ContractorsIcon />}
                             containerElement={<Link to={'/app/contractors'} />}
-                            onTouchTap={closeSidebar}
+                            onClick={closeSidebar}
                         />
                     </List>
                 </div>

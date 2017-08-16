@@ -79,13 +79,13 @@ class AppHome extends React.Component {
                 label='Cancel'
                 primary
                 keyboardFocused
-                onTouchTap={() => this.handleClose('CreateEvent')}
+                onClick={() => this.handleClose('CreateEvent')}
                 key={1}
             />,
             <FlatButton
                 label='Ok'
                 primary
-                onTouchTap={() => {
+                onClick={() => {
                     addEvent(formValues);
                     this.handleClose('CreateEvent');
                 }}
@@ -117,7 +117,7 @@ class AppHome extends React.Component {
                 </div>
                 <FloatingActionButton
                     className='add-event-btn'
-                    onTouchTap={() => this.handleOpen('CreateEvent')}
+                    onClick={() => this.handleOpen('CreateEvent')}
                 >
                     <ContentAdd />
                 </FloatingActionButton>

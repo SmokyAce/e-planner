@@ -22,7 +22,7 @@ const styles = {
 const SignIn = () => (
     <FlatButton
         label={<Link to='/login' style={{ color: '#fff' }}><FormattedMessage {...messages.loginBtn} /></Link>}
-        onTouchTap={this.handleOpen}
+        onClick={this.handleOpen}
     />
 );
 

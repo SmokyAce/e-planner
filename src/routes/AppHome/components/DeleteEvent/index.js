@@ -29,14 +29,14 @@ class DeleteEvent extends React.Component {
                 label='No'
                 primary
                 keyboardFocused
-                onTouchTap={handleClose}
+                onClick={handleClose}
                 key={1}
             />,
             <FlatButton
                 label='Yes'
                 primary
                 keyboardFocused
-                onTouchTap={removeEvent}
+                onClick={removeEvent}
                 key={2}
             />
         ];
