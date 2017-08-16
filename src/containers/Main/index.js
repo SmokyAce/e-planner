@@ -11,8 +11,6 @@ import LanguageProvider from '../LanguageProvider';
 
 import 'bootstrap-social';
 
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
 
 const muiTheme = getMuiTheme({
     palette: {

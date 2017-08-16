@@ -94,7 +94,7 @@ class SidebarContent extends React.Component {
                                     primaryText={<FormattedMessage {...messages.sidebar_docked} />}
                                     rightToggle={
                                         <Toggle
-                                            defaultToggled={sidebarDocked}
+                                            toggled={sidebarDocked}
                                             onToggle={() => dockedSidebar(sidebarDocked)}
                                             thumbSwitchedStyle={styles.toggle_on}
                                             thumbStyle={styles.toggle_off}
@@ -106,7 +106,7 @@ class SidebarContent extends React.Component {
                                     primaryText={<FormattedMessage {...messages.sidebar_pullRight} />}
                                     rightToggle={
                                         <Toggle
-                                            defaultToggled={sidebarPullRight}
+                                            toggled={sidebarPullRight}
                                             onToggle={() => pullRightSidebar(!sidebarPullRight)}
                                         />
                                     }
