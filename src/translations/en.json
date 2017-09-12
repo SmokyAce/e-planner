@@ -3,7 +3,7 @@
   "app.language.en"                    : "English",
   "app.language.ru"                    : "Русский",
   "app.description"                    : "Event Planner",
-  "app.greeting"                       : "Welcome!",
+  "app.greeting"                       : "Meet Event Planner your assistant in organizing events!",
   "app.home.greeting"                  : "Welcome to the Application Home Page",
   "app.event.home.greeting"            : "Welcome to the Event Home Page",
   "app.title-panel.description"        : "Event Planner",

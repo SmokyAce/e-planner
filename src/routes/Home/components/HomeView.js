@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // components
-import { FormattedDate, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import AuthForm from '../../../components/AuthForm';
+import H1 from '../../../components/H1';
 import Col from '../../../components/Grid/Col';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
@@ -20,15 +21,9 @@ const HomeView = ({ loginRequest, registerRequest, loginWithProviderRequest }) =
                 <div style={{ paddingTop: '40px', paddingBottom: '40px' }}>
                     <Col md={8}>
                         <div>
-                            <h4>
+                            <H1 style={{ fontSize: '40pt' }}>
                                 <FormattedMessage {...messages.greeting} />
-                            </h4>
-                            <FormattedDate value={Date.now()} />
-                            <img
-                                alt='This is a duck, because Redux!'
-                                className='duck'
-                                src='/img/Duck.jpg'
-                            />
+                            </H1>
                         </div>
                     </Col>
                     <Col md={4}>
