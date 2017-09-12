@@ -5,6 +5,7 @@ import { fromJS } from 'immutable';
 import { Field, reduxForm } from 'redux-form/immutable';
 import ReduxFormTextField from '../../../../components/Form/ReduxFormTextField';
 import DatePicker from 'material-ui/DatePicker';
+import TimePicker from 'material-ui/TimePicker';
 import Checkbox from 'material-ui/Checkbox';
 // import Services from '../Services';
 // import { Link } from 'react-router';
@@ -31,7 +32,10 @@ const services = {
     notebook   : false
 };
 
-const initialValues = { date: new Date() };
+const initialValues = {
+    date: new Date(),
+    time: new Date()
+};
 
 for (const key in services) {
     if (services.hasOwnProperty(key)) {
@@ -39,7 +43,20 @@ for (const key in services) {
     }
 }
 
-const renderTextField = props => (<ReduxFormTextField {...props} />);
+const renderTextField = props => {
+    const { meta } = props;
+
+    return (
+        <ReduxFormTextField
+            {...props}
+            formattedError={<FormattedMessage {...messages[meta.error]} />}
+        />
+    );
+};
+
+renderTextField.propTypes = {
+    meta: PropTypes.object
+};
 
 const renderDateField = ({ input: { onBlur, value, ...inputProps }, meta, onChange, ...props }) => (
     <DatePicker
@@ -51,8 +68,8 @@ const renderDateField = ({ input: { onBlur, value, ...inputProps }, meta, onChan
                 onChange(val);
             }
         }}
-        fullWidth
         value={value}
+        textFieldStyle={{ width: 'auto' }}
     />
 );
 
@@ -62,6 +79,31 @@ renderDateField.propTypes = {
     hintText: PropTypes.element,
     onChange: PropTypes.func
 };
+
+const renderTimeField = ({ input: { onBlur, value, ...inputProps }, meta, onChange, ...props }) => (
+    <TimePicker
+        {...props}
+        floatingLabelText={props.hintText}
+        format='24hr'
+        onChange={(event, val) => {
+            inputProps.onChange(val);
+            if (onChange) {
+                onChange(val);
+            }
+        }}
+        textFieldStyle={{ width: 'auto' }}
+        value={value}
+    />
+);
+
+
+renderTimeField.propTypes = {
+    input   : PropTypes.object,
+    meta    : PropTypes.object,
+    hintText: PropTypes.element,
+    onChange: PropTypes.func
+};
+
 
 const renderCheckbox = ({ input, label, defaultChecked }) => (
     <Checkbox
@@ -103,20 +145,30 @@ class CreateEvent extends React.Component {
                     name='name'
                     component={renderTextField}
                     label={<FormattedMessage {...messages.event_name} />}
-                /><br />
-                <Field
-                    name='date'
-                    component={renderDateField}
-                    DateTimeFormat={DateTimeFormat}
-                    locale={locale}
-                    autoOk
-                    hintText={<FormattedMessage {...messages.event_date} />}
-                    formatDate={new DateTimeFormat(locale, {
-                        day  : 'numeric',
-                        month: 'long',
-                        year : 'numeric'
-                    }).format}
-                /><br />
+                />
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Field
+                        name='date'
+                        component={renderDateField}
+                        DateTimeFormat={DateTimeFormat}
+                        locale={locale}
+                        autoOk
+                        hintText={<FormattedMessage {...messages.event_date} />}
+                        formatDate={new DateTimeFormat(locale, {
+                            day  : 'numeric',
+                            month: 'long',
+                            year : 'numeric'
+                        }).format}
+                        style={{ width: '58%' }}
+                    />
+                    <Field
+                        name='time'
+                        autoOk
+                        hintText={<FormattedMessage {...messages.event_time} />}
+                        component={renderTimeField}
+                        style={{ width: '38%' }}
+                    />
+                </div>
                 <h4><FormattedMessage {...messages.services_desc} /></h4>
                 <div className='services-cont'>
                     {servicesList}

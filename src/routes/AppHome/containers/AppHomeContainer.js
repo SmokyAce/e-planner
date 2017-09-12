@@ -6,7 +6,8 @@ import {
     selectRestored,
     makeSelectEventsByIds,
     makeSelectEventsListOfIds,
-    makeSelectFormValues
+    makeSelectFormValues,
+    makeSelectFormSyncErrors
 } from '../../App/modules/selectors';
 import { selectLocale } from '../../../containers/LanguageProvider/selectors';
 // actions
@@ -20,7 +21,10 @@ const mapStateToProps = (state) => createStructuredSelector({
     eventsByIds   : makeSelectEventsByIds(),
     eventListOfIds: makeSelectEventsListOfIds(),
     locale        : selectLocale(),
-    formValues    : makeSelectFormValues('create-event')
+    createEvent   : createStructuredSelector({
+        values    : makeSelectFormValues('create-event'),
+        syncErrors: makeSelectFormSyncErrors('create-event')
+    })
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

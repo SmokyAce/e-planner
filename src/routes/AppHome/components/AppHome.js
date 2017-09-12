@@ -71,7 +71,7 @@ class AppHome extends React.Component {
         // console.log('AppHome render!');
         const {
             locale, restored, eventsByIds, eventListOfIds,
-            addEvent, removeEvent, toggleEventService, formValues
+            addEvent, removeEvent, toggleEventService, createEvent
         } = this.props;
 
         const actions = [
@@ -86,9 +86,10 @@ class AppHome extends React.Component {
                 label='Ok'
                 primary
                 onClick={() => {
-                    addEvent(formValues);
+                    addEvent(createEvent.values);
                     this.handleClose('CreateEvent');
                 }}
+                disabled={createEvent.syncErrors && Object.keys(createEvent.syncErrors).length > 0}
                 keyboardFocused
                 key={2}
             />
@@ -161,7 +162,7 @@ AppHome.propTypes = {
     removeEvent       : PropTypes.func.isRequired,
     addEvent          : PropTypes.func.isRequired,
     toggleEventService: PropTypes.func.isRequired,
-    formValues        : PropTypes.object
+    createEvent       : PropTypes.object
 };
 
 export default AppHome;

@@ -26,6 +26,7 @@
   "app.events.delete-event-description"   : "Вы действительно хотите удалить мероприятие?",
   "app.events.event-name-field"           : "Имя мероприятия",
   "app.events.event-date-field"           : "Дата мероприятия",
+  "app.events.event-time-field"           : "Время мероприятия",
   "app.events.services-description"       : "Выберите сервисы для мероприятия:",
   "app.guests.description"                : "Гости",
   "app.contractors.description"           : "Подрядчики",

@@ -9,6 +9,10 @@ export default defineMessages({
         id            : 'app.events.event-date-field',
         defaultMessage: 'Event date'
     },
+    event_time: {
+        id            : 'app.events.event-time-field',
+        defaultMessage: 'Event time'
+    },
     services_desc: {
         id            : 'app.events.services-description',
         defaultMessage: 'Choose services for Event'
@@ -48,5 +52,9 @@ export default defineMessages({
     notebook: {
         id            : 'app.route.notebook',
         defaultMessage: 'Notebook'
+    },
+    required: {
+        id            : 'app.notification.required',
+        defaultMessage: 'This is required field!'
     }
 });

@@ -1,4 +1,5 @@
 import { fromJS } from 'immutable';
+import { pick } from 'lodash';
 import {
     COUNTER_INCREMENT, COUNTER_DOUBLE_ASYNC
 } from '../../Counter/modules/counter';
@@ -34,17 +35,16 @@ export const types = {
     REMOVE_EVENT
 };
 
-const defaultServices = {
-    counter    : false,
-    guests     : false,
-    todos      : false,
-    budjet     : false,
-    timing     : false,
-    contractors: false,
-    blog       : false,
-    quiz       : false,
-    notebook   : false
-};
+export const allServices = [
+    'guests',
+    'todos',
+    'budjet',
+    'timing',
+    'contractors',
+    'blog',
+    'quiz',
+    'notebook'
+];
 
 // ------------------------------------
 // Actions
@@ -52,18 +52,14 @@ const defaultServices = {
 
 
 export const addEvent = (options) => {
-    const eventOptions = { ...options.toJS() };
-    const payload = {};
+    const payload = pick(options.toJS(), ['name', 'date', 'time']);
 
     payload.id = firebaseDb.ref().child('events').push().key;
-    payload.name = eventOptions.name;
-    payload.date = eventOptions.date;
-    payload.services = defaultServices;
-    Object.keys(eventOptions).map((key, index) => {
-        if (payload.services.hasOwnProperty(key)) {
-            payload.services[key] = eventOptions[key];
-        }
+    payload.services = {};
+    allServices.map((key, index) => {
+        payload.services[key] = options.get(key);
     });
+
     return ({
         type: ADD_EVENT,
         payload

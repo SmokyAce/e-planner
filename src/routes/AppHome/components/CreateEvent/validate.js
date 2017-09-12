@@ -6,6 +6,8 @@ const validate = (values, props) => {
         errors.name = 'required';
     } else if (!values.get('date')) {
         errors.date = 'required';
+    } else if (!values.get('time')) {
+        errors.date = 'required';
     }
     return errors;
 };

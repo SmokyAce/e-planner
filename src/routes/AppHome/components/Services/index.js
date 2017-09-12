@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { allServices } from '../../../App/modules/events';
+// components
 import { FormattedMessage } from 'react-intl';
-
 import Checkbox from 'material-ui/Checkbox';
+// intl
 import messages from './messages';
 
 
@@ -10,7 +12,7 @@ const Services = ({ services }) => {
     return (
         <div>
             <h4><FormattedMessage {...messages.services_desc} /></h4>
-            {Object.keys(services).map((key, ind) => {
+            {allServices.map((key, ind) => {
                 return (
                     <Checkbox
                         key={ind}

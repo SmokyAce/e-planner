@@ -91,6 +91,11 @@ const makeSelectFormValues = (form) => createSelector(
     (globalState) => globalState.getIn([form, 'values'])
 );
 
+const makeSelectFormSyncErrors = (form) => createSelector(
+    selectForm,
+    (globalState) => globalState.getIn([form, 'syncErrors'])
+);
+
 export {
     selectApp,
     // sidebar
@@ -116,5 +121,6 @@ export {
     makeSelectEventsFormState,
     makeSelectEventsSettingsFormState,
     // form
-    makeSelectFormValues
+    makeSelectFormValues,
+    makeSelectFormSyncErrors
 };
