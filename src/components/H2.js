@@ -2,14 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-const H2 = ({ children }) => (
-    <span style={{ fontSize: '18pt' }}>
-        {children}
-    </span>
-);
+const defaultStyle = { fontSize: '18pt' };
+
+const H2 = ({ children, style, className }) => {
+    const elStyle = { ...defaultStyle, ...style };
+
+    return (
+        <span className={className} style={elStyle}>
+            {children}
+        </span>
+    );
+};
 
 H2.propTypes = {
-    children: PropTypes.element
+    children : PropTypes.element,
+    style    : PropTypes.object,
+    className: PropTypes.string
 };
 
 export default H2;

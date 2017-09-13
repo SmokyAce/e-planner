@@ -1,5 +1,4 @@
 @import '../../../styles/variables.scss';
-
 .content {
     min-height: 100vh;
     display: flex;
@@ -17,4 +16,18 @@
         margin-left: 0px;
         margin-right: 0px;
     }
+}
+
+.app-description {
+    display: flex;
+    flex-direction: column; // justify-content: flex-start;
+}
+
+.slide-appear {
+    opacity: 0.01;
+}
+
+.slide-appear.slide-appear-active {
+    opacity: 1;
+    transition: opacity .5s ease-in;
 }
