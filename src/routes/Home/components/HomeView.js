@@ -16,9 +16,7 @@ import './HomeView.scss';
 
 
 class HomeView extends React.Component {
-
     render() {
-
         const { loginRequest, registerRequest, loginWithProviderRequest } = this.props;
 
         return (
@@ -33,14 +31,22 @@ class HomeView extends React.Component {
                                 </H1>
                                 <ReactCSSTransitionGroup
                                     transitionName='slide'
+                                    component='ul'
                                     transitionEnter={false}
                                     transitionLeave={false}
                                     transitionAppear
                                     transitionAppearTimeout={500}
+                                    className='feautures'
                                 >
-                                    <H2>
-                                        <FormattedMessage {...messages.feature_1} />
-                                    </H2>
+                                    {Object.keys(messages.features).map((item, index) => {
+                                        console.log(item);
+                                        console.log(index);
+                                        return (
+                                            <li key={index} style={{ transitionDelay: `${500 * index}ms` }}>
+                                                <H2><FormattedMessage {...messages.features[item]} /></H2>
+                                            </li>
+                                        );
+                                    })}
                                 </ReactCSSTransitionGroup>
                             </div>
                         </Col>
@@ -57,11 +63,11 @@ class HomeView extends React.Component {
             </div>
         );
     }
-};
+}
 
 HomeView.propTypes = {
-    loginRequest: PropTypes.func,
-    registerRequest: PropTypes.func,
+    loginRequest            : PropTypes.func,
+    registerRequest         : PropTypes.func,
     loginWithProviderRequest: PropTypes.func
 };
 

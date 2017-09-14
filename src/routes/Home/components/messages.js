@@ -10,8 +10,18 @@ export default defineMessages({
         id            : 'app.greeting',
         defaultMessage: 'Welcome'
     },
-    feature_1: {
-        id            : 'app.features.1',
-        defaultMessage: 'Welcome'
+    features: {
+        feature_1: {
+            id: 'app.features.1'
+        },
+        feature_2: {
+            id: 'app.features.2'
+        },
+        feature_3: {
+            id: 'app.features.3'
+        },
+        feature_4: {
+            id: 'app.features.4'
+        }
     }
 });
