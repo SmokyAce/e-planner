@@ -34,7 +34,7 @@ const styles = {
         textDecoration: 'none'
     },
     content: {
-        padding: '5px'
+        padding: '3px'
     },
     toggle_on: {
         backgroundImage: 'url(/img/docked_off.png)'
@@ -82,7 +82,7 @@ class SidebarContent extends React.Component {
         return (
             <TitlePanel style={sidebarStyle}>
                 <div style={styles.content} className='text-left'>
-                    <List>
+                    <List style={{ paddingTop: '0px' }}>
                         <ListItem
                             primaryText={<FormattedMessage {...messages.sidebar_description} />}
                             leftIcon={<SidebarIcon />}

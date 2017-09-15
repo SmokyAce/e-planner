@@ -9,7 +9,9 @@ import messages from './messages';
 
 const styles = {
     tabs: {
-        overflowY: 'hidden'
+        overflowY      : 'hidden',
+        backgroundColor: '#f2f2f2',
+        borderBottom   : '1px solid #e0e0e0'
         // display  : 'block'
     },
     tab: {
@@ -17,7 +19,8 @@ const styles = {
         flex        : '1 1 0%',
         paddingLeft : '10px',
         paddingRight: '10px',
-        whiteSpace  : 'normal'
+        whiteSpace  : 'normal',
+        color       : 'black'
     },
     inkBarStyle: {
         display: 'none'
