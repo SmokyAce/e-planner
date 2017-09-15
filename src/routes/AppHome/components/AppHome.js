@@ -106,7 +106,7 @@ class AppHome extends React.Component {
         return (
             <div>
                 <div className=''>
-                    <h2><FormattedMessage {...messages.greeting} /></h2>
+                    <h2 className='text-center'><FormattedMessage {...messages.greeting} /></h2>
                     <EventsList
                         eventsByIds={eventsByIds}
                         eventListOfIds={eventListOfIds}

@@ -7,7 +7,7 @@ import './Filters.scss';
 
 const Filters = ({ filter, onClick }) => {
     return (
-        <form>
+        <form className='text-center'>
             <RadioButton isChecked={filter === 'SHOW_ALL'} value='SHOW_ALL' name='filters' filterName='All'
                 onChange={onClick}
             />
