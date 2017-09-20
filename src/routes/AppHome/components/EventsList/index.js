@@ -44,7 +44,7 @@ const EventsList = ({ eventsByIds, onDeleteEvent, eventListOfIds }) => (
                             style={{ marginLeft: '8px' }}
                         />
                         <FlatButton
-                            label={<FormattedMessage {...messages.delete_btn} />}
+                            label={<a><FormattedMessage {...messages.delete_btn} /></a>}
                             onClick={() => onDeleteEvent(eventId)}
                         />
                     </CardActions>
