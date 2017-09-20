@@ -16,3 +16,18 @@
     display: flex;
     justify-content: space-between
 }
+
+.widjet-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.widjets-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.widjet-data {
+    display        : flex;
+    justify-content: space-around;
+}

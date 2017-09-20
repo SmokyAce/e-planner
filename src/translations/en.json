@@ -83,5 +83,8 @@
   "app.notification-status.error"      : "Error!",
   "app.notification-status.success"    : "Success!",
   "app.notification.required"          : "This is required field!",
-  "app.notification.invalid-email"     : "Invalid e-mail address!"
+  "app.notification.invalid-email"     : "Invalid e-mail address!",
+  "app.widjets.budjet-description"     : "Budjet",
+  "app.widjets.guests-description"     : "Guests",
+  "app.widjets.tasks-description"      : "Tasks"
 }

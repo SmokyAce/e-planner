@@ -90,5 +90,8 @@
   "app.notification-status.error"         : "Ошибка!",
   "app.notification-status.success"       : "Выполнено успешно!",
   "app.notification.required"             : "Обязательное поле!",
-  "app.notification.invalid-email"        : "Некорректный адрес электронной почты!"
+  "app.notification.invalid-email"        : "Некорректный адрес электронной почты!",
+  "app.widjets.budjet-description"        : "Бюджет",
+  "app.widjets.guests-description"        : "Гости",
+  "app.widjets.tasks-description"         : "Задачи"
 }

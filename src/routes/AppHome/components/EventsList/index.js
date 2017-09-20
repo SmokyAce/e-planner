@@ -6,6 +6,9 @@ import { Link } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import WidjetBudjet from '../Widjets/Budjet';
+import WidjetGuests from '../Widjets/Guests';
+import WidjetTasks from '../Widjets/Tasks';
 // intl
 import messages from './messages';
 // styles
@@ -27,9 +30,10 @@ const EventsList = ({ eventsByIds, onDeleteEvent, eventListOfIds }) => (
                         actAsExpander
                         showExpandableButton
                     />
-                    <CardText expandable style={{ maxWidth: '360px' }}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    <CardText expandable className='widjets-box'>
+                        <WidjetBudjet />
+                        <WidjetGuests />
+                        <WidjetTasks />
                     </CardText>
                     <CardActions className='card-actions-cont'>
                         <FlatButton

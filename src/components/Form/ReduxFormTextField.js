@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 
 
-const ReduxFormTextField = ({ input, label, meta: { touched, error }, formattedError, ...custom, style }) => (
+const ReduxFormTextField = ({ input, label, meta: { touched, error }, formattedError, style, ...custom }) => (
     <TextField
         hintText={label}
         floatingLabelText={label}
