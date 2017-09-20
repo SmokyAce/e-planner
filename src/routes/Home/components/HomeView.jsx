@@ -25,7 +25,7 @@ class HomeView extends React.Component {
                 <div className='container'>
                     <div style={{ paddingTop: '40px', paddingBottom: '40px' }}>
                         <Col md={8}>
-                            <div className='app-description'>
+                            <div className='app-description text-left'>
                                 <H1 style={{ fontSize: '30pt' }}>
                                     <FormattedMessage {...messages.greeting} />
                                 </H1>

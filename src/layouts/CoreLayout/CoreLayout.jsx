@@ -9,7 +9,7 @@ class CoreLayout extends React.Component {
     render = () => {
         // console.log('CoreLayout render!');
         return (
-            <div className='core-layout'>
+            <div className='core-layout text-center'>
                 {this.props.children}
             </div>
         );

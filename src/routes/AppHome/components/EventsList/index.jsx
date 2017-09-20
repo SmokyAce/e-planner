@@ -21,12 +21,16 @@ const EventsList = ({ eventsByIds, onDeleteEvent, eventListOfIds }) => (
             return (
                 <Card
                     key={eventId}
-                    style={{ margin: '0px 10px 10px 10px', zIndex: '0' }}
+                    style={{ margin: '10px', zIndex: '0' }}
                     initiallyExpanded
-                    className='card'
+                    className='card text-left'
                 >
                     <CardHeader
-                        title={<Link to=''>{eventsByIds.getIn([eventId, 'name'])}</Link>}
+                        title={<div>
+                            <Link to=''>{eventsByIds.getIn([eventId, 'name'])}</Link>
+                            <br /><span>Тут будет описание мероприятия...</span>
+                        </div>}
+                        textStyle={{ paddingRight: '48px' }}
                         actAsExpander
                         showExpandableButton
                     />

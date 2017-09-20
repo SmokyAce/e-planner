@@ -10,6 +10,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    max-width: 360px;
 }
 
 .card-actions-cont {
@@ -25,6 +26,8 @@
 .widjets-box {
     display: flex;
     justify-content: space-between;
+    flex-direction: row;
+    padding: 7px;
 }
 
 .widjet-data {
