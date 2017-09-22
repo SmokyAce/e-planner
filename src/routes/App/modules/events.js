@@ -2,7 +2,7 @@ import { fromJS } from 'immutable';
 import { pick } from 'lodash';
 import {
     COUNTER_INCREMENT, COUNTER_DOUBLE_ASYNC
-} from '../../Counter/modules/counter';
+} from '../../EventCounter/modules/counter';
 import { REHYDRATE } from 'redux-persist/constants';
 import { firebaseDb } from '../../../utils/firebaseTools';
 

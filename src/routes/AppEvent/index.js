@@ -14,7 +14,7 @@ export default (store) => {
             require.ensure([], (require) => {
                 next(null, [
                     // require('../Zen').default(store),
-                    require('../Counter').default(store),
+                    require('../EventCounter').default(store),
                     require('../Todos').default(store),
                     require('../EventBlog').default(store),
                     require('../EventBudget').default(store),

@@ -7,6 +7,7 @@ import { isEqual } from 'lodash';
 import SwipeableViews from 'react-swipeable-views';
 import AppNavPanel from '../AppNavPanel';
 import Spinner from '../../../../components/Spinner';
+import AsyncComponent from '../../AsyncComponent';
 
 
 class AppEvent extends React.Component {
@@ -99,7 +100,7 @@ class AppEvent extends React.Component {
                     >
                         {services.map((service, index) => (
                             <div key={index} style={{ display: 'flex', justifyContent: 'center', minHeight: '700px' }}>
-                                {(index === slideIndex) ? children : (<Spinner />)}
+                                {(index === slideIndex) ? children : (<AsyncComponent />)}
                             </div>
                         ))}
                     </SwipeableViews>

@@ -1,4 +1,6 @@
 import { getAsyncInjectors } from '../../utils/asyncInjectors';
+import { asyncComponent } from 'react-async-component';
+
 
 export default (store) => {
     const { injectSagas } = getAsyncInjectors(store);
@@ -24,3 +26,12 @@ export default (store) => {
         }
     });
 };
+
+export const AsyncCounter = asyncComponent({
+    resolve: () => new Promise(resolve =>
+        // Webpack's code splitting API w/naming
+        require.ensure([], (require) => {
+            resolve(require('./containers/CounterContainer').default);
+        }, 'counter')
+    )
+});
