@@ -14,7 +14,6 @@ import messages from './messages';
 // styles
 import './HomeView.scss';
 
-
 class HomeView extends React.Component {
     render() {
         const { loginRequest, registerRequest, loginWithProviderRequest } = this.props;
@@ -38,15 +37,18 @@ class HomeView extends React.Component {
                                     transitionAppearTimeout={500}
                                     className='feautures'
                                 >
-                                    {Object.keys(messages.features).map((item, index) => {
-                                        console.log(item);
-                                        console.log(index);
-                                        return (
-                                            <li key={index} style={{ transitionDelay: `${500 * index}ms` }}>
-                                                <H2><FormattedMessage {...messages.features[item]} /></H2>
-                                            </li>
-                                        );
-                                    })}
+                                    {Object.keys(messages.features).map((item, index) => (
+                                        <li
+                                            key={index}
+                                            style={{
+                                                transitionDelay: `${500 * index}ms`
+                                            }}
+                                        >
+                                            <H2>
+                                                <FormattedMessage {...messages.features[item]} />
+                                            </H2>
+                                        </li>
+                                    ))}
                                 </ReactCSSTransitionGroup>
                             </div>
                         </Col>

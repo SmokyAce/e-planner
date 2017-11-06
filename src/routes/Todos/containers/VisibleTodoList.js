@@ -5,12 +5,12 @@ import { toggleTodo, deleteTodo, getVisibleTodos } from '../modules/todos';
 const mapStateToProps = (state) => {
     return {
         todoList: getVisibleTodos(
-            state.getIn(['todos', 'todoList']),
-            state.getIn(['todos', 'filter']),
-            state.getIn(['todos', 'entries'])
+            state.getIn(['app', 'todos', 'todoList']),
+            state.getIn(['app', 'todos', 'filter']),
+            state.getIn(['app', 'todos', 'entries'])
         ),
-        filter : state.getIn(['todos', 'filter']),
-        entries: state.getIn(['todos', 'entries'])
+        filter : state.getIn(['app', 'todos', 'filter']),
+        entries: state.getIn(['app', 'todos', 'entries'])
     };
 };
 

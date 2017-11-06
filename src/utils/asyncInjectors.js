@@ -4,7 +4,6 @@ import createReducer from '../store/reducers';
 import invariant from 'invariant';
 import warning from 'warning';
 
-
 /**
  * Validate the shape of redux store
  */
@@ -18,12 +17,8 @@ export function checkStore(store) {
         asyncReducers : isObject
     };
 
-    invariant(
-        conformsTo(store, shape),
-        '(app/utils...) asyncInjectors: Expected a valid redux store'
-    );
+    invariant(conformsTo(store, shape), '(app/utils...) asyncInjectors: Expected a valid redux store');
 }
-
 
 const replaceAsyncReducers = (rootReducers, keys, reducer) => {
     const key = keys.shift();
@@ -32,12 +27,13 @@ const replaceAsyncReducers = (rootReducers, keys, reducer) => {
         rootReducers[key] = reducer;
         return;
     }
-    if (rootReducers[key] === undefined) rootReducers[key] = {};
+    if (rootReducers[key] === undefined) {
+        rootReducers[key] = {};
+    }
     const nextRootReducers = rootReducers[key];
 
     return replaceAsyncReducers(nextRootReducers, keys, reducer);
 };
-
 
 /**
  * Inject an asynchronously loaded reducer
@@ -72,12 +68,9 @@ export function injectAsyncSagas(store, isValid) {
             '(app/utils...) injectAsyncSagas: Expected `sagas` to be an array of generator functions'
         );
 
-        warning(
-            !isEmpty(sagas),
-            '(app/utils...) injectAsyncSagas: Received an empty `sagas` array'
-        );
+        warning(!isEmpty(sagas), '(app/utils...) injectAsyncSagas: Received an empty `sagas` array');
 
-        sagas.forEach((saga) => {
+        sagas.forEach(saga => {
             if (!(saga.isDaemon === true && Reflect.has(store.asyncSagas, saga))) {
                 store.asyncSagas[saga] = true; // eslint-disable-line no-param-reassign
                 store.runSaga(saga);
@@ -85,7 +78,6 @@ export function injectAsyncSagas(store, isValid) {
         });
     };
 }
-
 
 /**
  * Helper for creating injectors

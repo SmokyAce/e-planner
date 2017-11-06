@@ -3,32 +3,44 @@ import { getAsyncInjectors } from '../../utils/asyncInjectors';
 import AppHome from '../AppHome';
 import auth from '../../utils/auth';
 
-
-export default (store) => {
+export default store => {
     const { injectSagas, injectReducer } = getAsyncInjectors(store);
 
-    return ({
+    return {
         path: 'app',
         getComponent(nextState, next) {
-            require.ensure([], (require) => {
-                injectSagas(require('./modules/sagas').default);
-                injectReducer('app', require('./modules/app').default);
+            require.ensure(
+                [],
+                require => {
+                    injectSagas(require('./modules/sagas').default);
 
-                next(null, AppContainer);
-            }, 'planner');
+                    injectReducer('app.connection', require('./modules/connection').default);
+                    injectReducer('app.sync', require('./modules/sync').default);
+                    injectReducer('app.sidebar', require('./modules/sidebar').default);
+                    injectReducer('app.user', require('./modules/user').default);
+                    injectReducer('app.events', require('./modules/events').default);
+
+                    next(null, AppContainer);
+                },
+                'planner'
+            );
         },
         indexRoute: AppHome,
         getChildRoutes(location, next) {
-            require.ensure([], (require) => {
-                next(null, [
-                    require('../AppEvent').default(store),
+            require.ensure(
+                [],
+                require => {
+                    next(null, [
+                        require('../AppEvent').default(store),
 
-                    require('../AppProfile').default(store),
-                    require('../AppGuests').default(store),
-                    require('../AppContractors').default(store)
-                ]);
-            }, 'planner-routes');
+                        require('../AppProfile').default(store),
+                        require('../AppGuests').default(store),
+                        require('../AppContractors').default(store)
+                    ]);
+                },
+                'planner-routes'
+            );
         },
         onEnter: auth.requireAuth
-    });
+    };
 };

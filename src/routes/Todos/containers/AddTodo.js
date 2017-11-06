@@ -3,7 +3,7 @@ import AddTodo from '../components/AddTodo';
 
 const mapStateToProps = (state) => {
     return {
-        todoList: state.getIn(['todos', 'todoList'])
+        todoList: state.getIn(['app', 'todos', 'todoList'])
     };
 };
 

@@ -3,7 +3,7 @@ import NotFound from './NotFound';
 
 export default (store) => {
     return ({
-        path: '*',
+        path     : '*',
         component: NotFound
     });
 };

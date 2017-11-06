@@ -5,6 +5,7 @@ import sync from './sync';
 import sidebar from './sidebar';
 import user from './user';
 import events from './events';
+import todos from '../../Todos/modules/todos';
 
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
     sync,
     sidebar,
     user,
-    events
+    events,
+    todos
 });
