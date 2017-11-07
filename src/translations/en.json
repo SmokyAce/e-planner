@@ -38,7 +38,7 @@
   "app.route.event"                    : "Event",
   "app.route.counter"                  : "Counter",
   "app.route.zen"                      : "Zen",
-  "app.route.todos"                    : "Todos",
+  "app.route.tasks"                    : "Tasks",
   "app.route.guests"                   : "Guests",
   "app.route.budjet"                   : "Budjet",
   "app.route.timing"                   : "Timing",

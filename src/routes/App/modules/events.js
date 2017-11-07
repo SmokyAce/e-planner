@@ -37,7 +37,7 @@ export const types = {
 
 export const allServices = [
     'guests',
-    'todos',
+    'tasks',
     'budjet',
     'timing',
     'contractors',

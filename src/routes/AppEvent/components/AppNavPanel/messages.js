@@ -14,9 +14,9 @@ export default defineMessages({
         id            : 'app.route.counter',
         defaultMessage: 'Counter'
     },
-    todos: {
-        id            : 'app.route.todos',
-        defaultMessage: 'Todos'
+    tasks: {
+        id            : 'app.route.tasks',
+        defaultMessage: 'Tasks'
     },
     guests: {
         id            : 'app.route.guests',

@@ -23,7 +23,7 @@ import './CreateEvent.scss';
 const services = {
     // counter    : false,
     guests     : true,
-    todos      : true,
+    tasks      : true,
     budjet     : true,
     timing     : false,
     contractors: false,

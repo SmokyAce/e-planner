@@ -39,7 +39,7 @@
   "app.route.planner"                     : "Планировщик",
   "app.route.counter"                     : "Счетчик",
   "app.route.zen"                         : "Дзен",
-  "app.route.todos"                       : "Задачи",
+  "app.route.tasks"                       : "Задачи",
   "app.route.guests"                      : "Гости",
   "app.route.budjet"                      : "Бюджет",
   "app.route.timing"                      : "Тайминг",

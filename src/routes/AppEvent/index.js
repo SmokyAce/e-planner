@@ -11,7 +11,8 @@ export default store => {
             require.ensure(
                 [],
                 require => {
-                    injectReducer('app.todos', require('../Todos/modules/todos').default);
+                    // injectReducer('app.todos', require('../Todos/modules/todos').default);
+                    injectReducer('app.tasks', require('../EventTasks/modules/reducer').default);
 
                     next(null, require('./containers/EventContainer').default);
                 },
@@ -26,7 +27,8 @@ export default store => {
                     next(null, [
                         // require('../Zen').default(store),
                         require('../EventCounter').default(store),
-                        require('../Todos').default(store),
+                        // require('../Todos').default(store),
+                        require('../EventTasks').default(store),
                         require('../EventBlog').default(store),
                         require('../EventBudget').default(store),
                         require('../EventContractors').default(store),
