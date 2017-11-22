@@ -5,6 +5,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TasksTable from './TasksTable';
 import AddTask from './AddTask';
+import './EventTasks.scss';
 
 class EventTasks extends Component {
     state = {
@@ -19,11 +20,11 @@ class EventTasks extends Component {
         return (
             <div>
                 <AddTask showComponent={this.state.showAddTask} />
-                <br />
                 <TasksTable />
                 <FloatingActionButton className='add-task-btn' onClick={this.handleOpen}>
                     <ContentAdd />
                 </FloatingActionButton>
+                <br />
             </div>
         );
     }

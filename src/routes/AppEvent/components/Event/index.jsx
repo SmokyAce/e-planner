@@ -80,22 +80,16 @@ class AppEvent extends React.Component {
         }
 
         return (
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <AppNavPanel eventId={params.id} services={services} onChange={this.handleChange} value={slideIndex} />
-                <div style={{ padding: '10px' }}>
+                <div style={{ display: 'flex', flex: '1' }}>
                     <SwipeableViews
                         index={slideIndex}
                         onChangeIndex={v => this.handleChangeSwipeView(v, services, params.id)}
+                        style={{ display: 'flex', flex: '1' }}
                     >
                         {services.map((name, index) => (
-                            <div
-                                key={index}
-                                style={{
-                                    display       : 'flex',
-                                    justifyContent: 'center',
-                                    minHeight     : '700px'
-                                }}
-                            >
+                            <div key={index} style={{ display: 'flex', flex: '1' }}>
                                 {index === slideIndex ? children : asyncService[name]}
                             </div>
                         ))}
