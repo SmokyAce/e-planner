@@ -19,29 +19,6 @@ export default store => {
                 'event'
             );
         },
-        indexRoute: EventHome,
-        getChildRoutes(location, next) {
-            require.ensure(
-                [],
-                require => {
-                    next(null, [
-                        // require('../Zen').default(store),
-                        require('../EventCounter').default(store),
-                        // require('../Todos').default(store),
-                        require('../EventTasks').default(store),
-                        require('../EventBlog').default(store),
-                        require('../EventBudget').default(store),
-                        require('../EventContractors').default(store),
-                        require('../EventGuests').default(store),
-                        require('../EventNotebook').default(store),
-                        require('../EventQuiz').default(store),
-                        require('../EventTiming').default(store),
-                        require('../EventSettings').default(store),
-                        require('../EventRemove').default(store)
-                    ]);
-                },
-                'event-routes'
-            );
-        }
+        indexRoute: EventHome
     };
 };

@@ -113,13 +113,34 @@ const AsyncNotebook = asyncComponent({
         )
 });
 
-export default {
-    home    : <AsyncHome />,
-    guests  : <AsyncGuests />,
-    tasks   : <AsyncTasks />,
-    budjet  : <AsyncBudjet />,
-    timing  : <AsyncTiming />,
-    blog    : <AsyncBlog />,
-    quiz    : <AsyncQuiz />,
-    notebook: <AsyncNotebook />
-};
+const AsyncSettings = asyncComponent({
+    resolve: () =>
+        new Promise(resolve =>
+            // Webpack's code splitting API w/naming
+            require.ensure(
+                [],
+                require => {
+                    resolve(require('../EventSettings/containers/SettingsContainer').default);
+                },
+                'settings'
+            )
+        )
+});
+
+export default (function A() {
+    const services = {
+        home    : <AsyncHome />,
+        guests  : <AsyncGuests />,
+        tasks   : <AsyncTasks />,
+        budjet  : <AsyncBudjet />,
+        timing  : <AsyncTiming />,
+        blog    : <AsyncBlog />,
+        quiz    : <AsyncQuiz />,
+        notebook: <AsyncNotebook />,
+        settings: <AsyncSettings />
+    };
+
+    return function B(component, props) {
+        return React.cloneElement(services[component], { ...props });
+    };
+}());

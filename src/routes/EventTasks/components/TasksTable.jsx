@@ -42,8 +42,7 @@ class TasksTable extends Component {
         multiSelectable    : true,
         enableSelectAll    : true,
         deselectOnClickaway: true,
-        showCheckboxes     : true,
-        height             : '600px'
+        showCheckboxes     : true
     };
 
     shouldComponentUpdate = (nextProps, nextState) => true;
@@ -62,7 +61,6 @@ class TasksTable extends Component {
         return (
             <div>
                 <Table
-                    height={this.state.height}
                     fixedHeader={this.state.fixedHeader}
                     fixedFooter={this.state.fixedFooter}
                     selectable={this.state.selectable}

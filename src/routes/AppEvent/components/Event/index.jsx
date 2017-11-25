@@ -31,13 +31,12 @@ class AppEvent extends React.Component {
         this.tabsScrollLeft(value);
     };
 
-    handleChangeSwipeView = (value, services, evId) => {
-        const route = services[value] === 'home' ? `/app/event/${evId}` : `/app/event/${evId}/${services[value]}`;
+    handleChangeSwipeView = (index, evId) => {
+        // change route
+        browserHistory.push(`/app/event/${evId}#${this.state.services[index]}`);
 
-        browserHistory.push(route);
-
-        this.setState({ slideIndex: value });
-        this.tabsScrollLeft(value);
+        this.setState({ slideIndex: index });
+        this.tabsScrollLeft(index);
     };
 
     getComponentState = props => {
@@ -51,12 +50,13 @@ class AppEvent extends React.Component {
                 .filter(isChecked => isChecked)
                 .keys();
 
+            services.push('settings');
             services.unshift('home');
         }
 
-        const service = location.pathname.substring(location.pathname.lastIndexOf('/') + 1);
-        const slideIndex = services.indexOf(service);
+        const slideIndex = services.indexOf(location.hash.slice(1));
 
+        console.log(slideIndex, services);
         return {
             slideIndex: slideIndex === -1 ? 0 : slideIndex,
             services
@@ -72,35 +72,26 @@ class AppEvent extends React.Component {
     };
 
     render() {
-        const { children, params, eventsByIds } = this.props;
+        console.log('AppEvent render!');
+        const { params, eventsByIds } = this.props;
         const { services, slideIndex } = this.state;
 
         if (eventsByIds.size === 0) {
             return <div>Loading ...</div>;
         }
-
         return (
             <div>
                 <AppNavPanel eventId={params.id} services={services} onChange={this.handleChange} value={slideIndex} />
-                <div style={{ padding: '10px' }}>
-                    <SwipeableViews
-                        index={slideIndex}
-                        onChangeIndex={v => this.handleChangeSwipeView(v, services, params.id)}
-                    >
-                        {services.map((name, index) => (
-                            <div
-                                key={index}
-                                style={{
-                                    display       : 'flex',
-                                    justifyContent: 'center',
-                                    minHeight     : '700px'
-                                }}
-                            >
-                                {index === slideIndex ? children : asyncService[name]}
-                            </div>
-                        ))}
-                    </SwipeableViews>
-                </div>
+                <SwipeableViews
+                    index={slideIndex}
+                    onChangeIndex={index => this.handleChangeSwipeView(index, params.id)}
+                >
+                    {services.map((name, index) => (
+                        <div key={index} style={{ display: 'flex', justifyContent: 'center' }}>
+                            {asyncService(name, { params })}
+                        </div>
+                    ))}
+                </SwipeableViews>
             </div>
         );
     }
@@ -111,7 +102,6 @@ AppEvent.contextTypes = {
 };
 
 AppEvent.propTypes = {
-    children   : PropTypes.element,
     params     : PropTypes.object,
     eventsByIds: PropTypes.instanceOf(Map),
     location   : PropTypes.object

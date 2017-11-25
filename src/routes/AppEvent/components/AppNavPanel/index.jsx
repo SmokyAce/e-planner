@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Tabs, Tab } from 'material-ui/Tabs';
 import messages from './messages';
-
+import { isEqual } from 'lodash';
 
 const styles = {
     tabs: {
@@ -27,40 +27,46 @@ const styles = {
     }
 };
 
-const AppNavPanel = ({ eventId, services, onChange, value }) => {
-    return (
-        <div >
-            <Tabs
-                onChange={onChange}
-                value={value}
-                tabItemContainerStyle={styles.tabs}
-                inkBarStyle={styles.inkBarStyle}
-                id='event-tabs'
-            >
-                {services.map((service, index) => {
-                    const route = (service === 'home')
-                        ? `/app/event/${eventId}`
-                        : `/app/event/${eventId}/${service}`;
-                    const tabStyle = { ...styles.tab, borderBottom: '2px solid red' };
+class AppNavPanel extends React.Component {
+    shouldComponentUpdate = (nextProps, nextState) => !isEqual(nextProps, this.props);
 
-                    return (
-                        <Tab
-                            key={service}
-                            label={<FormattedMessage {...messages[service]} />}
-                            value={index}
-                            containerElement={
-                                <Link to={route} activeClassName='route--active'>
-                                    <FormattedMessage {...messages[service]} />
-                                </Link>
-                            }
-                            style={value === index ? tabStyle : styles.tab}
-                        />
-                    );
-                })}
-            </Tabs>
-        </div>
-    );
-};
+    render() {
+        console.log('AppNavPanel render');
+
+        const { onChange, eventId, services, value } = this.props;
+
+        return (
+            <div>
+                <Tabs
+                    onChange={onChange}
+                    value={value}
+                    tabItemContainerStyle={styles.tabs}
+                    inkBarStyle={styles.inkBarStyle}
+                    id='event-tabs'
+                >
+                    {services.map((service, index) => {
+                        const route = `/app/event/${eventId}#${service}`;
+                        const tabStyle = { ...styles.tab, borderBottom: '2px solid red' };
+
+                        return (
+                            <Tab
+                                key={service}
+                                label={<FormattedMessage {...messages[service]} />}
+                                value={index}
+                                containerElement={
+                                    <Link to={route} activeClassName='route--active'>
+                                        <FormattedMessage {...messages[service]} />
+                                    </Link>
+                                }
+                                style={value === index ? tabStyle : styles.tab}
+                            />
+                        );
+                    })}
+                </Tabs>
+            </div>
+        );
+    }
+}
 
 AppNavPanel.propTypes = {
     eventId : PropTypes.string.isRequired,

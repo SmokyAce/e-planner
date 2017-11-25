@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import { isEqual } from 'lodash';
 
+class Quiz extends Component {
+    shouldComponentUpdate = (nextProps, nextState) => !isEqual(nextProps, this.props);
 
-export const Quiz = () => {
-    return (
-        <div>
-            <h2><FormattedMessage {...messages.description} /></h2>
-        </div>
-    );
-};
+    render() {
+        return (
+            <div>
+                <h2>
+                    <FormattedMessage {...messages.description} />
+                </h2>
+            </div>
+        );
+    }
+}
 
 Quiz.propTypes = {};
 
