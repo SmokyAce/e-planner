@@ -36,7 +36,7 @@ const AsyncTasks = asyncComponent({
             require.ensure(
                 [],
                 require => {
-                    resolve(require('../EventTasks/containers/EventTasksContainer').default);
+                    resolve(require('./containers/EventTasksContainer').default);
                 },
                 'tasks'
             )

@@ -12,7 +12,7 @@ export default store => {
                 [],
                 require => {
                     // injectReducer('app.todos', require('../Todos/modules/todos').default);
-                    injectReducer('app.tasks', require('../EventTasks/modules/reducer').default);
+                    injectReducer('app.tasks', require('./modules/tasks').default);
 
                     next(null, require('./containers/EventContainer').default);
                 },
