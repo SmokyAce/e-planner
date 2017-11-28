@@ -5,7 +5,11 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TasksTable from './TasksTable';
 import AddTask from './AddTask';
+<<<<<<< HEAD:src/routes/AppEvent/components/EventTasks.jsx
 import { isEqual } from 'lodash';
+=======
+import './EventTasks.scss';
+>>>>>>> master:src/routes/EventTasks/components/EventTasks.jsx
 
 class EventTasks extends Component {
     state = {
@@ -27,6 +31,7 @@ class EventTasks extends Component {
                 <FloatingActionButton className='add-task-btn' onClick={this.handleOpen}>
                     <ContentAdd />
                 </FloatingActionButton>
+                <br />
             </div>
         );
     }

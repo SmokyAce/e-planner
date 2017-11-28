@@ -59,7 +59,7 @@ class TasksTable extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{ padding: '5px' }}>
                 <Table
                     fixedHeader={this.state.fixedHeader}
                     fixedFooter={this.state.fixedFooter}
