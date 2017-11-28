@@ -104,8 +104,8 @@ class AppHome extends React.Component {
         }
 
         return (
-            <div>
-                <div className=''>
+            <div className='flexbox-row'>
+                <div className='flexbox-column'>
                     <h2 className='text-center'><FormattedMessage {...messages.greeting} /></h2>
                     <EventsList
                         eventsByIds={eventsByIds}

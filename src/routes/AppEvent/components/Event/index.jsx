@@ -8,6 +8,7 @@ import SwipeableViews from 'react-swipeable-views';
 import AppNavPanel from '../AppNavPanel';
 // import Spinner from '../../../../components/Spinner';
 import asyncService from '../../asyncService';
+import './Event.scss';
 
 class AppEvent extends React.Component {
     constructor(props) {
@@ -56,7 +57,6 @@ class AppEvent extends React.Component {
 
         const slideIndex = services.indexOf(location.hash.slice(1));
 
-        console.log(slideIndex, services);
         return {
             slideIndex: slideIndex === -1 ? 0 : slideIndex,
             services
@@ -80,21 +80,19 @@ class AppEvent extends React.Component {
             return <div>Loading ...</div>;
         }
         return (
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div className='flexbox-column'>
                 <AppNavPanel eventId={params.id} services={services} onChange={this.handleChange} value={slideIndex} />
-                <div style={{ display: 'flex', flex: '1' }}>
-                    <SwipeableViews
-                        index={slideIndex}
-                        onChangeIndex={index => this.handleChangeSwipeView(index, params.id)}
-                        style={{ display: 'flex', flex: '1' }}
-                    >
-                        {services.map((name, index) => (
-                            <div key={index} style={{ display: 'flex', flex: '1' }}>
-                                {asyncService(name, { params })}
-                            </div>
-                        ))}
-                    </SwipeableViews>
-                </div>
+                <SwipeableViews
+                    index={slideIndex}
+                    onChangeIndex={index => this.handleChangeSwipeView(index, params.id)}
+                    style={{ display: 'flex', flex: '1' }}
+                >
+                    {services.map((name, index) => (
+                        <div className='flexbox-row' style={{ justifyContent: 'center' }} key={index}>
+                            {asyncService(name, { params })}
+                        </div>
+                    ))}
+                </SwipeableViews>
             </div>
         );
     }

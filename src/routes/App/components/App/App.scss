@@ -1,7 +1,40 @@
-.app-container {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
+@mixin flexbox() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
 }
 
+@mixin flex($values) {
+    -webkit-box-flex: $values;
+    -moz-box-flex: $values;
+    -webkit-flex: $values;
+    -ms-flex: $values;
+    flex: $values;
+}
 
+@mixin order($val) {
+    -webkit-box-ordinal-group: $val;
+    -moz-box-ordinal-group: $val;
+    -ms-flex-order: $val;
+    -webkit-order: $val;
+    order: $val;
+}
+
+.app-container {
+    @include flexbox();
+    flex: 1;
+}
+
+.flexbox-column {
+    @include flexbox();
+    flex-direction: column;
+    width: 100%;
+}
+
+.flexbox-row {
+    @include flexbox();
+    width: 100%;
+    flex: 1;
+}

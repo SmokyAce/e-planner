@@ -36,34 +36,32 @@ class AppNavPanel extends React.Component {
         const { onChange, eventId, services, value } = this.props;
 
         return (
-            <div>
-                <Tabs
-                    onChange={onChange}
-                    value={value}
-                    tabItemContainerStyle={styles.tabs}
-                    inkBarStyle={styles.inkBarStyle}
-                    id='event-tabs'
-                >
-                    {services.map((service, index) => {
-                        const route = `/app/event/${eventId}#${service}`;
-                        const tabStyle = { ...styles.tab, borderBottom: '2px solid red' };
+            <Tabs
+                onChange={onChange}
+                value={value}
+                tabItemContainerStyle={styles.tabs}
+                inkBarStyle={styles.inkBarStyle}
+                id='event-tabs'
+            >
+                {services.map((service, index) => {
+                    const route = `/app/event/${eventId}#${service}`;
+                    const tabStyle = { ...styles.tab, borderBottom: '2px solid red' };
 
-                        return (
-                            <Tab
-                                key={service}
-                                label={<FormattedMessage {...messages[service]} />}
-                                value={index}
-                                containerElement={
-                                    <Link to={route} activeClassName='route--active'>
-                                        <FormattedMessage {...messages[service]} />
-                                    </Link>
-                                }
-                                style={value === index ? tabStyle : styles.tab}
-                            />
-                        );
-                    })}
-                </Tabs>
-            </div>
+                    return (
+                        <Tab
+                            key={service}
+                            label={<FormattedMessage {...messages[service]} />}
+                            value={index}
+                            containerElement={
+                                <Link to={route} activeClassName='route--active'>
+                                    <FormattedMessage {...messages[service]} />
+                                </Link>
+                            }
+                            style={value === index ? tabStyle : styles.tab}
+                        />
+                    );
+                })}
+            </Tabs>
         );
     }
 }
