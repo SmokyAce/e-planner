@@ -21,7 +21,9 @@ const styles = {
     },
     content: {
         overflowY      : 'auto',
-        backgroundColor: '#f2f2f2'
+        backgroundColor: '#f2f2f2',
+        display        : 'flex',
+        flexDirection  : 'column'
     },
     loadingBar: {
         zIndex: 1101,
@@ -80,7 +82,7 @@ class App extends React.Component {
                     style={styles.header}
                     currentPage={currentPage}
                 />
-                <div className='app-container container-fluide'>
+                <div className='app-container'>
                     {children}
                 </div>
             </Sidebar>
