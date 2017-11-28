@@ -42,7 +42,7 @@ const EventsList = ({ eventsByIds, onDeleteEvent, eventListOfIds }) => (
                     <CardActions className='card-actions-cont'>
                         <FlatButton
                             label={
-                                <Link to={`/app/event/${eventId}/settings`}>
+                                <Link to={`/app/event/${eventId}#settings`}>
                                     <FormattedMessage {...messages.settings_btn} />
                                 </Link>}
                             style={{ marginLeft: '8px' }}

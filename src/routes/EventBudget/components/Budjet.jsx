@@ -1,16 +1,22 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import { isEqual } from 'lodash';
 
+class Budjet extends React.Component {
+    shouldComponentUpdate = (nextProps, nextState) => !isEqual(nextProps, this.props);
 
-export const EventBlog = () => {
-    return (
-        <div>
-            <h2><FormattedMessage {...messages.description} /></h2>
-        </div>
-    );
-};
+    render() {
+        return (
+            <div>
+                <h2>
+                    <FormattedMessage {...messages.description} />
+                </h2>
+            </div>
+        );
+    }
+}
 
-EventBlog.propTypes = {};
+Budjet.propTypes = {};
 
-export default EventBlog;
+export default Budjet;

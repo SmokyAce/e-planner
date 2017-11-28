@@ -45,5 +45,9 @@ export default defineMessages({
     notebook: {
         id            : 'app.route.notebook',
         defaultMessage: 'Notebook'
+    },
+    settings: {
+        id            : 'app.route.settings',
+        defaultMessage: 'Settings'
     }
 });
