@@ -9,8 +9,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // translations
 import LanguageProvider from '../LanguageProvider';
 
-import 'bootstrap-social';
-
 
 const muiTheme = getMuiTheme({
     palette: {
