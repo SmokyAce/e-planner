@@ -4,25 +4,24 @@ import PropTypes from 'prop-types';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TasksTable from './TasksTable';
-import AddTask from './AddTask';
 import { isEqual } from 'lodash';
 
 class EventTasks extends Component {
     state = {
-        showAddTask: false
+        showNewTask: false
     };
 
     shouldComponentUpdate = (nextProps, nextState) =>
         !isEqual(nextProps, this.props) || !isEqual(nextState, this.state);
 
     handleOpen = () => {
-        this.setState({ showAddTask: !this.state.showAddTask });
+        this.setState({ showNewTask: !this.state.showNewTask });
     };
 
     render() {
         const { pageIndex } = this.props;
 
-        const styleAddTaskBtn = {
+        const addTaskBtn = {
             right   : `-${pageIndex * 100 - 5}%`,
             position: 'fixed',
             bottom  : '5%'
@@ -31,9 +30,8 @@ class EventTasks extends Component {
         console.log('EventTasks render!');
         return (
             <div className='flexbox-column'>
-                <AddTask showComponent={this.state.showAddTask} />
-                <TasksTable style={{ flex: '1' }} />
-                <FloatingActionButton onClick={this.handleOpen} style={styleAddTaskBtn}>
+                <TasksTable style={{ flex: '1' }} showNewTask={this.state.showNewTask} />
+                <FloatingActionButton onClick={this.handleOpen} style={addTaskBtn}>
                     <ContentAdd />
                 </FloatingActionButton>
             </div>

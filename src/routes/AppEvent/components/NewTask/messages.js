@@ -16,5 +16,9 @@ export default defineMessages({
     required: {
         id            : 'app.notification.required',
         defaultMessage: 'This is required field!'
+    },
+    undefined: {
+        id            : 'app.notification.required',
+        defaultMessage: 'This is required field!'
     }
 });

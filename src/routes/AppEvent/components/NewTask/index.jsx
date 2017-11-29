@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // components
 import { Field, reduxForm } from 'redux-form/immutable';
-import RaisedButton from 'material-ui/RaisedButton';
+import Paper from 'material-ui/Paper';
+import IconButton from 'material-ui/IconButton';
+import AddContentIcon from 'material-ui/svg-icons/content/add-box';
 import ReduxFormTextField from '../../../../components/Form/ReduxFormTextField';
 import Error from '../../../../components/Indicators/Error';
 import { FormattedMessage } from 'react-intl';
@@ -30,19 +32,24 @@ class AddTask extends Component {
 
         return (
             <form onSubmit={handleSubmit}>
-                <div style={{ display: 'flex' }}>
+                <Paper zDepth={1} style={{ display: 'flex', padding: '10px 10px 2px 10px' }}>
                     <Field
                         name='description'
                         component={renderTextField}
-                        label={<FormattedMessage {...messages.description} />}
+                        hintText={<FormattedMessage {...messages.description} />}
                     />
-                    <RaisedButton
+                    <IconButton
                         type='submit'
-                        label={<FormattedMessage {...messages.save} />}
-                        style={{ maxContent: 'max-content', marginTop: 'auto', marginBottom: '8px' }}
-                        primary
-                    />
-                </div>
+                        iconStyle={{ width: '32px', height: '32px' }}
+                        style={{
+                            maxContent  : 'max-content',
+                            marginTop   : 'auto',
+                            marginBottom: '8px'
+                        }}
+                    >
+                        <AddContentIcon color={'#757575'} />
+                    </IconButton>
+                </Paper>
                 {error !== undefined && <Error message={error} />}
             </form>
         );
