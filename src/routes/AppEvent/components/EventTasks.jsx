@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // components
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -20,23 +20,29 @@ class EventTasks extends Component {
     };
 
     render() {
+        const { pageIndex } = this.props;
+
+        const styleAddTaskBtn = {
+            right   : `-${pageIndex * 100 - 5}%`,
+            position: 'fixed',
+            bottom  : '5%'
+        };
+
         console.log('EventTasks render!');
         return (
             <div className='flexbox-column'>
                 <AddTask showComponent={this.state.showAddTask} />
                 <TasksTable style={{ flex: '1' }} />
-                <div>
-                    <FloatingActionButton className='add-task-btn' onClick={this.handleOpen}>
-                        <ContentAdd />
-                    </FloatingActionButton>
-                </div>
+                <FloatingActionButton onClick={this.handleOpen} style={styleAddTaskBtn}>
+                    <ContentAdd />
+                </FloatingActionButton>
             </div>
         );
     }
 }
 
 EventTasks.propTypes = {
-    // tasksList: PropTypes.array,
+    pageIndex: PropTypes.number
     // tasksById: PropTypes.object
 };
 

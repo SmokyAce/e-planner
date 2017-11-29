@@ -89,7 +89,7 @@ class AppEvent extends React.Component {
                 >
                     {services.map((name, index) => (
                         <div className='flexbox-row' style={{ justifyContent: 'center' }} key={index}>
-                            {asyncService(name, { params })}
+                            {asyncService(name, { params, pageIndex: slideIndex })}
                         </div>
                     ))}
                 </SwipeableViews>
