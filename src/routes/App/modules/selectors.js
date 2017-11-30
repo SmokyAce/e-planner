@@ -3,98 +3,59 @@
  */
 import { createSelector } from 'reselect';
 
-const selectApp = (state) => state.get('app');
+const selectApp = state => state.get('app');
 
-const selectForm = (state) => state.get('form');
+const selectForm = state => state.get('form');
 
-const selectRestored = (state) => state.get('restored');
+const selectRestored = state => state.get('restored');
 
-const makeSelectSidebar = () => createSelector(
-    selectApp,
-    (globalState) => globalState.get('sidebar')
-);
+const makeSelectSidebar = () => createSelector(selectApp, globalState => globalState.get('sidebar'));
 
-const makeSelectSidebarDocked = () => createSelector(
-    selectApp,
-    (globalState) => globalState.getIn(['sidebar', 'sidebarDocked'])
-);
+const makeSelectSidebarDocked = () =>
+    createSelector(selectApp, globalState => globalState.getIn(['sidebar', 'sidebarDocked']));
 
-const makeSelectSidebarPullRight = () => createSelector(
-    selectApp,
-    (globalState) => globalState.getIn(['sidebar', 'pullRight'])
-);
+const makeSelectSidebarPullRight = () =>
+    createSelector(selectApp, globalState => globalState.getIn(['sidebar', 'pullRight']));
 
-const makeSelectSidebarOpen = () => createSelector(
-    selectApp,
-    (globalState) => globalState.getIn(['sidebar', 'sidebarOpen'])
-);
+const makeSelectSidebarOpen = () =>
+    createSelector(selectApp, globalState => globalState.getIn(['sidebar', 'sidebarOpen']));
 
-const makeSelectCurrentUser = () => createSelector(
-    selectApp,
-    (globalState) => globalState.get('user')
-);
+const makeSelectCurrentUser = () => createSelector(selectApp, globalState => globalState.get('user'));
 
-const makeSelectCurrentUserField = (field) => {
-    return createSelector(
-        selectApp,
-        (globalState) => globalState.getIn(['user', field])
-    );
+const makeSelectCurrentUserField = field => {
+    return createSelector(selectApp, globalState => globalState.getIn(['user', field]));
 };
 
-const makeSelectCurrentUserEmail = () => createSelector(
-    selectApp,
-    (globalState) => globalState.getIn(['user', 'email'])
-);
+const makeSelectCurrentUserEmail = () => createSelector(selectApp, globalState => globalState.getIn(['user', 'email']));
 
-const makeSelectCurrentUserEvents = () => createSelector(
-    selectApp,
-    (globalState) => globalState.getIn(['user', 'events'])
-);
+const makeSelectCurrentUserEvents = () =>
+    createSelector(selectApp, globalState => globalState.getIn(['user', 'events']));
 
-const makeSelectEventsByIds = () => createSelector(
-    selectApp,
-    (globalState) => globalState.getIn(['events', 'byIds'])
-);
+const makeSelectEventsByIds = () => createSelector(selectApp, globalState => globalState.getIn(['events', 'byIds']));
 
-const makeSelectEventsOptionsById = (eventId) => createSelector(
-    selectApp,
-    (globalState) => globalState.getIn(['events', 'byIds', eventId]).toJS()
-);
+const makeSelectEventsOptionsById = eventId =>
+    createSelector(selectApp, globalState => globalState.getIn(['events', 'byIds', eventId]).toJS());
 
-const makeSelectEventsListOfIds = () => createSelector(
-    selectApp,
-    (globalState) => globalState.getIn(['events', 'listOfIds'])
-);
+const makeSelectEventById = eventId =>
+    createSelector(selectApp, globalState => globalState.getIn(['events', 'byIds', eventId]));
 
-const makeSelectEventsFormState = () => createSelector(
-    selectApp,
-    (globalState) => globalState.getIn(['events', 'formState'])
-);
+const makeSelectEventsListOfIds = () =>
+    createSelector(selectApp, globalState => globalState.getIn(['events', 'listOfIds']));
 
-const makeSelectEventsSettingsFormState = () => createSelector(
-    selectApp,
-    (globalState) => globalState.getIn(['events', 'settingsFormState']).toJS()
-);
+const makeSelectEventsFormState = () =>
+    createSelector(selectApp, globalState => globalState.getIn(['events', 'formState']));
 
-const makeSelectAppConnectionState = () => createSelector(
-    selectApp,
-    (globalState) => globalState.get('connection')
-);
+const makeSelectEventsSettingsFormState = () =>
+    createSelector(selectApp, globalState => globalState.getIn(['events', 'settingsFormState']).toJS());
 
-const makeSelectAppSyncState = () => createSelector(
-    selectApp,
-    (globalState) => globalState.getIn(['sync', 'status'])
-);
+const makeSelectAppConnectionState = () => createSelector(selectApp, globalState => globalState.get('connection'));
 
-const makeSelectFormValues = (form) => createSelector(
-    selectForm,
-    (globalState) => globalState.getIn([form, 'values'])
-);
+const makeSelectAppSyncState = () => createSelector(selectApp, globalState => globalState.getIn(['sync', 'status']));
 
-const makeSelectFormSyncErrors = (form) => createSelector(
-    selectForm,
-    (globalState) => globalState.getIn([form, 'syncErrors'])
-);
+const makeSelectFormValues = form => createSelector(selectForm, globalState => globalState.getIn([form, 'values']));
+
+const makeSelectFormSyncErrors = form =>
+    createSelector(selectForm, globalState => globalState.getIn([form, 'syncErrors']));
 
 export {
     selectApp,
@@ -120,6 +81,7 @@ export {
     makeSelectEventsListOfIds,
     makeSelectEventsFormState,
     makeSelectEventsSettingsFormState,
+    makeSelectEventById,
     // form
     makeSelectFormValues,
     makeSelectFormSyncErrors

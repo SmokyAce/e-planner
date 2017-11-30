@@ -25,7 +25,7 @@ class AppEvent extends React.Component {
     componentWillReceiveProps = nextProps => this.setState(this.getComponentState(nextProps));
 
     shouldComponentUpdate = (nextProps, nextState) =>
-        !isEqual(nextProps.location, this.props.location) || !isEqual(nextProps.eventsByIds, this.props.eventsByIds);
+        !isEqual(nextProps.location, this.props.location) || !isEqual(nextProps.eventEntry, this.props.eventEntry);
 
     handleChange = value => {
         this.setState({ slideIndex: value });
@@ -43,11 +43,11 @@ class AppEvent extends React.Component {
     getComponentState = props => {
         let services = [];
 
-        const { eventsByIds, params, location } = props;
+        const { eventEntry, location } = props;
 
-        if (eventsByIds.size > 0) {
-            [...services] = eventsByIds
-                .getIn([params.id, 'services'])
+        if (eventEntry) {
+            [...services] = eventEntry
+                .get('services')
                 .filter(isChecked => isChecked)
                 .keys();
 
@@ -73,12 +73,13 @@ class AppEvent extends React.Component {
 
     render() {
         console.log('AppEvent render!');
-        const { params, eventsByIds } = this.props;
+        const { params, dispatch, eventEntry } = this.props;
         const { services, slideIndex } = this.state;
 
-        if (eventsByIds.size === 0) {
+        if (!eventEntry) {
             return <div>Loading ...</div>;
         }
+
         return (
             <div className='flexbox-column'>
                 <AppNavPanel eventId={params.id} services={services} onChange={this.handleChange} value={slideIndex} />
@@ -89,7 +90,7 @@ class AppEvent extends React.Component {
                 >
                     {services.map((name, index) => (
                         <div className='flexbox-row' style={{ justifyContent: 'center' }} key={index}>
-                            {asyncService(name, { params, pageIndex: slideIndex })}
+                            {asyncService(name, { eventEntry, pageIndex: index, dispatch })}
                         </div>
                     ))}
                 </SwipeableViews>
@@ -103,9 +104,10 @@ AppEvent.contextTypes = {
 };
 
 AppEvent.propTypes = {
-    params     : PropTypes.object,
-    eventsByIds: PropTypes.instanceOf(Map),
-    location   : PropTypes.object
+    params    : PropTypes.object,
+    eventEntry: PropTypes.instanceOf(Map),
+    location  : PropTypes.object,
+    dispatch: PropTypes.func
 };
 
 export default AppEvent;

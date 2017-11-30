@@ -12,6 +12,14 @@ import { FormattedMessage } from 'react-intl';
 import validate from './validate';
 import messages from './messages';
 
+const styles = {
+    paper: {
+        display: 'flex',
+        padding: '10px 15px 2px 15px',
+        margin: '5px 5px 0 5px'
+    }
+};
+
 const renderTextField = props => {
     const { meta } = props;
 
@@ -22,7 +30,7 @@ renderTextField.propTypes = {
     meta: PropTypes.object
 };
 
-class AddTask extends Component {
+class NewTask extends Component {
     render() {
         const { showComponent, handleSubmit, error } = this.props;
 
@@ -32,7 +40,7 @@ class AddTask extends Component {
 
         return (
             <form onSubmit={handleSubmit}>
-                <Paper zDepth={1} style={{ display: 'flex', padding: '10px 15px 2px 15px' }}>
+                <Paper zDepth={1} style={styles.paper}>
                     <Field
                         name='description'
                         component={renderTextField}
@@ -56,14 +64,14 @@ class AddTask extends Component {
     }
 }
 
-AddTask.propTypes = {
+NewTask.propTypes = {
     showComponent: PropTypes.bool,
     handleSubmit : PropTypes.func,
     error        : PropTypes.string
 };
 
 export default reduxForm({
-    form  : 'AddTask',
+    form  : 'NewTask',
     fields: ['description', 'plannedDate'],
     validate
-})(AddTask);
+})(NewTask);

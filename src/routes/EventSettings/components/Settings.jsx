@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Map } from 'immutable';
 import { FormattedMessage } from 'react-intl';
 
 import { onEventSettingsNameChange, saveEventSettings } from '../../App/modules/events';
 import Services from './Services';
 import messages from './messages';
 
-
-export const Settings = ({ eventOptions, formState, dispatch }) => {
-    const onChange = (e) => {
+export const Settings = ({ eventEntry, formState, dispatch }) => {
+    
+    const eventOptions = eventEntry.toJS();
+    
+    const onChange = e => {
         dispatch(onEventSettingsNameChange(e.target.value));
     };
 
@@ -16,25 +19,24 @@ export const Settings = ({ eventOptions, formState, dispatch }) => {
         dispatch(saveEventSettings(eventOptions.id, formState.name));
     };
 
-    const eventName = (formState.name === '' && !formState.isChanged) ? eventOptions.name : formState.name;
+    const eventName = formState.name === '' && !formState.isChanged ? eventOptions.name : formState.name;
 
     return (
         <div>
-            <h3><FormattedMessage {...messages.description} /></h3>
+            <h3>
+                <FormattedMessage {...messages.description} />
+            </h3>
             <br />
-            <input className='form-control' value={eventName}
-                onChange={onChange}
-            />
+            <input className='form-control' value={eventName} onChange={onChange} />
             <br />
-            <Services dispatch={dispatch}
+            <Services
+                dispatch={dispatch}
                 services={eventOptions.services}
                 eventId={eventOptions.id}
                 messages={messages}
             />
             <br />
-            <button className='btn btn-primary'
-                onClick={onSaveButtonClick}
-            >
+            <button className='btn btn-primary' onClick={onSaveButtonClick}>
                 Save
             </button>
         </div>
@@ -42,9 +44,9 @@ export const Settings = ({ eventOptions, formState, dispatch }) => {
 };
 
 Settings.propTypes = {
-    eventOptions: PropTypes.object,
-    formState   : PropTypes.object,
-    dispatch    : PropTypes.func
+    eventEntry: PropTypes.instanceOf(Map),
+    formState : PropTypes.object,
+    dispatch  : PropTypes.func
 };
 
 export default Settings;

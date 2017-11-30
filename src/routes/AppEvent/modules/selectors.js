@@ -1,14 +1,11 @@
 import { createSelector } from 'reselect';
 import { selectApp } from '../../App/modules/selectors';
 
-const makeSelectEventTasksList = eventId => createSelector(selectApp, appState => appState.getIn(['events', 'tasks']));
+const makeSelectTaskListIds = () => createSelector(selectApp, appState => appState.getIn(['tasks', 'listOfIds']));
 
-const makeSelectEventTasksByIds = eventId =>
-    createSelector(selectApp, makeSelectEventTasksList(eventId), (appState, eventTasksList) => {
-        return appState.getIn(['tasks']);
-    });
+const makeSelectTaskEntries = () => createSelector(selectApp, appState => appState.getIn(['tasks', 'entries']));
 
-export default {
-    makeSelectEventTasksList,
-    makeSelectEventTasksByIds
+export {
+    makeSelectTaskListIds,
+    makeSelectTaskEntries
 };

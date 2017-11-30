@@ -1,11 +1,8 @@
 import { fromJS } from 'immutable';
 import { pick } from 'lodash';
-import {
-    COUNTER_INCREMENT, COUNTER_DOUBLE_ASYNC
-} from '../../EventCounter/modules/counter';
+import { COUNTER_INCREMENT, COUNTER_DOUBLE_ASYNC } from '../../EventCounter/modules/counter';
 import { REHYDRATE } from 'redux-persist/constants';
 import { firebaseDb } from '../../../utils/firebaseTools';
-
 
 // ------------------------------------
 // Constants
@@ -35,38 +32,32 @@ export const types = {
     REMOVE_EVENT
 };
 
-export const allServices = [
-    'guests',
-    'tasks',
-    'budjet',
-    'timing',
-    'contractors',
-    'blog',
-    'quiz',
-    'notebook'
-];
+export const allServices = ['guests', 'tasks', 'budjet', 'timing', 'contractors', 'blog', 'quiz', 'notebook'];
 
 // ------------------------------------
 // Actions
 // ------------------------------------
 
+export const addEvent = options => {
+    const event = pick(options.toJS(), ['name', 'date', 'time']);
 
-export const addEvent = (options) => {
-    const payload = pick(options.toJS(), ['name', 'date', 'time']);
-
-    payload.id = firebaseDb.ref().child('events').push().key;
-    payload.services = {};
+    event.id = firebaseDb
+        .ref()
+        .child('events')
+        .push().key;
+    event.services = {};
     allServices.map((key, index) => {
-        payload.services[key] = options.get(key);
+        event.services[key] = options.get(key);
     });
+    event.tasks = [];
 
-    return ({
-        type: ADD_EVENT,
-        payload
-    });
+    return {
+        type   : ADD_EVENT,
+        payload: event
+    };
 };
 
-export const removeEvent = (id) => ({
+export const removeEvent = id => ({
     type   : REMOVE_EVENT,
     payload: id
 });
@@ -74,7 +65,7 @@ export const removeEvent = (id) => ({
 export const addEventRequest = () => ({
     type: ADD_EVENT_REQUEST
 });
-export const addEventSuccess = (eventId) => ({
+export const addEventSuccess = eventId => ({
     type   : ADD_EVENT_SUCCESS,
     payload: eventId
 });
@@ -89,7 +80,7 @@ export const removeEventRequest = () => ({
     type: REMOVE_EVENT_REQUEST
 });
 
-export const removeEventSuccess = (eventId) => ({
+export const removeEventSuccess = eventId => ({
     type   : REMOVE_EVENT_SUCCESS,
     payload: eventId
 });
@@ -104,12 +95,12 @@ export const fetchEventRequest = () => ({
     type: FETCH_EVENT_REQUEST
 });
 
-export const fetchEventSuccess = (response) => ({
+export const fetchEventSuccess = response => ({
     type   : FETCH_EVENT_SUCCESS,
     payload: response
 });
 
-export const fetchEventFailure = (error) => ({
+export const fetchEventFailure = error => ({
     type: FETCH_EVENT_FAILURE,
     error
 });
@@ -121,12 +112,12 @@ export const toggleEventService = (eventId, service, checked) => ({
     checked
 });
 
-export const onEventNameChange = (eventName) => ({
+export const onEventNameChange = eventName => ({
     type   : 'EVENT_NAME_CHANGE',
     payload: eventName
 });
 
-export const onEventSettingsNameChange = (eventName) => ({
+export const onEventSettingsNameChange = eventName => ({
     type   : 'EVENT_SETTINGS_NAME_CHANGE',
     payload: eventName
 });
@@ -136,7 +127,6 @@ export const saveEventSettings = (eventId, newEventName) => ({
     eventId,
     newEventName
 });
-
 
 const initialState = fromJS({
     listOfIds: [],
@@ -160,12 +150,10 @@ const EVENTS_ACTION_HANDLERS = {
             .setIn(['formState', 'eventName'], '');
     },
     [ADD_EVENT_SUCCESS]: (state, action) => {
-        return state
-            .setIn(['byIds', action.payload, 'isSync'], true);
+        return state.setIn(['byIds', action.payload, 'isSync'], true);
     },
     [ADD_EVENT_FAILURE]: (state, action) => {
-        return state
-            .setIn(['byIds', action.payload, 'isSync'], false);
+        return state.setIn(['byIds', action.payload, 'isSync'], false);
     },
     [REMOVE_EVENT]: (state, action) => {
         return state
@@ -173,17 +161,13 @@ const EVENTS_ACTION_HANDLERS = {
             .deleteIn(['byIds', action.payload]);
     },
     [FETCH_EVENT_SUCCESS]: (state, action) => {
-        return state
-            .set('listOfIds', fromJS(action.payload.result))
-            .set('byIds', fromJS(action.payload.response));
+        return state.set('listOfIds', fromJS(action.payload.result)).set('byIds', fromJS(action.payload.response));
     },
     [TOGGLE_EVENT_SERVICE]: (state, action) => {
-        return state
-            .setIn(['byIds', action.eventId, 'services', action.service], action.checked);
+        return state.setIn(['byIds', action.eventId, 'services', action.service], action.checked);
     },
     [EVENT_NAME_CHANGE]: (state, action) => {
-        return state
-            .setIn(['formState', 'eventName'], action.payload);
+        return state.setIn(['formState', 'eventName'], action.payload);
     },
     [EVENT_SETTINGS_NAME_CHANGE]: (state, action) => {
         return state
@@ -196,14 +180,12 @@ const EVENTS_ACTION_HANDLERS = {
             .setIn(['byIds', action.eventId, 'isChanged'], false);
     },
     [COUNTER_INCREMENT]: (state, action) => {
-        return state
-            .setIn(['byIds', action.payload.eventId, 'counter'], (action.payload.value + 1));
+        return state.setIn(['byIds', action.payload.eventId, 'counter'], action.payload.value + 1);
     },
     [COUNTER_DOUBLE_ASYNC]: (state, action) => {
         const { eventId } = action.payload;
 
-        return state
-            .setIn(['byIds', eventId, 'counter'], (state.getIn(['byIds', eventId, 'counter']) * 2));
+        return state.setIn(['byIds', eventId, 'counter'], state.getIn(['byIds', eventId, 'counter']) * 2);
     },
     [REHYDRATE]: (state, action) => {
         const incoming = action.payload.app;

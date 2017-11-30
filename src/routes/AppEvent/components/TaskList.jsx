@@ -1,45 +1,37 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { iList, Map } from 'immutable';
 // components
 import { List, ListItem } from 'material-ui/List';
-import NewTask from './NewTask';
 import ActionInfo from 'material-ui/svg-icons/action/info';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
-import FileFolder from 'material-ui/svg-icons/file/folder';
+import DoneIcon from 'material-ui/svg-icons/action/done';
 
 class TaskList extends Component {
     render() {
-        const { showNewTask } = this.props;
+        const { taskIds, taskEntries } = this.props;
 
         return (
             <div>
-                <div style={{ margin: '5px' }}>
-                    <NewTask showComponent={showNewTask} />
-                </div>
                 <Paper zDepth={1} style={{ margin: '5px' }}>
                     <List>
-                        <Subheader inset>All task</Subheader>
-                        <ListItem
-                            leftAvatar={<Avatar icon={<FileFolder />} />}
-                            rightIcon={<ActionInfo />}
-                            primaryText='Photos'
-                            secondaryText='Jan 9, 2014'
-                        />
-                        <ListItem
-                            leftAvatar={<Avatar icon={<FileFolder />} />}
-                            rightIcon={<ActionInfo />}
-                            primaryText='Recipes'
-                            secondaryText='Jan 17, 2014'
-                        />
-                        <ListItem
-                            leftAvatar={<Avatar icon={<FileFolder />} />}
-                            rightIcon={<ActionInfo />}
-                            primaryText='Work'
-                            secondaryText='Jan 28, 2014'
-                        />
+                        <Subheader inset>Event task list</Subheader>
+                        {taskIds.map((item, index) => {
+                            const task = taskEntries.get(item);
+
+                            return (
+                                <ListItem
+                                    key={index}
+                                    leftAvatar={<Avatar icon={<DoneIcon />} />}
+                                    rightIcon={<ActionInfo />}
+                                    primaryText={task.description}
+                                    secondaryText='Jan 9, 2014'
+                                />
+                            );
+                        })}
                     </List>
                     <Divider inset />
                 </Paper>
@@ -49,7 +41,8 @@ class TaskList extends Component {
 }
 
 TaskList.propTypes = {
-    showNewTask: PropTypes.bool
+    taskIds    : PropTypes.instanceOf(iList),
+    taskEntries: PropTypes.instanceOf(Map)
 };
 
 export default TaskList;

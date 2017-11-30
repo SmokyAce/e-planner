@@ -31,7 +31,7 @@ export const deleteTodo = id => {
 // ------------------------------------
 // Constants
 // ------------------------------------
-const ADD_TASK    = 'ADD_TASK';
+const ADD_TASK = 'ADD_TASK';
 const TOGGLE_TASK = 'TOGGLE_TASK';
 const DELETE_TASK = 'DELETE_TASK';
 // ------------------------------------
@@ -67,19 +67,19 @@ const TASKS_ACTION_HANDLERS = {
         const { id } = action;
         const newState = state.setIn(['entries', id], todo(undefined, action));
 
-        return newState.updateIn(['tasksList'], list => list.push(id));
+        return newState.updateIn(['listOfIds'], list => list.push(id));
     },
     [TOGGLE_TASK]: (state, action) => {
         return state.setIn(['entries', action.id], todo(state.getIn(['entries', action.id]), action));
     },
     [DELETE_TASK]: (state, action) => {
         return state
-            .set('tasksList', state.get('tasksList').filter(id => id !== action.id))
+            .set('listOfIds', state.get('listOfIds').filter(id => id !== action.id))
             .deleteIn(['entries', action.id]);
     }
 };
 
-const initialState = Immutable.fromJS({ tasksList: [], filter: 'SHOW_ALL', entries: {} });
+const initialState = Immutable.fromJS({ listOfIds: [], entries: {}, filter: 'SHOW_ALL' });
 
 export default function tasksReduceer(state = initialState, action) {
     const handler = TASKS_ACTION_HANDLERS[action.type];
