@@ -32,7 +32,7 @@ class AddTask extends Component {
 
         return (
             <form onSubmit={handleSubmit}>
-                <Paper zDepth={1} style={{ display: 'flex', padding: '10px 10px 2px 10px' }}>
+                <Paper zDepth={1} style={{ display: 'flex', padding: '10px 15px 2px 15px' }}>
                     <Field
                         name='description'
                         component={renderTextField}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // components
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import TasksTable from './TasksTable';
+import TaskList from './TaskList';
 import { isEqual } from 'lodash';
 
 class EventTasks extends Component {
@@ -30,7 +30,7 @@ class EventTasks extends Component {
         console.log('EventTasks render!');
         return (
             <div className='flexbox-column'>
-                <TasksTable style={{ flex: '1' }} showNewTask={this.state.showNewTask} />
+                <TaskList style={{ flex: '1' }} showNewTask={this.state.showNewTask} />
                 <FloatingActionButton onClick={this.handleOpen} style={addTaskBtn}>
                     <ContentAdd />
                 </FloatingActionButton>
