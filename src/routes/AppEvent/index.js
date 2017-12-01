@@ -6,7 +6,7 @@ export default store => {
     const { injectReducer } = getAsyncInjectors(store);
 
     return {
-        path: 'event/:id',
+        path: 'event/:id(/:service)',
         getComponent(nextState, next) {
             require.ensure(
                 [],

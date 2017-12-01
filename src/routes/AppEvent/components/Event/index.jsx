@@ -22,10 +22,12 @@ class AppEvent extends React.Component {
 
     componentDidMount = () => this.tabsScrollLeft(this.state.slideIndex);
 
-    componentWillReceiveProps = nextProps => this.setState(this.getComponentState(nextProps));
+    componentWillReceiveProps = nextProps => {
+        return this.setState(this.getComponentState(nextProps));
+    };
 
     shouldComponentUpdate = (nextProps, nextState) =>
-        !isEqual(nextProps.location, this.props.location) || !isEqual(nextProps.eventEntry, this.props.eventEntry);
+        !isEqual(nextProps.location, this.props.location) || !isEqual(nextProps.eventsByIds, this.props.eventsByIds);
 
     handleChange = value => {
         this.setState({ slideIndex: value });
@@ -34,7 +36,7 @@ class AppEvent extends React.Component {
 
     handleChangeSwipeView = (index, evId) => {
         // change route
-        browserHistory.push(`/app/event/${evId}#${this.state.services[index]}`);
+        browserHistory.push(`/app/event/${evId}/${this.state.services[index]}`);
 
         this.setState({ slideIndex: index });
         this.tabsScrollLeft(index);
@@ -43,19 +45,19 @@ class AppEvent extends React.Component {
     getComponentState = props => {
         let services = [];
 
-        const { eventEntry, location } = props;
+        const { eventsByIds, params } = props;
 
-        if (eventEntry) {
-            [...services] = eventEntry
-                .get('services')
+        if (eventsByIds.size > 0) {
+            [...services] = eventsByIds
+                .getIn([params.id, 'services'])
                 .filter(isChecked => isChecked)
                 .keys();
 
-            services.push('settings');
+            // services.push('settings');
             services.unshift('home');
         }
 
-        const slideIndex = services.indexOf(location.hash.slice(1));
+        const slideIndex = services.indexOf(params.service);
 
         return {
             slideIndex: slideIndex === -1 ? 0 : slideIndex,
@@ -73,12 +75,13 @@ class AppEvent extends React.Component {
 
     render() {
         console.log('AppEvent render!');
-        const { params, dispatch, eventEntry } = this.props;
+        const { params, eventsByIds } = this.props;
         const { services, slideIndex } = this.state;
 
-        if (!eventEntry) {
+        if (!eventsByIds) {
             return <div>Loading ...</div>;
         }
+        // console.log(eventEntry);
 
         return (
             <div className='flexbox-column'>
@@ -90,7 +93,7 @@ class AppEvent extends React.Component {
                 >
                     {services.map((name, index) => (
                         <div className='flexbox-row' style={{ justifyContent: 'center' }} key={index}>
-                            {asyncService(name, { eventEntry, pageIndex: index, dispatch })}
+                            {asyncService(name, { pageIndex: index, params })}
                         </div>
                     ))}
                 </SwipeableViews>
@@ -104,10 +107,9 @@ AppEvent.contextTypes = {
 };
 
 AppEvent.propTypes = {
-    params    : PropTypes.object,
-    eventEntry: PropTypes.instanceOf(Map),
-    location  : PropTypes.object,
-    dispatch: PropTypes.func
+    params     : PropTypes.object,
+    eventsByIds: PropTypes.instanceOf(Map),
+    location   : PropTypes.object
 };
 
 export default AppEvent;

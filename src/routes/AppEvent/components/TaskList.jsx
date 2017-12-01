@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { iList, Map } from 'immutable';
+import { List as imList, Map } from 'immutable';
 // components
 import { List, ListItem } from 'material-ui/List';
 import ActionInfo from 'material-ui/svg-icons/action/info';
@@ -14,6 +14,12 @@ class TaskList extends Component {
     render() {
         const { taskIds, taskEntries } = this.props;
 
+        console.log('TaskList render!');
+        if (!taskIds) {
+            return <div>Not have tasks yet</div>;
+        }
+        // console.log(taskIds.toJS());
+
         return (
             <div>
                 <Paper zDepth={1} style={{ margin: '5px' }}>
@@ -22,6 +28,9 @@ class TaskList extends Component {
                         {taskIds.map((item, index) => {
                             const task = taskEntries.get(item);
 
+                            if (!task) {
+                                return <div key={index}>I don't find task by id: {item}</div>;
+                            }
                             return (
                                 <ListItem
                                     key={index}
@@ -41,7 +50,7 @@ class TaskList extends Component {
 }
 
 TaskList.propTypes = {
-    taskIds    : PropTypes.instanceOf(iList),
+    taskIds    : PropTypes.instanceOf(imList),
     taskEntries: PropTypes.instanceOf(Map)
 };
 

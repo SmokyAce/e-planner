@@ -44,7 +44,7 @@ class AppNavPanel extends React.Component {
                 id='event-tabs'
             >
                 {services.map((service, index) => {
-                    const route = `/app/event/${eventId}#${service}`;
+                    const route = `/app/event/${eventId}/${service}`;
                     const tabStyle = { ...styles.tab, borderBottom: '2px solid red' };
 
                     return (

@@ -69,7 +69,7 @@ class SidebarContent extends React.Component {
                     key={item}
                     primaryText={eventsByIds.getIn([item, 'name'])}
                     containerElement={
-                        <Link to={`/app/event/${item}#home`} activeClassName='route--active'>
+                        <Link to={`/app/event/${item}/home`} activeClassName='route--active'>
                             {eventsByIds.getIn([item, 'name'])}
                         </Link>
                     }

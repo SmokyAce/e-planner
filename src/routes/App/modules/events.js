@@ -49,7 +49,6 @@ export const addEvent = options => {
     allServices.map((key, index) => {
         event.services[key] = options.get(key);
     });
-    event.tasks = [];
 
     return {
         type   : ADD_EVENT,
@@ -146,8 +145,7 @@ const EVENTS_ACTION_HANDLERS = {
         return state
             .updateIn(['listOfIds'], list => list.push(action.payload.id))
             .setIn(['byIds', action.payload.id], fromJS(action.payload))
-            .setIn(['byIds', action.payload.id, 'isSync'], false)
-            .setIn(['formState', 'eventName'], '');
+            .setIn(['byIds', action.payload.id, 'isSync'], false);
     },
     [ADD_EVENT_SUCCESS]: (state, action) => {
         return state.setIn(['byIds', action.payload, 'isSync'], true);

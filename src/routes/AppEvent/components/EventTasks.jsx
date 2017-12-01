@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { List } from 'immutable';
 // components
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -21,9 +21,9 @@ class EventTasks extends Component {
     };
 
     render() {
-        const { pageIndex, eventEntry } = this.props;
+        const { pageIndex, params } = this.props;
 
-        console.log(pageIndex);
+        // console.log(params);
 
         const addTaskBtn = {
             right   : `-${pageIndex * 100 - 5}%`,
@@ -35,7 +35,7 @@ class EventTasks extends Component {
         return (
             <div className='flexbox-column'>
                 <NewTask showComponent={this.state.showNewTask} />
-                <TaskList taskIds={eventEntry.get('tasks')} />
+                <TaskList taskIds={List([])} params={params} />
                 <FloatingActionButton onClick={this.handleOpen} style={addTaskBtn}>
                     <ContentAdd />
                 </FloatingActionButton>
@@ -45,8 +45,8 @@ class EventTasks extends Component {
 }
 
 EventTasks.propTypes = {
-    pageIndex : PropTypes.number,
-    eventEntry: PropTypes.instanceOf(Map)
+    pageIndex: PropTypes.number,
+    params   : PropTypes.object
 };
 
 export default EventTasks;
