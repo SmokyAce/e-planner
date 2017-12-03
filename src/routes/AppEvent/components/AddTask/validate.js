@@ -3,7 +3,7 @@ const validate = (values, props) => {
     const errors = {};
 
     if (!values.get('description')) {
-        errors.email = 'required';
+        errors.description = 'required';
     }
     return errors;
 };

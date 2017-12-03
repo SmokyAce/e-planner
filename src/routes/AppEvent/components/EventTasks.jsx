@@ -1,30 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { List } from 'immutable';
+import { Map } from 'immutable';
 // components
+import H2 from '../../../components/H2';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import TaskList from '../containers/TaskListContainer';
-import NewTask from './NewTask';
+import TaskList from '../components/TaskList';
+import AddTask from '../components/AddTask';
 import { isEqual } from 'lodash';
 
 class EventTasks extends Component {
     state = {
-        showNewTask: false
+        showAddTask: false
     };
 
     shouldComponentUpdate = (nextProps, nextState) =>
         !isEqual(nextProps, this.props) || !isEqual(nextState, this.state);
 
     handleOpen = () => {
-        this.setState({ showNewTask: !this.state.showNewTask });
+        this.setState({ showAddTask: !this.state.showAddTask });
     };
 
     render() {
-        const { pageIndex, params } = this.props;
-
-        // console.log(params);
-
+        const { pageIndex, eventEntry, locale, actions, taskEntries } = this.props;
         const addTaskBtn = {
             right   : `-${pageIndex * 100 - 5}%`,
             position: 'fixed',
@@ -33,9 +31,18 @@ class EventTasks extends Component {
 
         console.log('EventTasks render!');
         return (
-            <div className='flexbox-column'>
-                <NewTask showComponent={this.state.showNewTask} />
-                <TaskList taskIds={List([])} params={params} />
+            <div className='flexbox-column'>    
+                <H2 className='text-center'>
+                    <p>{eventEntry.get('name')}</p>
+                </H2>
+                <br />
+                <AddTask
+                    showComponent={this.state.showAddTask}
+                    eventId={eventEntry.get('id')}
+                    onSubmit={actions.addTask}
+                    locale={locale}
+                />
+                <TaskList taskIds={eventEntry.get('tasks')} taskEntries={taskEntries} />
                 <FloatingActionButton onClick={this.handleOpen} style={addTaskBtn}>
                     <ContentAdd />
                 </FloatingActionButton>
@@ -45,8 +52,11 @@ class EventTasks extends Component {
 }
 
 EventTasks.propTypes = {
-    pageIndex: PropTypes.number,
-    params   : PropTypes.object
+    pageIndex  : PropTypes.number,
+    eventEntry : PropTypes.instanceOf(Map),
+    taskEntries: PropTypes.instanceOf(Map),
+    locale     : PropTypes.string,
+    actions    : PropTypes.object
 };
 
 export default EventTasks;

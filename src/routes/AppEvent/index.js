@@ -3,7 +3,7 @@ import { getAsyncInjectors } from '../../utils/asyncInjectors';
 import EventHome from '../EventHome';
 
 export default store => {
-    const { injectReducer } = getAsyncInjectors(store);
+    const { injectReducer, injectSagas } = getAsyncInjectors(store);
 
     return {
         path: 'event/:id(/:service)',
@@ -11,8 +11,8 @@ export default store => {
             require.ensure(
                 [],
                 require => {
-                    // injectReducer('app.todos', require('../Todos/modules/todos').default);
                     injectReducer('app.tasks', require('./modules/tasks').default);
+                    injectSagas(require('./modules/sagas').default);
 
                     next(null, require('./containers/EventContainer').default);
                 },

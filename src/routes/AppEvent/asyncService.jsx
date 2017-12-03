@@ -36,7 +36,7 @@ const AsyncTasks = asyncComponent({
             require.ensure(
                 [],
                 require => {
-                    resolve(require('./components/EventTasks').default);
+                    resolve(require('./containers/EventTasksContainer').default);
                 },
                 'tasks'
             )
@@ -141,6 +141,8 @@ export default (function A() {
     };
 
     return function B(component, props) {
+        console.log(props);
+
         return React.cloneElement(services[component], { ...props });
     };
 }());

@@ -78,10 +78,12 @@ class AppEvent extends React.Component {
         const { params, eventsByIds } = this.props;
         const { services, slideIndex } = this.state;
 
-        if (!eventsByIds) {
+        console.log(eventsByIds);
+
+        if (eventsByIds.size === 0) {
             return <div>Loading ...</div>;
         }
-        // console.log(eventEntry);
+        // console.log(eventsByIds.get(params.id));
 
         return (
             <div className='flexbox-column'>
@@ -93,7 +95,7 @@ class AppEvent extends React.Component {
                 >
                     {services.map((name, index) => (
                         <div className='flexbox-row' style={{ justifyContent: 'center' }} key={index}>
-                            {asyncService(name, { pageIndex: index, params })}
+                            {asyncService(name, { pageIndex: index, eventEntry: eventsByIds.get(params.id) })}
                         </div>
                     ))}
                 </SwipeableViews>

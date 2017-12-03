@@ -1,39 +1,88 @@
 import Immutable from 'immutable';
+import { pick } from 'lodash';
+import { firebaseDb } from '../../../utils/firebaseTools';
+
+// ------------------------------------
+// Constants
+// ------------------------------------
+const ADD_TASK = 'ADD_TASK';
+const ADD_TASK_REQUEST = 'ADD_TASK_REQUEST';
+const ADD_TASK_SUCCESS = 'ADD_TASK_SUCCESS';
+const ADD_TASK_FAILURE = 'ADD_TASK_FAILURE';
+
+const TOGGLE_TASK = 'TOGGLE_TASK';
+const REMOVE_TASK = 'REMOVE_TASK';
+const REMOVE_TASK_REQUEST = 'REMOVE_TASK_REQUEST';
+const REMOVE_TASK_SUCCESS = 'REMOVE_TASK_SUCCESS';
+const REMOVE_TASK_FAILURE = 'REMOVE_TASK_FAILURE';
+
+export const types = {
+    ADD_TASK,
+    REMOVE_TASK
+};
 
 // ------------------------------------
 // Actions
 // ------------------------------------
 
-export const addTodo = (text, count) => {
-    let newId = count;
+export const addTask = (values, dispatch, { eventId }) => {
+    const task = pick(values.toJS(), ['description', 'date']);
+
+    task.id = firebaseDb
+        .ref()
+        .child('tasks')
+        .push().key;
+
+    task.eventId = eventId;
 
     return {
-        type: 'ADD_TASK',
-        id  : newId++,
-        text
+        type   : ADD_TASK,
+        payload: task
     };
 };
 
+export const addTaskRequest = () => ({
+    type: ADD_TASK_REQUEST
+});
+export const addTaskSuccess = taskId => ({
+    type   : ADD_TASK_SUCCESS,
+    payload: taskId
+});
+
+export const addTaskFailure = (taskId, error) => ({
+    type   : ADD_TASK_FAILURE,
+    payload: taskId,
+    error
+});
+
+export const removeTaskRequest = () => ({
+    type: REMOVE_TASK_REQUEST
+});
+export const removeTaskSuccess = taskId => ({
+    type   : REMOVE_TASK_SUCCESS,
+    payload: taskId
+});
+
+export const removeTaskFailure = (taskId, error) => ({
+    type   : REMOVE_TASK_FAILURE,
+    payload: taskId,
+    error
+});
+
 export const toggleTodo = id => {
     return {
-        type: 'TOGGLE_TASK',
+        type: TOGGLE_TASK,
         id
     };
 };
 
 export const deleteTodo = id => {
     return {
-        type: 'DELETE_TASK',
+        type: REMOVE_TASK,
         id
     };
 };
 
-// ------------------------------------
-// Constants
-// ------------------------------------
-const ADD_TASK = 'ADD_TASK';
-const TOGGLE_TASK = 'TOGGLE_TASK';
-const DELETE_TASK = 'DELETE_TASK';
 // ------------------------------------
 // Reducers
 // ------------------------------------
@@ -62,17 +111,14 @@ const todo = (state, action) => {
 
 const TASKS_ACTION_HANDLERS = {
     [ADD_TASK]: (state, action) => {
-        if (action.text === '') return state;
+        const { payload } = action;
 
-        const { id } = action;
-        const newState = state.setIn(['entries', id], todo(undefined, action));
-
-        return newState.updateIn(['listOfIds'], list => list.push(id));
+        return state.setIn(['entries', payload.id], payload).updateIn(['listOfIds'], list => list.push(payload.id));
     },
     [TOGGLE_TASK]: (state, action) => {
         return state.setIn(['entries', action.id], todo(state.getIn(['entries', action.id]), action));
     },
-    [DELETE_TASK]: (state, action) => {
+    [REMOVE_TASK]: (state, action) => {
         return state
             .set('listOfIds', state.get('listOfIds').filter(id => id !== action.id))
             .deleteIn(['entries', action.id]);
