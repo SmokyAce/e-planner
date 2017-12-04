@@ -1,9 +1,9 @@
-// utils
 import { take, call, put, race, fork } from 'redux-saga/effects';
 // API
 import api from './api';
 // actions
 import * as taskActions from './tasks';
+
 
 function * addTask(action) {
     yield put(taskActions.addTaskRequest());

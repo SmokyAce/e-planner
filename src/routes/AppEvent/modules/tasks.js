@@ -1,10 +1,15 @@
 import Immutable from 'immutable';
 import { pick } from 'lodash';
 import { firebaseDb } from '../../../utils/firebaseTools';
+import { REHYDRATE } from 'redux-persist/constants';
 
 // ------------------------------------
 // Constants
 // ------------------------------------
+const FETCH_TASK_REQUEST = 'FETCH_TASK_REQUEST';
+const FETCH_TASK_SUCCESS = 'FETCH_TASK_SUCCESS';
+const FETCH_TASK_FAILURE = 'FETCH_TASK_FAILURE';
+
 const ADD_TASK = 'ADD_TASK';
 const ADD_TASK_REQUEST = 'ADD_TASK_REQUEST';
 const ADD_TASK_SUCCESS = 'ADD_TASK_SUCCESS';
@@ -69,6 +74,20 @@ export const removeTaskFailure = (taskId, error) => ({
     error
 });
 
+export const fetchEventRequest = () => ({
+    type: FETCH_TASK_REQUEST
+});
+
+export const fetchEventSuccess = response => ({
+    type   : FETCH_TASK_SUCCESS,
+    payload: response
+});
+
+export const fetchEventFailure = error => ({
+    type: FETCH_TASK_FAILURE,
+    error
+});
+
 export const toggleTodo = id => {
     return {
         type: TOGGLE_TASK,
@@ -122,6 +141,14 @@ const TASKS_ACTION_HANDLERS = {
         return state
             .set('listOfIds', state.get('listOfIds').filter(id => id !== action.id))
             .deleteIn(['entries', action.id]);
+    },
+    [REHYDRATE]: (state, action) => {
+        const incoming = action.payload.app;
+
+        if (incoming && incoming.get('tasks')) {
+            return incoming.get('tasks');
+        }
+        return state;
     }
 };
 

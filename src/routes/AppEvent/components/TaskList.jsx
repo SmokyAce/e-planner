@@ -16,9 +16,8 @@ class TaskList extends Component {
 
         console.log('TaskList render!');
         if (!taskIds) {
-            return <div>Not have tasks yet</div>;
+            return <div>Create tasks to not miss a details</div>;
         }
-        // console.log(taskIds.toJS());
 
         return (
             <div>

@@ -18,7 +18,7 @@ import * as eventActions from './events';
 import * as userActions from './user';
 import * as syncActions from './sync';
 import * as connectionActions from './connection';
-
+// import * as taskActions from '../../AppEvent/modules/tasks';
 
 // /////////////////////
 // Events
@@ -47,7 +47,6 @@ function * removeEvent(action) {
     }
 }
 
-
 export function * fetchEvents() {
     const { response, error } = yield call(api.fetchEvents);
 
@@ -57,7 +56,6 @@ export function * fetchEvents() {
         yield put(eventActions.fetchEventFailure(error));
     }
 }
-
 
 // /////////////////////
 // User
@@ -76,7 +74,6 @@ export function * setUserData(userData) {
     return success;
 }
 
-
 /**
  * Fetch user data from DB
  */
@@ -94,8 +91,14 @@ export function * fetchUserData() {
 
     if (response === null) {
         console.log('setUserData', response);
-        userInfo = pick(firebaseAuth.currentUser.toJSON(),
-            ['uid', 'email', 'displayName', 'providerData', 'isAnonymous', 'emailVerified']);
+        userInfo = pick(firebaseAuth.currentUser.toJSON(), [
+            'uid',
+            'email',
+            'displayName',
+            'providerData',
+            'isAnonymous',
+            'emailVerified'
+        ]);
 
         yield setUserData(userInfo);
     } else {
@@ -104,7 +107,6 @@ export function * fetchUserData() {
     yield put(userActions.fetchUserDataSuccess(userInfo));
     return userInfo;
 }
-
 
 /**
  * update user data out saga
@@ -141,7 +143,6 @@ export function * updateUserInfoFlow() {
     }
 }
 
-
 // /////////////////////
 // Sync
 // /////////////////////
@@ -160,6 +161,8 @@ export function * appSyncFlow() {
             yield call(fetchEvents);
         }
 
+        // yield call(fetchTasks);
+
         yield put(syncActions.finishSync());
     } catch (error) {
         yield put(syncActions.errorSync(error));
@@ -177,7 +180,7 @@ export function * appSyncFlow() {
 export function * loadingFlow() {
     while (true) {
         yield take(action => {
-            return (action.type.indexOf('REQUEST') > 0);
+            return action.type.indexOf('REQUEST') > 0;
         });
 
         yield put(showLoading());
@@ -211,13 +214,13 @@ export function * watchSync() {
     }
 }
 
-const connectionStatusWrapper = (connStatusChannel) => ({
+const connectionStatusWrapper = connStatusChannel => ({
     connectionStatus(snapshot) {
         connStatusChannel.put(snapshot.val());
     }
 });
 
-const authWrapper = (authStateChannel) => ({
+const authWrapper = authStateChannel => ({
     onChange(user) {
         authStateChannel.put(user !== null);
     }
@@ -284,7 +287,6 @@ export function * eventsFlow() {
         }
     }
 }
-
 
 // daemon watchers
 watchSync.isDaemon = true;

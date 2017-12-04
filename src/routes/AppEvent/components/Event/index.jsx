@@ -6,6 +6,8 @@ import { isEqual } from 'lodash';
 // components
 import SwipeableViews from 'react-swipeable-views';
 import AppNavPanel from '../AppNavPanel';
+import Spinner from '../../../../components/Spinner';
+
 // import Spinner from '../../../../components/Spinner';
 import asyncService from '../../asyncService';
 import './Event.scss';
@@ -78,12 +80,13 @@ class AppEvent extends React.Component {
         const { params, eventsByIds } = this.props;
         const { services, slideIndex } = this.state;
 
-        console.log(eventsByIds);
-
         if (eventsByIds.size === 0) {
-            return <div>Loading ...</div>;
+            return (
+                <div style={{ alignSelf: 'center' }}>
+                    <Spinner />
+                </div>
+            );
         }
-        // console.log(eventsByIds.get(params.id));
 
         return (
             <div className='flexbox-column'>

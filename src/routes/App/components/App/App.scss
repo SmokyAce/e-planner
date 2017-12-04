@@ -25,6 +25,7 @@
 .app-container {
     @include flexbox();
     flex: 1;
+    justify-content: center;
 }
 
 .flexbox-column {
