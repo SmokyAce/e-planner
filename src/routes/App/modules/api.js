@@ -53,20 +53,22 @@ const api = {
                 return firebaseDb.ref().update(updates);
             });
     },
-    removeEvent: eventId => {
-        return api
-            .removeEventTasks(eventId)
-            .then(() => {
-                const uid = auth.getUserUID().uid;
+    removeEvent: event => {
+        const uid = auth.getUserUID().uid;
 
-                const updates = {};
+        const updates = {};
 
-                updates[`/events/${eventId}`] = null;
-                updates[`/users/${uid}/events/${eventId}`] = null;
-
-                return firebaseDb.ref().update(updates);
-            })
-            .then(() => ({ success: true, id: eventId }))
+        updates[`/events/${event.id}`] = null;
+        updates[`/users/${uid}/events/${event.id}`] = null;
+        for (const taskId in event.tasks) {
+            if (event.tasks.val().hasOwnProperty(taskId)) {
+                updates[`/tasks/${taskId}`] = null;
+            }
+        }
+        return firebaseDb
+            .ref()
+            .update(updates)
+            .then(() => ({ success: true, id: event.id }))
             .catch(error => ({ error }));
     },
     fetchUserEvents: () => {
@@ -102,6 +104,43 @@ const api = {
                     events.response[event.id] = event;
                 });
                 return { response: events };
+            })
+            .catch(error => ({ error }));
+    },
+    fetchTasks: () => {
+        return api
+            .fetchUserEvents()
+            .then(eventsIds => {
+                if (eventsIds === null) return [];
+                const promises = [];
+
+                for (const id in eventsIds) {
+                    if (eventsIds.hasOwnProperty(id)) {
+                        promises.push(
+                            firebaseDb
+                                .ref('/tasks')
+                                .orderByChild('eventId')
+                                .equalTo(id)
+                                .once('value')
+                        );
+                    }
+                }
+                return Promise.all(promises);
+            })
+            .then(values => {
+                const tasks = { result: [], response: {} };
+
+                values.forEach(snapshot => {
+                    const eventTasks = snapshot.val();
+
+                    for (const taskId in eventTasks) {
+                        if (eventTasks.hasOwnProperty(taskId)) {
+                            tasks.result.push(taskId);
+                            tasks.response[taskId] = eventTasks[taskId];
+                        }
+                    }
+                });
+                return { response: tasks };
             })
             .catch(error => ({ error }));
     }

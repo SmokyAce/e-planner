@@ -1,7 +1,7 @@
 // utils
 import { channel, delay } from 'redux-saga';
 import { take, call, put, race, select, fork } from 'redux-saga/effects';
-import { pick, keys, isEqual } from 'lodash';
+import { pick } from 'lodash';
 // auth sagas
 import { logout } from '../../../store/middlewares/authSaga';
 // API
@@ -9,7 +9,8 @@ import api from './api';
 import firebaseTools, { firebaseAuth } from '../../../utils/firebaseTools';
 // selectors
 import { makeSelectLoggedIn } from '../../AppAuth/modules/selectors';
-import { makeSelectEventsListOfIds, selectRestored } from '../../App/modules/selectors';
+import { selectRestored } from '../../App/modules/selectors';
+import { makeSelectTasksIdsByEventId } from '../../AppEvent/modules/selectors';
 // actions
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { REHYDRATE } from 'redux-persist/constants';
@@ -18,7 +19,7 @@ import * as eventActions from './events';
 import * as userActions from './user';
 import * as syncActions from './sync';
 import * as connectionActions from './connection';
-// import * as taskActions from '../../AppEvent/modules/tasks';
+import * as taskActions from '../../AppEvent/modules/tasks';
 
 // /////////////////////
 // Events
@@ -38,7 +39,9 @@ function * addEvent(action) {
 function * removeEvent(action) {
     yield put(eventActions.removeEventRequest());
 
-    const response = yield call(api.removeEvent, action.payload);
+    const tasks = yield select(makeSelectTasksIdsByEventId(action.payload));
+
+    const response = yield call(api.removeEvent, { id: action.payload, tasks });
 
     if (!response.error) {
         yield put(eventActions.removeEventSuccess(response.id));
@@ -54,6 +57,19 @@ export function * fetchEvents() {
         yield put(eventActions.fetchEventSuccess(response));
     } else {
         yield put(eventActions.fetchEventFailure(error));
+    }
+}
+
+// /////////////////////
+// Tasks
+// /////////////////////
+export function * fetchTasks(events) {
+    const { response, error } = yield call(api.fetchTasks);
+
+    if (response) {
+        yield put(taskActions.fetchTasksSuccess(response));
+    } else {
+        yield put(taskActions.fetchTasksFailure(error));
     }
 }
 
@@ -150,17 +166,14 @@ export function * appSyncFlow() {
     try {
         yield fork(fetchUserData);
 
-        const fetchAction = yield take(userActions.type.FETCH_USER_DATA_SUCCESS);
-        // Take list of events ids from redux store and compare with events from user data
-        // if are not equals make fetch events from DB
-        const listOfEventsIds = yield select(makeSelectEventsListOfIds());
+        yield take(userActions.type.FETCH_USER_DATA_SUCCESS);
 
-        if (!isEqual(keys(fetchAction.payload.events).sort(), listOfEventsIds.toJS().sort())) {
-            yield put(eventActions.fetchEventRequest());
+        yield put(eventActions.fetchEventRequest());
 
-            yield call(fetchEvents);
-        }
+        // get events from DB
+        yield call(fetchEvents);
 
+        // get tasks from DB
         // yield call(fetchTasks);
 
         yield put(syncActions.finishSync());

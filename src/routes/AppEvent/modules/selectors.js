@@ -10,4 +10,9 @@ const makeSelectEventTaskList = eventId =>
         return appState.getIn(['events', 'byIds', eventId, 'tasks']);
     });
 
-export { makeSelectTaskListIds, makeSelectTaskEntries, makeSelectEventTaskList };
+const makeSelectTasksIdsByEventId = eventId =>
+    createSelector(selectApp, appState => {
+        return appState.getIn(['tasks', 'entries']).filter(task => task.eventId === eventId);
+    });
+
+export { makeSelectTaskListIds, makeSelectTaskEntries, makeSelectEventTaskList, makeSelectTasksIdsByEventId };
