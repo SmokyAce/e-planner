@@ -19,6 +19,7 @@ export default store => {
                     injectReducer('app.sidebar', require('./modules/sidebar').default);
                     injectReducer('app.user', require('./modules/user').default);
                     injectReducer('app.events', require('./modules/events').default);
+                    injectReducer('app.tasks', require('../AppEvent/modules/tasks').default);
 
                     next(null, AppContainer);
                 },

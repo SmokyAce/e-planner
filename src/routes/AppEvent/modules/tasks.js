@@ -30,7 +30,7 @@ export const types = {
 // Actions
 // ------------------------------------
 
-export const addTask = (values, dispatch, { eventId }) => {
+export const addTask = (values, eventId) => {
     const task = pick(values.toJS(), ['description', 'date']);
 
     task.id = firebaseDb
@@ -132,7 +132,9 @@ const TASKS_ACTION_HANDLERS = {
     [ADD_TASK]: (state, action) => {
         const { payload } = action;
 
-        return state.setIn(['entries', payload.id], payload).updateIn(['listOfIds'], list => list.push(payload.id));
+        return state
+            .setIn(['entries', payload.id], fromJS(payload))
+            .updateIn(['listOfIds'], list => list.push(payload.id));
     },
     [TOGGLE_TASK]: (state, action) => {
         return state.setIn(['entries', action.id], todo(state.getIn(['entries', action.id]), action));

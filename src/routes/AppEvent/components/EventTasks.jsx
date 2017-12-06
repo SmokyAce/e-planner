@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 // components
-import H2 from '../../../components/H2';
+// import H2 from '../../../components/H2';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TaskList from '../components/TaskList';
@@ -28,20 +28,20 @@ class EventTasks extends Component {
             position: 'fixed',
             bottom  : '5%'
         };
+        const eventId = eventEntry.get('id');
 
         console.log('EventTasks render!');
         return (
             <div className='flexbox-column'>
-                <H2 className='text-center'>
-                    <p>{eventEntry.get('name')}</p>
-                </H2>
-                <br />
-                <AddTask
-                    showComponent={this.state.showAddTask}
-                    eventId={eventEntry.get('id')}
-                    onSubmit={actions.addTask}
-                    locale={locale}
-                />
+                {this.state.showAddTask && (
+                    <AddTask
+                        onSubmit={values => {
+                            actions.addTask(values, eventId);
+                            this.handleOpen();
+                        }}
+                        locale={locale}
+                    />
+                )}
                 <TaskList taskIds={eventEntry.get('tasks')} taskEntries={taskEntries} />
                 <FloatingActionButton onClick={this.handleOpen} style={addTaskBtn}>
                     <ContentAdd />

@@ -174,7 +174,7 @@ export function * appSyncFlow() {
         yield call(fetchEvents);
 
         // get tasks from DB
-        // yield call(fetchTasks);
+        yield call(fetchTasks);
 
         yield put(syncActions.finishSync());
     } catch (error) {

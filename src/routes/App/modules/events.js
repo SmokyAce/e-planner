@@ -180,9 +180,9 @@ const EVENTS_ACTION_HANDLERS = {
             .setIn(['byIds', action.eventId, 'isChanged'], false);
     },
     [ADD_TASK]: (state, action) => {
-        return state.updateIn(['byIds', action.payload.eventId, 'tasks'], list => {
-            if (!list) list = List([]);
-            return list.push(action.payload.id);
+        return state.updateIn(['byIds', action.payload.eventId, 'tasks'], tasks => {
+            if (!tasks) tasks = Map({});
+            return tasks.set(action.payload.id, true);
         });
     },
     [COUNTER_INCREMENT]: (state, action) => {

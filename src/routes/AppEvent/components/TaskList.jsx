@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { List as imList, Map } from 'immutable';
+import { Map } from 'immutable';
 // components
 import { List, ListItem } from 'material-ui/List';
-import ActionInfo from 'material-ui/svg-icons/action/info';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import Subheader from 'material-ui/Subheader';
@@ -19,24 +19,27 @@ class TaskList extends Component {
             return <div>Create tasks to not miss a details</div>;
         }
 
+        const [...taskList] = taskIds.keys();
+
         return (
             <div>
                 <Paper zDepth={1} style={{ margin: '5px' }}>
                     <List>
                         <Subheader inset>Event task list</Subheader>
-                        {taskIds.map((item, index) => {
+                        {taskList.map((item, i) => {
                             const task = taskEntries.get(item);
 
                             if (!task) {
-                                return <div key={index}>I don't find task by id: {item}</div>;
+                                return <div key={i}>I don't find task by id: {item}</div>;
                             }
+
                             return (
                                 <ListItem
-                                    key={index}
+                                    key={i}
                                     leftAvatar={<Avatar icon={<DoneIcon />} />}
-                                    rightIcon={<ActionInfo />}
-                                    primaryText={task.description}
-                                    secondaryText='Jan 9, 2014'
+                                    rightIcon={<DeleteIcon />}
+                                    primaryText={task.get('description')}
+                                    secondaryText={task.get('date')}
                                 />
                             );
                         })}
@@ -49,7 +52,7 @@ class TaskList extends Component {
 }
 
 TaskList.propTypes = {
-    taskIds    : PropTypes.instanceOf(imList),
+    taskIds    : PropTypes.instanceOf(Map),
     taskEntries: PropTypes.instanceOf(Map)
 };
 

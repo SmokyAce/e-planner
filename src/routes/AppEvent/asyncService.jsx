@@ -141,8 +141,6 @@ export default (function A() {
     };
 
     return function B(component, props) {
-        console.log(props);
-
         return React.cloneElement(services[component], { ...props });
     };
 }());

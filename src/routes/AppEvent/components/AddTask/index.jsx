@@ -54,11 +54,9 @@ renderDateField.propTypes = {
 class AddTask extends Component {
     render() {
         const DateTimeFormat = global.Intl.DateTimeFormat;
-        const { showComponent, locale, handleSubmit, error, invalid } = this.props;
+        const { locale, handleSubmit, error, invalid } = this.props;
 
-        if (!showComponent) {
-            return null;
-        }
+        console.log('AddTask render!');
 
         return (
             <form onSubmit={handleSubmit}>
@@ -105,13 +103,11 @@ class AddTask extends Component {
 
 AddTask.propTypes = {
     // redux-form props
-    handleSubmit : PropTypes.func.isRequired,
-    error        : PropTypes.string,
-    invalid      : PropTypes.bool,
+    handleSubmit: PropTypes.func.isRequired,
+    error       : PropTypes.string,
+    invalid     : PropTypes.bool,
     // props
-    showComponent: PropTypes.bool,
-    locale       : PropTypes.string,
-    eventId      : PropTypes.string.isRequired
+    locale      : PropTypes.string
 };
 
 export default reduxForm({
