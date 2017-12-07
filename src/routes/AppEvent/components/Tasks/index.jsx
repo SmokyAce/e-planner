@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Map } from 'immutable';
+import { isEqual } from 'lodash';
 // components
-// import H2 from '../../../components/H2';
+import { FormattedMessage } from 'react-intl';
+import H2 from '../../../../components/H2';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import TaskList from '../components/TaskList';
-import AddTask from '../components/AddTask';
-import { isEqual } from 'lodash';
+import TaskList from '../TaskList';
+import AddTask from '../AddTask';
+import messages from './messages';
 
 class EventTasks extends Component {
     state = {
@@ -33,6 +35,9 @@ class EventTasks extends Component {
         console.log('EventTasks render!');
         return (
             <div className='flexbox-column'>
+                <H2 className='text-center'>
+                    <FormattedMessage {...messages.description} />
+                </H2>
                 {this.state.showAddTask && (
                     <AddTask
                         onSubmit={values => {

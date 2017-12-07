@@ -17,7 +17,7 @@ class TaskList extends Component {
 
         console.log('TaskList render!');
         if (!taskIds) {
-            return <div>Create tasks to not miss a details</div>;
+            return null;
         }
 
         const [...taskList] = taskIds.keys();

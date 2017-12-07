@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectLocale } from '../../../containers/LanguageProvider/selectors';
 import { makeSelectTaskEntries } from '../modules/selectors';
 import * as taskActions from '../modules/tasks';
-import EventTasks from '../components/EventTasks';
+import Tasks from '../components/Tasks';
 
 const mapStateToProps = state =>
     createStructuredSelector({
@@ -16,4 +16,4 @@ function mapDispatchToProps(dispatch) {
     return { actions: bindActionCreators(taskActions, dispatch) };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventTasks);
+export default connect(mapStateToProps, mapDispatchToProps)(Tasks);

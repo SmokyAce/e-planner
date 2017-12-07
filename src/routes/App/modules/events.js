@@ -182,7 +182,7 @@ const EVENTS_ACTION_HANDLERS = {
     },
     [ADD_TASK]: (state, action) => {
         return state.updateIn(['byIds', action.payload.eventId, 'tasks'], tasks => {
-            if (!tasks) tasks = Map({});
+            if (!tasks) tasks = fromJS({});
             return tasks.set(action.payload.id, true);
         });
     },
