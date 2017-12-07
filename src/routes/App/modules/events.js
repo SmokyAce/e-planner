@@ -1,4 +1,4 @@
-import { fromJS, List } from 'immutable';
+import { fromJS } from 'immutable';
 import { pick } from 'lodash';
 import { COUNTER_INCREMENT, COUNTER_DOUBLE_ASYNC } from '../../EventCounter/modules/counter';
 import { REHYDRATE } from 'redux-persist/constants';
@@ -27,6 +27,7 @@ const EVENT_SETTINGS_NAME_CHANGE = 'EVENT_SETTINGS_NAME_CHANGE';
 const SAVE_EVENT_SETTINGS = 'SAVE_EVENT_SETTINGS';
 
 const ADD_TASK = 'ADD_TASK';
+const REMOVE_TASK = 'REMOVE_TASK';
 
 export const types = {
     FETCH_EVENT_REQUEST,
@@ -184,6 +185,9 @@ const EVENTS_ACTION_HANDLERS = {
             if (!tasks) tasks = Map({});
             return tasks.set(action.payload.id, true);
         });
+    },
+    [REMOVE_TASK]: (state, action) => {
+        return state.deleteIn(['byIds', action.payload.eventId, 'tasks', action.payload.id]);
     },
     [COUNTER_INCREMENT]: (state, action) => {
         return state.setIn(['byIds', action.payload.eventId, 'counter'], action.payload.value + 1);

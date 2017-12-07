@@ -20,7 +20,7 @@ function * addTask(action) {
 function * removeTask(action) {
     yield put(taskActions.removeTaskRequest());
 
-    const response = yield call(api.removeEvent, action.payload);
+    const response = yield call(api.removeTask, action.payload);
 
     if (!response.error) {
         yield put(taskActions.removeTaskSuccess(response.id));

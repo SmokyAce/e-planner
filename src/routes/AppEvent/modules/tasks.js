@@ -60,6 +60,11 @@ export const addTaskFailure = (taskId, error) => ({
     error
 });
 
+export const removeTask = (id, eventId) => ({
+    type   : REMOVE_TASK,
+    payload: { id, eventId }
+});
+
 export const removeTaskRequest = () => ({
     type: REMOVE_TASK_REQUEST
 });
