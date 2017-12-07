@@ -12,7 +12,7 @@ const api = {
         return firebaseDb
             .ref()
             .update(updates)
-            .then(() => ({ success: true, id: payload.id }))
+            .then(() => ({ success: true, payload }))
             .catch(error => ({ error }));
     },
     removeTask: payload => {
@@ -24,7 +24,18 @@ const api = {
         return firebaseDb
             .ref()
             .update(updates)
-            .then(() => ({ success: true, id: payload }))
+            .then(() => ({ success: true, payload }))
+            .catch(error => ({ error }));
+    },
+    toggleTask: payload => {
+        const updates = {};
+
+        updates[`/tasks/${payload.id}/done`] = !payload.complete;
+
+        return firebaseDb
+            .ref()
+            .update(updates)
+            .then(() => ({ success: true, payload }))
             .catch(error => ({ error }));
     }
 };

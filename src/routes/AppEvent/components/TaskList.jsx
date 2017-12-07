@@ -4,16 +4,17 @@ import { Map } from 'immutable';
 // components
 import { List, ListItem } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
-import DeleteIcon from 'material-ui/svg-icons/action/delete';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
+// icons
 import DoneIcon from 'material-ui/svg-icons/action/done';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 class TaskList extends Component {
     render() {
-        const { taskIds, taskEntries, removeTask, eventId } = this.props;
+        const { taskIds, taskEntries, actions, eventId } = this.props;
 
         console.log('TaskList render!');
         if (!taskIds) {
@@ -22,9 +23,14 @@ class TaskList extends Component {
 
         const [...taskList] = taskIds.keys();
 
-        const onClick = id => {
+        const onClickRemoveTask = id => {
             return function A() {
-                return removeTask(id, eventId);
+                return actions.removeTask(id, eventId);
+            };
+        };
+        const onClickToggleTask = (id, complete) => {
+            return function A() {
+                return actions.toggleTask(id, complete);
             };
         };
 
@@ -40,14 +46,21 @@ class TaskList extends Component {
                         }
                         const description = task.get('description');
                         const date = !task.get('date') ? '' : new Date(task.get('date')).toDateString();
+                        const completed = task.get('completed');
 
                         return (
                             <ListItem
                                 key={i}
-                                leftAvatar={<Avatar icon={<DoneIcon />} />}
+                                leftAvatar={
+                                    <Avatar backgroundColor={completed ? 'mediumseagreen' : 'grey'}>
+                                        <IconButton onClick={onClickToggleTask(id, completed)}>
+                                            <DoneIcon color='white' />
+                                        </IconButton>
+                                    </Avatar>
+                                }
                                 rightIcon={
-                                    <IconButton style={{ padding: '0px' }} onClick={onClick(id)}>
-                                        <DeleteIcon color={'#757575'} />
+                                    <IconButton style={{ padding: '0px' }} onClick={onClickRemoveTask(id)}>
+                                        <DeleteIcon color={'grey'} />
                                     </IconButton>
                                 }
                                 primaryText={description}
@@ -65,7 +78,7 @@ class TaskList extends Component {
 TaskList.propTypes = {
     taskIds    : PropTypes.instanceOf(Map),
     taskEntries: PropTypes.instanceOf(Map),
-    removeTask : PropTypes.func.isRequired,
+    actions    : PropTypes.object.isRequired,
     eventId    : PropTypes.string.isRequired
 };
 

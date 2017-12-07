@@ -50,7 +50,7 @@ class EventTasks extends Component {
                 <TaskList
                     taskIds={eventEntry.get('tasks')}
                     taskEntries={taskEntries}
-                    removeTask={actions.removeTask}
+                    actions={actions}
                     eventId={eventId}
                 />
                 <FloatingActionButton onClick={this.handleOpen} style={addTaskBtn}>
