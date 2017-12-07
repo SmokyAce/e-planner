@@ -30,7 +30,7 @@ const api = {
     toggleTask: payload => {
         const updates = {};
 
-        updates[`/tasks/${payload.id}/done`] = !payload.complete;
+        updates[`/tasks/${payload.id}/completed`] = !payload.completed;
 
         return firebaseDb
             .ref()
