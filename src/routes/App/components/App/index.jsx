@@ -43,7 +43,7 @@ class App extends React.Component {
     render = () => {
         // console.log('App render!');
         const {
-            children, sidebar, loggedIn, eventsByIds, listOfEventsId, 
+            children, sidebar, loggedIn, eventsByIds, listOfEventsId,
             connection, onSetOpen, onSetDocked, onChangeSide, currentPage
         } = this.props;
 
