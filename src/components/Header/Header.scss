@@ -1,5 +1,12 @@
 .header-cont {
-    // position: fixed;
     width: 100%;
-    text-align: left
+    text-align: left;
+}
+
+.offline-status {
+    background: red;
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    box-shadow: 0 0 6px 0 rgba(0,0,0,0.5);
 }

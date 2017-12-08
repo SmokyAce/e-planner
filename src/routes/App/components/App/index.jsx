@@ -43,8 +43,8 @@ class App extends React.Component {
     render = () => {
         // console.log('App render!');
         const {
-            children, sidebar, loggedIn, eventsByIds, listOfEventsId,
-            formState, onSetOpen, onSetDocked, onChangeSide, currentPage
+            children, sidebar, loggedIn, eventsByIds, listOfEventsId, 
+            connection, onSetOpen, onSetDocked, onChangeSide, currentPage
         } = this.props;
 
         const content = (
@@ -52,7 +52,6 @@ class App extends React.Component {
                 style={{ width: sidebar.get('sidebarWidth') }}
                 eventsByIds={eventsByIds}
                 listOfEventsId={listOfEventsId}
-                formState={formState}
                 dockedSidebar={onSetDocked}
                 sidebarDocked={sidebar.get('sidebarDocked')}
                 pullRightSidebar={onChangeSide}
@@ -81,6 +80,7 @@ class App extends React.Component {
                     onMenuIconButtonTouchTap={() => onSetOpen(true)}
                     style={styles.header}
                     currentPage={currentPage}
+                    connection={connection}
                 />
                 <div className='app-container'>
                     {children}
@@ -96,7 +96,7 @@ App.propTypes = {
     loggedIn      : PropTypes.bool.isRequired,
     listOfEventsId: PropTypes.instanceOf(List),
     eventsByIds   : PropTypes.instanceOf(Map),
-    formState     : PropTypes.instanceOf(Map),
+    connection    : PropTypes.string.isRequired,
     onSetOpen     : PropTypes.func.isRequired,
     onSetDocked   : PropTypes.func.isRequired,
     onChangeSide  : PropTypes.func.isRequired,

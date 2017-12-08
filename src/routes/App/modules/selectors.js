@@ -42,9 +42,6 @@ const makeSelectEventById = eventId =>
 const makeSelectEventsListOfIds = () =>
     createSelector(selectApp, globalState => globalState.getIn(['events', 'listOfIds']));
 
-const makeSelectEventsFormState = () =>
-    createSelector(selectApp, globalState => globalState.getIn(['events', 'formState']));
-
 const makeSelectEventsSettingsFormState = () =>
     createSelector(selectApp, globalState => globalState.getIn(['events', 'settingsFormState']).toJS());
 
@@ -79,7 +76,6 @@ export {
     makeSelectEventsByIds,
     makeSelectEventsOptionsById,
     makeSelectEventsListOfIds,
-    makeSelectEventsFormState,
     makeSelectEventsSettingsFormState,
     makeSelectEventById,
     // form

@@ -12,7 +12,7 @@ export const changeFirebaseConnectionStatus = (status) => ({ type: APP_CONNECTIO
 // ------------------------------------
 // Reducer
 // ------------------------------------
-export default (state = 'Offline', action) => {
+export default (state = 'Online', action) => {
     return action.type === APP_CONNECTION_STATUS_CHANGE
         ? action.payload
         : state;

@@ -7,7 +7,7 @@ import {
     makeSelectSidebar,
     makeSelectEventsByIds,
     makeSelectEventsListOfIds,
-    makeSelectEventsFormState
+    makeSelectAppConnectionState
 } from '../modules/selectors';
 import { makeSelectLoggedIn } from '../../AppAuth/modules/selectors';
 import { getCurrenPageLocation } from '../../../store/reducers/location';
@@ -23,8 +23,8 @@ const mapStateToProps = (state) => createStructuredSelector({
     loggedIn      : makeSelectLoggedIn(),
     eventsByIds   : makeSelectEventsByIds(),
     listOfEventsId: makeSelectEventsListOfIds(),
-    formState     : makeSelectEventsFormState(),
-    currentPage   : getCurrenPageLocation
+    currentPage   : getCurrenPageLocation,
+    connection    : makeSelectAppConnectionState()
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

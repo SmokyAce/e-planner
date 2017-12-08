@@ -131,11 +131,8 @@ export const saveEventSettings = (eventId, newEventName) => ({
 });
 
 const initialState = fromJS({
-    listOfIds: [],
-    byIds    : {},
-    formState: {
-        eventName: ''
-    },
+    listOfIds        : [],
+    byIds            : {},
     settingsFormState: {
         name     : '',
         services : {},
@@ -166,9 +163,6 @@ const EVENTS_ACTION_HANDLERS = {
     },
     [TOGGLE_EVENT_SERVICE]: (state, action) => {
         return state.setIn(['byIds', action.eventId, 'services', action.service], action.checked);
-    },
-    [EVENT_NAME_CHANGE]: (state, action) => {
-        return state.setIn(['formState', 'eventName'], action.payload);
     },
     [EVENT_SETTINGS_NAME_CHANGE]: (state, action) => {
         return state
