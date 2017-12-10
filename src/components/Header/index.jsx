@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from '../FlatButton';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router';
+import Link from '../Link';
 import UserMenu from '../../containers/UserMenu';
 // styles
 import './Header.scss';

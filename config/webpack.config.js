@@ -6,9 +6,8 @@ const project = require('../project.config');
 const OfflinePlugin = require('offline-plugin');
 const debug = require('debug')('app:config:webpack');
 
-
 const inProject = path.resolve.bind(path, project.basePath);
-const inProjectSrc = (file) => inProject(project.srcDir, file);
+const inProjectSrc = file => inProject(project.srcDir, file);
 
 const __DEV__ = project.env === 'development';
 const __TEST__ = project.env === 'test';
@@ -18,25 +17,18 @@ debug('Creating configuration.');
 
 const config = {
     entry: {
-        normalize: [
-            inProjectSrc('normalize')
-        ],
-        main: [
-            inProjectSrc(project.main)
-        ]
+        normalize: [inProjectSrc('normalize')],
+        main     : [inProjectSrc(project.main)]
     },
     devtool: project.sourcemaps && __DEV__ ? 'source-map' : false,
     output : {
         path         : inProject(project.outDir),
-        filename     : __DEV__ ? '[name].js' : '[name].[chunkhash].js',
-        chunkFilename: __DEV__ ? '[name].chunk.js' : '[id].[chunkhash].chunk.js',
+        filename     : __DEV__ ? '[name].[hash].js' : '[name].[chunkhash].js',
+        chunkFilename: __DEV__ ? '[id].[chunkhash].chunk.js' : '[id].[chunkhash].chunk.js',
         publicPath   : project.publicPath
     },
     resolve: {
-        modules: [
-            inProject(project.srcDir),
-            'node_modules'
-        ],
+        modules   : [inProject(project.srcDir), 'node_modules'],
         extensions: ['*', '.js', '.jsx', '.json']
     },
     externals: project.externals,
@@ -44,12 +36,17 @@ const config = {
         rules: []
     },
     plugins: [
-        new webpack.DefinePlugin(Object.assign({
-            'process.env': { NODE_ENV: JSON.stringify(project.env) },
-            __DEV__,
-            __TEST__,
-            __PROD__
-        }, project.globals))
+        new webpack.DefinePlugin(
+            Object.assign(
+                {
+                    'process.env': { NODE_ENV: JSON.stringify(project.env) },
+                    __DEV__,
+                    __TEST__,
+                    __PROD__
+                },
+                project.globals
+            )
+        )
     ]
 };
 
@@ -58,40 +55,45 @@ const config = {
 config.module.rules.push({
     test   : /\.(js|jsx)$/,
     exclude: /node_modules/,
-    use    : [{
-        loader: 'babel-loader',
-        query : {
-            cacheDirectory: true,
-            plugins       : [
-                'babel-plugin-transform-class-properties',
-                'babel-plugin-syntax-dynamic-import',
-                [
-                    'babel-plugin-transform-runtime',
-                    {
-                        helpers    : true,
-                        polyfill   : false, // we polyfill needed features in src/normalize.js
-                        regenerator: true
-                    }
+    use    : [
+        {
+            loader: 'babel-loader',
+            query : {
+                cacheDirectory: true,
+                plugins       : [
+                    'babel-plugin-transform-class-properties',
+                    'babel-plugin-syntax-dynamic-import',
+                    [
+                        'babel-plugin-transform-runtime',
+                        {
+                            helpers    : true,
+                            polyfill   : false, // we polyfill needed features in src/normalize.js
+                            regenerator: true
+                        }
+                    ],
+                    [
+                        'babel-plugin-transform-object-rest-spread',
+                        {
+                            useBuiltIns: true // we polyfill Object.assign in src/normalize.js
+                        }
+                    ]
                 ],
-                [
-                    'babel-plugin-transform-object-rest-spread',
-                    {
-                        useBuiltIns: true // we polyfill Object.assign in src/normalize.js
-                    }
+                presets: [
+                    'babel-preset-react',
+                    [
+                        'babel-preset-env',
+                        {
+                            modules: false,
+                            targets: {
+                                ie9: true
+                            },
+                            uglify: true
+                        }
+                    ]
                 ]
-            ],
-            presets: [
-                'babel-preset-react',
-                ['babel-preset-env', {
-                    modules: false,
-                    targets: {
-                        ie9: true
-                    },
-                    uglify: true
-                }]
-            ]
+            }
         }
-    }]
+    ]
 });
 
 // Styles
@@ -99,7 +101,7 @@ config.module.rules.push({
 const extractStyles = new ExtractTextPlugin({
     filename : 'styles/[name].[contenthash].css',
     allChunks: true,
-    disable  : __DEV__
+    disable  : __TEST__
 });
 
 config.module.rules.push({
@@ -132,9 +134,7 @@ config.module.rules.push({
                 loader : 'sass-loader',
                 options: {
                     sourceMap   : project.sourcemaps,
-                    includePaths: [
-                        inProjectSrc('styles')
-                    ]
+                    includePaths: [inProjectSrc('styles')]
                 }
             }
         ]
@@ -150,18 +150,18 @@ config.module.rules.push({
     options: {
         limit: 8192
     }
-})
+});
 
 // Fonts
 // ------------------------------------
-;[
+[
     ['woff', 'application/font-woff'],
     ['woff2', 'application/font-woff2'],
     ['otf', 'font/opentype'],
     ['ttf', 'application/octet-stream'],
     ['eot', 'application/vnd.ms-fontobject'],
     ['svg', 'image/svg+xml']
-].forEach((font) => {
+].forEach(font => {
     const extension = font[0];
     const mimetype = font[1];
 
@@ -178,36 +178,38 @@ config.module.rules.push({
 
 // HTML Template
 // ------------------------------------
-config.plugins.push(new HtmlWebpackPlugin({
-    template: inProjectSrc('index.html'),
-    inject  : true,
-    minify  : {
-        collapseWhitespace: false
-    }
-}));
+config.plugins.push(
+    new HtmlWebpackPlugin({
+        template: inProjectSrc('index.html'),
+        inject  : true,
+        minify  : {
+            collapseWhitespace: false
+        }
+    })
+);
 
 // Offline mode
 // ------------------------------------
 
-if (__PROD__) {
+if (!__TEST__) {
     debug('Enable plugins for production (OfflinePlugin).');
-    config.plugins.push(new OfflinePlugin({
-        relativePaths: false,
-        publicPath   : '/',
-        // No need to cache .htaccess. See http://mxs.is/googmp,
-        // this is applied before any match in `caches` section
-        excludes     : ['.htaccess'],
-        caches       : {
-            main      : [':rest:'],
-            // All chunks marked as `additional`, loaded after main section
-            // and do not prevent SW to install. Change to `optional` if
-            // do not want them to be preloaded at all (cached only when first loaded)
-            additional: ['*.chunk.js']
-        },
-        // Removes warning for about `additional` section usage
-        safeToUseOptionalCaches: true,
-        AppCache               : false
-    })
+    config.plugins.push(
+        new OfflinePlugin({
+            relativePaths: false,
+            publicPath   : '/',
+            excludes     : ['.htaccess', '**/*.map'],
+            caches       : {
+                main      : [':rest:'],
+                additional: ['*.chunk.js']
+            },
+            externals              : ['/'],
+            safeToUseOptionalCaches: true,
+            ServiceWorker          : {
+                events             : true,
+                navigateFallbackURL: '/index.html'
+            },
+            autoUpdate: 1000 * 60 * 2
+        })
     );
 }
 
@@ -215,13 +217,8 @@ if (__PROD__) {
 // ------------------------------------
 if (__DEV__) {
     debug('Enable plugins for development (HotModuleReplacementPlugin, NamedModulesPlugin).');
-    config.entry.main.push(
-        `webpack-hot-middleware/client.js?path=${config.output.publicPath}__webpack_hmr`
-    );
-    config.plugins.push(
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NamedModulesPlugin()
-    );
+    config.entry.main.push(`webpack-hot-middleware/client.js?path=${config.output.publicPath}__webpack_hmr`);
+    config.plugins.push(new webpack.HotModuleReplacementPlugin(), new webpack.NamedModulesPlugin());
 }
 
 // Bundle Splitting

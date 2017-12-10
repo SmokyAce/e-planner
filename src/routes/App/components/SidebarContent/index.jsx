@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Map, List as imList } from 'immutable';
 // components
-import { Link } from 'react-router';
+import Link from '../../../../components/Link';
 import { FormattedMessage } from 'react-intl';
 import TitlePanel from '../../components/TitlePanel';
 import Toggle from 'material-ui/Toggle';

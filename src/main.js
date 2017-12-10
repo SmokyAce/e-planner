@@ -7,7 +7,6 @@ import Main from './containers/Main';
 // Import translations messages
 import { translationMessages } from './i18n';
 
-
 // ========================================================
 // Store Instantiation
 // ========================================================
@@ -17,11 +16,7 @@ const store = createStore();
 // Persist store
 // ========================================================
 // transform state func
-const transformImmutableState = createTransform(
-    state => state.toJS(),
-    state => fromJS(state),
-    config => config
-);
+const transformImmutableState = createTransform(state => state.toJS(), state => fromJS(state), config => config);
 
 // config
 const config = {
@@ -40,13 +35,10 @@ setTimeout(persistStore, 1000, store, config);
 // ========================================================
 const MOUNT_NODE = document.getElementById('root');
 
-let render = (messages) => {
+let render = messages => {
     const routes = require('./routes').default(store);
 
-    ReactDOM.render(
-        <Main store={store} routes={routes} messages={messages} />,
-        MOUNT_NODE
-    );
+    ReactDOM.render(<Main store={store} routes={routes} messages={messages} />, MOUNT_NODE);
 };
 
 // This code is excluded from production bundle
@@ -54,7 +46,7 @@ if (__DEV__) {
     if (module.hot) {
         // Development render functions
         const renderApp = render;
-        const renderError = (error) => {
+        const renderError = error => {
             const RedBox = require('redbox-react').default;
 
             ReactDOM.render(<RedBox error={error} />, MOUNT_NODE);
@@ -85,7 +77,6 @@ if (__DEV__) {
     }
 }
 
-
 // ========================================================
 // Go!
 // ========================================================
@@ -94,6 +85,11 @@ render(translationMessages);
 // Install ServiceWorker and AppCache in the end since
 // it's not most important operation and if main code fails,
 // we do not want it installed
-if (__PROD__) {
-    require('offline-plugin/runtime').install(); // eslint-disable-line global-require
+if (!__TEST__) {
+    const OfflinePluginRuntime = require('offline-plugin/runtime'); // eslint-disable-line global-require
+
+    OfflinePluginRuntime.install({
+        onUpdateReady: () => OfflinePluginRuntime.applyUpdate(),
+        onUpdated    : () => (window.swUpdate = true)
+    });
 }
