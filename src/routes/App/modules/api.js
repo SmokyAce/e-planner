@@ -61,7 +61,7 @@ const api = {
         updates[`/events/${event.id}`] = null;
         updates[`/users/${uid}/events/${event.id}`] = null;
         for (const taskId in event.tasks) {
-            if (event.tasks.val().hasOwnProperty(taskId)) {
+            if (event.tasks.hasOwnProperty(taskId)) {
                 updates[`/tasks/${taskId}`] = null;
             }
         }
