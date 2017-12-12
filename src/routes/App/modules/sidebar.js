@@ -35,7 +35,7 @@ export const onSetWidth = width => ({
 // The initial state of the App
 const initialState = fromJS({
     open     : false,
-    docked   : false,
+    docked   : true,
     pullRight: false,
     widht    : 256
 });
@@ -45,7 +45,7 @@ const APP_ACTION_HANDLERS = {
         return state.set('open', action.payload);
     },
     [SIDEBAR_DOCKED_SET]: (state, action) => {
-        return state.set('docked', !action.payload);
+        return state.set('docked', action.payload).set('open', false);
     },
     [SIDEBAR_PULL_RIGHT_SET]: (state, action) => {
         return state.set('pullRight', action.payload);

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { isEqual } from 'lodash';
 import { Map, List } from 'immutable';
 // components
 import Sidebar from 'react-sidebar';
@@ -30,7 +29,7 @@ const HOC = Component => {
             super(props);
 
             this.state = {
-                docked: props.docked
+                docked: !props.hide && props.docked 
             };
             this.onChangeSidebarDocked = this.onChangeSidebarDocked.bind(this);
         }
