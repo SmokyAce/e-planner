@@ -7,8 +7,6 @@ import Main from './containers/Main';
 // Import translations messages
 import { translationMessages } from './i18n';
 
-const key = Object.keys(localStorage).find(e => e.match(/app/));
-localStorage.removeItem(key);
 
 // ========================================================
 // Store Instantiation
