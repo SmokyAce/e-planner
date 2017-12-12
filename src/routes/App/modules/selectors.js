@@ -9,6 +9,12 @@ const selectForm = state => state.get('form');
 
 const selectRestored = state => state.get('restored');
 
+const selectBrowser = state => state.get('browser');
+
+const browserLessThanMedium = () => {
+    return createSelector(selectBrowser, browser => browser.lessThan.medium);
+};
+
 const makeSelectSidebar = () => createSelector(selectApp, globalState => globalState.get('sidebar'));
 
 const makeSelectSidebarDocked = () =>
@@ -78,6 +84,8 @@ export {
     makeSelectEventsListOfIds,
     makeSelectEventsSettingsFormState,
     makeSelectEventById,
+    // browser
+    browserLessThanMedium,
     // form
     makeSelectFormValues,
     makeSelectFormSyncErrors

@@ -8,16 +8,17 @@ import { updateLocation } from './reducers/location';
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import authSaga from './middlewares/authSaga';
+// enchancers
+import { responsiveStoreEnhancer } from 'redux-responsive';
 
-
-const stateTransformer = (state) => {
+const stateTransformer = state => {
     if (Iterable.isIterable(state)) return state.toJS();
     return state;
 };
 
 const logger = createLogger({
     stateTransformer,
-    collapsed: (getState, action) => (action.type.indexOf('redux-form') > 0)
+    collapsed: (getState, action) => action.type.indexOf('redux-form') > 0
 });
 const sagaMiddleware = createSagaMiddleware();
 
@@ -35,6 +36,7 @@ export default (initialState = {}) => {
     // ======================================================
     const enhancers = [
         // autoRehydrate()
+        responsiveStoreEnhancer
     ];
 
     let composeEnhancers = compose;

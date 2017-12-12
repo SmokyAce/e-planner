@@ -18,7 +18,6 @@ import './SidebarContent.scss';
 // intl
 import messages from './messages';
 
-
 // styles
 const styles = {
     sidebar: {
@@ -46,24 +45,31 @@ const styles = {
 
 class SidebarContent extends React.Component {
     shouldComponentUpdate = nextProps => {
-        return !this.props.listOfEventsId.equals(nextProps.listOfEventsId) ||
+        return (
+            !this.props.listOfEventsId.equals(nextProps.listOfEventsId) ||
             this.props.sidebarDocked !== nextProps.sidebarDocked ||
-            this.props.sidebarPullRight !== nextProps.sidebarPullRight;
+            this.props.sidebarDocked !== nextProps.sidebarDocked ||
+            this.props.sidebarPullRight !== nextProps.sidebarPullRight
+        );
     };
 
     render = () => {
         const {
-            listOfEventsId, eventsByIds, style,
-            dockedSidebar, sidebarDocked,
-            pullRightSidebar, sidebarPullRight,
-            openSidebar, sidebarOpened
+            listOfEventsId,
+            eventsByIds,
+            style,
+            dockedSidebar,
+            sidebarDocked,
+            pullRightSidebar,
+            sidebarPullRight,
+            openSidebar
         } = this.props;
         const sidebarStyle = style ? { ...styles.sidebar, ...style } : styles.sidebar;
         const nestedList = [];
 
-        const closeSidebar = () => (!sidebarDocked && openSidebar(sidebarOpened));
+        const closeSidebar = () => !sidebarDocked && openSidebar(false);
 
-        listOfEventsId.map((item) => {
+        listOfEventsId.map(item => {
             nestedList.push(
                 <ListItem
                     key={item}
@@ -73,14 +79,13 @@ class SidebarContent extends React.Component {
                             {eventsByIds.getIn([item, 'name'])}
                         </Link>
                     }
-                    onClick={closeSidebar}
+                    onClick={() => closeSidebar()}
                 />
             );
         });
 
-
         return (
-            <TitlePanel style={sidebarStyle}>
+            <TitlePanel style={sidebarStyle} onClick={() => closeSidebar()}>
                 <div style={styles.content} className='text-left'>
                     <List style={{ paddingTop: '0px' }}>
                         <ListItem
@@ -95,7 +100,7 @@ class SidebarContent extends React.Component {
                                     rightToggle={
                                         <Toggle
                                             toggled={sidebarDocked}
-                                            onToggle={() => dockedSidebar(sidebarDocked)}
+                                            onToggle={() => dockedSidebar()}
                                             thumbSwitchedStyle={styles.toggle_on}
                                             thumbStyle={styles.toggle_off}
                                         />
@@ -127,21 +132,20 @@ class SidebarContent extends React.Component {
                             primaryText={<FormattedMessage {...messages.guests_description} />}
                             leftIcon={<GuestsIcon />}
                             containerElement={<Link to={'/app/guests'} />}
-                            onClick={closeSidebar}
+                            onClick={() => closeSidebar()}
                         />
                         <ListItem
                             primaryText={<FormattedMessage {...messages.contractors_description} />}
                             leftIcon={<ContractorsIcon />}
                             containerElement={<Link to={'/app/contractors'} />}
-                            onClick={closeSidebar}
+                            onClick={() => closeSidebar()}
                         />
                     </List>
                 </div>
             </TitlePanel>
         );
-    }
+    };
 }
-
 
 SidebarContent.propTypes = {
     listOfEventsId  : PropTypes.instanceOf(imList),
@@ -151,7 +155,6 @@ SidebarContent.propTypes = {
     openSidebar     : PropTypes.func,
     sidebarDocked   : PropTypes.bool,
     sidebarPullRight: PropTypes.bool,
-    sidebarOpened   : PropTypes.bool,
     style           : PropTypes.object
 };
 

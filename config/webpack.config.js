@@ -191,7 +191,7 @@ config.plugins.push(
 // Offline mode
 // ------------------------------------
 
-if (!__TEST__) {
+if (__PROD__) {
     debug('Enable plugins for production (OfflinePlugin).');
     config.plugins.push(
         new OfflinePlugin({

@@ -3,10 +3,10 @@ import { location } from './location';
 import language from '../../containers/LanguageProvider/module';
 import { loadingBarReducer as loadingBar } from 'react-redux-loading-bar';
 import { reducer as form } from 'redux-form/immutable';
+import { responsiveStateReducer as browser } from 'redux-responsive';
 import restored from './persistor';
 
-
-export const makeRootReducer = (asyncReducers) => {
+export const makeRootReducer = asyncReducers => {
     const newAsyncReducers = {};
 
     for (const key in asyncReducers) {
@@ -19,13 +19,14 @@ export const makeRootReducer = (asyncReducers) => {
         loadingBar,
         form,
         restored,
+        browser,
         ...asyncReducers
     });
 };
 
 export default makeRootReducer;
 
-const combineAsyncReducers = (asyncReducers) => {
+const combineAsyncReducers = asyncReducers => {
     if (typeof asyncReducers !== 'object') return asyncReducers;
     const combineReducerObject = {};
 

@@ -1,39 +1,97 @@
-import React  from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { isEqual } from 'lodash';
+import { Map, List } from 'immutable';
 // components
 import Sidebar from 'react-sidebar';
+import SidebarContent from '../../components/SidebarContent';
 
 import './Sidebar.scss';
 
+const styles = {
+    root: {
+        position: 'fixed'
+    },
+    sidebar: {
+        zIndex         : '1101',
+        backgroundColor: '#f2f2f2'
+    },
+    content: {
+        overflowY      : 'auto',
+        backgroundColor: '#f2f2f2',
+        display        : 'flex',
+        flexDirection  : 'column'
+    }
+};
 
-const HOC = (Component) => {
+const HOC = Component => {
     class SidebarHOC extends React.Component {
-        componentWillMount = () => {
-            const mql = window.matchMedia('(min-width: 800px)');
+        constructor(props) {
+            super(props);
 
-            mql.addListener(this.mediaQueryChanged);
-            this.setState({ mql, sidebarDocked: mql.matches });
+            this.state = {
+                docked: props.docked
+            };
+            this.onChangeSidebarDocked = this.onChangeSidebarDocked.bind(this);
+        }
+
+        componentWillReceiveProps = nextProps => {
+            if (nextProps.hide === this.props.hide) return;
+
+            const { hide, docked } = nextProps;
+
+            if (hide) this.setState({ docked: false });
+            if (!hide && docked) this.setState({ docked: true });
         };
 
-        shouldComponentUpdate = (nextProps) => (!isEqual(nextProps, this.props));
-
-        componentWillUnmount = () => {
-            this.state.mql.removeListener(this.mediaQueryChanged);
-        };
-
-        mediaQueryChanged = () => {
-            this.props.onSetDocked(!this.state.mql.matches);
-        };
+        onChangeSidebarDocked() {
+            this.props.onSetDocked(!this.state.docked);
+            this.setState({ docked: !this.state.docked });
+        }
 
         render() {
             // console.log('Sidebar render!');
-            return <Component {...this.props} />;
+            const { eventsByIds, listOfEventsId, widht, pullRight } = this.props;
+            const { onChangeSide, onSetOpen } = this.props;
+
+            const content = (
+                <SidebarContent
+                    style={{ width: `${widht}px` }}
+                    eventsByIds={eventsByIds}
+                    listOfEventsId={listOfEventsId}
+                    dockedSidebar={this.onChangeSidebarDocked}
+                    sidebarDocked={this.state.docked}
+                    pullRightSidebar={onChangeSide}
+                    sidebarPullRight={pullRight}
+                    openSidebar={onSetOpen}
+                />
+            );
+
+            const props = {
+                ...this.props,
+                sidebar         : content,
+                sidebarClassName: 'custom-sidebar-class',
+                docked          : this.state.docked,
+                styles
+            };
+
+            return <Component {...props} />;
         }
     }
+
     SidebarHOC.propTypes = {
-        onSetDocked: PropTypes.func.isRequired
+        onChangeSide  : PropTypes.func,
+        onSetDocked   : PropTypes.func,
+        onSetOpen     : PropTypes.func,
+        docked        : PropTypes.bool,
+        open          : PropTypes.bool,
+        pullRight     : PropTypes.bool,
+        hide          : PropTypes.bool,
+        widht         : PropTypes.number,
+        listOfEventsId: PropTypes.instanceOf(List),
+        eventsByIds   : PropTypes.instanceOf(Map)
     };
+
     return SidebarHOC;
 };
 

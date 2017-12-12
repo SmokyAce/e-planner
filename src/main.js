@@ -7,6 +7,9 @@ import Main from './containers/Main';
 // Import translations messages
 import { translationMessages } from './i18n';
 
+const key = Object.keys(localStorage).find(e => e.match(/app/));
+localStorage.removeItem(key);
+
 // ========================================================
 // Store Instantiation
 // ========================================================
@@ -85,7 +88,7 @@ render(translationMessages);
 // Install ServiceWorker and AppCache in the end since
 // it's not most important operation and if main code fails,
 // we do not want it installed
-if (!__TEST__) {
+if (__PROD__) {
     const OfflinePluginRuntime = require('offline-plugin/runtime'); // eslint-disable-line global-require
 
     OfflinePluginRuntime.install({

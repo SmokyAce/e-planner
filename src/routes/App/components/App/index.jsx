@@ -4,12 +4,10 @@ import { Map, List } from 'immutable';
 import { isEqual } from 'lodash';
 // components
 import Sidebar from '../Sidebar';
-import SidebarContent from '../../components/SidebarContent';
 import Header from '../../../../components/Header';
 import { ImmutableLoadingBar as LoadingBar } from 'react-redux-loading-bar';
 // style
 import './App.scss';
-
 
 const styles = {
     root: {
@@ -38,38 +36,25 @@ class App extends React.Component {
         this.props.startSync();
     }
 
-    shouldComponentUpdate = (nextState) => (!isEqual(nextState, this.props));
+    shouldComponentUpdate = (nextProps, nextState) =>
+        !isEqual(nextProps, this.props) || !isEqual(nextState, this.state);
 
     render = () => {
         // console.log('App render!');
-        const {
-            children, sidebar, loggedIn, eventsByIds, listOfEventsId,
-            connection, onSetOpen, onSetDocked, onChangeSide, currentPage
-        } = this.props;
-
-        const content = (
-            <SidebarContent
-                style={{ width: sidebar.get('sidebarWidth') }}
-                eventsByIds={eventsByIds}
-                listOfEventsId={listOfEventsId}
-                dockedSidebar={onSetDocked}
-                sidebarDocked={sidebar.get('sidebarDocked')}
-                pullRightSidebar={onChangeSide}
-                sidebarPullRight={sidebar.get('pullRight')}
-                openSidebar={onSetOpen}
-                sidebarOpened={sidebar.get('open')}
-            />
-        );
+        const { children, loggedIn, eventsByIds, listOfEventsId, connection, currentPage, sidebar } = this.props;
+        const { onSetDocked, onChangeSide, onSetOpen, browserLessThanMedium } = this.props;
 
         const sidebarProps = {
-            sidebar         : content,
-            sidebarClassName: 'custom-sidebar-class',
-            docked          : sidebar.get('sidebarDocked'),
-            open            : sidebar.get('sidebarOpen'),
-            pullRight       : sidebar.get('pullRight'),
-            onSetOpen,
+            hide     : browserLessThanMedium,
+            docked   : sidebar.get('docked'),
+            pullRight: sidebar.get('pullRight'),
+            open     : sidebar.get('open'),
+            widht    : sidebar.get('widht'),
             onSetDocked,
-            styles
+            onChangeSide,
+            onSetOpen,
+            eventsByIds,
+            listOfEventsId
         };
 
         return (
@@ -77,32 +62,30 @@ class App extends React.Component {
                 <LoadingBar style={styles.loadingBar} />
                 <Header
                     loggedIn={loggedIn}
-                    onMenuIconButtonTouchTap={() => onSetOpen(true)}
+                    onMenuIconButtonTouchTap={() => onSetOpen(!sidebarProps.open)}
                     style={styles.header}
                     currentPage={currentPage}
                     connection={connection}
                 />
-                <div className='app-container'>
-                    {children}
-                </div>
+                <div className='app-container'>{children}</div>
             </Sidebar>
         );
-    }
+    };
 }
 
 App.propTypes = {
-    children      : PropTypes.element,
-    sidebar       : PropTypes.instanceOf(Map).isRequired,
-    loggedIn      : PropTypes.bool.isRequired,
-    listOfEventsId: PropTypes.instanceOf(List),
-    eventsByIds   : PropTypes.instanceOf(Map),
-    connection    : PropTypes.string.isRequired,
-    onSetOpen     : PropTypes.func.isRequired,
-    onSetDocked   : PropTypes.func.isRequired,
-    onChangeSide  : PropTypes.func.isRequired,
-    startSync     : PropTypes.func.isRequired,
-    currentPage   : PropTypes.string.isRequired
+    children             : PropTypes.element,
+    loggedIn             : PropTypes.bool.isRequired,
+    listOfEventsId       : PropTypes.instanceOf(List),
+    eventsByIds          : PropTypes.instanceOf(Map),
+    connection           : PropTypes.string.isRequired,
+    startSync            : PropTypes.func.isRequired,
+    currentPage          : PropTypes.string.isRequired,
+    browserLessThanMedium: PropTypes.bool,
+    sidebar              : PropTypes.instanceOf(Map),
+    onSetDocked          : PropTypes.func,
+    onChangeSide         : PropTypes.func,
+    onSetOpen            : PropTypes.func
 };
 
 export default App;
-
