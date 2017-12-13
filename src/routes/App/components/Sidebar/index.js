@@ -49,7 +49,7 @@ const HOC = Component => {
         }
 
         render() {
-            // console.log('Sidebar render!');
+            console.log('Sidebar render!');
             const { eventsByIds, listOfEventsId, widht, pullRight } = this.props;
             const { onChangeSide, onSetOpen } = this.props;
 

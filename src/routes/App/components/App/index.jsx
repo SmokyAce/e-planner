@@ -36,20 +36,28 @@ class App extends React.Component {
         this.props.startSync();
     }
 
-    shouldComponentUpdate = (nextProps, nextState) =>
-        !isEqual(nextProps, this.props) || !isEqual(nextState, this.state);
+    shouldComponentUpdate = (nextProps, nextState) => {
+        console.log(isEqual(nextProps, this.props));
+        if (!isEqual(nextProps, this.props)) {
+            console.log(nextProps);
+            console.log(this.props);
+        }
+        return !isEqual(nextProps, this.props);
+    };
 
     render = () => {
-        // console.log('App render!');
-        const { children, loggedIn, eventsByIds, listOfEventsId, connection, currentPage, sidebar } = this.props;
+        console.log('App render!');
+        const { children, loggedIn, eventsByIds, listOfEventsId, connection, currentPage } = this.props;
         const { onSetDocked, onChangeSide, onSetOpen, browserLessThanMedium } = this.props;
+
+        const sidebar = this.props.sidebar.toJS();
 
         const sidebarProps = {
             hide     : browserLessThanMedium,
-            docked   : sidebar.get('docked'),
-            pullRight: sidebar.get('pullRight'),
-            open     : sidebar.get('open'),
-            widht    : sidebar.get('widht'),
+            docked   : sidebar.docked,
+            pullRight: sidebar.pullRight,
+            open     : sidebar.open,
+            widht    : sidebar.widht,
             onSetDocked,
             onChangeSide,
             onSetOpen,
@@ -62,7 +70,7 @@ class App extends React.Component {
                 <LoadingBar style={styles.loadingBar} />
                 <Header
                     loggedIn={loggedIn}
-                    onMenuIconButtonTouchTap={() => onSetOpen(!sidebarProps.open)}
+                    onMenuIconButtonTouchTap={() => !sidebar.docked && onSetOpen(!sidebarProps.open)}
                     style={styles.header}
                     currentPage={currentPage}
                     connection={connection}
