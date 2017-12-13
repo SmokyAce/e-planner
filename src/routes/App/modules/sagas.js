@@ -106,7 +106,6 @@ export function * fetchUserData() {
     }
 
     if (response === null) {
-        console.log('setUserData', response);
         userInfo = pick(firebaseAuth.currentUser.toJSON(), [
             'uid',
             'email',

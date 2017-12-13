@@ -16,7 +16,7 @@ class TaskList extends Component {
     render() {
         const { taskIds, taskEntries, actions, eventId } = this.props;
 
-        console.log('TaskList render!');
+        __DEV__ && console.log('TaskList render!');
         if (!taskIds) {
             return null;
         }

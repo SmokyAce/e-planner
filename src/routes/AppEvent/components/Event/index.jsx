@@ -76,7 +76,7 @@ class AppEvent extends React.Component {
     };
 
     render() {
-        console.log('AppEvent render!');
+        __DEV__ && console.log('AppEvent render!');
         const { params, eventsByIds } = this.props;
         const { services, slideIndex } = this.state;
 

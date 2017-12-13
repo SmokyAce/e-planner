@@ -31,7 +31,7 @@ class AppNavPanel extends React.Component {
     shouldComponentUpdate = (nextProps, nextState) => !isEqual(nextProps, this.props);
 
     render() {
-        console.log('AppNavPanel render');
+        __DEV__ && console.log('AppNavPanel render');
 
         const { onChange, eventId, services, value } = this.props;
 

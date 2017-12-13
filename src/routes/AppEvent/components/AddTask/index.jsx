@@ -56,7 +56,7 @@ class AddTask extends Component {
         const DateTimeFormat = global.Intl.DateTimeFormat;
         const { locale, handleSubmit, error, invalid } = this.props;
 
-        console.log('AddTask render!');
+        __DEV__ && console.log('AddTask render!');
 
         return (
             <form onSubmit={handleSubmit}>

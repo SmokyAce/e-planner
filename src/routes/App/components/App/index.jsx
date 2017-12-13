@@ -36,17 +36,10 @@ class App extends React.Component {
         this.props.startSync();
     }
 
-    shouldComponentUpdate = (nextProps, nextState) => {
-        console.log(isEqual(nextProps, this.props));
-        if (!isEqual(nextProps, this.props)) {
-            console.log(nextProps);
-            console.log(this.props);
-        }
-        return !isEqual(nextProps, this.props);
-    };
+    shouldComponentUpdate = nextProps => !isEqual(nextProps, this.props);
 
     render = () => {
-        console.log('App render!');
+        __DEV__ && console.log('App render!');
         const { children, loggedIn, eventsByIds, listOfEventsId, connection, currentPage } = this.props;
         const { onSetDocked, onChangeSide, onSetOpen, browserLessThanMedium } = this.props;
 

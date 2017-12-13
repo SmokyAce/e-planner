@@ -32,7 +32,7 @@ class EventTasks extends Component {
         };
         const eventId = eventEntry.get('id');
 
-        console.log('EventTasks render!');
+        __DEV__ && console.log('EventTasks render!');
         return (
             <div className='flexbox-column'>
                 <H2 className='text-center'>

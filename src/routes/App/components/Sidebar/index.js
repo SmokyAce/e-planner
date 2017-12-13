@@ -29,7 +29,7 @@ const HOC = Component => {
             super(props);
 
             this.state = {
-                docked: !props.hide && props.docked 
+                docked: !props.hide && props.docked
             };
             this.onChangeSidebarDocked = this.onChangeSidebarDocked.bind(this);
         }
@@ -49,7 +49,7 @@ const HOC = Component => {
         }
 
         render() {
-            console.log('Sidebar render!');
+            __DEV__ && console.log('Sidebar render!');
             const { eventsByIds, listOfEventsId, widht, pullRight } = this.props;
             const { onChangeSide, onSetOpen } = this.props;
 
