@@ -7,7 +7,7 @@ export default defineMessages({
     },
     plannedDate: {
         id            : 'app.event.tasks.task-planned-date',
-        defaultMessage: 'Planned date'
+        defaultMessage: 'Date'
     },
     save: {
         id            : 'app.event.tasks.task-btn-save',

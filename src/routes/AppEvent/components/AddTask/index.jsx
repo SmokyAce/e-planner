@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 // components
 import { Field, reduxForm } from 'redux-form/immutable';
@@ -16,7 +17,7 @@ import messages from './messages';
 const styles = {
     paper: {
         display: 'flex',
-        padding: '10px 15px 2px 15px',
+        padding: '8px 15px 6px 15px',
         margin : '5px 5px 0 5px'
     }
 };
@@ -52,6 +53,12 @@ renderDateField.propTypes = {
 };
 
 class AddTask extends Component {
+    componentDidMount() {
+        ReactDOM.findDOMNode(this.description)
+            .getElementsByTagName('input')[0]
+            .focus();
+    }
+
     render() {
         const DateTimeFormat = global.Intl.DateTimeFormat;
         const { locale, handleSubmit, error, invalid } = this.props;
@@ -65,6 +72,9 @@ class AddTask extends Component {
                         name='description'
                         component={renderTextField}
                         hintText={<FormattedMessage {...messages.description} />}
+                        ref={input => {
+                            this.description = input;
+                        }}
                     />
                     <Field
                         name='date'
@@ -73,13 +83,7 @@ class AddTask extends Component {
                         locale={locale}
                         autoOk
                         hintText={<FormattedMessage {...messages.plannedDate} />}
-                        formatDate={
-                            new DateTimeFormat(locale, {
-                                day  : 'numeric',
-                                month: 'long',
-                                year : 'numeric'
-                            }).format
-                        }
+                        formatDate={new DateTimeFormat(locale).format}
                         style={{ marginLeft: '10px' }}
                     />
                     <IconButton
