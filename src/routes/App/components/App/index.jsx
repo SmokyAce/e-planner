@@ -63,7 +63,7 @@ class App extends React.Component {
                 <LoadingBar style={styles.loadingBar} />
                 <Header
                     loggedIn={loggedIn}
-                    onMenuIconButtonTouchTap={() => !sidebar.docked && onSetOpen(!sidebarProps.open)}
+                    onMenuIconButtonTouchTap={() => onSetOpen(!sidebar.open)}
                     style={styles.header}
                     currentPage={currentPage}
                     connection={connection}
