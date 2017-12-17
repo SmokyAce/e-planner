@@ -45,12 +45,10 @@ class App extends React.Component {
 
         const sidebar = this.props.sidebar.toJS();
 
+        sidebar.hide = browserLessThanMedium;
+
         const sidebarProps = {
-            hide     : browserLessThanMedium,
-            docked   : sidebar.docked,
-            pullRight: sidebar.pullRight,
-            open     : sidebar.open,
-            widht    : sidebar.widht,
+            ...sidebar,
             onSetDocked,
             onChangeSide,
             onSetOpen,

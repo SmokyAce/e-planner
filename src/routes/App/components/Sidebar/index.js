@@ -20,6 +20,9 @@ const styles = {
         backgroundColor: '#f2f2f2',
         display        : 'flex',
         flexDirection  : 'column'
+    },
+    sidebarContent: {
+        width: '256px'
     }
 };
 
@@ -50,12 +53,14 @@ const HOC = Component => {
 
         render() {
             __DEV__ && console.log('Sidebar render!');
-            const { eventsByIds, listOfEventsId, widht, pullRight } = this.props;
+            const { eventsByIds, listOfEventsId, pullRight, width } = this.props;
             const { onChangeSide, onSetOpen } = this.props;
+
+            if (width !== 256) styles.sidebarContent.width = `${width}px`;
 
             const content = (
                 <SidebarContent
-                    style={{ width: `${widht}px` }}
+                    style={styles.sidebarContent}
                     eventsByIds={eventsByIds}
                     listOfEventsId={listOfEventsId}
                     dockedSidebar={this.onChangeSidebarDocked}
@@ -82,11 +87,11 @@ const HOC = Component => {
         onChangeSide  : PropTypes.func,
         onSetDocked   : PropTypes.func,
         onSetOpen     : PropTypes.func,
-        docked        : PropTypes.bool,
-        open          : PropTypes.bool,
+        width         : PropTypes.number,
         pullRight     : PropTypes.bool,
         hide          : PropTypes.bool,
-        widht         : PropTypes.number,
+        docked        : PropTypes.bool,
+        open          : PropTypes.bool,
         listOfEventsId: PropTypes.instanceOf(List),
         eventsByIds   : PropTypes.instanceOf(Map)
     };

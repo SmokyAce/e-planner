@@ -21,7 +21,6 @@ import messages from './messages';
 // styles
 const styles = {
     sidebar: {
-        width    : 256,
         height   : '100%',
         textAlign: 'left'
     },
@@ -31,9 +30,6 @@ const styles = {
         color         : '#757575',
         paddingLeft   : '5px',
         textDecoration: 'none'
-    },
-    content: {
-        padding: '3px'
     },
     toggle_on: {
         backgroundImage: 'url(/img/docked_off.png)'
@@ -47,7 +43,6 @@ class SidebarContent extends React.Component {
     shouldComponentUpdate = nextProps => {
         return (
             !this.props.listOfEventsId.equals(nextProps.listOfEventsId) ||
-            this.props.sidebarDocked !== nextProps.sidebarDocked ||
             this.props.sidebarDocked !== nextProps.sidebarDocked ||
             this.props.sidebarPullRight !== nextProps.sidebarPullRight
         );
@@ -85,64 +80,62 @@ class SidebarContent extends React.Component {
         });
 
         return (
-            <TitlePanel style={sidebarStyle} onClick={() => closeSidebar()}>
-                <div style={styles.content} className='text-left'>
-                    <List style={{ paddingTop: '0px' }}>
-                        <ListItem
-                            primaryText={<FormattedMessage {...messages.sidebar_description} />}
-                            leftIcon={<SidebarIcon />}
-                            primaryTogglesNestedList
-                            nestedListStyle={{ fontWeight: 'inherit' }}
-                            nestedItems={[
-                                <ListItem
-                                    key={1}
-                                    primaryText={<FormattedMessage {...messages.sidebar_docked} />}
-                                    rightToggle={
-                                        <Toggle
-                                            toggled={sidebarDocked}
-                                            onToggle={() => dockedSidebar()}
-                                            thumbSwitchedStyle={styles.toggle_on}
-                                            thumbStyle={styles.toggle_off}
-                                        />
-                                    }
-                                />,
-                                <ListItem
-                                    key={2}
-                                    primaryText={<FormattedMessage {...messages.sidebar_pullRight} />}
-                                    rightToggle={
-                                        <Toggle
-                                            toggled={sidebarPullRight}
-                                            onToggle={() => pullRightSidebar(!sidebarPullRight)}
-                                        />
-                                    }
-                                />
-                            ]}
-                        />
-
-                        <Divider />
-                        <ListItem
-                            primaryText={<FormattedMessage {...messages.events_description} />}
-                            initiallyOpen
-                            leftIcon={<EventIcon />}
-                            primaryTogglesNestedList
-                            nestedItems={nestedList}
-                        />
-                        <Divider />
-                        <ListItem
-                            primaryText={<FormattedMessage {...messages.guests_description} />}
-                            leftIcon={<GuestsIcon />}
-                            containerElement={<Link to={'/app/guests'} />}
-                            onClick={() => closeSidebar()}
-                        />
-                        <ListItem
-                            primaryText={<FormattedMessage {...messages.contractors_description} />}
-                            leftIcon={<ContractorsIcon />}
-                            containerElement={<Link to={'/app/contractors'} />}
-                            onClick={() => closeSidebar()}
-                        />
-                    </List>
-                </div>
-            </TitlePanel>
+            <div style={sidebarStyle}>
+                <TitlePanel onClick={() => closeSidebar()} />
+                <List style={{ paddingTop: '0px' }}>
+                    <ListItem
+                        primaryText={<FormattedMessage {...messages.sidebar_description} />}
+                        leftIcon={<SidebarIcon />}
+                        primaryTogglesNestedList
+                        nestedListStyle={{ fontWeight: 'inherit' }}
+                        nestedItems={[
+                            <ListItem
+                                key={1}
+                                primaryText={<FormattedMessage {...messages.sidebar_docked} />}
+                                rightToggle={
+                                    <Toggle
+                                        toggled={sidebarDocked}
+                                        onToggle={() => dockedSidebar()}
+                                        thumbSwitchedStyle={styles.toggle_on}
+                                        thumbStyle={styles.toggle_off}
+                                    />
+                                }
+                            />,
+                            <ListItem
+                                key={2}
+                                primaryText={<FormattedMessage {...messages.sidebar_pullRight} />}
+                                rightToggle={
+                                    <Toggle
+                                        toggled={sidebarPullRight}
+                                        onToggle={() => pullRightSidebar(!sidebarPullRight)}
+                                    />
+                                }
+                            />
+                        ]}
+                    />
+                    <Divider />
+                    <ListItem
+                        primaryText={<FormattedMessage {...messages.events_description} />}
+                        initiallyOpen
+                        leftIcon={<EventIcon />}
+                        primaryTogglesNestedList
+                        nestedItems={nestedList}
+                    />
+                    <Divider />
+                    <ListItem
+                        primaryText={<FormattedMessage {...messages.guests_description} />}
+                        leftIcon={<GuestsIcon />}
+                        containerElement={<Link to={'/app/guests'} />}
+                        onClick={() => closeSidebar()}
+                    />
+                    <ListItem
+                        primaryText={<FormattedMessage {...messages.contractors_description} />}
+                        leftIcon={<ContractorsIcon />}
+                        containerElement={<Link to={'/app/contractors'} />}
+                        onClick={() => closeSidebar()}
+                    />
+                </List>
+            </div>
         );
     };
 }

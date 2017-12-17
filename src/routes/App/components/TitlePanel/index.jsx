@@ -7,26 +7,21 @@ import AppBar from 'material-ui/AppBar';
 // intl
 import messages from './messages';
 
-const TitlePanel = props => {
-    return (
-        <div style={props.style}>
-            <AppBar
-                title={
-                    <Link to='/app' style={{ color: '#fff' }} onClick={() => props.onClick()}>
-                        <FormattedMessage {...messages.titlePanel} />
-                    </Link>
-                }
-                showMenuIconButton={false}
-            />
-            {props.children}
-        </div>
-    );
-};
+const TitlePanel = props => (
+    <AppBar
+        title={
+            <Link to='/app' style={{ color: '#fff' }} onClick={() => props.onClick()}>
+                <FormattedMessage {...messages.titlePanel} />
+            </Link>
+        }
+        titleStyle={props.style}
+        showMenuIconButton={false}
+    />
+);
 
 TitlePanel.propTypes = {
-    children: PropTypes.object.isRequired,
-    style   : PropTypes.object,
-    onClick : PropTypes.func
+    style  : PropTypes.object,
+    onClick: PropTypes.func
 };
 
 export default TitlePanel;
