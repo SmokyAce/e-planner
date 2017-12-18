@@ -47,17 +47,20 @@ class SignUp extends React.Component {
                     name='fullName'
                     component={renderTextField}
                     label={<FormattedMessage {...messages.full_name} />}
+                    fullWidth
                 /><br />
                 <Field
                     name='email'
                     component={renderTextField}
                     label={<FormattedMessage {...messages.email} />}
+                    fullWidth
                 /><br />
                 <Field
                     name='password'
                     type='password'
                     component={renderTextField}
                     label={<FormattedMessage {...messages.pwd} />}
+                    fullWidth
                 /><br /><br />
                 <RaisedButton
                     type='submit'

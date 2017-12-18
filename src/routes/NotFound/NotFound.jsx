@@ -1,10 +1,9 @@
 import React from 'react';
 
-
 export const NotFound = () => {
     return (
-        <div>
-            <img src="/img/404.gif"/>
+        <div style={{ textAlign: 'center' }}>
+            <img src='/img/404.gif' />
         </div>
     );
 };

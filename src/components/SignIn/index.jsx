@@ -47,12 +47,14 @@ class SignIn extends React.Component {
                     name='email'
                     component={renderTextField}
                     label={<FormattedMessage {...messages.email} />}
+                    fullWidth
                 /><br />
                 <Field
                     name='password'
                     type='password'
                     component={renderTextField}
                     label={<FormattedMessage {...messages.pwd} />}
+                    fullWidth
                 /><br /><br />
                 <RaisedButton
                     type='submit'

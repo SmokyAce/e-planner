@@ -14,7 +14,7 @@ export default defineMessages({
         id            : 'app.email',
         defaultMessage: 'Email'
     },
-    update_btn: {
+    updateBtn: {
         id            : 'app.profile.save-btn',
         defaultMessage: 'Save'
     },

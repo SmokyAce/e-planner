@@ -12,7 +12,6 @@ const ReduxFormTextField = ({ input, label, meta: { touched, error }, formattedE
         {...input}
         {...custom}
         style={style}
-        fullWidth
     />
 );
 
