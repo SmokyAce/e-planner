@@ -15,7 +15,7 @@ const H2 = ({ children, style, className }) => {
 };
 
 H2.propTypes = {
-    children : PropTypes.element,
+    children : PropTypes.node,
     style    : PropTypes.object,
     className: PropTypes.string
 };

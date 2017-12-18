@@ -37,7 +37,7 @@ const initialState = fromJS({
     open     : false,
     docked   : true,
     pullRight: false,
-    widht    : 256
+    width    : 256
 });
 
 const APP_ACTION_HANDLERS = {
@@ -51,7 +51,7 @@ const APP_ACTION_HANDLERS = {
         return state.set('pullRight', action.payload);
     },
     [SIDEBAR_WIDTH_SET]: (state, action) => {
-        return state.set('widht', action.payload);
+        return state.set('width', action.payload);
     },
     [REHYDRATE]: (state, action) => {
         const incoming = action.payload.app;

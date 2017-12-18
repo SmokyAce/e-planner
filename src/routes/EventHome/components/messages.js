@@ -6,8 +6,8 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-    greeting: {
-        id            : 'app.event.home.greeting',
-        defaultMessage: 'Welcome to the Event Home Page'
+    description: {
+        id            : 'app.event.home.description',
+        defaultMessage: 'home page'
     }
 });

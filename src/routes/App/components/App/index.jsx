@@ -45,12 +45,10 @@ class App extends React.Component {
 
         const sidebar = this.props.sidebar.toJS();
 
+        sidebar.hide = browserLessThanMedium;
+
         const sidebarProps = {
-            hide     : browserLessThanMedium,
-            docked   : sidebar.docked,
-            pullRight: sidebar.pullRight,
-            open     : sidebar.open,
-            widht    : sidebar.widht,
+            ...sidebar,
             onSetDocked,
             onChangeSide,
             onSetOpen,
@@ -63,7 +61,7 @@ class App extends React.Component {
                 <LoadingBar style={styles.loadingBar} />
                 <Header
                     loggedIn={loggedIn}
-                    onMenuIconButtonTouchTap={() => !sidebar.docked && onSetOpen(!sidebarProps.open)}
+                    onMenuIconButtonTouchTap={() => onSetOpen(!sidebar.open)}
                     style={styles.header}
                     currentPage={currentPage}
                     connection={connection}
