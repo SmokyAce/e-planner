@@ -10,6 +10,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import Spinner from '../../../components/Spinner';
+import H2 from '../../../components/H2';
 import EventsList from './EventsList';
 import CreateEvent from './CreateEvent';
 import DeleteEvent from './DeleteEvent';
@@ -17,7 +18,6 @@ import DeleteEvent from './DeleteEvent';
 import messages from './messages';
 // styles
 import './AppHome.scss';
-
 
 const styles = {
     spinner: {
@@ -47,11 +47,10 @@ class AppHome extends React.Component {
         openDeleteEvent: false
     };
 
-    shouldComponentUpdate = (nextProps, nextState) => (
-        !isEqual(nextState, this.state) || !isEqual(nextProps, this.props)
-    );
+    shouldComponentUpdate = (nextProps, nextState) =>
+        !isEqual(nextState, this.state) || !isEqual(nextProps, this.props);
 
-    handleOpen = (component) => {
+    handleOpen = component => {
         const obj = {};
 
         obj[`open${component}`] = true;
@@ -59,7 +58,7 @@ class AppHome extends React.Component {
         this.setState(obj);
     };
 
-    handleClose = (component) => {
+    handleClose = component => {
         const obj = {};
 
         obj[`open${component}`] = false;
@@ -70,8 +69,14 @@ class AppHome extends React.Component {
     render() {
         // console.log('AppHome render!');
         const {
-            locale, restored, eventsByIds, eventListOfIds,
-            addEvent, removeEvent, toggleEventService, createEvent
+            locale,
+            restored,
+            eventsByIds,
+            eventListOfIds,
+            addEvent,
+            removeEvent,
+            toggleEventService,
+            createEvent
         } = this.props;
 
         const actions = [
@@ -106,20 +111,20 @@ class AppHome extends React.Component {
         return (
             <div className='flexbox-row'>
                 <div className='flexbox-column'>
-                    <h2 className='text-center'><FormattedMessage {...messages.greeting} /></h2>
+                    <br />
+                    <H2 className='text-center'>
+                        <FormattedMessage {...messages.greeting} />
+                    </H2>
                     <EventsList
                         eventsByIds={eventsByIds}
                         eventListOfIds={eventListOfIds}
-                        onDeleteEvent={(id) => {
+                        onDeleteEvent={id => {
                             this.setState({ activeEvent: id });
                             this.handleOpen('DeleteEvent');
                         }}
                     />
                 </div>
-                <FloatingActionButton
-                    className='add-event-btn'
-                    onClick={() => this.handleOpen('CreateEvent')}
-                >
+                <FloatingActionButton className='add-event-btn' onClick={() => this.handleOpen('CreateEvent')}>
                     <ContentAdd />
                 </FloatingActionButton>
                 <Dialog

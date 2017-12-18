@@ -19,7 +19,6 @@ import validate from './validate';
 // styles
 import './CreateEvent.scss';
 
-
 const services = {
     // counter    : false,
     guests     : true,
@@ -46,12 +45,7 @@ for (const key in services) {
 const renderTextField = props => {
     const { meta } = props;
 
-    return (
-        <ReduxFormTextField
-            {...props}
-            formattedError={<FormattedMessage {...messages[meta.error]} />}
-        />
-    );
+    return <ReduxFormTextField {...props} formattedError={<FormattedMessage {...messages[meta.error]} />} />;
 };
 
 renderTextField.propTypes = {
@@ -96,7 +90,6 @@ const renderTimeField = ({ input: { onBlur, value, ...inputProps }, meta, onChan
     />
 );
 
-
 renderTimeField.propTypes = {
     input   : PropTypes.object,
     meta    : PropTypes.object,
@@ -104,19 +97,14 @@ renderTimeField.propTypes = {
     onChange: PropTypes.func
 };
 
-
-const renderCheckbox = ({ input, label, defaultChecked }) => (
-    <Checkbox
-        label={label}
-        onCheck={input.onChange}
-        defaultChecked={input.value}
-    />
+const renderCheckbox = ({ input, label, checked }) => (
+    <Checkbox label={label} onCheck={input.onChange} checked={input.value} />
 );
 
 renderCheckbox.propTypes = {
-    input         : PropTypes.object,
-    label         : PropTypes.element,
-    defaultChecked: PropTypes.bool
+    input  : PropTypes.object,
+    label  : PropTypes.element,
+    checked: PropTypes.bool
 };
 
 class CreateEvent extends React.Component {
@@ -133,7 +121,7 @@ class CreateEvent extends React.Component {
                         name={key}
                         component={renderCheckbox}
                         label={<FormattedMessage {...messages[key]} />}
-                        defaultChecked={services[key]}
+                        checked={services[key]}
                     />
                 );
             }
@@ -141,11 +129,7 @@ class CreateEvent extends React.Component {
 
         return (
             <form onSubmit={handleSubmit}>
-                <Field
-                    name='name'
-                    component={renderTextField}
-                    label={<FormattedMessage {...messages.event_name} />}
-                />
+                <Field name='name' component={renderTextField} label={<FormattedMessage {...messages.event_name} />} />
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Field
                         name='date'
@@ -154,11 +138,13 @@ class CreateEvent extends React.Component {
                         locale={locale}
                         autoOk
                         hintText={<FormattedMessage {...messages.event_date} />}
-                        formatDate={new DateTimeFormat(locale, {
-                            day  : 'numeric',
-                            month: 'long',
-                            year : 'numeric'
-                        }).format}
+                        formatDate={
+                            new DateTimeFormat(locale, {
+                                day  : 'numeric',
+                                month: 'long',
+                                year : 'numeric'
+                            }).format
+                        }
                         style={{ width: '58%' }}
                     />
                     <Field
@@ -169,10 +155,10 @@ class CreateEvent extends React.Component {
                         style={{ width: '38%' }}
                     />
                 </div>
-                <h4><FormattedMessage {...messages.services_desc} /></h4>
-                <div className='services-cont'>
-                    {servicesList}
-                </div>
+                <h4>
+                    <FormattedMessage {...messages.services_desc} />
+                </h4>
+                <div className='services-cont'>{servicesList}</div>
             </form>
         );
     }

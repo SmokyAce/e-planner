@@ -8,11 +8,9 @@ import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 // styles
 
-
 const customContentStyle = {
     maxWidth: '400px'
 };
-
 
 const Title = props => (
     <div {...props}>
@@ -25,35 +23,21 @@ class DeleteEvent extends React.Component {
         const { handleClose, openModal, removeEvent } = this.props;
 
         const actions = [
-            <FlatButton
-                label='No'
-                primary
-                keyboardFocused
-                onClick={handleClose}
-                key={1}
-            />,
-            <FlatButton
-                label='Yes'
-                primary
-                keyboardFocused
-                onClick={removeEvent}
-                key={2}
-            />
+            <FlatButton label='No' primary keyboardFocused onClick={handleClose} key={1} />,
+            <FlatButton label='Yes' primary keyboardFocused onClick={removeEvent} key={2} />
         ];
 
         return (
-            <div>
-                <Dialog
-                    title={<Title />}
-                    titleStyle={{ margin: '10px' }}
-                    actions={actions}
-                    modal={false}
-                    open={openModal}
-                    onRequestClose={handleClose}
-                    contentStyle={customContentStyle}
-                    autoDetectWindowHeight
-                />
-            </div>
+            <Dialog
+                title={<Title />}
+                titleStyle={{ margin: '10px' }}
+                actions={actions}
+                modal={false}
+                open={openModal}
+                onRequestClose={handleClose}
+                contentStyle={customContentStyle}
+                autoDetectWindowHeight
+            />
         );
     }
 }
