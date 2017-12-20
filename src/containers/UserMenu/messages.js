@@ -11,7 +11,7 @@ export default defineMessages({
         defaultMessage: 'Logout'
     },
     profileBtn: {
-        id            : 'app.profile.btn',
-        defaultMessage: 'Profile'
+        id            : 'app.settings.btn',
+        defaultMessage: 'Setting'
     }
 });

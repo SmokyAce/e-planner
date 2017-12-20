@@ -30,9 +30,9 @@ export default defineMessages({
         id            : 'app.route.event',
         defaultMessage: 'Event'
     },
-    profile: {
-        id            : 'app.route.profile',
-        defaultMessage: 'Profile'
+    settings: {
+        id            : 'app.route.settings',
+        defaultMessage: 'Settings'
     },
     planner: {
         id            : 'app.route.planner',
@@ -49,9 +49,5 @@ export default defineMessages({
     logoutBtn: {
         id            : 'app.logout.btn',
         defaultMessage: 'Sign out'
-    },
-    profileBtn: {
-        id            : 'app.profile.btn',
-        defaultMessage: 'Profile'
     }
 });

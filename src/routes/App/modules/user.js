@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { fromJS } from 'immutable';
 import { LOGOUT } from '../../AppAuth/modules/actionTypes';
 import { REHYDRATE } from 'redux-persist/constants';
 
@@ -58,7 +58,7 @@ const initialState = null;
 
 const USERS_ACTION_HANDLERS = {
     [FETCH_USER_DATA_SUCCESS]: (state, action) => {
-        return Map(action.payload);
+        return fromJS(action.payload);
     },
     [SAVE_USER_DATA]: (state, action) => {
         return state.merge(action.payload);

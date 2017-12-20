@@ -50,7 +50,7 @@ class UserMenu extends React.Component {
                 >
                     <MenuItem
                         primaryText={<FormattedMessage {...messages.profileBtn} />}
-                        containerElement={<Link to='/app/profile' />}
+                        containerElement={<Link to='/app/settings' />}
                     />
                     <Divider />
                     <MenuItem onClick={this.props.logoutRequest}>
