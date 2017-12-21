@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-const defaultStyle = { fontSize: '20px' };
+const defaultStyle = { fontSize: '16px' };
 
-const H2 = ({ children, style, className }) => {
+const H3 = ({ children, style, className }) => {
     const elStyle = { ...defaultStyle, ...style };
 
     return (
@@ -14,10 +14,10 @@ const H2 = ({ children, style, className }) => {
     );
 };
 
-H2.propTypes = {
+H3.propTypes = {
     children : PropTypes.node,
     style    : PropTypes.object,
     className: PropTypes.string
 };
 
-export default H2;
+export default H3;

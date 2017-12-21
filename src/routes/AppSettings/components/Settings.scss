@@ -1,0 +1,34 @@
+@import '../../../styles/variables';
+.settings_avatar {
+    width: 150px;
+    height: auto;
+}
+
+.settings_avatar img {
+    width: inherit;
+}
+
+.settings_paper {
+    margin-top: 5px;
+    flex: 1;
+    max-width: 600px;
+}
+
+.settings_photo_btn {
+    display: block;
+    position: absolute;
+    margin-left: 500px;
+    top: 188px;
+}
+
+@media (max-width: $screen-sm-min) {
+    .settings_avatar {
+        width: 130px;
+    }
+    .settings_photo_btn {
+        right: 0;
+        top: 168px;
+        margin-right: 20px;
+        margin-left: auto;
+    }
+}
