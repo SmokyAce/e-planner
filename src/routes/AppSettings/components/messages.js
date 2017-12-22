@@ -36,7 +36,7 @@ export default defineMessages({
     },
     language: {
         id            : 'app.language',
-        defaultMessage: 'Language:'
+        defaultMessage: 'Language'
     },
     en: {
         id            : 'app.language.en',
@@ -45,5 +45,13 @@ export default defineMessages({
     ru: {
         id            : 'app.language.ru',
         defaultMessage: 'Русский'
+    },
+    change_email: {
+        id            : 'app.settings.change-email',
+        defaultMessage: 'Change your e-mail'
+    },
+    set_psw: {
+        id            : 'app.settings.set-psw',
+        defaultMessage: 'Set new password'
     }
 });

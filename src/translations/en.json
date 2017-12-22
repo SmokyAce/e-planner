@@ -1,5 +1,5 @@
 {
-    "app.language"                       : "Language:",
+    "app.language"                       : "Language",
     "app.language.en"                    : "English",
     "app.language.ru"                    : "Русский",
     "app.description"                    : "Event Planner",
@@ -47,7 +47,6 @@
     "app.route.quiz"                     : "Quiz",
     "app.route.notebook"                 : "Notebook",
     "app.route.settings"                 : "Settings",
-    "app.lang"                           : "Language",
     "app.profile.btn"                    : "Profile",
     "app.full-name"                      : "Full name",
     "app.email"                          : "Email",

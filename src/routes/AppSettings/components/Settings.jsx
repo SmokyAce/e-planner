@@ -6,13 +6,15 @@ import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router';
 import Paper from 'material-ui/Paper';
 import { List, ListItem } from 'material-ui/List';
+import Popover from 'material-ui/Popover';
 import CircularProgress from 'material-ui/CircularProgress';
 // import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
 // import Avatar from 'material-ui/Avatar';
 // import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import PhotoCamera from 'material-ui/svg-icons/image/photo-camera';
+import PhotoCameraIcon from 'material-ui/svg-icons/image/photo-camera';
+import AccountBoxIcon from 'material-ui/svg-icons/action/account-box';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import LocaleToogle from '../../../containers/LocaleToogle';
 import H2 from '../../../components/H2';
@@ -41,11 +43,27 @@ const styles = {
 };
 
 class Settings extends Component {
-    shouldComponentUpdate = nextState => !nextState.user.equals(this.props.user);
+    state = {
+        openLang: false
+    };
+    shouldComponentUpdate = (nextProps, nextState) =>
+        !nextProps.user.equals(this.props.user) || nextState.openLang !== this.state.openLang;
+
+    handleClick = (event, prop) => {
+        event.preventDefault();
+
+        this.setState({ ...this.state, [prop]: true, anchorEl: event.currentTarget });
+    };
+
+    handleLangClose = () => {
+        this.setState({
+            openLang: false
+        });
+    };
 
     render() {
         __DEV__ && console.log('Settings render!');
-        const { user } = this.props;
+        const { user, locale } = this.props;
 
         if (!user) {
             return <CircularProgress />;
@@ -74,20 +92,35 @@ class Settings extends Component {
                         </div>
                     </div>
                 </div>
-                <List style={{ margin: '5px' }}>
-                    <ListItem>
-                        <FormattedMessage {...messages.email} />:
-                        <ins> {user.get('email')} </ins>
-                        <Link className='link' to='/app/profile/change-email'>
-                            change email
-                        </Link>
+                <List style={{ margin: '20px' }}>
+                    <ListItem leftIcon={<AccountBoxIcon />}>
+                        <FormattedMessage {...messages.language} />{' '}
+                        <a onClick={e => this.handleClick(e, 'openLang')}>
+                            <FormattedMessage {...messages[locale]} />
+                        </a>
                     </ListItem>
-                    <ListItem>
-                        <LocaleToogle />
+                    <ListItem insetChildren>
+                        <a onClick={e => this.handleClick(e, 'openEmail')}>
+                            <FormattedMessage {...messages.change_email} />
+                        </a>
+                    </ListItem>
+                    <ListItem insetChildren>
+                        <a onClick={e => this.handleClick(e, 'openPsw')}>
+                            <FormattedMessage {...messages.set_psw} />
+                        </a>
                     </ListItem>
                 </List>
+                <Popover
+                    open={this.state.openLang}
+                    anchorEl={this.state.anchorEl}
+                    anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                    targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                    onRequestClose={this.handleLangClose}
+                >
+                    <LocaleToogle />
+                </Popover>
                 <FloatingActionButton className='settings_photo_btn' zDepth={1}>
-                    <PhotoCamera />
+                    <PhotoCameraIcon />
                 </FloatingActionButton>
             </Paper>
         );
@@ -95,7 +128,8 @@ class Settings extends Component {
 }
 
 Settings.propTypes = {
-    user: PropTypes.instanceOf(Map)
+    user  : PropTypes.instanceOf(Map),
+    locale: PropTypes.string
 };
 
 export default Settings;
