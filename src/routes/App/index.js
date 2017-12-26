@@ -34,13 +34,11 @@ export default store => {
                     next(null, [
                         require('../AppEvent').default(store),
 
-                        require('../AppProfile').default(store),
                         require('../AppSettings').default(store),
                         require('../AppGuests').default(store),
                         require('../AppContractors').default(store)
                     ]);
-                },
-                'planner-routes'
+                }
             );
         },
         onEnter: auth.requireAuth

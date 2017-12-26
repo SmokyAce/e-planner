@@ -2,6 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
 import { isEqual } from 'lodash';
+// theme
+// import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // components
 import Sidebar from '../Sidebar';
 import Header from '../../../../components/Header';
@@ -30,6 +34,16 @@ const styles = {
     header: {}
 };
 
+const muiTheme = getMuiTheme({
+    palette: {
+        primary1Color: '#21a3f6'
+    },
+    appBar: {
+        // height: 64
+        // textColor: '#666666'
+    }
+});
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -57,17 +71,19 @@ class App extends React.Component {
         };
 
         return (
-            <Sidebar {...sidebarProps}>
-                <LoadingBar style={styles.loadingBar} />
-                <Header
-                    loggedIn={loggedIn}
-                    onMenuIconButtonTouchTap={() => onSetOpen(!sidebar.open)}
-                    style={styles.header}
-                    currentPage={currentPage}
-                    connection={connection}
-                />
-                <div className='app-container'>{children}</div>
-            </Sidebar>
+            <MuiThemeProvider muiTheme={muiTheme}>
+                <Sidebar {...sidebarProps}>
+                    <LoadingBar style={styles.loadingBar} />
+                    <Header
+                        loggedIn={loggedIn}
+                        onMenuIconButtonTouchTap={() => onSetOpen(!sidebar.open)}
+                        style={styles.header}
+                        currentPage={currentPage}
+                        connection={connection}
+                    />
+                    <div className='app-container'>{children}</div>
+                </Sidebar>
+            </MuiThemeProvider>
         );
     };
 }
