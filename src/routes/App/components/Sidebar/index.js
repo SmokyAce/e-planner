@@ -4,6 +4,7 @@ import { Map, List } from 'immutable';
 // components
 import Sidebar from 'react-sidebar';
 import SidebarContent from '../../components/SidebarContent';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 import './Sidebar.scss';
 
@@ -12,8 +13,7 @@ const styles = {
         position: 'fixed'
     },
     sidebar: {
-        zIndex         : '1101',
-        backgroundColor: '#f2f2f2'
+        zIndex: '1101'
     },
     content: {
         overflowY      : 'auto',
@@ -53,10 +53,11 @@ const HOC = Component => {
 
         render() {
             __DEV__ && console.log('Sidebar render!');
-            const { eventsByIds, listOfEventsId, pullRight, width } = this.props;
+            const { eventsByIds, listOfEventsId, pullRight, width, muiTheme } = this.props;
             const { onChangeSide, onSetOpen } = this.props;
 
             if (width !== 256) styles.sidebarContent.width = `${width}px`;
+            styles.sidebarContent.backgroundColor = muiTheme.drawer.color;
 
             const content = (
                 <SidebarContent
@@ -99,4 +100,4 @@ const HOC = Component => {
     return SidebarHOC;
 };
 
-export default HOC(Sidebar);
+export default muiThemeable()(HOC(Sidebar));

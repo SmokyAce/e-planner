@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Map, List } from 'immutable';
 import { isEqual } from 'lodash';
 // theme
-// import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import { getThemeSource, themes } from './themes';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // components
@@ -34,16 +34,6 @@ const styles = {
     header: {}
 };
 
-const muiTheme = getMuiTheme({
-    palette: {
-        primary1Color: '#21a3f6'
-    },
-    appBar: {
-        // height: 64
-        // textColor: '#666666'
-    }
-});
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -54,7 +44,7 @@ class App extends React.Component {
 
     render = () => {
         __DEV__ && console.log('App render!');
-        const { children, loggedIn, eventsByIds, listOfEventsId, connection, currentPage } = this.props;
+        const { children, loggedIn, eventsByIds, listOfEventsId, connection, currentPage, theme } = this.props;
         const { onSetDocked, onChangeSide, onSetOpen, browserLessThanMedium } = this.props;
 
         const sidebar = this.props.sidebar.toJS();
@@ -71,7 +61,7 @@ class App extends React.Component {
         };
 
         return (
-            <MuiThemeProvider muiTheme={muiTheme}>
+            <MuiThemeProvider muiTheme={getMuiTheme(getThemeSource(theme, themes))}>
                 <Sidebar {...sidebarProps}>
                     <LoadingBar style={styles.loadingBar} />
                     <Header

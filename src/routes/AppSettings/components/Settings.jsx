@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 // components
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router';
+// import { Link } from 'react-router';
 import Paper from 'material-ui/Paper';
 import { List, ListItem } from 'material-ui/List';
 import Popover from 'material-ui/Popover';
@@ -17,6 +17,7 @@ import PhotoCameraIcon from 'material-ui/svg-icons/image/photo-camera';
 import AccountBoxIcon from 'material-ui/svg-icons/action/account-box';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import LocaleToogle from '../../../containers/LocaleToogle';
+import ThemeToogle from '../../../containers/ThemeToogle';
 import H2 from '../../../components/H2';
 import H3 from '../../../components/H3';
 // translations
@@ -44,10 +45,13 @@ const styles = {
 
 class Settings extends Component {
     state = {
-        openLang: false
+        openLang : false,
+        openTheme: false
     };
     shouldComponentUpdate = (nextProps, nextState) =>
-        !nextProps.user.equals(this.props.user) || nextState.openLang !== this.state.openLang;
+        !nextProps.user.equals(this.props.user) ||
+        nextState.openLang !== this.state.openLang ||
+        nextState.openTheme !== this.state.openTheme;
 
     handleClick = (event, prop) => {
         event.preventDefault();
@@ -57,7 +61,8 @@ class Settings extends Component {
 
     handleLangClose = () => {
         this.setState({
-            openLang: false
+            openLang : false,
+            openTheme: false
         });
     };
 
@@ -98,6 +103,12 @@ class Settings extends Component {
                         <a onClick={e => this.handleClick(e, 'openLang')}>
                             <FormattedMessage {...messages[locale]} />
                         </a>
+                    </ListItem>{' '}
+                    <ListItem leftIcon={<AccountBoxIcon />}>
+                        Select{' '}
+                        <a onClick={e => this.handleClick(e, 'openTheme')}>
+                            theme
+                        </a>
                     </ListItem>
                     <ListItem insetChildren>
                         <a onClick={e => this.handleClick(e, 'openEmail')}>
@@ -118,6 +129,15 @@ class Settings extends Component {
                     onRequestClose={this.handleLangClose}
                 >
                     <LocaleToogle />
+                </Popover>
+                <Popover
+                    open={this.state.openTheme}
+                    anchorEl={this.state.anchorEl}
+                    anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                    targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                    onRequestClose={this.handleLangClose}
+                >
+                    <ThemeToogle />
                 </Popover>
                 <FloatingActionButton className='settings_photo_btn' zDepth={1}>
                     <PhotoCameraIcon />

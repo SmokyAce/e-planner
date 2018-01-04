@@ -27,7 +27,7 @@ const styles = {
     sidebarLink: {
         display       : 'block',
         padding       : '7px 0px',
-        color         : '#757575',
+        // color         : '#757575',
         paddingLeft   : '5px',
         textDecoration: 'none'
     },

@@ -19,6 +19,8 @@ export default store => {
                     injectReducer('app.sidebar', require('./modules/sidebar').default);
                     injectReducer('app.user', require('./modules/user').default);
                     injectReducer('app.events', require('./modules/events').default);
+                    injectReducer('app.theme', require('./modules/theme').default);
+
                     injectReducer('app.tasks', require('../AppEvent/modules/tasks').default);
 
                     next(null, AppContainer);
@@ -28,18 +30,15 @@ export default store => {
         },
         indexRoute: AppHome,
         getChildRoutes(location, next) {
-            require.ensure(
-                [],
-                require => {
-                    next(null, [
-                        require('../AppEvent').default(store),
+            require.ensure([], require => {
+                next(null, [
+                    require('../AppEvent').default(store),
 
-                        require('../AppSettings').default(store),
-                        require('../AppGuests').default(store),
-                        require('../AppContractors').default(store)
-                    ]);
-                }
-            );
+                    require('../AppSettings').default(store),
+                    require('../AppGuests').default(store),
+                    require('../AppContractors').default(store)
+                ]);
+            });
         },
         onEnter: auth.requireAuth
     };

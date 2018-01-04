@@ -15,6 +15,8 @@ const browserLessThanMedium = () => {
     return createSelector(selectBrowser, browser => browser.lessThan.medium);
 };
 
+const makeSelectTheme = () => createSelector(selectApp, globalState => globalState.get('theme'));
+
 const makeSelectSidebar = () => createSelector(selectApp, globalState => globalState.get('sidebar'));
 
 const makeSelectSidebarDocked = () =>
@@ -88,5 +90,7 @@ export {
     browserLessThanMedium,
     // form
     makeSelectFormValues,
-    makeSelectFormSyncErrors
+    makeSelectFormSyncErrors,
+    // theme
+    makeSelectTheme
 };

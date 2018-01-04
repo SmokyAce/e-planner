@@ -8,7 +8,8 @@ import {
     makeSelectEventsByIds,
     makeSelectEventsListOfIds,
     makeSelectAppConnectionState,
-    browserLessThanMedium
+    browserLessThanMedium,
+    makeSelectTheme
 } from '../modules/selectors';
 import { makeSelectLoggedIn } from '../../AppAuth/modules/selectors';
 import { getCurrenPageLocation } from '../../../store/reducers/location';
@@ -26,7 +27,8 @@ const mapStateToProps = state =>
         listOfEventsId       : makeSelectEventsListOfIds(),
         currentPage          : getCurrenPageLocation,
         connection           : makeSelectAppConnectionState(),
-        browserLessThanMedium: browserLessThanMedium()
+        browserLessThanMedium: browserLessThanMedium(),
+        theme                : makeSelectTheme()
     });
 
 const mapDispatchToProps = dispatch =>
